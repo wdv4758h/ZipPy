@@ -172,8 +172,4 @@ public abstract class PNode extends Node implements Visualizable {
         ASTInterpreter.trace(this);
     }
 
-    public void accept(PNodeVisitor visitor) {
-        throw new RuntimeException("Unexpected node: " + this);
-    }
-
 }
