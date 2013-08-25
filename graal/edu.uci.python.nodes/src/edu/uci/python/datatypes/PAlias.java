@@ -22,64 +22,45 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package edu.uci.python.nodes.literals;
+package edu.uci.python.datatypes;
 
 import java.util.*;
 
-import com.oracle.truffle.api.frame.*;
+import org.antlr.runtime.*;
 
 import edu.uci.python.nodes.*;
-import edu.uci.python.nodes.truffle.*;
 
-public class ListLiteralNode extends LiteralNode {
+public class PAlias extends PNode {
 
-    @Children protected final PNode[] values;
+    private String name;
+    private String asname;
 
-    private List<PNode> elts;
-
-    public ListLiteralNode(PNode[] values) {
-        this.values = adoptChildren(values);
+    public PAlias(Token token, String name, String asname) {
+        super(token);
+        this.name = name;
+        this.asname = asname;
     }
 
-    protected ListLiteralNode(ListLiteralNode node) {
-        this(node.values);
-    }
-
-    public List<PNode> getElts() {
-        return elts;
-    }
-
-    public void setElts(List<PNode> elts) {
-        this.elts = elts;
-    }
-
-    @Override
-    public Object execute(VirtualFrame frame) {
-        List<Object> elements = new ArrayList<Object>();
-
-        for (PNode v : this.values) {
-            elements.add(v.execute(frame));
-        }
-
-        return PythonTypesUtil.createList(elements);
-    }
-
-    @Override
-    public String toString() {
-        return "list";
-    }
-
-    @Override
-    public void visualize(int level) {
-        for (int i = 0; i < level; i++) {
-            ASTInterpreter.trace("    ");
-        }
-        ASTInterpreter.trace(this);
-
-        level++;
-        for (PNode v : values) {
-            v.visualize(level);
+    public PAlias(PNode name, PNode asname) {
+        super();
+        this.name = name.getText();
+        if (asname != null) {
+            this.asname = asname.getText();
         }
     }
 
+    public PAlias(List<PNode> nameNodes, String snameNodes, PNode asname) {
+        this.name = snameNodes;
+        if (asname != null) {
+            this.asname = asname.getText();
+        }
+    }
+
+    public String getInternalName() {
+        return name;
+    }
+
+    public String getInternalAsname() {
+        return asname;
+    }
 }

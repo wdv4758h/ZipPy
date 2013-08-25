@@ -26,7 +26,6 @@ package edu.uci.python.nodes.expressions;
 
 import java.math.BigInteger;
 
-
 import com.oracle.truffle.api.frame.Frame;
 import com.oracle.truffle.api.frame.FrameSlot;
 import com.oracle.truffle.api.frame.FrameSlotKind;
@@ -50,6 +49,7 @@ public abstract class FrameSlotNode extends StatementNode {
         this.slot = slot;
     }
 
+    @Override
     public final FrameSlot getSlot() {
         return slot;
     }

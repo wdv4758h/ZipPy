@@ -24,18 +24,21 @@
  */
 package edu.uci.python.nodes.literals;
 
+import static edu.uci.python.nodes.truffle.PythonTypesUtil.*;
+
+import java.util.*;
 
 import com.oracle.truffle.api.frame.*;
-import com.oracle.truffle.api.nodes.ExplodeLoop;
+import com.oracle.truffle.api.nodes.*;
 
 import edu.uci.python.nodes.*;
 import edu.uci.python.nodes.truffle.*;
 
-import static edu.uci.python.nodes.truffle.PythonTypesUtil.*;
-
 public final class TupleLiteralNode extends LiteralNode {
 
     @Children protected final PNode[] values;
+
+    private List<PNode> elts;
 
     public TupleLiteralNode(PNode[] values) {
         this.values = adoptChildren(values);
@@ -51,6 +54,14 @@ public final class TupleLiteralNode extends LiteralNode {
         }
 
         return createTuple(elements);
+    }
+
+    public List<PNode> getElts() {
+        return elts;
+    }
+
+    public void setElts(List<PNode> elts) {
+        this.elts = elts;
     }
 
     @Override

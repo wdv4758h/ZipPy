@@ -31,4 +31,6 @@ public class Options {
 
     public static boolean OptimizeNode = true;
 
+    public static boolean debug = false;
+
 }

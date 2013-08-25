@@ -22,64 +22,68 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package edu.uci.python.nodes.literals;
+package edu.uci.python.datatypes;
 
 import java.util.*;
 
-import com.oracle.truffle.api.frame.*;
+import org.antlr.runtime.Token;
 
 import edu.uci.python.nodes.*;
-import edu.uci.python.nodes.truffle.*;
 
-public class ListLiteralNode extends LiteralNode {
+public class PComprehension extends PNode {
 
-    @Children protected final PNode[] values;
+    private PNode target;
+    private PNode iter;
+    private List<PNode> ifs;
+    private PComprehension innerLoop;
+    private PNode loopBody;
 
-    private List<PNode> elts;
-
-    public ListLiteralNode(PNode[] values) {
-        this.values = adoptChildren(values);
-    }
-
-    protected ListLiteralNode(ListLiteralNode node) {
-        this(node.values);
-    }
-
-    public List<PNode> getElts() {
-        return elts;
-    }
-
-    public void setElts(List<PNode> elts) {
-        this.elts = elts;
-    }
-
-    @Override
-    public Object execute(VirtualFrame frame) {
-        List<Object> elements = new ArrayList<Object>();
-
-        for (PNode v : this.values) {
-            elements.add(v.execute(frame));
-        }
-
-        return PythonTypesUtil.createList(elements);
-    }
-
-    @Override
-    public String toString() {
-        return "list";
-    }
-
-    @Override
-    public void visualize(int level) {
-        for (int i = 0; i < level; i++) {
-            ASTInterpreter.trace("    ");
-        }
-        ASTInterpreter.trace(this);
-
-        level++;
-        for (PNode v : values) {
-            v.visualize(level);
+    public PComprehension(Token token, PNode target, PNode iter, java.util.List<PNode> ifs) {
+        super(token);
+        this.target = target;
+        this.iter = iter;
+        this.ifs = ifs;
+        if (ifs == null) {
+            this.ifs = new ArrayList<>();
         }
     }
 
+    /**
+     * Truffle If we expand list comprehension in to a conventional nested loop, The left most
+     * expression of list comprehension become the body of the inner most loop. So we transform
+     * ListComp Node by attaching its elts expression to the inner most comprehension Node instead.
+     * The interpreter would interpret ListComp as if it was a nested loop.
+     */
+
+    public void setLoopBody(PNode body) {
+        loopBody = body;
+    }
+
+    public PNode getLoopBody() {
+        return loopBody;
+    }
+
+    public void setInnerLoop(PComprehension loop) {
+        innerLoop = loop;
+    }
+
+    public PComprehension getInnerLoop() {
+        return innerLoop;
+    }
+
+    public PNode getInternalTarget() {
+        return target;
+    }
+
+    public void setInternalTarget(PNode target) {
+        this.target = target;
+    }
+
+    public PNode getInternalIter() {
+        return iter;
+    }
+
+    public List<PNode> getInternalIfs() {
+        return ifs;
+    }
 }
