@@ -1,13 +1,38 @@
-package org.python.ast;
+/*
+ * Copyright (c) 2013, Regents of the University of California
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met: 
+ * 
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer. 
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution. 
+ * 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+package edu.uci.python.antlr;
 
 import org.antlr.runtime.CommonToken;
 import org.antlr.runtime.RecognitionException;
 import org.antlr.runtime.Token;
 import org.antlr.runtime.TokenStream;
 import org.antlr.runtime.tree.CommonTreeAdaptor;
-import org.python.antlr.TruffleErrorNode;
-import org.python.ast.nodes.PNode;
 
+import com.oracle.truffle.api.frame.*;
+
+import edu.uci.python.nodes.*;
 
 public class TrufflePNodeAdaptor extends CommonTreeAdaptor {
 
@@ -16,9 +41,6 @@ public class TrufflePNodeAdaptor extends CommonTreeAdaptor {
         if (t == null) {
             return;
         }
-        // System.out.println("setting boundries on '"+t+"' with start: '" +
-        // startToken + "' and '" +
-        // stopToken + "'");
         int start = 0;
         int stop = 0;
         int startChar = 0;
@@ -40,40 +62,29 @@ public class TrufflePNodeAdaptor extends CommonTreeAdaptor {
 
     @Override
     public Object create(Token token) {
-        return new PNode(token);
+        return new PNode(token) {
+
+            @Override
+            public Object execute(VirtualFrame frame) {
+                return null;
+            }
+        };
     }
 
     @Override
-    public Object errorNode(TokenStream input, Token start, Token stop,
-            RecognitionException e) {
+    public Object errorNode(TokenStream input, Token start, Token stop, RecognitionException e) {
         TruffleErrorNode t = new TruffleErrorNode(input, start, stop, e);
-        // System.out.println("returning error node '"+t+"' @index="+input.index());
         return t;
-    }
-
-    @Override
-    public Object dupNode(Object t) {
-        if (t == null) {
-            return null;
-        }
-        return create(((PNode) t).getToken());
-    }
-
-    @Override
-    public boolean isNil(Object tree) {
-        return ((PNode) tree).isNil();
     }
 
     @Override
     public void addChild(Object t, Object child) {
         if (t != null && child != null) {
             /*
-             * Truffle
-             * This is a hack. For some reason when both parent and child are Nil.
-             * addChild() will recursively set its children's parent to be the parent,
-             * which is also Nil.
-             * This process ruins some of the parent child relations and causes problems in
-             * PythonTreeProcessor. 
+             * Truffle This is a hack. For some reason when both parent and child are Nil.
+             * addChild() will recursively set its children's parent to be the parent, which is also
+             * Nil. This process ruins some of the parent child relations and causes problems in
+             * PythonTreeProcessor.
              */
             PNode tree = (PNode) t;
             PNode childTree = (PNode) child;
@@ -86,102 +97,17 @@ public class TrufflePNodeAdaptor extends CommonTreeAdaptor {
     }
 
     @Override
-    public Object becomeRoot(Object newRoot, Object oldRoot) {
-        // System.out.println("becomeroot new "+newRoot.toString()+" old "+oldRoot);
-        PNode newRootTree = (PNode) newRoot;
-        PNode oldRootTree = (PNode) oldRoot;
-        if (oldRoot == null) {
-            return newRoot;
-        }
-        // handle ^(nil real-node)
-        if (newRootTree.isNil()) {
-            int nc = newRootTree.getChildCount();
-            if (nc == 1)
-                newRootTree = newRootTree.getChild(0);
-            else if (nc > 1) {
-                // TODO: make tree run time exceptions hierarchy
-                throw new RuntimeException(
-                        "more than one node as root (TODO: make exception hierarchy)");
-            }
-        }
-        // add oldRoot to newRoot; addChild takes care of case where oldRoot
-        // is a flat list (i.e., nil-rooted tree). All children of oldRoot
-        // are added to newRoot.
-        newRootTree.addChild(oldRootTree);
-        return newRootTree;
-    }
-
-    @Override
     public Object rulePostProcessing(Object root) {
-        // System.out.println("rulePostProcessing: "+((PNode)root).toStringTree());
         PNode r = (PNode) root;
         if (r != null && r.isNil()) {
             if (r.getChildCount() == 0) {
                 r = null;
             } else if (r.getChildCount() == 1) {
                 r = r.getChild(0);
-                // whoever invokes rule will set parent and child index
-                // truffle: this does not make sense
-//                r.setParent(null);
                 r.setChildIndex(-1);
             }
         }
         return r;
-    }
-
-    @Override
-    public Object create(int tokenType, Token fromToken) {
-        fromToken = createToken(fromToken);
-        // ((ClassicToken)fromToken).setType(tokenType);
-        fromToken.setType(tokenType);
-        PNode t = (PNode) create(fromToken);
-        return t;
-    }
-
-    @Override
-    public Object create(int tokenType, Token fromToken, String text) {
-        fromToken = createToken(fromToken);
-        fromToken.setType(tokenType);
-        fromToken.setText(text);
-        PNode t = (PNode) create(fromToken);
-        return t;
-    }
-
-    @Override
-    public Object create(int tokenType, String text) {
-        Token fromToken = createToken(tokenType, text);
-        PNode t = (PNode) create(fromToken);
-        return t;
-    }
-
-    public int getType(Object t) {
-        ((PNode) t).getType();
-        return 0;
-    }
-
-    @Override
-    public String getText(Object t) {
-        return ((PNode) t).getText();
-    }
-
-    @Override
-    public Object getChild(Object t, int i) {
-        return ((PNode) t).getChild(i);
-    }
-
-    @Override
-    public void setChild(Object t, int i, Object child) {
-        ((PNode) t).setChild(i, (PNode) child);
-    }
-
-    @Override
-    public Object deleteChild(Object t, int i) {
-        return ((PNode) t).deleteChild(i);
-    }
-
-    @Override
-    public int getChildCount(Object t) {
-        return ((PNode) t).getChildCount();
     }
 
 }

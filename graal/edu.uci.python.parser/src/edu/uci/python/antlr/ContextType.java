@@ -24,24 +24,6 @@
  */
 package edu.uci.python.antlr;
 
-@SuppressWarnings("serial")
-public class ParseException extends RuntimeException {
-
-    public int line;
-    public int charPositionInLine;
-
-    public ParseException() {
-        super();
-    }
-
-    public ParseException(String message, int lin, int charPos) {
-        super(message);
-        this.line = lin;
-        this.charPositionInLine = charPos;
-    }
-
-    public ParseException(String message) {
-        this(message, 0, 0);
-    }
-
+public enum ContextType {
+    UNDEFINED, Load, Store, Del, AugLoad, AugStore, Param;
 }
