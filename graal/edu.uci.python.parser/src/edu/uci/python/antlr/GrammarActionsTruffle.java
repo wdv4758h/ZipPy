@@ -65,8 +65,8 @@ public class GrammarActionsTruffle {
 // private Stack<FunctionRootNode> funcRoots = new Stack<>();
 
     // Loop Header Setter
-    private ArrayList<PNode> currentLoopFixes = new ArrayList<>();
-    private Stack<ArrayList<PNode>> fixLoopHeaders = new Stack<>();
+// private ArrayList<PNode> currentLoopFixes = new ArrayList<>();
+// private Stack<ArrayList<PNode>> fixLoopHeaders = new Stack<>();
 
     public StringBuilder output = null;
 
@@ -82,25 +82,25 @@ public class GrammarActionsTruffle {
         this.errorHandler = eh;
     }
 
-    public void beginLoopLevel() {
-        fixLoopHeaders.push(currentLoopFixes);
-
-        currentLoopFixes = new ArrayList<>();
-    }
-
-    private void fixLoopHeaders(StatementNode loopheader) {
-        for (PNode node : currentLoopFixes) {
-            if (node instanceof BreakNode) {
-                ((BreakNode) node).setLoopHeader(loopheader);
-            } else if (node instanceof BlockNode) {
-                ((BlockNode) node).setLoopHeader(loopheader);
-            } else {
-                throwNotCovered();
-            }
-        }
-
-        currentLoopFixes = fixLoopHeaders.pop();
-    }
+// public void beginLoopLevel() {
+// fixLoopHeaders.push(currentLoopFixes);
+//
+// currentLoopFixes = new ArrayList<>();
+// }
+//
+// private void fixLoopHeaders(StatementNode loopheader) {
+// for (PNode node : currentLoopFixes) {
+// if (node instanceof BreakNode) {
+// ((BreakNode) node).setLoopHeader(loopheader);
+// } else if (node instanceof BlockNode) {
+// ((BlockNode) node).setLoopHeader(loopheader);
+// } else {
+// throwNotCovered();
+// }
+// }
+//
+// currentLoopFixes = fixLoopHeaders.pop();
+// }
 
     public void beginScope() {
         if (Options.debug) {
@@ -584,8 +584,8 @@ public class GrammarActionsTruffle {
 // thenPart.setFuncRootNode(getCurrentFuncRoot());
 // elsePart.setFuncRootNode(getCurrentFuncRoot());
 
-        currentLoopFixes.add(thenPart);
-        currentLoopFixes.add(elsePart);
+// currentLoopFixes.add(thenPart);
+// currentLoopFixes.add(elsePart);
 
         retVal.setToken(t);
 
@@ -818,7 +818,7 @@ public class GrammarActionsTruffle {
         // retVal = new Break(t);
         retVal = factory.createBreak();
 
-        currentLoopFixes.add(retVal);
+// currentLoopFixes.add(retVal);
         // retVal.setLoopHeader(getCurrentLoopHeader());
 
         retVal.setToken(t);
@@ -1806,34 +1806,37 @@ public class GrammarActionsTruffle {
         BlockNode orelsePart = null;
         // retVal = new While(t, test, b, o);
 
-        if (test instanceof BooleanLiteralNode && ((BooleanLiteralNode) test).getValue()) {
-            retVal = factory.createWhileTrue(null);
+// if (test instanceof BooleanLiteralNode && ((BooleanLiteralNode) test).getValue()) {
+// retVal = factory.createWhileTrue(null);
+//
+// bodyPart = factory.createBlock(b);
+//
+// currentLoopFixes.add(bodyPart);
+//
+// // bodyPart.setFuncRootNode(getCurrentFuncRoot());
+// // retVal.setFuncRootNode(getCurrentFuncRoot());
+//
+// ((WhileTrueNode) retVal).setInternal(bodyPart);
+// } else {
+// retVal = factory.createWhile(factory.toBooleanCastNode(test), null, null);
+//
+// bodyPart = factory.createBlock(b);
+// orelsePart = factory.createBlock(o);
+//
+// currentLoopFixes.add(bodyPart);
+// currentLoopFixes.add(orelsePart);
+//
+// // bodyPart.setFuncRootNode(getCurrentFuncRoot());
+// // orelsePart.setFuncRootNode(getCurrentFuncRoot());
+// // retVal.setFuncRootNode(getCurrentFuncRoot());
+//
+// ((WhileNode) retVal).setInternal(bodyPart, orelsePart);
+// }
+// fixLoopHeaders(retVal);
 
-            bodyPart = factory.createBlock(b);
-
-            currentLoopFixes.add(bodyPart);
-
-// bodyPart.setFuncRootNode(getCurrentFuncRoot());
-// retVal.setFuncRootNode(getCurrentFuncRoot());
-
-            ((WhileTrueNode) retVal).setInternal(bodyPart);
-        } else {
-            retVal = factory.createWhile(factory.toBooleanCastNode(test), null, null);
-
-            bodyPart = factory.createBlock(b);
-            orelsePart = factory.createBlock(o);
-
-            currentLoopFixes.add(bodyPart);
-            currentLoopFixes.add(orelsePart);
-
-// bodyPart.setFuncRootNode(getCurrentFuncRoot());
-// orelsePart.setFuncRootNode(getCurrentFuncRoot());
-// retVal.setFuncRootNode(getCurrentFuncRoot());
-
-            ((WhileNode) retVal).setInternal(bodyPart, orelsePart);
-        }
-        fixLoopHeaders(retVal);
-
+        bodyPart = factory.createBlock(b);
+        orelsePart = factory.createBlock(o);
+        retVal = factory.createWhile(factory.toBooleanCastNode(test), bodyPart, orelsePart);
         retVal.setToken(t);
         return retVal;
     }
@@ -1871,18 +1874,19 @@ public class GrammarActionsTruffle {
         return result;
     }
 
-    private StatementNode dirtySpecialization(StatementNode target, PNode iter) {
+    private StatementNode dirtySpecialization(StatementNode target, PNode iter, BlockNode bodyPart, BlockNode orelsePart) {
         StatementNode forNode;
         if (Options.OptimizeNode) {
             if (iter instanceof CallBuiltInWithOneArgNoKeywordNode && ((CallBuiltInWithOneArgNoKeywordNode) iter).getName().equals("range")) {
-                forNode = factory.createForRangeWithOneValue(target, ((CallBuiltInWithOneArgNoKeywordNode) iter).getArgument(), null, null);
+                forNode = factory.createForRangeWithOneValue(target, ((CallBuiltInWithOneArgNoKeywordNode) iter).getArgument(), bodyPart, orelsePart);
             } else if (iter instanceof CallBuiltInWithTwoArgsNoKeywordNode && ((CallBuiltInWithTwoArgsNoKeywordNode) iter).getName().equals("range")) {
-                forNode = factory.createForRangeWithTwoValues(target, ((CallBuiltInWithTwoArgsNoKeywordNode) iter).getArg0(), ((CallBuiltInWithTwoArgsNoKeywordNode) iter).getArg1(), null, null);
+                forNode = factory.createForRangeWithTwoValues(target, ((CallBuiltInWithTwoArgsNoKeywordNode) iter).getArg0(), ((CallBuiltInWithTwoArgsNoKeywordNode) iter).getArg1(), bodyPart,
+                                orelsePart);
             } else {
-                forNode = factory.createFor(target, iter, null, null);
+                forNode = factory.createFor(target, iter, bodyPart, orelsePart);
             }
         } else {
-            forNode = factory.createFor(target, iter, null, null);
+            forNode = factory.createFor(target, iter, bodyPart, orelsePart);
         }
         return forNode;
     }
@@ -1922,7 +1926,6 @@ public class GrammarActionsTruffle {
         PNode runtimeValue = factory.createRuntimeValueNode();
         StatementNode iteratorWrite = incomplete.updateRhs(runtimeValue);
 
-        retVal = dirtySpecialization(iteratorWrite, iter);
 // retVal.setFuncRootNode(getCurrentFuncRoot());
 
         b.addAll(0, targets);
@@ -1938,22 +1941,24 @@ public class GrammarActionsTruffle {
         bodyPart = factory.createBlock(body);
         orelsePart = factory.createBlock(orelse);
 
-        currentLoopFixes.add(bodyPart);
-        currentLoopFixes.add(orelsePart);
+// currentLoopFixes.add(bodyPart);
+// currentLoopFixes.add(orelsePart);
 
 // bodyPart.setFuncRootNode(getCurrentFuncRoot());
 // orelsePart.setFuncRootNode(getCurrentFuncRoot());
 // retVal.setFuncRootNode(getCurrentFuncRoot());
 
-        if (retVal instanceof ForNode) {
-            ((ForNode) retVal).setInternal(bodyPart, orelsePart);
-        } else if (retVal instanceof ForRangeWithOneValueNode) {
-            ((ForRangeWithOneValueNode) retVal).setInternal(bodyPart, orelsePart);
-        } else {
-            ((ForRangeWithTwoValuesNode) retVal).setInternal(bodyPart, orelsePart);
-        }
+// if (retVal instanceof ForNode) {
+// ((ForNode) retVal).setInternal(bodyPart, orelsePart);
+// } else if (retVal instanceof ForRangeWithOneValueNode) {
+// ((ForRangeWithOneValueNode) retVal).setInternal(bodyPart, orelsePart);
+// } else {
+// ((ForRangeWithTwoValuesNode) retVal).setInternal(bodyPart, orelsePart);
+// }
 
-        fixLoopHeaders(retVal);
+// fixLoopHeaders(retVal);
+
+        retVal = dirtySpecialization(iteratorWrite, iter, bodyPart, orelsePart);
 
         retVal.setToken(t);
         return retVal;

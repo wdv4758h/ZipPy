@@ -1128,7 +1128,7 @@ else_clause
 while_stmt
 @init {
     StatementNode stype = null;
-    actions.beginLoopLevel();
+//    actions.beginLoopLevel();
 }
 @after {
    $while_stmt.tree = stype;
@@ -1143,7 +1143,7 @@ while_stmt
 for_stmt
 @init {
     StatementNode stype = null;
-    actions.beginLoopLevel();
+//    actions.beginLoopLevel();
 }
 @after {
    $for_stmt.tree = stype;

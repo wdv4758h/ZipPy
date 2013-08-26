@@ -1,8 +1,7 @@
-// $ANTLR 3.5 Truffle.g 2013-08-25 21:08:32
+// $ANTLR 3.5 Truffle.g 2013-08-26 02:57:22
 
 package edu.uci.python.antlr;
 
-// CheckStyle: stop check
 import org.antlr.runtime.CommonToken;
 
 import edu.uci.python.nodes.PNode;
@@ -273,7 +272,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "single_input"
-	// Truffle.g:249:1: single_input : ( ( NEWLINE )* EOF | simple_stmt ( NEWLINE )* EOF | compound_stmt ( NEWLINE )+ EOF );
+	// Truffle.g:246:1: single_input : ( ( NEWLINE )* EOF | simple_stmt ( NEWLINE )* EOF | compound_stmt ( NEWLINE )+ EOF );
 	public final TruffleParser.single_input_return single_input() throws RecognitionException {
 		TruffleParser.single_input_return retval = new TruffleParser.single_input_return();
 		retval.start = input.LT(1);
@@ -300,7 +299,7 @@ public class TruffleParser extends Parser {
 		    PNode mtype = null;
 
 		try {
-			// Truffle.g:256:5: ( ( NEWLINE )* EOF | simple_stmt ( NEWLINE )* EOF | compound_stmt ( NEWLINE )+ EOF )
+			// Truffle.g:253:5: ( ( NEWLINE )* EOF | simple_stmt ( NEWLINE )* EOF | compound_stmt ( NEWLINE )+ EOF )
 			int alt4=3;
 			int LA4_0 = input.LA(1);
 			if ( (LA4_0==EOF||LA4_0==NEWLINE) ) {
@@ -328,12 +327,12 @@ public class TruffleParser extends Parser {
 
 			switch (alt4) {
 				case 1 :
-					// Truffle.g:256:7: ( NEWLINE )* EOF
+					// Truffle.g:253:7: ( NEWLINE )* EOF
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					// Truffle.g:256:7: ( NEWLINE )*
+					// Truffle.g:253:7: ( NEWLINE )*
 					loop1:
 					while (true) {
 						int alt1=2;
@@ -344,9 +343,9 @@ public class TruffleParser extends Parser {
 
 						switch (alt1) {
 						case 1 :
-							// Truffle.g:256:7: NEWLINE
+							// Truffle.g:253:7: NEWLINE
 							{
-							NEWLINE1=(Token)match(input,NEWLINE,FOLLOW_NEWLINE_in_single_input119); if (state.failed) return retval;
+							NEWLINE1=(Token)match(input,NEWLINE,FOLLOW_NEWLINE_in_single_input118); if (state.failed) return retval;
 							if ( state.backtracking==0 ) {
 							NEWLINE1_tree = (PNode)adaptor.create(NEWLINE1);
 							adaptor.addChild(root_0, NEWLINE1_tree);
@@ -360,7 +359,7 @@ public class TruffleParser extends Parser {
 						}
 					}
 
-					EOF2=(Token)match(input,EOF,FOLLOW_EOF_in_single_input122); if (state.failed) return retval;
+					EOF2=(Token)match(input,EOF,FOLLOW_EOF_in_single_input121); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					EOF2_tree = (PNode)adaptor.create(EOF2);
 					adaptor.addChild(root_0, EOF2_tree);
@@ -372,18 +371,18 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 2 :
-					// Truffle.g:260:7: simple_stmt ( NEWLINE )* EOF
+					// Truffle.g:257:7: simple_stmt ( NEWLINE )* EOF
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					pushFollow(FOLLOW_simple_stmt_in_single_input138);
+					pushFollow(FOLLOW_simple_stmt_in_single_input137);
 					simple_stmt3=simple_stmt();
 					state._fsp--;
 					if (state.failed) return retval;
 					if ( state.backtracking==0 ) adaptor.addChild(root_0, simple_stmt3.getTree());
 
-					// Truffle.g:260:19: ( NEWLINE )*
+					// Truffle.g:257:19: ( NEWLINE )*
 					loop2:
 					while (true) {
 						int alt2=2;
@@ -394,9 +393,9 @@ public class TruffleParser extends Parser {
 
 						switch (alt2) {
 						case 1 :
-							// Truffle.g:260:19: NEWLINE
+							// Truffle.g:257:19: NEWLINE
 							{
-							NEWLINE4=(Token)match(input,NEWLINE,FOLLOW_NEWLINE_in_single_input140); if (state.failed) return retval;
+							NEWLINE4=(Token)match(input,NEWLINE,FOLLOW_NEWLINE_in_single_input139); if (state.failed) return retval;
 							if ( state.backtracking==0 ) {
 							NEWLINE4_tree = (PNode)adaptor.create(NEWLINE4);
 							adaptor.addChild(root_0, NEWLINE4_tree);
@@ -410,7 +409,7 @@ public class TruffleParser extends Parser {
 						}
 					}
 
-					EOF5=(Token)match(input,EOF,FOLLOW_EOF_in_single_input143); if (state.failed) return retval;
+					EOF5=(Token)match(input,EOF,FOLLOW_EOF_in_single_input142); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					EOF5_tree = (PNode)adaptor.create(EOF5);
 					adaptor.addChild(root_0, EOF5_tree);
@@ -422,18 +421,18 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 3 :
-					// Truffle.g:264:7: compound_stmt ( NEWLINE )+ EOF
+					// Truffle.g:261:7: compound_stmt ( NEWLINE )+ EOF
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					pushFollow(FOLLOW_compound_stmt_in_single_input159);
+					pushFollow(FOLLOW_compound_stmt_in_single_input158);
 					compound_stmt6=compound_stmt();
 					state._fsp--;
 					if (state.failed) return retval;
 					if ( state.backtracking==0 ) adaptor.addChild(root_0, compound_stmt6.getTree());
 
-					// Truffle.g:264:21: ( NEWLINE )+
+					// Truffle.g:261:21: ( NEWLINE )+
 					int cnt3=0;
 					loop3:
 					while (true) {
@@ -445,9 +444,9 @@ public class TruffleParser extends Parser {
 
 						switch (alt3) {
 						case 1 :
-							// Truffle.g:264:21: NEWLINE
+							// Truffle.g:261:21: NEWLINE
 							{
-							NEWLINE7=(Token)match(input,NEWLINE,FOLLOW_NEWLINE_in_single_input161); if (state.failed) return retval;
+							NEWLINE7=(Token)match(input,NEWLINE,FOLLOW_NEWLINE_in_single_input160); if (state.failed) return retval;
 							if ( state.backtracking==0 ) {
 							NEWLINE7_tree = (PNode)adaptor.create(NEWLINE7);
 							adaptor.addChild(root_0, NEWLINE7_tree);
@@ -465,7 +464,7 @@ public class TruffleParser extends Parser {
 						cnt3++;
 					}
 
-					EOF8=(Token)match(input,EOF,FOLLOW_EOF_in_single_input164); if (state.failed) return retval;
+					EOF8=(Token)match(input,EOF,FOLLOW_EOF_in_single_input163); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					EOF8_tree = (PNode)adaptor.create(EOF8);
 					adaptor.addChild(root_0, EOF8_tree);
@@ -513,7 +512,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "file_input"
-	// Truffle.g:278:1: file_input : ( NEWLINE | stmt )* EOF ;
+	// Truffle.g:275:1: file_input : ( NEWLINE | stmt )* EOF ;
 	public final TruffleParser.file_input_return file_input() throws RecognitionException {
 		TruffleParser.file_input_return retval = new TruffleParser.file_input_return();
 		retval.start = input.LT(1);
@@ -532,13 +531,13 @@ public class TruffleParser extends Parser {
 		    List stypes = new ArrayList();    
 
 		try {
-			// Truffle.g:296:5: ( ( NEWLINE | stmt )* EOF )
-			// Truffle.g:296:7: ( NEWLINE | stmt )* EOF
+			// Truffle.g:293:5: ( ( NEWLINE | stmt )* EOF )
+			// Truffle.g:293:7: ( NEWLINE | stmt )* EOF
 			{
 			root_0 = (PNode)adaptor.nil();
 
 
-			// Truffle.g:296:7: ( NEWLINE | stmt )*
+			// Truffle.g:293:7: ( NEWLINE | stmt )*
 			loop5:
 			while (true) {
 				int alt5=3;
@@ -558,9 +557,9 @@ public class TruffleParser extends Parser {
 
 				switch (alt5) {
 				case 1 :
-					// Truffle.g:296:8: NEWLINE
+					// Truffle.g:293:8: NEWLINE
 					{
-					NEWLINE9=(Token)match(input,NEWLINE,FOLLOW_NEWLINE_in_file_input216); if (state.failed) return retval;
+					NEWLINE9=(Token)match(input,NEWLINE,FOLLOW_NEWLINE_in_file_input215); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					NEWLINE9_tree = (PNode)adaptor.create(NEWLINE9);
 					adaptor.addChild(root_0, NEWLINE9_tree);
@@ -569,9 +568,9 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 2 :
-					// Truffle.g:297:9: stmt
+					// Truffle.g:294:9: stmt
 					{
-					pushFollow(FOLLOW_stmt_in_file_input226);
+					pushFollow(FOLLOW_stmt_in_file_input225);
 					stmt10=stmt();
 					state._fsp--;
 					if (state.failed) return retval;
@@ -590,7 +589,7 @@ public class TruffleParser extends Parser {
 				}
 			}
 
-			EOF11=(Token)match(input,EOF,FOLLOW_EOF_in_file_input245); if (state.failed) return retval;
+			EOF11=(Token)match(input,EOF,FOLLOW_EOF_in_file_input244); if (state.failed) return retval;
 			if ( state.backtracking==0 ) {
 			EOF11_tree = (PNode)adaptor.create(EOF11);
 			adaptor.addChild(root_0, EOF11_tree);
@@ -647,7 +646,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "eval_input"
-	// Truffle.g:318:1: eval_input : ( LEADING_WS )? ( NEWLINE )* testlist[expr_contextType.Load] ( NEWLINE )* EOF ;
+	// Truffle.g:315:1: eval_input : ( LEADING_WS )? ( NEWLINE )* testlist[expr_contextType.Load] ( NEWLINE )* EOF ;
 	public final TruffleParser.eval_input_return eval_input() throws RecognitionException {
 		TruffleParser.eval_input_return retval = new TruffleParser.eval_input_return();
 		retval.start = input.LT(1);
@@ -669,13 +668,13 @@ public class TruffleParser extends Parser {
 		    PNode mtype = null;
 
 		try {
-			// Truffle.g:325:5: ( ( LEADING_WS )? ( NEWLINE )* testlist[expr_contextType.Load] ( NEWLINE )* EOF )
-			// Truffle.g:325:7: ( LEADING_WS )? ( NEWLINE )* testlist[expr_contextType.Load] ( NEWLINE )* EOF
+			// Truffle.g:322:5: ( ( LEADING_WS )? ( NEWLINE )* testlist[expr_contextType.Load] ( NEWLINE )* EOF )
+			// Truffle.g:322:7: ( LEADING_WS )? ( NEWLINE )* testlist[expr_contextType.Load] ( NEWLINE )* EOF
 			{
 			root_0 = (PNode)adaptor.nil();
 
 
-			// Truffle.g:325:7: ( LEADING_WS )?
+			// Truffle.g:322:7: ( LEADING_WS )?
 			int alt6=2;
 			int LA6_0 = input.LA(1);
 			if ( (LA6_0==LEADING_WS) ) {
@@ -683,9 +682,9 @@ public class TruffleParser extends Parser {
 			}
 			switch (alt6) {
 				case 1 :
-					// Truffle.g:325:7: LEADING_WS
+					// Truffle.g:322:7: LEADING_WS
 					{
-					LEADING_WS12=(Token)match(input,LEADING_WS,FOLLOW_LEADING_WS_in_eval_input299); if (state.failed) return retval;
+					LEADING_WS12=(Token)match(input,LEADING_WS,FOLLOW_LEADING_WS_in_eval_input298); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					LEADING_WS12_tree = (PNode)adaptor.create(LEADING_WS12);
 					adaptor.addChild(root_0, LEADING_WS12_tree);
@@ -696,7 +695,7 @@ public class TruffleParser extends Parser {
 
 			}
 
-			// Truffle.g:325:19: ( NEWLINE )*
+			// Truffle.g:322:19: ( NEWLINE )*
 			loop7:
 			while (true) {
 				int alt7=2;
@@ -707,9 +706,9 @@ public class TruffleParser extends Parser {
 
 				switch (alt7) {
 				case 1 :
-					// Truffle.g:325:20: NEWLINE
+					// Truffle.g:322:20: NEWLINE
 					{
-					NEWLINE13=(Token)match(input,NEWLINE,FOLLOW_NEWLINE_in_eval_input303); if (state.failed) return retval;
+					NEWLINE13=(Token)match(input,NEWLINE,FOLLOW_NEWLINE_in_eval_input302); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					NEWLINE13_tree = (PNode)adaptor.create(NEWLINE13);
 					adaptor.addChild(root_0, NEWLINE13_tree);
@@ -723,13 +722,13 @@ public class TruffleParser extends Parser {
 				}
 			}
 
-			pushFollow(FOLLOW_testlist_in_eval_input307);
+			pushFollow(FOLLOW_testlist_in_eval_input306);
 			testlist14=testlist(expr_contextType.Load);
 			state._fsp--;
 			if (state.failed) return retval;
 			if ( state.backtracking==0 ) adaptor.addChild(root_0, testlist14.getTree());
 
-			// Truffle.g:325:62: ( NEWLINE )*
+			// Truffle.g:322:62: ( NEWLINE )*
 			loop8:
 			while (true) {
 				int alt8=2;
@@ -740,9 +739,9 @@ public class TruffleParser extends Parser {
 
 				switch (alt8) {
 				case 1 :
-					// Truffle.g:325:63: NEWLINE
+					// Truffle.g:322:63: NEWLINE
 					{
-					NEWLINE15=(Token)match(input,NEWLINE,FOLLOW_NEWLINE_in_eval_input311); if (state.failed) return retval;
+					NEWLINE15=(Token)match(input,NEWLINE,FOLLOW_NEWLINE_in_eval_input310); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					NEWLINE15_tree = (PNode)adaptor.create(NEWLINE15);
 					adaptor.addChild(root_0, NEWLINE15_tree);
@@ -756,7 +755,7 @@ public class TruffleParser extends Parser {
 				}
 			}
 
-			EOF16=(Token)match(input,EOF,FOLLOW_EOF_in_eval_input315); if (state.failed) return retval;
+			EOF16=(Token)match(input,EOF,FOLLOW_EOF_in_eval_input314); if (state.failed) return retval;
 			if ( state.backtracking==0 ) {
 			EOF16_tree = (PNode)adaptor.create(EOF16);
 			adaptor.addChild(root_0, EOF16_tree);
@@ -803,7 +802,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "dotted_attr"
-	// Truffle.g:340:1: dotted_attr returns [PNode etype] : n1= NAME ( ( DOT n2+= NAME )+ |) ;
+	// Truffle.g:337:1: dotted_attr returns [PNode etype] : n1= NAME ( ( DOT n2+= NAME )+ |) ;
 	public final TruffleParser.dotted_attr_return dotted_attr() throws RecognitionException {
 		TruffleParser.dotted_attr_return retval = new TruffleParser.dotted_attr_return();
 		retval.start = input.LT(1);
@@ -820,19 +819,19 @@ public class TruffleParser extends Parser {
 		PNode n2_tree=null;
 
 		try {
-			// Truffle.g:342:5: (n1= NAME ( ( DOT n2+= NAME )+ |) )
-			// Truffle.g:342:7: n1= NAME ( ( DOT n2+= NAME )+ |)
+			// Truffle.g:339:5: (n1= NAME ( ( DOT n2+= NAME )+ |) )
+			// Truffle.g:339:7: n1= NAME ( ( DOT n2+= NAME )+ |)
 			{
 			root_0 = (PNode)adaptor.nil();
 
 
-			n1=(Token)match(input,NAME,FOLLOW_NAME_in_dotted_attr367); if (state.failed) return retval;
+			n1=(Token)match(input,NAME,FOLLOW_NAME_in_dotted_attr366); if (state.failed) return retval;
 			if ( state.backtracking==0 ) {
 			n1_tree = (PNode)adaptor.create(n1);
 			adaptor.addChild(root_0, n1_tree);
 			}
 
-			// Truffle.g:343:7: ( ( DOT n2+= NAME )+ |)
+			// Truffle.g:340:7: ( ( DOT n2+= NAME )+ |)
 			int alt10=2;
 			int LA10_0 = input.LA(1);
 			if ( (LA10_0==DOT) ) {
@@ -851,9 +850,9 @@ public class TruffleParser extends Parser {
 
 			switch (alt10) {
 				case 1 :
-					// Truffle.g:343:9: ( DOT n2+= NAME )+
+					// Truffle.g:340:9: ( DOT n2+= NAME )+
 					{
-					// Truffle.g:343:9: ( DOT n2+= NAME )+
+					// Truffle.g:340:9: ( DOT n2+= NAME )+
 					int cnt9=0;
 					loop9:
 					while (true) {
@@ -865,15 +864,15 @@ public class TruffleParser extends Parser {
 
 						switch (alt9) {
 						case 1 :
-							// Truffle.g:343:10: DOT n2+= NAME
+							// Truffle.g:340:10: DOT n2+= NAME
 							{
-							DOT17=(Token)match(input,DOT,FOLLOW_DOT_in_dotted_attr378); if (state.failed) return retval;
+							DOT17=(Token)match(input,DOT,FOLLOW_DOT_in_dotted_attr377); if (state.failed) return retval;
 							if ( state.backtracking==0 ) {
 							DOT17_tree = (PNode)adaptor.create(DOT17);
 							adaptor.addChild(root_0, DOT17_tree);
 							}
 
-							n2=(Token)match(input,NAME,FOLLOW_NAME_in_dotted_attr382); if (state.failed) return retval;
+							n2=(Token)match(input,NAME,FOLLOW_NAME_in_dotted_attr381); if (state.failed) return retval;
 							if ( state.backtracking==0 ) {
 							n2_tree = (PNode)adaptor.create(n2);
 							adaptor.addChild(root_0, n2_tree);
@@ -899,7 +898,7 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 2 :
-					// Truffle.g:348:9: 
+					// Truffle.g:345:9: 
 					{
 					if ( state.backtracking==0 ) {
 					            retval.etype = actions.makeNameNode(n1);
@@ -942,7 +941,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "name_or_print"
-	// Truffle.g:356:1: name_or_print returns [Token tok] : ( NAME |{...}? => PRINT );
+	// Truffle.g:353:1: name_or_print returns [Token tok] : ( NAME |{...}? => PRINT );
 	public final TruffleParser.name_or_print_return name_or_print() throws RecognitionException {
 		TruffleParser.name_or_print_return retval = new TruffleParser.name_or_print_return();
 		retval.start = input.LT(1);
@@ -956,7 +955,7 @@ public class TruffleParser extends Parser {
 		PNode PRINT19_tree=null;
 
 		try {
-			// Truffle.g:358:5: ( NAME |{...}? => PRINT )
+			// Truffle.g:355:5: ( NAME |{...}? => PRINT )
 			int alt11=2;
 			int LA11_0 = input.LA(1);
 			if ( (LA11_0==NAME) ) {
@@ -968,12 +967,12 @@ public class TruffleParser extends Parser {
 
 			switch (alt11) {
 				case 1 :
-					// Truffle.g:358:7: NAME
+					// Truffle.g:355:7: NAME
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					NAME18=(Token)match(input,NAME,FOLLOW_NAME_in_name_or_print447); if (state.failed) return retval;
+					NAME18=(Token)match(input,NAME,FOLLOW_NAME_in_name_or_print446); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					NAME18_tree = (PNode)adaptor.create(NAME18);
 					adaptor.addChild(root_0, NAME18_tree);
@@ -985,7 +984,7 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 2 :
-					// Truffle.g:361:7: {...}? => PRINT
+					// Truffle.g:358:7: {...}? => PRINT
 					{
 					root_0 = (PNode)adaptor.nil();
 
@@ -994,7 +993,7 @@ public class TruffleParser extends Parser {
 						if (state.backtracking>0) {state.failed=true; return retval;}
 						throw new FailedPredicateException(input, "name_or_print", "printFunction");
 					}
-					PRINT19=(Token)match(input,PRINT,FOLLOW_PRINT_in_name_or_print461); if (state.failed) return retval;
+					PRINT19=(Token)match(input,PRINT,FOLLOW_PRINT_in_name_or_print460); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					PRINT19_tree = (PNode)adaptor.create(PRINT19);
 					adaptor.addChild(root_0, PRINT19_tree);
@@ -1037,7 +1036,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "attr"
-	// Truffle.g:370:1: attr : ( NAME | AND | AS | ASSERT | BREAK | CLASS | CONTINUE | DEF | DELETE | ELIF | EXCEPT | FINALLY | FROM | FOR | GLOBAL | IF | IMPORT | IN | IS | LAMBDA | NOT | OR | ORELSE | PASS | PRINT | RAISE | RETURN | TRY | WHILE | WITH | YIELD | NONE | TRUE | FALSE | NONLOCAL );
+	// Truffle.g:367:1: attr : ( NAME | AND | AS | ASSERT | BREAK | CLASS | CONTINUE | DEF | DELETE | ELIF | EXCEPT | FINALLY | FROM | FOR | GLOBAL | IF | IMPORT | IN | IS | LAMBDA | NOT | OR | ORELSE | PASS | PRINT | RAISE | RETURN | TRY | WHILE | WITH | YIELD | NONE | TRUE | FALSE | NONLOCAL );
 	public final TruffleParser.attr_return attr() throws RecognitionException {
 		TruffleParser.attr_return retval = new TruffleParser.attr_return();
 		retval.start = input.LT(1);
@@ -1049,7 +1048,7 @@ public class TruffleParser extends Parser {
 		PNode set20_tree=null;
 
 		try {
-			// Truffle.g:371:5: ( NAME | AND | AS | ASSERT | BREAK | CLASS | CONTINUE | DEF | DELETE | ELIF | EXCEPT | FINALLY | FROM | FOR | GLOBAL | IF | IMPORT | IN | IS | LAMBDA | NOT | OR | ORELSE | PASS | PRINT | RAISE | RETURN | TRY | WHILE | WITH | YIELD | NONE | TRUE | FALSE | NONLOCAL )
+			// Truffle.g:368:5: ( NAME | AND | AS | ASSERT | BREAK | CLASS | CONTINUE | DEF | DELETE | ELIF | EXCEPT | FINALLY | FROM | FOR | GLOBAL | IF | IMPORT | IN | IS | LAMBDA | NOT | OR | ORELSE | PASS | PRINT | RAISE | RETURN | TRY | WHILE | WITH | YIELD | NONE | TRUE | FALSE | NONLOCAL )
 			// Truffle.g:
 			{
 			root_0 = (PNode)adaptor.nil();
@@ -1100,7 +1099,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "decorator"
-	// Truffle.g:410:1: decorator returns [PNode etype] : AT dotted_attr ( LPAREN ( arglist |) RPAREN |) NEWLINE ;
+	// Truffle.g:407:1: decorator returns [PNode etype] : AT dotted_attr ( LPAREN ( arglist |) RPAREN |) NEWLINE ;
 	public final TruffleParser.decorator_return decorator() throws RecognitionException {
 		TruffleParser.decorator_return retval = new TruffleParser.decorator_return();
 		retval.start = input.LT(1);
@@ -1120,25 +1119,25 @@ public class TruffleParser extends Parser {
 		PNode NEWLINE26_tree=null;
 
 		try {
-			// Truffle.g:415:5: ( AT dotted_attr ( LPAREN ( arglist |) RPAREN |) NEWLINE )
-			// Truffle.g:415:7: AT dotted_attr ( LPAREN ( arglist |) RPAREN |) NEWLINE
+			// Truffle.g:412:5: ( AT dotted_attr ( LPAREN ( arglist |) RPAREN |) NEWLINE )
+			// Truffle.g:412:7: AT dotted_attr ( LPAREN ( arglist |) RPAREN |) NEWLINE
 			{
 			root_0 = (PNode)adaptor.nil();
 
 
-			AT21=(Token)match(input,AT,FOLLOW_AT_in_decorator792); if (state.failed) return retval;
+			AT21=(Token)match(input,AT,FOLLOW_AT_in_decorator791); if (state.failed) return retval;
 			if ( state.backtracking==0 ) {
 			AT21_tree = (PNode)adaptor.create(AT21);
 			adaptor.addChild(root_0, AT21_tree);
 			}
 
-			pushFollow(FOLLOW_dotted_attr_in_decorator794);
+			pushFollow(FOLLOW_dotted_attr_in_decorator793);
 			dotted_attr22=dotted_attr();
 			state._fsp--;
 			if (state.failed) return retval;
 			if ( state.backtracking==0 ) adaptor.addChild(root_0, dotted_attr22.getTree());
 
-			// Truffle.g:416:5: ( LPAREN ( arglist |) RPAREN |)
+			// Truffle.g:413:5: ( LPAREN ( arglist |) RPAREN |)
 			int alt13=2;
 			int LA13_0 = input.LA(1);
 			if ( (LA13_0==LPAREN) ) {
@@ -1157,15 +1156,15 @@ public class TruffleParser extends Parser {
 
 			switch (alt13) {
 				case 1 :
-					// Truffle.g:416:7: LPAREN ( arglist |) RPAREN
+					// Truffle.g:413:7: LPAREN ( arglist |) RPAREN
 					{
-					LPAREN23=(Token)match(input,LPAREN,FOLLOW_LPAREN_in_decorator802); if (state.failed) return retval;
+					LPAREN23=(Token)match(input,LPAREN,FOLLOW_LPAREN_in_decorator801); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					LPAREN23_tree = (PNode)adaptor.create(LPAREN23);
 					adaptor.addChild(root_0, LPAREN23_tree);
 					}
 
-					// Truffle.g:417:7: ( arglist |)
+					// Truffle.g:414:7: ( arglist |)
 					int alt12=2;
 					int LA12_0 = input.LA(1);
 					if ( (LA12_0==BACKQUOTE||(LA12_0 >= LBRACK && LA12_0 <= LCURLY)||(LA12_0 >= LPAREN && LA12_0 <= MINUS)||LA12_0==NAME||LA12_0==NOT||LA12_0==PLUS||LA12_0==TILDE) ) {
@@ -1190,9 +1189,9 @@ public class TruffleParser extends Parser {
 
 					switch (alt12) {
 						case 1 :
-							// Truffle.g:417:9: arglist
+							// Truffle.g:414:9: arglist
 							{
-							pushFollow(FOLLOW_arglist_in_decorator812);
+							pushFollow(FOLLOW_arglist_in_decorator811);
 							arglist24=arglist();
 							state._fsp--;
 							if (state.failed) return retval;
@@ -1204,7 +1203,7 @@ public class TruffleParser extends Parser {
 							}
 							break;
 						case 2 :
-							// Truffle.g:422:9: 
+							// Truffle.g:419:9: 
 							{
 							if ( state.backtracking==0 ) {
 							            retval.etype = actions.makeCall(LPAREN23, (dotted_attr22!=null?((TruffleParser.dotted_attr_return)dotted_attr22).etype:null));
@@ -1214,7 +1213,7 @@ public class TruffleParser extends Parser {
 
 					}
 
-					RPAREN25=(Token)match(input,RPAREN,FOLLOW_RPAREN_in_decorator856); if (state.failed) return retval;
+					RPAREN25=(Token)match(input,RPAREN,FOLLOW_RPAREN_in_decorator855); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					RPAREN25_tree = (PNode)adaptor.create(RPAREN25);
 					adaptor.addChild(root_0, RPAREN25_tree);
@@ -1223,7 +1222,7 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 2 :
-					// Truffle.g:428:7: 
+					// Truffle.g:425:7: 
 					{
 					if ( state.backtracking==0 ) {
 					          retval.etype = (dotted_attr22!=null?((TruffleParser.dotted_attr_return)dotted_attr22).etype:null);
@@ -1233,7 +1232,7 @@ public class TruffleParser extends Parser {
 
 			}
 
-			NEWLINE26=(Token)match(input,NEWLINE,FOLLOW_NEWLINE_in_decorator878); if (state.failed) return retval;
+			NEWLINE26=(Token)match(input,NEWLINE,FOLLOW_NEWLINE_in_decorator877); if (state.failed) return retval;
 			if ( state.backtracking==0 ) {
 			NEWLINE26_tree = (PNode)adaptor.create(NEWLINE26);
 			adaptor.addChild(root_0, NEWLINE26_tree);
@@ -1275,7 +1274,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "decorators"
-	// Truffle.g:435:1: decorators returns [List etypes] : (d+= decorator )+ ;
+	// Truffle.g:432:1: decorators returns [List etypes] : (d+= decorator )+ ;
 	public final TruffleParser.decorators_return decorators() throws RecognitionException {
 		TruffleParser.decorators_return retval = new TruffleParser.decorators_return();
 		retval.start = input.LT(1);
@@ -1286,13 +1285,13 @@ public class TruffleParser extends Parser {
 		RuleReturnScope d = null;
 
 		try {
-			// Truffle.g:437:5: ( (d+= decorator )+ )
-			// Truffle.g:437:7: (d+= decorator )+
+			// Truffle.g:434:5: ( (d+= decorator )+ )
+			// Truffle.g:434:7: (d+= decorator )+
 			{
 			root_0 = (PNode)adaptor.nil();
 
 
-			// Truffle.g:437:8: (d+= decorator )+
+			// Truffle.g:434:8: (d+= decorator )+
 			int cnt14=0;
 			loop14:
 			while (true) {
@@ -1304,9 +1303,9 @@ public class TruffleParser extends Parser {
 
 				switch (alt14) {
 				case 1 :
-					// Truffle.g:437:8: d+= decorator
+					// Truffle.g:434:8: d+= decorator
 					{
-					pushFollow(FOLLOW_decorator_in_decorators906);
+					pushFollow(FOLLOW_decorator_in_decorators905);
 					d=decorator();
 					state._fsp--;
 					if (state.failed) return retval;
@@ -1361,7 +1360,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "funcdef"
-	// Truffle.g:444:1: funcdef : ( decorators )? DEF name_or_print parameters COLON suite[false] ;
+	// Truffle.g:441:1: funcdef : ( decorators )? DEF name_or_print parameters COLON suite[false] ;
 	public final TruffleParser.funcdef_return funcdef() throws RecognitionException {
 		TruffleParser.funcdef_return retval = new TruffleParser.funcdef_return();
 		retval.start = input.LT(1);
@@ -1383,13 +1382,13 @@ public class TruffleParser extends Parser {
 		    actions.beginScope();
 
 		try {
-			// Truffle.g:453:5: ( ( decorators )? DEF name_or_print parameters COLON suite[false] )
-			// Truffle.g:453:7: ( decorators )? DEF name_or_print parameters COLON suite[false]
+			// Truffle.g:450:5: ( ( decorators )? DEF name_or_print parameters COLON suite[false] )
+			// Truffle.g:450:7: ( decorators )? DEF name_or_print parameters COLON suite[false]
 			{
 			root_0 = (PNode)adaptor.nil();
 
 
-			// Truffle.g:453:7: ( decorators )?
+			// Truffle.g:450:7: ( decorators )?
 			int alt15=2;
 			int LA15_0 = input.LA(1);
 			if ( (LA15_0==AT) ) {
@@ -1397,9 +1396,9 @@ public class TruffleParser extends Parser {
 			}
 			switch (alt15) {
 				case 1 :
-					// Truffle.g:453:7: decorators
+					// Truffle.g:450:7: decorators
 					{
-					pushFollow(FOLLOW_decorators_in_funcdef944);
+					pushFollow(FOLLOW_decorators_in_funcdef943);
 					decorators27=decorators();
 					state._fsp--;
 					if (state.failed) return retval;
@@ -1410,31 +1409,31 @@ public class TruffleParser extends Parser {
 
 			}
 
-			DEF28=(Token)match(input,DEF,FOLLOW_DEF_in_funcdef947); if (state.failed) return retval;
+			DEF28=(Token)match(input,DEF,FOLLOW_DEF_in_funcdef946); if (state.failed) return retval;
 			if ( state.backtracking==0 ) {
 			DEF28_tree = (PNode)adaptor.create(DEF28);
 			adaptor.addChild(root_0, DEF28_tree);
 			}
 
-			pushFollow(FOLLOW_name_or_print_in_funcdef949);
+			pushFollow(FOLLOW_name_or_print_in_funcdef948);
 			name_or_print29=name_or_print();
 			state._fsp--;
 			if (state.failed) return retval;
 			if ( state.backtracking==0 ) adaptor.addChild(root_0, name_or_print29.getTree());
 
-			pushFollow(FOLLOW_parameters_in_funcdef951);
+			pushFollow(FOLLOW_parameters_in_funcdef950);
 			parameters30=parameters();
 			state._fsp--;
 			if (state.failed) return retval;
 			if ( state.backtracking==0 ) adaptor.addChild(root_0, parameters30.getTree());
 
-			COLON31=(Token)match(input,COLON,FOLLOW_COLON_in_funcdef953); if (state.failed) return retval;
+			COLON31=(Token)match(input,COLON,FOLLOW_COLON_in_funcdef952); if (state.failed) return retval;
 			if ( state.backtracking==0 ) {
 			COLON31_tree = (PNode)adaptor.create(COLON31);
 			adaptor.addChild(root_0, COLON31_tree);
 			}
 
-			pushFollow(FOLLOW_suite_in_funcdef955);
+			pushFollow(FOLLOW_suite_in_funcdef954);
 			suite32=suite(false);
 			state._fsp--;
 			if (state.failed) return retval;
@@ -1483,7 +1482,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "parameters"
-	// Truffle.g:464:1: parameters returns [ParametersNode args] : LPAREN ( varargslist |) RPAREN ;
+	// Truffle.g:461:1: parameters returns [ParametersNode args] : LPAREN ( varargslist |) RPAREN ;
 	public final TruffleParser.parameters_return parameters() throws RecognitionException {
 		TruffleParser.parameters_return retval = new TruffleParser.parameters_return();
 		retval.start = input.LT(1);
@@ -1498,19 +1497,19 @@ public class TruffleParser extends Parser {
 		PNode RPAREN35_tree=null;
 
 		try {
-			// Truffle.g:466:5: ( LPAREN ( varargslist |) RPAREN )
-			// Truffle.g:466:7: LPAREN ( varargslist |) RPAREN
+			// Truffle.g:463:5: ( LPAREN ( varargslist |) RPAREN )
+			// Truffle.g:463:7: LPAREN ( varargslist |) RPAREN
 			{
 			root_0 = (PNode)adaptor.nil();
 
 
-			LPAREN33=(Token)match(input,LPAREN,FOLLOW_LPAREN_in_parameters988); if (state.failed) return retval;
+			LPAREN33=(Token)match(input,LPAREN,FOLLOW_LPAREN_in_parameters987); if (state.failed) return retval;
 			if ( state.backtracking==0 ) {
 			LPAREN33_tree = (PNode)adaptor.create(LPAREN33);
 			adaptor.addChild(root_0, LPAREN33_tree);
 			}
 
-			// Truffle.g:467:7: ( varargslist |)
+			// Truffle.g:464:7: ( varargslist |)
 			int alt16=2;
 			int LA16_0 = input.LA(1);
 			if ( (LA16_0==DOUBLESTAR||LA16_0==LPAREN||LA16_0==NAME||LA16_0==STAR) ) {
@@ -1529,9 +1528,9 @@ public class TruffleParser extends Parser {
 
 			switch (alt16) {
 				case 1 :
-					// Truffle.g:467:8: varargslist
+					// Truffle.g:464:8: varargslist
 					{
-					pushFollow(FOLLOW_varargslist_in_parameters997);
+					pushFollow(FOLLOW_varargslist_in_parameters996);
 					varargslist34=varargslist();
 					state._fsp--;
 					if (state.failed) return retval;
@@ -1543,7 +1542,7 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 2 :
-					// Truffle.g:472:9: 
+					// Truffle.g:469:9: 
 					{
 					if ( state.backtracking==0 ) {
 					            retval.args = actions.makeArguments((retval.start), null, null, null, null);
@@ -1554,7 +1553,7 @@ public class TruffleParser extends Parser {
 
 			}
 
-			RPAREN35=(Token)match(input,RPAREN,FOLLOW_RPAREN_in_parameters1041); if (state.failed) return retval;
+			RPAREN35=(Token)match(input,RPAREN,FOLLOW_RPAREN_in_parameters1040); if (state.failed) return retval;
 			if ( state.backtracking==0 ) {
 			RPAREN35_tree = (PNode)adaptor.create(RPAREN35);
 			adaptor.addChild(root_0, RPAREN35_tree);
@@ -1593,7 +1592,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "defparameter"
-	// Truffle.g:481:1: defparameter[List defaults] returns [PNode etype] : fpdef[expr_contextType.Param] ( ASSIGN test[expr_contextType.Load] )? ;
+	// Truffle.g:478:1: defparameter[List defaults] returns [PNode etype] : fpdef[expr_contextType.Param] ( ASSIGN test[expr_contextType.Load] )? ;
 	public final TruffleParser.defparameter_return defparameter(List defaults) throws RecognitionException {
 		TruffleParser.defparameter_return retval = new TruffleParser.defparameter_return();
 		retval.start = input.LT(1);
@@ -1607,19 +1606,19 @@ public class TruffleParser extends Parser {
 		PNode ASSIGN37_tree=null;
 
 		try {
-			// Truffle.g:486:5: ( fpdef[expr_contextType.Param] ( ASSIGN test[expr_contextType.Load] )? )
-			// Truffle.g:486:7: fpdef[expr_contextType.Param] ( ASSIGN test[expr_contextType.Load] )?
+			// Truffle.g:483:5: ( fpdef[expr_contextType.Param] ( ASSIGN test[expr_contextType.Load] )? )
+			// Truffle.g:483:7: fpdef[expr_contextType.Param] ( ASSIGN test[expr_contextType.Load] )?
 			{
 			root_0 = (PNode)adaptor.nil();
 
 
-			pushFollow(FOLLOW_fpdef_in_defparameter1074);
+			pushFollow(FOLLOW_fpdef_in_defparameter1073);
 			fpdef36=fpdef(expr_contextType.Param);
 			state._fsp--;
 			if (state.failed) return retval;
 			if ( state.backtracking==0 ) adaptor.addChild(root_0, fpdef36.getTree());
 
-			// Truffle.g:486:37: ( ASSIGN test[expr_contextType.Load] )?
+			// Truffle.g:483:37: ( ASSIGN test[expr_contextType.Load] )?
 			int alt17=2;
 			int LA17_0 = input.LA(1);
 			if ( (LA17_0==ASSIGN) ) {
@@ -1627,15 +1626,15 @@ public class TruffleParser extends Parser {
 			}
 			switch (alt17) {
 				case 1 :
-					// Truffle.g:486:38: ASSIGN test[expr_contextType.Load]
+					// Truffle.g:483:38: ASSIGN test[expr_contextType.Load]
 					{
-					ASSIGN37=(Token)match(input,ASSIGN,FOLLOW_ASSIGN_in_defparameter1078); if (state.failed) return retval;
+					ASSIGN37=(Token)match(input,ASSIGN,FOLLOW_ASSIGN_in_defparameter1077); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					ASSIGN37_tree = (PNode)adaptor.create(ASSIGN37);
 					adaptor.addChild(root_0, ASSIGN37_tree);
 					}
 
-					pushFollow(FOLLOW_test_in_defparameter1080);
+					pushFollow(FOLLOW_test_in_defparameter1079);
 					test38=test(expr_contextType.Load);
 					state._fsp--;
 					if (state.failed) return retval;
@@ -1690,7 +1689,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "varargslist"
-	// Truffle.g:500:1: varargslist returns [ParametersNode args] : (d+= defparameter[defaults] ( options {greedy=true; } : COMMA d+= defparameter[defaults] )* ( COMMA ( STAR starargs= NAME ( COMMA DOUBLESTAR kwargs= NAME )? | DOUBLESTAR kwargs= NAME )? )? | STAR starargs= NAME ( COMMA DOUBLESTAR kwargs= NAME )? | DOUBLESTAR kwargs= NAME );
+	// Truffle.g:497:1: varargslist returns [ParametersNode args] : (d+= defparameter[defaults] ( options {greedy=true; } : COMMA d+= defparameter[defaults] )* ( COMMA ( STAR starargs= NAME ( COMMA DOUBLESTAR kwargs= NAME )? | DOUBLESTAR kwargs= NAME )? )? | STAR starargs= NAME ( COMMA DOUBLESTAR kwargs= NAME )? | DOUBLESTAR kwargs= NAME );
 	public final TruffleParser.varargslist_return varargslist() throws RecognitionException {
 		TruffleParser.varargslist_return retval = new TruffleParser.varargslist_return();
 		retval.start = input.LT(1);
@@ -1728,7 +1727,7 @@ public class TruffleParser extends Parser {
 		    List defaults = new ArrayList();
 
 		try {
-			// Truffle.g:505:5: (d+= defparameter[defaults] ( options {greedy=true; } : COMMA d+= defparameter[defaults] )* ( COMMA ( STAR starargs= NAME ( COMMA DOUBLESTAR kwargs= NAME )? | DOUBLESTAR kwargs= NAME )? )? | STAR starargs= NAME ( COMMA DOUBLESTAR kwargs= NAME )? | DOUBLESTAR kwargs= NAME )
+			// Truffle.g:502:5: (d+= defparameter[defaults] ( options {greedy=true; } : COMMA d+= defparameter[defaults] )* ( COMMA ( STAR starargs= NAME ( COMMA DOUBLESTAR kwargs= NAME )? | DOUBLESTAR kwargs= NAME )? )? | STAR starargs= NAME ( COMMA DOUBLESTAR kwargs= NAME )? | DOUBLESTAR kwargs= NAME )
 			int alt23=3;
 			switch ( input.LA(1) ) {
 			case LPAREN:
@@ -1755,12 +1754,12 @@ public class TruffleParser extends Parser {
 			}
 			switch (alt23) {
 				case 1 :
-					// Truffle.g:505:7: d+= defparameter[defaults] ( options {greedy=true; } : COMMA d+= defparameter[defaults] )* ( COMMA ( STAR starargs= NAME ( COMMA DOUBLESTAR kwargs= NAME )? | DOUBLESTAR kwargs= NAME )? )?
+					// Truffle.g:502:7: d+= defparameter[defaults] ( options {greedy=true; } : COMMA d+= defparameter[defaults] )* ( COMMA ( STAR starargs= NAME ( COMMA DOUBLESTAR kwargs= NAME )? | DOUBLESTAR kwargs= NAME )? )?
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					pushFollow(FOLLOW_defparameter_in_varargslist1126);
+					pushFollow(FOLLOW_defparameter_in_varargslist1125);
 					d=defparameter(defaults);
 					state._fsp--;
 					if (state.failed) return retval;
@@ -1768,7 +1767,7 @@ public class TruffleParser extends Parser {
 
 					if (list_d==null) list_d=new ArrayList<Object>();
 					list_d.add(d.getTree());
-					// Truffle.g:505:33: ( options {greedy=true; } : COMMA d+= defparameter[defaults] )*
+					// Truffle.g:502:33: ( options {greedy=true; } : COMMA d+= defparameter[defaults] )*
 					loop18:
 					while (true) {
 						int alt18=2;
@@ -1783,15 +1782,15 @@ public class TruffleParser extends Parser {
 
 						switch (alt18) {
 						case 1 :
-							// Truffle.g:505:57: COMMA d+= defparameter[defaults]
+							// Truffle.g:502:57: COMMA d+= defparameter[defaults]
 							{
-							COMMA39=(Token)match(input,COMMA,FOLLOW_COMMA_in_varargslist1137); if (state.failed) return retval;
+							COMMA39=(Token)match(input,COMMA,FOLLOW_COMMA_in_varargslist1136); if (state.failed) return retval;
 							if ( state.backtracking==0 ) {
 							COMMA39_tree = (PNode)adaptor.create(COMMA39);
 							adaptor.addChild(root_0, COMMA39_tree);
 							}
 
-							pushFollow(FOLLOW_defparameter_in_varargslist1141);
+							pushFollow(FOLLOW_defparameter_in_varargslist1140);
 							d=defparameter(defaults);
 							state._fsp--;
 							if (state.failed) return retval;
@@ -1807,7 +1806,7 @@ public class TruffleParser extends Parser {
 						}
 					}
 
-					// Truffle.g:506:7: ( COMMA ( STAR starargs= NAME ( COMMA DOUBLESTAR kwargs= NAME )? | DOUBLESTAR kwargs= NAME )? )?
+					// Truffle.g:503:7: ( COMMA ( STAR starargs= NAME ( COMMA DOUBLESTAR kwargs= NAME )? | DOUBLESTAR kwargs= NAME )? )?
 					int alt21=2;
 					int LA21_0 = input.LA(1);
 					if ( (LA21_0==COMMA) ) {
@@ -1815,15 +1814,15 @@ public class TruffleParser extends Parser {
 					}
 					switch (alt21) {
 						case 1 :
-							// Truffle.g:506:8: COMMA ( STAR starargs= NAME ( COMMA DOUBLESTAR kwargs= NAME )? | DOUBLESTAR kwargs= NAME )?
+							// Truffle.g:503:8: COMMA ( STAR starargs= NAME ( COMMA DOUBLESTAR kwargs= NAME )? | DOUBLESTAR kwargs= NAME )?
 							{
-							COMMA40=(Token)match(input,COMMA,FOLLOW_COMMA_in_varargslist1153); if (state.failed) return retval;
+							COMMA40=(Token)match(input,COMMA,FOLLOW_COMMA_in_varargslist1152); if (state.failed) return retval;
 							if ( state.backtracking==0 ) {
 							COMMA40_tree = (PNode)adaptor.create(COMMA40);
 							adaptor.addChild(root_0, COMMA40_tree);
 							}
 
-							// Truffle.g:507:11: ( STAR starargs= NAME ( COMMA DOUBLESTAR kwargs= NAME )? | DOUBLESTAR kwargs= NAME )?
+							// Truffle.g:504:11: ( STAR starargs= NAME ( COMMA DOUBLESTAR kwargs= NAME )? | DOUBLESTAR kwargs= NAME )?
 							int alt20=3;
 							int LA20_0 = input.LA(1);
 							if ( (LA20_0==STAR) ) {
@@ -1834,21 +1833,21 @@ public class TruffleParser extends Parser {
 							}
 							switch (alt20) {
 								case 1 :
-									// Truffle.g:507:12: STAR starargs= NAME ( COMMA DOUBLESTAR kwargs= NAME )?
+									// Truffle.g:504:12: STAR starargs= NAME ( COMMA DOUBLESTAR kwargs= NAME )?
 									{
-									STAR41=(Token)match(input,STAR,FOLLOW_STAR_in_varargslist1166); if (state.failed) return retval;
+									STAR41=(Token)match(input,STAR,FOLLOW_STAR_in_varargslist1165); if (state.failed) return retval;
 									if ( state.backtracking==0 ) {
 									STAR41_tree = (PNode)adaptor.create(STAR41);
 									adaptor.addChild(root_0, STAR41_tree);
 									}
 
-									starargs=(Token)match(input,NAME,FOLLOW_NAME_in_varargslist1170); if (state.failed) return retval;
+									starargs=(Token)match(input,NAME,FOLLOW_NAME_in_varargslist1169); if (state.failed) return retval;
 									if ( state.backtracking==0 ) {
 									starargs_tree = (PNode)adaptor.create(starargs);
 									adaptor.addChild(root_0, starargs_tree);
 									}
 
-									// Truffle.g:507:31: ( COMMA DOUBLESTAR kwargs= NAME )?
+									// Truffle.g:504:31: ( COMMA DOUBLESTAR kwargs= NAME )?
 									int alt19=2;
 									int LA19_0 = input.LA(1);
 									if ( (LA19_0==COMMA) ) {
@@ -1856,21 +1855,21 @@ public class TruffleParser extends Parser {
 									}
 									switch (alt19) {
 										case 1 :
-											// Truffle.g:507:32: COMMA DOUBLESTAR kwargs= NAME
+											// Truffle.g:504:32: COMMA DOUBLESTAR kwargs= NAME
 											{
-											COMMA42=(Token)match(input,COMMA,FOLLOW_COMMA_in_varargslist1173); if (state.failed) return retval;
+											COMMA42=(Token)match(input,COMMA,FOLLOW_COMMA_in_varargslist1172); if (state.failed) return retval;
 											if ( state.backtracking==0 ) {
 											COMMA42_tree = (PNode)adaptor.create(COMMA42);
 											adaptor.addChild(root_0, COMMA42_tree);
 											}
 
-											DOUBLESTAR43=(Token)match(input,DOUBLESTAR,FOLLOW_DOUBLESTAR_in_varargslist1175); if (state.failed) return retval;
+											DOUBLESTAR43=(Token)match(input,DOUBLESTAR,FOLLOW_DOUBLESTAR_in_varargslist1174); if (state.failed) return retval;
 											if ( state.backtracking==0 ) {
 											DOUBLESTAR43_tree = (PNode)adaptor.create(DOUBLESTAR43);
 											adaptor.addChild(root_0, DOUBLESTAR43_tree);
 											}
 
-											kwargs=(Token)match(input,NAME,FOLLOW_NAME_in_varargslist1179); if (state.failed) return retval;
+											kwargs=(Token)match(input,NAME,FOLLOW_NAME_in_varargslist1178); if (state.failed) return retval;
 											if ( state.backtracking==0 ) {
 											kwargs_tree = (PNode)adaptor.create(kwargs);
 											adaptor.addChild(root_0, kwargs_tree);
@@ -1884,15 +1883,15 @@ public class TruffleParser extends Parser {
 									}
 									break;
 								case 2 :
-									// Truffle.g:508:13: DOUBLESTAR kwargs= NAME
+									// Truffle.g:505:13: DOUBLESTAR kwargs= NAME
 									{
-									DOUBLESTAR44=(Token)match(input,DOUBLESTAR,FOLLOW_DOUBLESTAR_in_varargslist1195); if (state.failed) return retval;
+									DOUBLESTAR44=(Token)match(input,DOUBLESTAR,FOLLOW_DOUBLESTAR_in_varargslist1194); if (state.failed) return retval;
 									if ( state.backtracking==0 ) {
 									DOUBLESTAR44_tree = (PNode)adaptor.create(DOUBLESTAR44);
 									adaptor.addChild(root_0, DOUBLESTAR44_tree);
 									}
 
-									kwargs=(Token)match(input,NAME,FOLLOW_NAME_in_varargslist1199); if (state.failed) return retval;
+									kwargs=(Token)match(input,NAME,FOLLOW_NAME_in_varargslist1198); if (state.failed) return retval;
 									if ( state.backtracking==0 ) {
 									kwargs_tree = (PNode)adaptor.create(kwargs);
 									adaptor.addChild(root_0, kwargs_tree);
@@ -1914,24 +1913,24 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 2 :
-					// Truffle.g:514:7: STAR starargs= NAME ( COMMA DOUBLESTAR kwargs= NAME )?
+					// Truffle.g:511:7: STAR starargs= NAME ( COMMA DOUBLESTAR kwargs= NAME )?
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					STAR45=(Token)match(input,STAR,FOLLOW_STAR_in_varargslist1237); if (state.failed) return retval;
+					STAR45=(Token)match(input,STAR,FOLLOW_STAR_in_varargslist1236); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					STAR45_tree = (PNode)adaptor.create(STAR45);
 					adaptor.addChild(root_0, STAR45_tree);
 					}
 
-					starargs=(Token)match(input,NAME,FOLLOW_NAME_in_varargslist1241); if (state.failed) return retval;
+					starargs=(Token)match(input,NAME,FOLLOW_NAME_in_varargslist1240); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					starargs_tree = (PNode)adaptor.create(starargs);
 					adaptor.addChild(root_0, starargs_tree);
 					}
 
-					// Truffle.g:514:26: ( COMMA DOUBLESTAR kwargs= NAME )?
+					// Truffle.g:511:26: ( COMMA DOUBLESTAR kwargs= NAME )?
 					int alt22=2;
 					int LA22_0 = input.LA(1);
 					if ( (LA22_0==COMMA) ) {
@@ -1939,21 +1938,21 @@ public class TruffleParser extends Parser {
 					}
 					switch (alt22) {
 						case 1 :
-							// Truffle.g:514:27: COMMA DOUBLESTAR kwargs= NAME
+							// Truffle.g:511:27: COMMA DOUBLESTAR kwargs= NAME
 							{
-							COMMA46=(Token)match(input,COMMA,FOLLOW_COMMA_in_varargslist1244); if (state.failed) return retval;
+							COMMA46=(Token)match(input,COMMA,FOLLOW_COMMA_in_varargslist1243); if (state.failed) return retval;
 							if ( state.backtracking==0 ) {
 							COMMA46_tree = (PNode)adaptor.create(COMMA46);
 							adaptor.addChild(root_0, COMMA46_tree);
 							}
 
-							DOUBLESTAR47=(Token)match(input,DOUBLESTAR,FOLLOW_DOUBLESTAR_in_varargslist1246); if (state.failed) return retval;
+							DOUBLESTAR47=(Token)match(input,DOUBLESTAR,FOLLOW_DOUBLESTAR_in_varargslist1245); if (state.failed) return retval;
 							if ( state.backtracking==0 ) {
 							DOUBLESTAR47_tree = (PNode)adaptor.create(DOUBLESTAR47);
 							adaptor.addChild(root_0, DOUBLESTAR47_tree);
 							}
 
-							kwargs=(Token)match(input,NAME,FOLLOW_NAME_in_varargslist1250); if (state.failed) return retval;
+							kwargs=(Token)match(input,NAME,FOLLOW_NAME_in_varargslist1249); if (state.failed) return retval;
 							if ( state.backtracking==0 ) {
 							kwargs_tree = (PNode)adaptor.create(kwargs);
 							adaptor.addChild(root_0, kwargs_tree);
@@ -1970,18 +1969,18 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 3 :
-					// Truffle.g:518:7: DOUBLESTAR kwargs= NAME
+					// Truffle.g:515:7: DOUBLESTAR kwargs= NAME
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					DOUBLESTAR48=(Token)match(input,DOUBLESTAR,FOLLOW_DOUBLESTAR_in_varargslist1268); if (state.failed) return retval;
+					DOUBLESTAR48=(Token)match(input,DOUBLESTAR,FOLLOW_DOUBLESTAR_in_varargslist1267); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					DOUBLESTAR48_tree = (PNode)adaptor.create(DOUBLESTAR48);
 					adaptor.addChild(root_0, DOUBLESTAR48_tree);
 					}
 
-					kwargs=(Token)match(input,NAME,FOLLOW_NAME_in_varargslist1272); if (state.failed) return retval;
+					kwargs=(Token)match(input,NAME,FOLLOW_NAME_in_varargslist1271); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					kwargs_tree = (PNode)adaptor.create(kwargs);
 					adaptor.addChild(root_0, kwargs_tree);
@@ -2024,7 +2023,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "fpdef"
-	// Truffle.g:525:1: fpdef[expr_contextType ctype] : ( NAME | ( LPAREN fpdef[null] COMMA )=> LPAREN fplist RPAREN | LPAREN ! fplist RPAREN !);
+	// Truffle.g:522:1: fpdef[expr_contextType ctype] : ( NAME | ( LPAREN fpdef[null] COMMA )=> LPAREN fplist RPAREN | LPAREN ! fplist RPAREN !);
 	public final TruffleParser.fpdef_return fpdef(expr_contextType ctype) throws RecognitionException {
 		TruffleParser.fpdef_return retval = new TruffleParser.fpdef_return();
 		retval.start = input.LT(1);
@@ -2049,7 +2048,7 @@ public class TruffleParser extends Parser {
 		    PNode etype = null;
 
 		try {
-			// Truffle.g:535:5: ( NAME | ( LPAREN fpdef[null] COMMA )=> LPAREN fplist RPAREN | LPAREN ! fplist RPAREN !)
+			// Truffle.g:532:5: ( NAME | ( LPAREN fpdef[null] COMMA )=> LPAREN fplist RPAREN | LPAREN ! fplist RPAREN !)
 			int alt24=3;
 			int LA24_0 = input.LA(1);
 			if ( (LA24_0==NAME) ) {
@@ -2075,12 +2074,12 @@ public class TruffleParser extends Parser {
 
 			switch (alt24) {
 				case 1 :
-					// Truffle.g:535:7: NAME
+					// Truffle.g:532:7: NAME
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					NAME49=(Token)match(input,NAME,FOLLOW_NAME_in_fpdef1309); if (state.failed) return retval;
+					NAME49=(Token)match(input,NAME,FOLLOW_NAME_in_fpdef1308); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					NAME49_tree = (PNode)adaptor.create(NAME49);
 					adaptor.addChild(root_0, NAME49_tree);
@@ -2092,24 +2091,24 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 2 :
-					// Truffle.g:539:7: ( LPAREN fpdef[null] COMMA )=> LPAREN fplist RPAREN
+					// Truffle.g:536:7: ( LPAREN fpdef[null] COMMA )=> LPAREN fplist RPAREN
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					LPAREN50=(Token)match(input,LPAREN,FOLLOW_LPAREN_in_fpdef1336); if (state.failed) return retval;
+					LPAREN50=(Token)match(input,LPAREN,FOLLOW_LPAREN_in_fpdef1335); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					LPAREN50_tree = (PNode)adaptor.create(LPAREN50);
 					adaptor.addChild(root_0, LPAREN50_tree);
 					}
 
-					pushFollow(FOLLOW_fplist_in_fpdef1338);
+					pushFollow(FOLLOW_fplist_in_fpdef1337);
 					fplist51=fplist();
 					state._fsp--;
 					if (state.failed) return retval;
 					if ( state.backtracking==0 ) adaptor.addChild(root_0, fplist51.getTree());
 
-					RPAREN52=(Token)match(input,RPAREN,FOLLOW_RPAREN_in_fpdef1340); if (state.failed) return retval;
+					RPAREN52=(Token)match(input,RPAREN,FOLLOW_RPAREN_in_fpdef1339); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					RPAREN52_tree = (PNode)adaptor.create(RPAREN52);
 					adaptor.addChild(root_0, RPAREN52_tree);
@@ -2121,19 +2120,19 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 3 :
-					// Truffle.g:543:7: LPAREN ! fplist RPAREN !
+					// Truffle.g:540:7: LPAREN ! fplist RPAREN !
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					LPAREN53=(Token)match(input,LPAREN,FOLLOW_LPAREN_in_fpdef1356); if (state.failed) return retval;
-					pushFollow(FOLLOW_fplist_in_fpdef1359);
+					LPAREN53=(Token)match(input,LPAREN,FOLLOW_LPAREN_in_fpdef1355); if (state.failed) return retval;
+					pushFollow(FOLLOW_fplist_in_fpdef1358);
 					fplist54=fplist();
 					state._fsp--;
 					if (state.failed) return retval;
 					if ( state.backtracking==0 ) adaptor.addChild(root_0, fplist54.getTree());
 
-					RPAREN55=(Token)match(input,RPAREN,FOLLOW_RPAREN_in_fpdef1361); if (state.failed) return retval;
+					RPAREN55=(Token)match(input,RPAREN,FOLLOW_RPAREN_in_fpdef1360); if (state.failed) return retval;
 					}
 					break;
 
@@ -2175,7 +2174,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "fplist"
-	// Truffle.g:547:1: fplist returns [List etypes] :f+= fpdef[expr_contextType.Store] ( options {greedy=true; } : COMMA f+= fpdef[expr_contextType.Store] )* ( COMMA )? ;
+	// Truffle.g:544:1: fplist returns [List etypes] :f+= fpdef[expr_contextType.Store] ( options {greedy=true; } : COMMA f+= fpdef[expr_contextType.Store] )* ( COMMA )? ;
 	public final TruffleParser.fplist_return fplist() throws RecognitionException {
 		TruffleParser.fplist_return retval = new TruffleParser.fplist_return();
 		retval.start = input.LT(1);
@@ -2190,13 +2189,13 @@ public class TruffleParser extends Parser {
 		PNode COMMA57_tree=null;
 
 		try {
-			// Truffle.g:549:5: (f+= fpdef[expr_contextType.Store] ( options {greedy=true; } : COMMA f+= fpdef[expr_contextType.Store] )* ( COMMA )? )
-			// Truffle.g:549:7: f+= fpdef[expr_contextType.Store] ( options {greedy=true; } : COMMA f+= fpdef[expr_contextType.Store] )* ( COMMA )?
+			// Truffle.g:546:5: (f+= fpdef[expr_contextType.Store] ( options {greedy=true; } : COMMA f+= fpdef[expr_contextType.Store] )* ( COMMA )? )
+			// Truffle.g:546:7: f+= fpdef[expr_contextType.Store] ( options {greedy=true; } : COMMA f+= fpdef[expr_contextType.Store] )* ( COMMA )?
 			{
 			root_0 = (PNode)adaptor.nil();
 
 
-			pushFollow(FOLLOW_fpdef_in_fplist1390);
+			pushFollow(FOLLOW_fpdef_in_fplist1389);
 			f=fpdef(expr_contextType.Store);
 			state._fsp--;
 			if (state.failed) return retval;
@@ -2204,7 +2203,7 @@ public class TruffleParser extends Parser {
 
 			if (list_f==null) list_f=new ArrayList<Object>();
 			list_f.add(f.getTree());
-			// Truffle.g:550:7: ( options {greedy=true; } : COMMA f+= fpdef[expr_contextType.Store] )*
+			// Truffle.g:547:7: ( options {greedy=true; } : COMMA f+= fpdef[expr_contextType.Store] )*
 			loop25:
 			while (true) {
 				int alt25=2;
@@ -2219,15 +2218,15 @@ public class TruffleParser extends Parser {
 
 				switch (alt25) {
 				case 1 :
-					// Truffle.g:550:31: COMMA f+= fpdef[expr_contextType.Store]
+					// Truffle.g:547:31: COMMA f+= fpdef[expr_contextType.Store]
 					{
-					COMMA56=(Token)match(input,COMMA,FOLLOW_COMMA_in_fplist1407); if (state.failed) return retval;
+					COMMA56=(Token)match(input,COMMA,FOLLOW_COMMA_in_fplist1406); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					COMMA56_tree = (PNode)adaptor.create(COMMA56);
 					adaptor.addChild(root_0, COMMA56_tree);
 					}
 
-					pushFollow(FOLLOW_fpdef_in_fplist1411);
+					pushFollow(FOLLOW_fpdef_in_fplist1410);
 					f=fpdef(expr_contextType.Store);
 					state._fsp--;
 					if (state.failed) return retval;
@@ -2243,7 +2242,7 @@ public class TruffleParser extends Parser {
 				}
 			}
 
-			// Truffle.g:550:72: ( COMMA )?
+			// Truffle.g:547:72: ( COMMA )?
 			int alt26=2;
 			int LA26_0 = input.LA(1);
 			if ( (LA26_0==COMMA) ) {
@@ -2251,9 +2250,9 @@ public class TruffleParser extends Parser {
 			}
 			switch (alt26) {
 				case 1 :
-					// Truffle.g:550:73: COMMA
+					// Truffle.g:547:73: COMMA
 					{
-					COMMA57=(Token)match(input,COMMA,FOLLOW_COMMA_in_fplist1417); if (state.failed) return retval;
+					COMMA57=(Token)match(input,COMMA,FOLLOW_COMMA_in_fplist1416); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					COMMA57_tree = (PNode)adaptor.create(COMMA57);
 					adaptor.addChild(root_0, COMMA57_tree);
@@ -2300,7 +2299,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "stmt"
-	// Truffle.g:557:1: stmt returns [List stypes] : ( simple_stmt | compound_stmt );
+	// Truffle.g:554:1: stmt returns [List stypes] : ( simple_stmt | compound_stmt );
 	public final TruffleParser.stmt_return stmt() throws RecognitionException {
 		TruffleParser.stmt_return retval = new TruffleParser.stmt_return();
 		retval.start = input.LT(1);
@@ -2312,7 +2311,7 @@ public class TruffleParser extends Parser {
 
 
 		try {
-			// Truffle.g:559:5: ( simple_stmt | compound_stmt )
+			// Truffle.g:556:5: ( simple_stmt | compound_stmt )
 			int alt27=2;
 			int LA27_0 = input.LA(1);
 			if ( (LA27_0==BACKQUOTE||(LA27_0 >= LBRACK && LA27_0 <= LCURLY)||(LA27_0 >= LPAREN && LA27_0 <= MINUS)||LA27_0==NAME||LA27_0==NOT||LA27_0==PLUS||LA27_0==TILDE) ) {
@@ -2337,12 +2336,12 @@ public class TruffleParser extends Parser {
 
 			switch (alt27) {
 				case 1 :
-					// Truffle.g:559:7: simple_stmt
+					// Truffle.g:556:7: simple_stmt
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					pushFollow(FOLLOW_simple_stmt_in_stmt1453);
+					pushFollow(FOLLOW_simple_stmt_in_stmt1452);
 					simple_stmt58=simple_stmt();
 					state._fsp--;
 					if (state.failed) return retval;
@@ -2354,12 +2353,12 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 2 :
-					// Truffle.g:563:7: compound_stmt
+					// Truffle.g:560:7: compound_stmt
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					pushFollow(FOLLOW_compound_stmt_in_stmt1469);
+					pushFollow(FOLLOW_compound_stmt_in_stmt1468);
 					compound_stmt59=compound_stmt();
 					state._fsp--;
 					if (state.failed) return retval;
@@ -2404,7 +2403,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "simple_stmt"
-	// Truffle.g:571:1: simple_stmt returns [List stypes] :s+= small_stmt ( options {greedy=true; } : SEMI s+= small_stmt )* ( SEMI )? NEWLINE ;
+	// Truffle.g:568:1: simple_stmt returns [List stypes] :s+= small_stmt ( options {greedy=true; } : SEMI s+= small_stmt )* ( SEMI )? NEWLINE ;
 	public final TruffleParser.simple_stmt_return simple_stmt() throws RecognitionException {
 		TruffleParser.simple_stmt_return retval = new TruffleParser.simple_stmt_return();
 		retval.start = input.LT(1);
@@ -2421,13 +2420,13 @@ public class TruffleParser extends Parser {
 		PNode NEWLINE62_tree=null;
 
 		try {
-			// Truffle.g:573:5: (s+= small_stmt ( options {greedy=true; } : SEMI s+= small_stmt )* ( SEMI )? NEWLINE )
-			// Truffle.g:573:7: s+= small_stmt ( options {greedy=true; } : SEMI s+= small_stmt )* ( SEMI )? NEWLINE
+			// Truffle.g:570:5: (s+= small_stmt ( options {greedy=true; } : SEMI s+= small_stmt )* ( SEMI )? NEWLINE )
+			// Truffle.g:570:7: s+= small_stmt ( options {greedy=true; } : SEMI s+= small_stmt )* ( SEMI )? NEWLINE
 			{
 			root_0 = (PNode)adaptor.nil();
 
 
-			pushFollow(FOLLOW_small_stmt_in_simple_stmt1505);
+			pushFollow(FOLLOW_small_stmt_in_simple_stmt1504);
 			s=small_stmt();
 			state._fsp--;
 			if (state.failed) return retval;
@@ -2435,7 +2434,7 @@ public class TruffleParser extends Parser {
 
 			if (list_s==null) list_s=new ArrayList<Object>();
 			list_s.add(s.getTree());
-			// Truffle.g:573:21: ( options {greedy=true; } : SEMI s+= small_stmt )*
+			// Truffle.g:570:21: ( options {greedy=true; } : SEMI s+= small_stmt )*
 			loop28:
 			while (true) {
 				int alt28=2;
@@ -2450,15 +2449,15 @@ public class TruffleParser extends Parser {
 
 				switch (alt28) {
 				case 1 :
-					// Truffle.g:573:45: SEMI s+= small_stmt
+					// Truffle.g:570:45: SEMI s+= small_stmt
 					{
-					SEMI60=(Token)match(input,SEMI,FOLLOW_SEMI_in_simple_stmt1515); if (state.failed) return retval;
+					SEMI60=(Token)match(input,SEMI,FOLLOW_SEMI_in_simple_stmt1514); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					SEMI60_tree = (PNode)adaptor.create(SEMI60);
 					adaptor.addChild(root_0, SEMI60_tree);
 					}
 
-					pushFollow(FOLLOW_small_stmt_in_simple_stmt1519);
+					pushFollow(FOLLOW_small_stmt_in_simple_stmt1518);
 					s=small_stmt();
 					state._fsp--;
 					if (state.failed) return retval;
@@ -2474,7 +2473,7 @@ public class TruffleParser extends Parser {
 				}
 			}
 
-			// Truffle.g:573:66: ( SEMI )?
+			// Truffle.g:570:66: ( SEMI )?
 			int alt29=2;
 			int LA29_0 = input.LA(1);
 			if ( (LA29_0==SEMI) ) {
@@ -2482,9 +2481,9 @@ public class TruffleParser extends Parser {
 			}
 			switch (alt29) {
 				case 1 :
-					// Truffle.g:573:67: SEMI
+					// Truffle.g:570:67: SEMI
 					{
-					SEMI61=(Token)match(input,SEMI,FOLLOW_SEMI_in_simple_stmt1524); if (state.failed) return retval;
+					SEMI61=(Token)match(input,SEMI,FOLLOW_SEMI_in_simple_stmt1523); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					SEMI61_tree = (PNode)adaptor.create(SEMI61);
 					adaptor.addChild(root_0, SEMI61_tree);
@@ -2495,7 +2494,7 @@ public class TruffleParser extends Parser {
 
 			}
 
-			NEWLINE62=(Token)match(input,NEWLINE,FOLLOW_NEWLINE_in_simple_stmt1528); if (state.failed) return retval;
+			NEWLINE62=(Token)match(input,NEWLINE,FOLLOW_NEWLINE_in_simple_stmt1527); if (state.failed) return retval;
 			if ( state.backtracking==0 ) {
 			NEWLINE62_tree = (PNode)adaptor.create(NEWLINE62);
 			adaptor.addChild(root_0, NEWLINE62_tree);
@@ -2536,7 +2535,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "small_stmt"
-	// Truffle.g:581:1: small_stmt : ( expr_stmt | del_stmt | pass_stmt | flow_stmt | import_stmt | global_stmt | assert_stmt |{...}? => print_stmt | nonlocal_stmt );
+	// Truffle.g:578:1: small_stmt : ( expr_stmt | del_stmt | pass_stmt | flow_stmt | import_stmt | global_stmt | assert_stmt |{...}? => print_stmt | nonlocal_stmt );
 	public final TruffleParser.small_stmt_return small_stmt() throws RecognitionException {
 		TruffleParser.small_stmt_return retval = new TruffleParser.small_stmt_return();
 		retval.start = input.LT(1);
@@ -2555,7 +2554,7 @@ public class TruffleParser extends Parser {
 
 
 		try {
-			// Truffle.g:581:12: ( expr_stmt | del_stmt | pass_stmt | flow_stmt | import_stmt | global_stmt | assert_stmt |{...}? => print_stmt | nonlocal_stmt )
+			// Truffle.g:578:12: ( expr_stmt | del_stmt | pass_stmt | flow_stmt | import_stmt | global_stmt | assert_stmt |{...}? => print_stmt | nonlocal_stmt )
 			int alt30=9;
 			int LA30_0 = input.LA(1);
 			if ( (LA30_0==BACKQUOTE||LA30_0==COMPLEX||LA30_0==FALSE||LA30_0==FLOAT||LA30_0==INT||(LA30_0 >= LAMBDA && LA30_0 <= LCURLY)||(LA30_0 >= LPAREN && LA30_0 <= MINUS)||LA30_0==NAME||LA30_0==NONE||LA30_0==NOT||LA30_0==PLUS||(LA30_0 >= STRING && LA30_0 <= TILDE)||LA30_0==TRUE) ) {
@@ -2615,12 +2614,12 @@ public class TruffleParser extends Parser {
 
 			switch (alt30) {
 				case 1 :
-					// Truffle.g:581:14: expr_stmt
+					// Truffle.g:578:14: expr_stmt
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					pushFollow(FOLLOW_expr_stmt_in_small_stmt1551);
+					pushFollow(FOLLOW_expr_stmt_in_small_stmt1550);
 					expr_stmt63=expr_stmt();
 					state._fsp--;
 					if (state.failed) return retval;
@@ -2629,12 +2628,12 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 2 :
-					// Truffle.g:582:14: del_stmt
+					// Truffle.g:579:14: del_stmt
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					pushFollow(FOLLOW_del_stmt_in_small_stmt1566);
+					pushFollow(FOLLOW_del_stmt_in_small_stmt1565);
 					del_stmt64=del_stmt();
 					state._fsp--;
 					if (state.failed) return retval;
@@ -2643,12 +2642,12 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 3 :
-					// Truffle.g:583:14: pass_stmt
+					// Truffle.g:580:14: pass_stmt
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					pushFollow(FOLLOW_pass_stmt_in_small_stmt1581);
+					pushFollow(FOLLOW_pass_stmt_in_small_stmt1580);
 					pass_stmt65=pass_stmt();
 					state._fsp--;
 					if (state.failed) return retval;
@@ -2657,12 +2656,12 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 4 :
-					// Truffle.g:584:14: flow_stmt
+					// Truffle.g:581:14: flow_stmt
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					pushFollow(FOLLOW_flow_stmt_in_small_stmt1596);
+					pushFollow(FOLLOW_flow_stmt_in_small_stmt1595);
 					flow_stmt66=flow_stmt();
 					state._fsp--;
 					if (state.failed) return retval;
@@ -2671,12 +2670,12 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 5 :
-					// Truffle.g:585:14: import_stmt
+					// Truffle.g:582:14: import_stmt
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					pushFollow(FOLLOW_import_stmt_in_small_stmt1611);
+					pushFollow(FOLLOW_import_stmt_in_small_stmt1610);
 					import_stmt67=import_stmt();
 					state._fsp--;
 					if (state.failed) return retval;
@@ -2685,12 +2684,12 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 6 :
-					// Truffle.g:586:14: global_stmt
+					// Truffle.g:583:14: global_stmt
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					pushFollow(FOLLOW_global_stmt_in_small_stmt1626);
+					pushFollow(FOLLOW_global_stmt_in_small_stmt1625);
 					global_stmt68=global_stmt();
 					state._fsp--;
 					if (state.failed) return retval;
@@ -2699,12 +2698,12 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 7 :
-					// Truffle.g:588:14: assert_stmt
+					// Truffle.g:585:14: assert_stmt
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					pushFollow(FOLLOW_assert_stmt_in_small_stmt1653);
+					pushFollow(FOLLOW_assert_stmt_in_small_stmt1652);
 					assert_stmt69=assert_stmt();
 					state._fsp--;
 					if (state.failed) return retval;
@@ -2713,7 +2712,7 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 8 :
-					// Truffle.g:589:14: {...}? => print_stmt
+					// Truffle.g:586:14: {...}? => print_stmt
 					{
 					root_0 = (PNode)adaptor.nil();
 
@@ -2722,7 +2721,7 @@ public class TruffleParser extends Parser {
 						if (state.backtracking>0) {state.failed=true; return retval;}
 						throw new FailedPredicateException(input, "small_stmt", "!printFunction");
 					}
-					pushFollow(FOLLOW_print_stmt_in_small_stmt1672);
+					pushFollow(FOLLOW_print_stmt_in_small_stmt1671);
 					print_stmt70=print_stmt();
 					state._fsp--;
 					if (state.failed) return retval;
@@ -2731,12 +2730,12 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 9 :
-					// Truffle.g:590:14: nonlocal_stmt
+					// Truffle.g:587:14: nonlocal_stmt
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					pushFollow(FOLLOW_nonlocal_stmt_in_small_stmt1687);
+					pushFollow(FOLLOW_nonlocal_stmt_in_small_stmt1686);
 					nonlocal_stmt71=nonlocal_stmt();
 					state._fsp--;
 					if (state.failed) return retval;
@@ -2776,7 +2775,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "nonlocal_stmt"
-	// Truffle.g:594:1: nonlocal_stmt : NONLOCAL n+= NAME ( options {k=2; } : COMMA n+= NAME )* ;
+	// Truffle.g:591:1: nonlocal_stmt : NONLOCAL n+= NAME ( options {k=2; } : COMMA n+= NAME )* ;
 	public final TruffleParser.nonlocal_stmt_return nonlocal_stmt() throws RecognitionException {
 		TruffleParser.nonlocal_stmt_return retval = new TruffleParser.nonlocal_stmt_return();
 		retval.start = input.LT(1);
@@ -2796,19 +2795,19 @@ public class TruffleParser extends Parser {
 		    StatementNode stype = null;
 
 		try {
-			// Truffle.g:601:5: ( NONLOCAL n+= NAME ( options {k=2; } : COMMA n+= NAME )* )
-			// Truffle.g:601:7: NONLOCAL n+= NAME ( options {k=2; } : COMMA n+= NAME )*
+			// Truffle.g:598:5: ( NONLOCAL n+= NAME ( options {k=2; } : COMMA n+= NAME )* )
+			// Truffle.g:598:7: NONLOCAL n+= NAME ( options {k=2; } : COMMA n+= NAME )*
 			{
 			root_0 = (PNode)adaptor.nil();
 
 
-			NONLOCAL72=(Token)match(input,NONLOCAL,FOLLOW_NONLOCAL_in_nonlocal_stmt1722); if (state.failed) return retval;
+			NONLOCAL72=(Token)match(input,NONLOCAL,FOLLOW_NONLOCAL_in_nonlocal_stmt1721); if (state.failed) return retval;
 			if ( state.backtracking==0 ) {
 			NONLOCAL72_tree = (PNode)adaptor.create(NONLOCAL72);
 			adaptor.addChild(root_0, NONLOCAL72_tree);
 			}
 
-			n=(Token)match(input,NAME,FOLLOW_NAME_in_nonlocal_stmt1726); if (state.failed) return retval;
+			n=(Token)match(input,NAME,FOLLOW_NAME_in_nonlocal_stmt1725); if (state.failed) return retval;
 			if ( state.backtracking==0 ) {
 			n_tree = (PNode)adaptor.create(n);
 			adaptor.addChild(root_0, n_tree);
@@ -2816,7 +2815,7 @@ public class TruffleParser extends Parser {
 
 			if (list_n==null) list_n=new ArrayList<Object>();
 			list_n.add(n);
-			// Truffle.g:601:24: ( options {k=2; } : COMMA n+= NAME )*
+			// Truffle.g:598:24: ( options {k=2; } : COMMA n+= NAME )*
 			loop31:
 			while (true) {
 				int alt31=2;
@@ -2827,15 +2826,15 @@ public class TruffleParser extends Parser {
 
 				switch (alt31) {
 				case 1 :
-					// Truffle.g:601:41: COMMA n+= NAME
+					// Truffle.g:598:41: COMMA n+= NAME
 					{
-					COMMA73=(Token)match(input,COMMA,FOLLOW_COMMA_in_nonlocal_stmt1737); if (state.failed) return retval;
+					COMMA73=(Token)match(input,COMMA,FOLLOW_COMMA_in_nonlocal_stmt1736); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					COMMA73_tree = (PNode)adaptor.create(COMMA73);
 					adaptor.addChild(root_0, COMMA73_tree);
 					}
 
-					n=(Token)match(input,NAME,FOLLOW_NAME_in_nonlocal_stmt1741); if (state.failed) return retval;
+					n=(Token)match(input,NAME,FOLLOW_NAME_in_nonlocal_stmt1740); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					n_tree = (PNode)adaptor.create(n);
 					adaptor.addChild(root_0, n_tree);
@@ -2889,7 +2888,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "expr_stmt"
-	// Truffle.g:609:1: expr_stmt : ( ( testlist[null] augassign )=>lhs= testlist[expr_contextType.AugStore] ( (aay= augassign y1= yield_expr ) | (aat= augassign rhs= testlist[expr_contextType.Load] ) ) | ( testlist[null] ASSIGN )=>lhs= testlist[expr_contextType.Store] (| ( (at= ASSIGN t+= testlist[expr_contextType.Load] )+ ) | ( (ay= ASSIGN y2+= yield_expr )+ ) ) |lhs= testlist[expr_contextType.Load] ) ;
+	// Truffle.g:606:1: expr_stmt : ( ( testlist[null] augassign )=>lhs= testlist[expr_contextType.AugStore] ( (aay= augassign y1= yield_expr ) | (aat= augassign rhs= testlist[expr_contextType.Load] ) ) | ( testlist[null] ASSIGN )=>lhs= testlist[expr_contextType.Store] (| ( (at= ASSIGN t+= testlist[expr_contextType.Load] )+ ) | ( (ay= ASSIGN y2+= yield_expr )+ ) ) |lhs= testlist[expr_contextType.Load] ) ;
 	public final TruffleParser.expr_stmt_return expr_stmt() throws RecognitionException {
 		TruffleParser.expr_stmt_return retval = new TruffleParser.expr_stmt_return();
 		retval.start = input.LT(1);
@@ -2914,13 +2913,13 @@ public class TruffleParser extends Parser {
 		    PNode stype = null;
 
 		try {
-			// Truffle.g:618:5: ( ( ( testlist[null] augassign )=>lhs= testlist[expr_contextType.AugStore] ( (aay= augassign y1= yield_expr ) | (aat= augassign rhs= testlist[expr_contextType.Load] ) ) | ( testlist[null] ASSIGN )=>lhs= testlist[expr_contextType.Store] (| ( (at= ASSIGN t+= testlist[expr_contextType.Load] )+ ) | ( (ay= ASSIGN y2+= yield_expr )+ ) ) |lhs= testlist[expr_contextType.Load] ) )
-			// Truffle.g:618:7: ( ( testlist[null] augassign )=>lhs= testlist[expr_contextType.AugStore] ( (aay= augassign y1= yield_expr ) | (aat= augassign rhs= testlist[expr_contextType.Load] ) ) | ( testlist[null] ASSIGN )=>lhs= testlist[expr_contextType.Store] (| ( (at= ASSIGN t+= testlist[expr_contextType.Load] )+ ) | ( (ay= ASSIGN y2+= yield_expr )+ ) ) |lhs= testlist[expr_contextType.Load] )
+			// Truffle.g:615:5: ( ( ( testlist[null] augassign )=>lhs= testlist[expr_contextType.AugStore] ( (aay= augassign y1= yield_expr ) | (aat= augassign rhs= testlist[expr_contextType.Load] ) ) | ( testlist[null] ASSIGN )=>lhs= testlist[expr_contextType.Store] (| ( (at= ASSIGN t+= testlist[expr_contextType.Load] )+ ) | ( (ay= ASSIGN y2+= yield_expr )+ ) ) |lhs= testlist[expr_contextType.Load] ) )
+			// Truffle.g:615:7: ( ( testlist[null] augassign )=>lhs= testlist[expr_contextType.AugStore] ( (aay= augassign y1= yield_expr ) | (aat= augassign rhs= testlist[expr_contextType.Load] ) ) | ( testlist[null] ASSIGN )=>lhs= testlist[expr_contextType.Store] (| ( (at= ASSIGN t+= testlist[expr_contextType.Load] )+ ) | ( (ay= ASSIGN y2+= yield_expr )+ ) ) |lhs= testlist[expr_contextType.Load] )
 			{
 			root_0 = (PNode)adaptor.nil();
 
 
-			// Truffle.g:618:7: ( ( testlist[null] augassign )=>lhs= testlist[expr_contextType.AugStore] ( (aay= augassign y1= yield_expr ) | (aat= augassign rhs= testlist[expr_contextType.Load] ) ) | ( testlist[null] ASSIGN )=>lhs= testlist[expr_contextType.Store] (| ( (at= ASSIGN t+= testlist[expr_contextType.Load] )+ ) | ( (ay= ASSIGN y2+= yield_expr )+ ) ) |lhs= testlist[expr_contextType.Load] )
+			// Truffle.g:615:7: ( ( testlist[null] augassign )=>lhs= testlist[expr_contextType.AugStore] ( (aay= augassign y1= yield_expr ) | (aat= augassign rhs= testlist[expr_contextType.Load] ) ) | ( testlist[null] ASSIGN )=>lhs= testlist[expr_contextType.Store] (| ( (at= ASSIGN t+= testlist[expr_contextType.Load] )+ ) | ( (ay= ASSIGN y2+= yield_expr )+ ) ) |lhs= testlist[expr_contextType.Load] )
 			int alt36=3;
 			int LA36_0 = input.LA(1);
 			if ( (LA36_0==NOT) ) {
@@ -3180,15 +3179,15 @@ public class TruffleParser extends Parser {
 
 			switch (alt36) {
 				case 1 :
-					// Truffle.g:618:8: ( testlist[null] augassign )=>lhs= testlist[expr_contextType.AugStore] ( (aay= augassign y1= yield_expr ) | (aat= augassign rhs= testlist[expr_contextType.Load] ) )
+					// Truffle.g:615:8: ( testlist[null] augassign )=>lhs= testlist[expr_contextType.AugStore] ( (aay= augassign y1= yield_expr ) | (aat= augassign rhs= testlist[expr_contextType.Load] ) )
 					{
-					pushFollow(FOLLOW_testlist_in_expr_stmt1792);
+					pushFollow(FOLLOW_testlist_in_expr_stmt1791);
 					lhs=testlist(expr_contextType.AugStore);
 					state._fsp--;
 					if (state.failed) return retval;
 					if ( state.backtracking==0 ) adaptor.addChild(root_0, lhs.getTree());
 
-					// Truffle.g:619:9: ( (aay= augassign y1= yield_expr ) | (aat= augassign rhs= testlist[expr_contextType.Load] ) )
+					// Truffle.g:616:9: ( (aay= augassign y1= yield_expr ) | (aat= augassign rhs= testlist[expr_contextType.Load] ) )
 					int alt32=2;
 					switch ( input.LA(1) ) {
 					case PLUSEQUAL:
@@ -3499,18 +3498,18 @@ public class TruffleParser extends Parser {
 					}
 					switch (alt32) {
 						case 1 :
-							// Truffle.g:619:11: (aay= augassign y1= yield_expr )
+							// Truffle.g:616:11: (aay= augassign y1= yield_expr )
 							{
-							// Truffle.g:619:11: (aay= augassign y1= yield_expr )
-							// Truffle.g:619:12: aay= augassign y1= yield_expr
+							// Truffle.g:616:11: (aay= augassign y1= yield_expr )
+							// Truffle.g:616:12: aay= augassign y1= yield_expr
 							{
-							pushFollow(FOLLOW_augassign_in_expr_stmt1808);
+							pushFollow(FOLLOW_augassign_in_expr_stmt1807);
 							aay=augassign();
 							state._fsp--;
 							if (state.failed) return retval;
 							if ( state.backtracking==0 ) adaptor.addChild(root_0, aay.getTree());
 
-							pushFollow(FOLLOW_yield_expr_in_expr_stmt1812);
+							pushFollow(FOLLOW_yield_expr_in_expr_stmt1811);
 							y1=yield_expr();
 							state._fsp--;
 							if (state.failed) return retval;
@@ -3525,18 +3524,18 @@ public class TruffleParser extends Parser {
 							}
 							break;
 						case 2 :
-							// Truffle.g:625:11: (aat= augassign rhs= testlist[expr_contextType.Load] )
+							// Truffle.g:622:11: (aat= augassign rhs= testlist[expr_contextType.Load] )
 							{
-							// Truffle.g:625:11: (aat= augassign rhs= testlist[expr_contextType.Load] )
-							// Truffle.g:625:12: aat= augassign rhs= testlist[expr_contextType.Load]
+							// Truffle.g:622:11: (aat= augassign rhs= testlist[expr_contextType.Load] )
+							// Truffle.g:622:12: aat= augassign rhs= testlist[expr_contextType.Load]
 							{
-							pushFollow(FOLLOW_augassign_in_expr_stmt1852);
+							pushFollow(FOLLOW_augassign_in_expr_stmt1851);
 							aat=augassign();
 							state._fsp--;
 							if (state.failed) return retval;
 							if ( state.backtracking==0 ) adaptor.addChild(root_0, aat.getTree());
 
-							pushFollow(FOLLOW_testlist_in_expr_stmt1856);
+							pushFollow(FOLLOW_testlist_in_expr_stmt1855);
 							rhs=testlist(expr_contextType.Load);
 							state._fsp--;
 							if (state.failed) return retval;
@@ -3556,15 +3555,15 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 2 :
-					// Truffle.g:632:7: ( testlist[null] ASSIGN )=>lhs= testlist[expr_contextType.Store] (| ( (at= ASSIGN t+= testlist[expr_contextType.Load] )+ ) | ( (ay= ASSIGN y2+= yield_expr )+ ) )
+					// Truffle.g:629:7: ( testlist[null] ASSIGN )=>lhs= testlist[expr_contextType.Store] (| ( (at= ASSIGN t+= testlist[expr_contextType.Load] )+ ) | ( (ay= ASSIGN y2+= yield_expr )+ ) )
 					{
-					pushFollow(FOLLOW_testlist_in_expr_stmt1911);
+					pushFollow(FOLLOW_testlist_in_expr_stmt1910);
 					lhs=testlist(expr_contextType.Store);
 					state._fsp--;
 					if (state.failed) return retval;
 					if ( state.backtracking==0 ) adaptor.addChild(root_0, lhs.getTree());
 
-					// Truffle.g:633:9: (| ( (at= ASSIGN t+= testlist[expr_contextType.Load] )+ ) | ( (ay= ASSIGN y2+= yield_expr )+ ) )
+					// Truffle.g:630:9: (| ( (at= ASSIGN t+= testlist[expr_contextType.Load] )+ ) | ( (ay= ASSIGN y2+= yield_expr )+ ) )
 					int alt35=3;
 					int LA35_0 = input.LA(1);
 					if ( (LA35_0==NEWLINE||LA35_0==SEMI) ) {
@@ -3603,17 +3602,17 @@ public class TruffleParser extends Parser {
 
 					switch (alt35) {
 						case 1 :
-							// Truffle.g:634:9: 
+							// Truffle.g:631:9: 
 							{
 							}
 							break;
 						case 2 :
-							// Truffle.g:634:11: ( (at= ASSIGN t+= testlist[expr_contextType.Load] )+ )
+							// Truffle.g:631:11: ( (at= ASSIGN t+= testlist[expr_contextType.Load] )+ )
 							{
-							// Truffle.g:634:11: ( (at= ASSIGN t+= testlist[expr_contextType.Load] )+ )
-							// Truffle.g:634:12: (at= ASSIGN t+= testlist[expr_contextType.Load] )+
+							// Truffle.g:631:11: ( (at= ASSIGN t+= testlist[expr_contextType.Load] )+ )
+							// Truffle.g:631:12: (at= ASSIGN t+= testlist[expr_contextType.Load] )+
 							{
-							// Truffle.g:634:12: (at= ASSIGN t+= testlist[expr_contextType.Load] )+
+							// Truffle.g:631:12: (at= ASSIGN t+= testlist[expr_contextType.Load] )+
 							int cnt33=0;
 							loop33:
 							while (true) {
@@ -3625,15 +3624,15 @@ public class TruffleParser extends Parser {
 
 								switch (alt33) {
 								case 1 :
-									// Truffle.g:634:13: at= ASSIGN t+= testlist[expr_contextType.Load]
+									// Truffle.g:631:13: at= ASSIGN t+= testlist[expr_contextType.Load]
 									{
-									at=(Token)match(input,ASSIGN,FOLLOW_ASSIGN_in_expr_stmt1938); if (state.failed) return retval;
+									at=(Token)match(input,ASSIGN,FOLLOW_ASSIGN_in_expr_stmt1937); if (state.failed) return retval;
 									if ( state.backtracking==0 ) {
 									at_tree = (PNode)adaptor.create(at);
 									adaptor.addChild(root_0, at_tree);
 									}
 
-									pushFollow(FOLLOW_testlist_in_expr_stmt1942);
+									pushFollow(FOLLOW_testlist_in_expr_stmt1941);
 									t=testlist(expr_contextType.Load);
 									state._fsp--;
 									if (state.failed) return retval;
@@ -3665,12 +3664,12 @@ public class TruffleParser extends Parser {
 							}
 							break;
 						case 3 :
-							// Truffle.g:643:11: ( (ay= ASSIGN y2+= yield_expr )+ )
+							// Truffle.g:640:11: ( (ay= ASSIGN y2+= yield_expr )+ )
 							{
-							// Truffle.g:643:11: ( (ay= ASSIGN y2+= yield_expr )+ )
-							// Truffle.g:643:12: (ay= ASSIGN y2+= yield_expr )+
+							// Truffle.g:640:11: ( (ay= ASSIGN y2+= yield_expr )+ )
+							// Truffle.g:640:12: (ay= ASSIGN y2+= yield_expr )+
 							{
-							// Truffle.g:643:12: (ay= ASSIGN y2+= yield_expr )+
+							// Truffle.g:640:12: (ay= ASSIGN y2+= yield_expr )+
 							int cnt34=0;
 							loop34:
 							while (true) {
@@ -3682,15 +3681,15 @@ public class TruffleParser extends Parser {
 
 								switch (alt34) {
 								case 1 :
-									// Truffle.g:643:13: ay= ASSIGN y2+= yield_expr
+									// Truffle.g:640:13: ay= ASSIGN y2+= yield_expr
 									{
-									ay=(Token)match(input,ASSIGN,FOLLOW_ASSIGN_in_expr_stmt1987); if (state.failed) return retval;
+									ay=(Token)match(input,ASSIGN,FOLLOW_ASSIGN_in_expr_stmt1986); if (state.failed) return retval;
 									if ( state.backtracking==0 ) {
 									ay_tree = (PNode)adaptor.create(ay);
 									adaptor.addChild(root_0, ay_tree);
 									}
 
-									pushFollow(FOLLOW_yield_expr_in_expr_stmt1991);
+									pushFollow(FOLLOW_yield_expr_in_expr_stmt1990);
 									y2=yield_expr();
 									state._fsp--;
 									if (state.failed) return retval;
@@ -3724,9 +3723,9 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 3 :
-					// Truffle.g:650:7: lhs= testlist[expr_contextType.Load]
+					// Truffle.g:647:7: lhs= testlist[expr_contextType.Load]
 					{
-					pushFollow(FOLLOW_testlist_in_expr_stmt2039);
+					pushFollow(FOLLOW_testlist_in_expr_stmt2038);
 					lhs=testlist(expr_contextType.Load);
 					state._fsp--;
 					if (state.failed) return retval;
@@ -3778,7 +3777,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "augassign"
-	// Truffle.g:659:1: augassign returns [operatorType op] : ( PLUSEQUAL | MINUSEQUAL | STAREQUAL | SLASHEQUAL | PERCENTEQUAL | AMPEREQUAL | VBAREQUAL | CIRCUMFLEXEQUAL | LEFTSHIFTEQUAL | RIGHTSHIFTEQUAL | DOUBLESTAREQUAL | DOUBLESLASHEQUAL );
+	// Truffle.g:656:1: augassign returns [operatorType op] : ( PLUSEQUAL | MINUSEQUAL | STAREQUAL | SLASHEQUAL | PERCENTEQUAL | AMPEREQUAL | VBAREQUAL | CIRCUMFLEXEQUAL | LEFTSHIFTEQUAL | RIGHTSHIFTEQUAL | DOUBLESTAREQUAL | DOUBLESLASHEQUAL );
 	public final TruffleParser.augassign_return augassign() throws RecognitionException {
 		TruffleParser.augassign_return retval = new TruffleParser.augassign_return();
 		retval.start = input.LT(1);
@@ -3812,7 +3811,7 @@ public class TruffleParser extends Parser {
 		PNode DOUBLESLASHEQUAL85_tree=null;
 
 		try {
-			// Truffle.g:661:5: ( PLUSEQUAL | MINUSEQUAL | STAREQUAL | SLASHEQUAL | PERCENTEQUAL | AMPEREQUAL | VBAREQUAL | CIRCUMFLEXEQUAL | LEFTSHIFTEQUAL | RIGHTSHIFTEQUAL | DOUBLESTAREQUAL | DOUBLESLASHEQUAL )
+			// Truffle.g:658:5: ( PLUSEQUAL | MINUSEQUAL | STAREQUAL | SLASHEQUAL | PERCENTEQUAL | AMPEREQUAL | VBAREQUAL | CIRCUMFLEXEQUAL | LEFTSHIFTEQUAL | RIGHTSHIFTEQUAL | DOUBLESTAREQUAL | DOUBLESLASHEQUAL )
 			int alt37=12;
 			switch ( input.LA(1) ) {
 			case PLUSEQUAL:
@@ -3883,12 +3882,12 @@ public class TruffleParser extends Parser {
 			}
 			switch (alt37) {
 				case 1 :
-					// Truffle.g:661:7: PLUSEQUAL
+					// Truffle.g:658:7: PLUSEQUAL
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					PLUSEQUAL74=(Token)match(input,PLUSEQUAL,FOLLOW_PLUSEQUAL_in_augassign2081); if (state.failed) return retval;
+					PLUSEQUAL74=(Token)match(input,PLUSEQUAL,FOLLOW_PLUSEQUAL_in_augassign2080); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					PLUSEQUAL74_tree = (PNode)adaptor.create(PLUSEQUAL74);
 					adaptor.addChild(root_0, PLUSEQUAL74_tree);
@@ -3900,12 +3899,12 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 2 :
-					// Truffle.g:665:7: MINUSEQUAL
+					// Truffle.g:662:7: MINUSEQUAL
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					MINUSEQUAL75=(Token)match(input,MINUSEQUAL,FOLLOW_MINUSEQUAL_in_augassign2099); if (state.failed) return retval;
+					MINUSEQUAL75=(Token)match(input,MINUSEQUAL,FOLLOW_MINUSEQUAL_in_augassign2098); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					MINUSEQUAL75_tree = (PNode)adaptor.create(MINUSEQUAL75);
 					adaptor.addChild(root_0, MINUSEQUAL75_tree);
@@ -3917,12 +3916,12 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 3 :
-					// Truffle.g:669:7: STAREQUAL
+					// Truffle.g:666:7: STAREQUAL
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					STAREQUAL76=(Token)match(input,STAREQUAL,FOLLOW_STAREQUAL_in_augassign2117); if (state.failed) return retval;
+					STAREQUAL76=(Token)match(input,STAREQUAL,FOLLOW_STAREQUAL_in_augassign2116); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					STAREQUAL76_tree = (PNode)adaptor.create(STAREQUAL76);
 					adaptor.addChild(root_0, STAREQUAL76_tree);
@@ -3934,12 +3933,12 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 4 :
-					// Truffle.g:673:7: SLASHEQUAL
+					// Truffle.g:670:7: SLASHEQUAL
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					SLASHEQUAL77=(Token)match(input,SLASHEQUAL,FOLLOW_SLASHEQUAL_in_augassign2135); if (state.failed) return retval;
+					SLASHEQUAL77=(Token)match(input,SLASHEQUAL,FOLLOW_SLASHEQUAL_in_augassign2134); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					SLASHEQUAL77_tree = (PNode)adaptor.create(SLASHEQUAL77);
 					adaptor.addChild(root_0, SLASHEQUAL77_tree);
@@ -3951,12 +3950,12 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 5 :
-					// Truffle.g:677:7: PERCENTEQUAL
+					// Truffle.g:674:7: PERCENTEQUAL
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					PERCENTEQUAL78=(Token)match(input,PERCENTEQUAL,FOLLOW_PERCENTEQUAL_in_augassign2153); if (state.failed) return retval;
+					PERCENTEQUAL78=(Token)match(input,PERCENTEQUAL,FOLLOW_PERCENTEQUAL_in_augassign2152); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					PERCENTEQUAL78_tree = (PNode)adaptor.create(PERCENTEQUAL78);
 					adaptor.addChild(root_0, PERCENTEQUAL78_tree);
@@ -3968,12 +3967,12 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 6 :
-					// Truffle.g:681:7: AMPEREQUAL
+					// Truffle.g:678:7: AMPEREQUAL
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					AMPEREQUAL79=(Token)match(input,AMPEREQUAL,FOLLOW_AMPEREQUAL_in_augassign2171); if (state.failed) return retval;
+					AMPEREQUAL79=(Token)match(input,AMPEREQUAL,FOLLOW_AMPEREQUAL_in_augassign2170); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					AMPEREQUAL79_tree = (PNode)adaptor.create(AMPEREQUAL79);
 					adaptor.addChild(root_0, AMPEREQUAL79_tree);
@@ -3985,12 +3984,12 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 7 :
-					// Truffle.g:685:7: VBAREQUAL
+					// Truffle.g:682:7: VBAREQUAL
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					VBAREQUAL80=(Token)match(input,VBAREQUAL,FOLLOW_VBAREQUAL_in_augassign2189); if (state.failed) return retval;
+					VBAREQUAL80=(Token)match(input,VBAREQUAL,FOLLOW_VBAREQUAL_in_augassign2188); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					VBAREQUAL80_tree = (PNode)adaptor.create(VBAREQUAL80);
 					adaptor.addChild(root_0, VBAREQUAL80_tree);
@@ -4002,12 +4001,12 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 8 :
-					// Truffle.g:689:7: CIRCUMFLEXEQUAL
+					// Truffle.g:686:7: CIRCUMFLEXEQUAL
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					CIRCUMFLEXEQUAL81=(Token)match(input,CIRCUMFLEXEQUAL,FOLLOW_CIRCUMFLEXEQUAL_in_augassign2207); if (state.failed) return retval;
+					CIRCUMFLEXEQUAL81=(Token)match(input,CIRCUMFLEXEQUAL,FOLLOW_CIRCUMFLEXEQUAL_in_augassign2206); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					CIRCUMFLEXEQUAL81_tree = (PNode)adaptor.create(CIRCUMFLEXEQUAL81);
 					adaptor.addChild(root_0, CIRCUMFLEXEQUAL81_tree);
@@ -4019,12 +4018,12 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 9 :
-					// Truffle.g:693:7: LEFTSHIFTEQUAL
+					// Truffle.g:690:7: LEFTSHIFTEQUAL
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					LEFTSHIFTEQUAL82=(Token)match(input,LEFTSHIFTEQUAL,FOLLOW_LEFTSHIFTEQUAL_in_augassign2225); if (state.failed) return retval;
+					LEFTSHIFTEQUAL82=(Token)match(input,LEFTSHIFTEQUAL,FOLLOW_LEFTSHIFTEQUAL_in_augassign2224); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					LEFTSHIFTEQUAL82_tree = (PNode)adaptor.create(LEFTSHIFTEQUAL82);
 					adaptor.addChild(root_0, LEFTSHIFTEQUAL82_tree);
@@ -4036,12 +4035,12 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 10 :
-					// Truffle.g:697:7: RIGHTSHIFTEQUAL
+					// Truffle.g:694:7: RIGHTSHIFTEQUAL
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					RIGHTSHIFTEQUAL83=(Token)match(input,RIGHTSHIFTEQUAL,FOLLOW_RIGHTSHIFTEQUAL_in_augassign2243); if (state.failed) return retval;
+					RIGHTSHIFTEQUAL83=(Token)match(input,RIGHTSHIFTEQUAL,FOLLOW_RIGHTSHIFTEQUAL_in_augassign2242); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					RIGHTSHIFTEQUAL83_tree = (PNode)adaptor.create(RIGHTSHIFTEQUAL83);
 					adaptor.addChild(root_0, RIGHTSHIFTEQUAL83_tree);
@@ -4053,12 +4052,12 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 11 :
-					// Truffle.g:701:7: DOUBLESTAREQUAL
+					// Truffle.g:698:7: DOUBLESTAREQUAL
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					DOUBLESTAREQUAL84=(Token)match(input,DOUBLESTAREQUAL,FOLLOW_DOUBLESTAREQUAL_in_augassign2261); if (state.failed) return retval;
+					DOUBLESTAREQUAL84=(Token)match(input,DOUBLESTAREQUAL,FOLLOW_DOUBLESTAREQUAL_in_augassign2260); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					DOUBLESTAREQUAL84_tree = (PNode)adaptor.create(DOUBLESTAREQUAL84);
 					adaptor.addChild(root_0, DOUBLESTAREQUAL84_tree);
@@ -4070,12 +4069,12 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 12 :
-					// Truffle.g:705:7: DOUBLESLASHEQUAL
+					// Truffle.g:702:7: DOUBLESLASHEQUAL
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					DOUBLESLASHEQUAL85=(Token)match(input,DOUBLESLASHEQUAL,FOLLOW_DOUBLESLASHEQUAL_in_augassign2279); if (state.failed) return retval;
+					DOUBLESLASHEQUAL85=(Token)match(input,DOUBLESLASHEQUAL,FOLLOW_DOUBLESLASHEQUAL_in_augassign2278); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					DOUBLESLASHEQUAL85_tree = (PNode)adaptor.create(DOUBLESLASHEQUAL85);
 					adaptor.addChild(root_0, DOUBLESLASHEQUAL85_tree);
@@ -4118,7 +4117,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "print_stmt"
-	// Truffle.g:713:1: print_stmt : PRINT (t1= printlist | RIGHTSHIFT t2= printlist2 |) ;
+	// Truffle.g:710:1: print_stmt : PRINT (t1= printlist | RIGHTSHIFT t2= printlist2 |) ;
 	public final TruffleParser.print_stmt_return print_stmt() throws RecognitionException {
 		TruffleParser.print_stmt_return retval = new TruffleParser.print_stmt_return();
 		retval.start = input.LT(1);
@@ -4137,19 +4136,19 @@ public class TruffleParser extends Parser {
 		    StatementNode stype = null;
 
 		try {
-			// Truffle.g:721:5: ( PRINT (t1= printlist | RIGHTSHIFT t2= printlist2 |) )
-			// Truffle.g:721:7: PRINT (t1= printlist | RIGHTSHIFT t2= printlist2 |)
+			// Truffle.g:718:5: ( PRINT (t1= printlist | RIGHTSHIFT t2= printlist2 |) )
+			// Truffle.g:718:7: PRINT (t1= printlist | RIGHTSHIFT t2= printlist2 |)
 			{
 			root_0 = (PNode)adaptor.nil();
 
 
-			PRINT86=(Token)match(input,PRINT,FOLLOW_PRINT_in_print_stmt2319); if (state.failed) return retval;
+			PRINT86=(Token)match(input,PRINT,FOLLOW_PRINT_in_print_stmt2318); if (state.failed) return retval;
 			if ( state.backtracking==0 ) {
 			PRINT86_tree = (PNode)adaptor.create(PRINT86);
 			adaptor.addChild(root_0, PRINT86_tree);
 			}
 
-			// Truffle.g:722:7: (t1= printlist | RIGHTSHIFT t2= printlist2 |)
+			// Truffle.g:719:7: (t1= printlist | RIGHTSHIFT t2= printlist2 |)
 			int alt38=3;
 			int LA38_0 = input.LA(1);
 			if ( (LA38_0==BACKQUOTE||(LA38_0 >= LBRACK && LA38_0 <= LCURLY)||(LA38_0 >= LPAREN && LA38_0 <= MINUS)||LA38_0==NAME||LA38_0==NOT||LA38_0==PLUS||LA38_0==TILDE) ) {
@@ -4177,9 +4176,9 @@ public class TruffleParser extends Parser {
 
 			switch (alt38) {
 				case 1 :
-					// Truffle.g:722:8: t1= printlist
+					// Truffle.g:719:8: t1= printlist
 					{
-					pushFollow(FOLLOW_printlist_in_print_stmt2330);
+					pushFollow(FOLLOW_printlist_in_print_stmt2329);
 					t1=printlist();
 					state._fsp--;
 					if (state.failed) return retval;
@@ -4191,15 +4190,15 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 2 :
-					// Truffle.g:726:9: RIGHTSHIFT t2= printlist2
+					// Truffle.g:723:9: RIGHTSHIFT t2= printlist2
 					{
-					RIGHTSHIFT87=(Token)match(input,RIGHTSHIFT,FOLLOW_RIGHTSHIFT_in_print_stmt2349); if (state.failed) return retval;
+					RIGHTSHIFT87=(Token)match(input,RIGHTSHIFT,FOLLOW_RIGHTSHIFT_in_print_stmt2348); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					RIGHTSHIFT87_tree = (PNode)adaptor.create(RIGHTSHIFT87);
 					adaptor.addChild(root_0, RIGHTSHIFT87_tree);
 					}
 
-					pushFollow(FOLLOW_printlist2_in_print_stmt2353);
+					pushFollow(FOLLOW_printlist2_in_print_stmt2352);
 					t2=printlist2();
 					state._fsp--;
 					if (state.failed) return retval;
@@ -4211,7 +4210,7 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 3 :
-					// Truffle.g:731:8: 
+					// Truffle.g:728:8: 
 					{
 					if ( state.backtracking==0 ) {
 					           stype = actions.makePrint(PRINT86, null, new ArrayList<PNode>(), true);
@@ -4258,7 +4257,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "printlist"
-	// Truffle.g:738:1: printlist returns [boolean newline, List elts] : ( ( test[null] COMMA )=>t+= test[expr_contextType.Load] ( options {k=2; } : COMMA t+= test[expr_contextType.Load] )* (trailcomma= COMMA )? |t+= test[expr_contextType.Load] );
+	// Truffle.g:735:1: printlist returns [boolean newline, List elts] : ( ( test[null] COMMA )=>t+= test[expr_contextType.Load] ( options {k=2; } : COMMA t+= test[expr_contextType.Load] )* (trailcomma= COMMA )? |t+= test[expr_contextType.Load] );
 	public final TruffleParser.printlist_return printlist() throws RecognitionException {
 		TruffleParser.printlist_return retval = new TruffleParser.printlist_return();
 		retval.start = input.LT(1);
@@ -4273,7 +4272,7 @@ public class TruffleParser extends Parser {
 		PNode COMMA88_tree=null;
 
 		try {
-			// Truffle.g:740:5: ( ( test[null] COMMA )=>t+= test[expr_contextType.Load] ( options {k=2; } : COMMA t+= test[expr_contextType.Load] )* (trailcomma= COMMA )? |t+= test[expr_contextType.Load] )
+			// Truffle.g:737:5: ( ( test[null] COMMA )=>t+= test[expr_contextType.Load] ( options {k=2; } : COMMA t+= test[expr_contextType.Load] )* (trailcomma= COMMA )? |t+= test[expr_contextType.Load] )
 			int alt41=2;
 			int LA41_0 = input.LA(1);
 			if ( (LA41_0==NOT) ) {
@@ -4479,12 +4478,12 @@ public class TruffleParser extends Parser {
 
 			switch (alt41) {
 				case 1 :
-					// Truffle.g:740:7: ( test[null] COMMA )=>t+= test[expr_contextType.Load] ( options {k=2; } : COMMA t+= test[expr_contextType.Load] )* (trailcomma= COMMA )?
+					// Truffle.g:737:7: ( test[null] COMMA )=>t+= test[expr_contextType.Load] ( options {k=2; } : COMMA t+= test[expr_contextType.Load] )* (trailcomma= COMMA )?
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					pushFollow(FOLLOW_test_in_printlist2433);
+					pushFollow(FOLLOW_test_in_printlist2432);
 					t=test(expr_contextType.Load);
 					state._fsp--;
 					if (state.failed) return retval;
@@ -4492,7 +4491,7 @@ public class TruffleParser extends Parser {
 
 					if (list_t==null) list_t=new ArrayList<Object>();
 					list_t.add(t.getTree());
-					// Truffle.g:741:39: ( options {k=2; } : COMMA t+= test[expr_contextType.Load] )*
+					// Truffle.g:738:39: ( options {k=2; } : COMMA t+= test[expr_contextType.Load] )*
 					loop39:
 					while (true) {
 						int alt39=2;
@@ -4507,15 +4506,15 @@ public class TruffleParser extends Parser {
 
 						switch (alt39) {
 						case 1 :
-							// Truffle.g:741:56: COMMA t+= test[expr_contextType.Load]
+							// Truffle.g:738:56: COMMA t+= test[expr_contextType.Load]
 							{
-							COMMA88=(Token)match(input,COMMA,FOLLOW_COMMA_in_printlist2445); if (state.failed) return retval;
+							COMMA88=(Token)match(input,COMMA,FOLLOW_COMMA_in_printlist2444); if (state.failed) return retval;
 							if ( state.backtracking==0 ) {
 							COMMA88_tree = (PNode)adaptor.create(COMMA88);
 							adaptor.addChild(root_0, COMMA88_tree);
 							}
 
-							pushFollow(FOLLOW_test_in_printlist2449);
+							pushFollow(FOLLOW_test_in_printlist2448);
 							t=test(expr_contextType.Load);
 							state._fsp--;
 							if (state.failed) return retval;
@@ -4531,7 +4530,7 @@ public class TruffleParser extends Parser {
 						}
 					}
 
-					// Truffle.g:741:95: (trailcomma= COMMA )?
+					// Truffle.g:738:95: (trailcomma= COMMA )?
 					int alt40=2;
 					int LA40_0 = input.LA(1);
 					if ( (LA40_0==COMMA) ) {
@@ -4539,9 +4538,9 @@ public class TruffleParser extends Parser {
 					}
 					switch (alt40) {
 						case 1 :
-							// Truffle.g:741:96: trailcomma= COMMA
+							// Truffle.g:738:96: trailcomma= COMMA
 							{
-							trailcomma=(Token)match(input,COMMA,FOLLOW_COMMA_in_printlist2457); if (state.failed) return retval;
+							trailcomma=(Token)match(input,COMMA,FOLLOW_COMMA_in_printlist2456); if (state.failed) return retval;
 							if ( state.backtracking==0 ) {
 							trailcomma_tree = (PNode)adaptor.create(trailcomma);
 							adaptor.addChild(root_0, trailcomma_tree);
@@ -4563,12 +4562,12 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 2 :
-					// Truffle.g:750:7: t+= test[expr_contextType.Load]
+					// Truffle.g:747:7: t+= test[expr_contextType.Load]
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					pushFollow(FOLLOW_test_in_printlist2478);
+					pushFollow(FOLLOW_test_in_printlist2477);
 					t=test(expr_contextType.Load);
 					state._fsp--;
 					if (state.failed) return retval;
@@ -4616,7 +4615,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "printlist2"
-	// Truffle.g:759:1: printlist2 returns [boolean newline, List elts] : ( ( test[null] COMMA test[null] )=>t+= test[expr_contextType.Load] ( options {k=2; } : COMMA t+= test[expr_contextType.Load] )* (trailcomma= COMMA )? |t+= test[expr_contextType.Load] );
+	// Truffle.g:756:1: printlist2 returns [boolean newline, List elts] : ( ( test[null] COMMA test[null] )=>t+= test[expr_contextType.Load] ( options {k=2; } : COMMA t+= test[expr_contextType.Load] )* (trailcomma= COMMA )? |t+= test[expr_contextType.Load] );
 	public final TruffleParser.printlist2_return printlist2() throws RecognitionException {
 		TruffleParser.printlist2_return retval = new TruffleParser.printlist2_return();
 		retval.start = input.LT(1);
@@ -4631,7 +4630,7 @@ public class TruffleParser extends Parser {
 		PNode COMMA89_tree=null;
 
 		try {
-			// Truffle.g:761:5: ( ( test[null] COMMA test[null] )=>t+= test[expr_contextType.Load] ( options {k=2; } : COMMA t+= test[expr_contextType.Load] )* (trailcomma= COMMA )? |t+= test[expr_contextType.Load] )
+			// Truffle.g:758:5: ( ( test[null] COMMA test[null] )=>t+= test[expr_contextType.Load] ( options {k=2; } : COMMA t+= test[expr_contextType.Load] )* (trailcomma= COMMA )? |t+= test[expr_contextType.Load] )
 			int alt44=2;
 			int LA44_0 = input.LA(1);
 			if ( (LA44_0==NOT) ) {
@@ -4837,12 +4836,12 @@ public class TruffleParser extends Parser {
 
 			switch (alt44) {
 				case 1 :
-					// Truffle.g:761:7: ( test[null] COMMA test[null] )=>t+= test[expr_contextType.Load] ( options {k=2; } : COMMA t+= test[expr_contextType.Load] )* (trailcomma= COMMA )?
+					// Truffle.g:758:7: ( test[null] COMMA test[null] )=>t+= test[expr_contextType.Load] ( options {k=2; } : COMMA t+= test[expr_contextType.Load] )* (trailcomma= COMMA )?
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					pushFollow(FOLLOW_test_in_printlist22535);
+					pushFollow(FOLLOW_test_in_printlist22534);
 					t=test(expr_contextType.Load);
 					state._fsp--;
 					if (state.failed) return retval;
@@ -4850,7 +4849,7 @@ public class TruffleParser extends Parser {
 
 					if (list_t==null) list_t=new ArrayList<Object>();
 					list_t.add(t.getTree());
-					// Truffle.g:762:39: ( options {k=2; } : COMMA t+= test[expr_contextType.Load] )*
+					// Truffle.g:759:39: ( options {k=2; } : COMMA t+= test[expr_contextType.Load] )*
 					loop42:
 					while (true) {
 						int alt42=2;
@@ -4865,15 +4864,15 @@ public class TruffleParser extends Parser {
 
 						switch (alt42) {
 						case 1 :
-							// Truffle.g:762:56: COMMA t+= test[expr_contextType.Load]
+							// Truffle.g:759:56: COMMA t+= test[expr_contextType.Load]
 							{
-							COMMA89=(Token)match(input,COMMA,FOLLOW_COMMA_in_printlist22547); if (state.failed) return retval;
+							COMMA89=(Token)match(input,COMMA,FOLLOW_COMMA_in_printlist22546); if (state.failed) return retval;
 							if ( state.backtracking==0 ) {
 							COMMA89_tree = (PNode)adaptor.create(COMMA89);
 							adaptor.addChild(root_0, COMMA89_tree);
 							}
 
-							pushFollow(FOLLOW_test_in_printlist22551);
+							pushFollow(FOLLOW_test_in_printlist22550);
 							t=test(expr_contextType.Load);
 							state._fsp--;
 							if (state.failed) return retval;
@@ -4889,7 +4888,7 @@ public class TruffleParser extends Parser {
 						}
 					}
 
-					// Truffle.g:762:95: (trailcomma= COMMA )?
+					// Truffle.g:759:95: (trailcomma= COMMA )?
 					int alt43=2;
 					int LA43_0 = input.LA(1);
 					if ( (LA43_0==COMMA) ) {
@@ -4897,9 +4896,9 @@ public class TruffleParser extends Parser {
 					}
 					switch (alt43) {
 						case 1 :
-							// Truffle.g:762:96: trailcomma= COMMA
+							// Truffle.g:759:96: trailcomma= COMMA
 							{
-							trailcomma=(Token)match(input,COMMA,FOLLOW_COMMA_in_printlist22559); if (state.failed) return retval;
+							trailcomma=(Token)match(input,COMMA,FOLLOW_COMMA_in_printlist22558); if (state.failed) return retval;
 							if ( state.backtracking==0 ) {
 							trailcomma_tree = (PNode)adaptor.create(trailcomma);
 							adaptor.addChild(root_0, trailcomma_tree);
@@ -4920,12 +4919,12 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 2 :
-					// Truffle.g:770:7: t+= test[expr_contextType.Load]
+					// Truffle.g:767:7: t+= test[expr_contextType.Load]
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					pushFollow(FOLLOW_test_in_printlist22580);
+					pushFollow(FOLLOW_test_in_printlist22579);
 					t=test(expr_contextType.Load);
 					state._fsp--;
 					if (state.failed) return retval;
@@ -4971,7 +4970,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "del_stmt"
-	// Truffle.g:778:1: del_stmt : DELETE del_list ;
+	// Truffle.g:775:1: del_stmt : DELETE del_list ;
 	public final TruffleParser.del_stmt_return del_stmt() throws RecognitionException {
 		TruffleParser.del_stmt_return retval = new TruffleParser.del_stmt_return();
 		retval.start = input.LT(1);
@@ -4987,19 +4986,19 @@ public class TruffleParser extends Parser {
 		    StatementNode stype = null;
 
 		try {
-			// Truffle.g:785:5: ( DELETE del_list )
-			// Truffle.g:785:7: DELETE del_list
+			// Truffle.g:782:5: ( DELETE del_list )
+			// Truffle.g:782:7: DELETE del_list
 			{
 			root_0 = (PNode)adaptor.nil();
 
 
-			DELETE90=(Token)match(input,DELETE,FOLLOW_DELETE_in_del_stmt2617); if (state.failed) return retval;
+			DELETE90=(Token)match(input,DELETE,FOLLOW_DELETE_in_del_stmt2616); if (state.failed) return retval;
 			if ( state.backtracking==0 ) {
 			DELETE90_tree = (PNode)adaptor.create(DELETE90);
 			adaptor.addChild(root_0, DELETE90_tree);
 			}
 
-			pushFollow(FOLLOW_del_list_in_del_stmt2619);
+			pushFollow(FOLLOW_del_list_in_del_stmt2618);
 			del_list91=del_list();
 			state._fsp--;
 			if (state.failed) return retval;
@@ -5043,7 +5042,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "pass_stmt"
-	// Truffle.g:792:1: pass_stmt : PASS ;
+	// Truffle.g:789:1: pass_stmt : PASS ;
 	public final TruffleParser.pass_stmt_return pass_stmt() throws RecognitionException {
 		TruffleParser.pass_stmt_return retval = new TruffleParser.pass_stmt_return();
 		retval.start = input.LT(1);
@@ -5058,13 +5057,13 @@ public class TruffleParser extends Parser {
 		    StatementNode stype = null;
 
 		try {
-			// Truffle.g:799:5: ( PASS )
-			// Truffle.g:799:7: PASS
+			// Truffle.g:796:5: ( PASS )
+			// Truffle.g:796:7: PASS
 			{
 			root_0 = (PNode)adaptor.nil();
 
 
-			PASS92=(Token)match(input,PASS,FOLLOW_PASS_in_pass_stmt2655); if (state.failed) return retval;
+			PASS92=(Token)match(input,PASS,FOLLOW_PASS_in_pass_stmt2654); if (state.failed) return retval;
 			if ( state.backtracking==0 ) {
 			PASS92_tree = (PNode)adaptor.create(PASS92);
 			adaptor.addChild(root_0, PASS92_tree);
@@ -5108,7 +5107,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "flow_stmt"
-	// Truffle.g:806:1: flow_stmt : ( break_stmt | continue_stmt | return_stmt | raise_stmt | yield_stmt );
+	// Truffle.g:803:1: flow_stmt : ( break_stmt | continue_stmt | return_stmt | raise_stmt | yield_stmt );
 	public final TruffleParser.flow_stmt_return flow_stmt() throws RecognitionException {
 		TruffleParser.flow_stmt_return retval = new TruffleParser.flow_stmt_return();
 		retval.start = input.LT(1);
@@ -5123,7 +5122,7 @@ public class TruffleParser extends Parser {
 
 
 		try {
-			// Truffle.g:807:5: ( break_stmt | continue_stmt | return_stmt | raise_stmt | yield_stmt )
+			// Truffle.g:804:5: ( break_stmt | continue_stmt | return_stmt | raise_stmt | yield_stmt )
 			int alt45=5;
 			switch ( input.LA(1) ) {
 			case BREAK:
@@ -5159,12 +5158,12 @@ public class TruffleParser extends Parser {
 			}
 			switch (alt45) {
 				case 1 :
-					// Truffle.g:807:7: break_stmt
+					// Truffle.g:804:7: break_stmt
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					pushFollow(FOLLOW_break_stmt_in_flow_stmt2681);
+					pushFollow(FOLLOW_break_stmt_in_flow_stmt2680);
 					break_stmt93=break_stmt();
 					state._fsp--;
 					if (state.failed) return retval;
@@ -5173,12 +5172,12 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 2 :
-					// Truffle.g:808:7: continue_stmt
+					// Truffle.g:805:7: continue_stmt
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					pushFollow(FOLLOW_continue_stmt_in_flow_stmt2689);
+					pushFollow(FOLLOW_continue_stmt_in_flow_stmt2688);
 					continue_stmt94=continue_stmt();
 					state._fsp--;
 					if (state.failed) return retval;
@@ -5187,12 +5186,12 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 3 :
-					// Truffle.g:809:7: return_stmt
+					// Truffle.g:806:7: return_stmt
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					pushFollow(FOLLOW_return_stmt_in_flow_stmt2697);
+					pushFollow(FOLLOW_return_stmt_in_flow_stmt2696);
 					return_stmt95=return_stmt();
 					state._fsp--;
 					if (state.failed) return retval;
@@ -5201,12 +5200,12 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 4 :
-					// Truffle.g:810:7: raise_stmt
+					// Truffle.g:807:7: raise_stmt
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					pushFollow(FOLLOW_raise_stmt_in_flow_stmt2705);
+					pushFollow(FOLLOW_raise_stmt_in_flow_stmt2704);
 					raise_stmt96=raise_stmt();
 					state._fsp--;
 					if (state.failed) return retval;
@@ -5215,12 +5214,12 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 5 :
-					// Truffle.g:811:7: yield_stmt
+					// Truffle.g:808:7: yield_stmt
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					pushFollow(FOLLOW_yield_stmt_in_flow_stmt2713);
+					pushFollow(FOLLOW_yield_stmt_in_flow_stmt2712);
 					yield_stmt97=yield_stmt();
 					state._fsp--;
 					if (state.failed) return retval;
@@ -5260,7 +5259,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "break_stmt"
-	// Truffle.g:815:1: break_stmt : BREAK ;
+	// Truffle.g:812:1: break_stmt : BREAK ;
 	public final TruffleParser.break_stmt_return break_stmt() throws RecognitionException {
 		TruffleParser.break_stmt_return retval = new TruffleParser.break_stmt_return();
 		retval.start = input.LT(1);
@@ -5275,13 +5274,13 @@ public class TruffleParser extends Parser {
 		    StatementNode stype = null;
 
 		try {
-			// Truffle.g:822:5: ( BREAK )
-			// Truffle.g:822:7: BREAK
+			// Truffle.g:819:5: ( BREAK )
+			// Truffle.g:819:7: BREAK
 			{
 			root_0 = (PNode)adaptor.nil();
 
 
-			BREAK98=(Token)match(input,BREAK,FOLLOW_BREAK_in_break_stmt2741); if (state.failed) return retval;
+			BREAK98=(Token)match(input,BREAK,FOLLOW_BREAK_in_break_stmt2740); if (state.failed) return retval;
 			if ( state.backtracking==0 ) {
 			BREAK98_tree = (PNode)adaptor.create(BREAK98);
 			adaptor.addChild(root_0, BREAK98_tree);
@@ -5325,7 +5324,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "continue_stmt"
-	// Truffle.g:829:1: continue_stmt : CONTINUE ;
+	// Truffle.g:826:1: continue_stmt : CONTINUE ;
 	public final TruffleParser.continue_stmt_return continue_stmt() throws RecognitionException {
 		TruffleParser.continue_stmt_return retval = new TruffleParser.continue_stmt_return();
 		retval.start = input.LT(1);
@@ -5340,13 +5339,13 @@ public class TruffleParser extends Parser {
 		    StatementNode stype = null;
 
 		try {
-			// Truffle.g:836:5: ( CONTINUE )
-			// Truffle.g:836:7: CONTINUE
+			// Truffle.g:833:5: ( CONTINUE )
+			// Truffle.g:833:7: CONTINUE
 			{
 			root_0 = (PNode)adaptor.nil();
 
 
-			CONTINUE99=(Token)match(input,CONTINUE,FOLLOW_CONTINUE_in_continue_stmt2777); if (state.failed) return retval;
+			CONTINUE99=(Token)match(input,CONTINUE,FOLLOW_CONTINUE_in_continue_stmt2776); if (state.failed) return retval;
 			if ( state.backtracking==0 ) {
 			CONTINUE99_tree = (PNode)adaptor.create(CONTINUE99);
 			adaptor.addChild(root_0, CONTINUE99_tree);
@@ -5393,7 +5392,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "return_stmt"
-	// Truffle.g:846:1: return_stmt : RETURN ( testlist[expr_contextType.Load] |) ;
+	// Truffle.g:843:1: return_stmt : RETURN ( testlist[expr_contextType.Load] |) ;
 	public final TruffleParser.return_stmt_return return_stmt() throws RecognitionException {
 		TruffleParser.return_stmt_return retval = new TruffleParser.return_stmt_return();
 		retval.start = input.LT(1);
@@ -5409,19 +5408,19 @@ public class TruffleParser extends Parser {
 		    StatementNode stype = null;
 
 		try {
-			// Truffle.g:853:5: ( RETURN ( testlist[expr_contextType.Load] |) )
-			// Truffle.g:853:7: RETURN ( testlist[expr_contextType.Load] |)
+			// Truffle.g:850:5: ( RETURN ( testlist[expr_contextType.Load] |) )
+			// Truffle.g:850:7: RETURN ( testlist[expr_contextType.Load] |)
 			{
 			root_0 = (PNode)adaptor.nil();
 
 
-			RETURN100=(Token)match(input,RETURN,FOLLOW_RETURN_in_return_stmt2813); if (state.failed) return retval;
+			RETURN100=(Token)match(input,RETURN,FOLLOW_RETURN_in_return_stmt2812); if (state.failed) return retval;
 			if ( state.backtracking==0 ) {
 			RETURN100_tree = (PNode)adaptor.create(RETURN100);
 			adaptor.addChild(root_0, RETURN100_tree);
 			}
 
-			// Truffle.g:854:7: ( testlist[expr_contextType.Load] |)
+			// Truffle.g:851:7: ( testlist[expr_contextType.Load] |)
 			int alt46=2;
 			int LA46_0 = input.LA(1);
 			if ( (LA46_0==BACKQUOTE||(LA46_0 >= LBRACK && LA46_0 <= LCURLY)||(LA46_0 >= LPAREN && LA46_0 <= MINUS)||LA46_0==NAME||LA46_0==NOT||LA46_0==PLUS||LA46_0==TILDE) ) {
@@ -5446,9 +5445,9 @@ public class TruffleParser extends Parser {
 
 			switch (alt46) {
 				case 1 :
-					// Truffle.g:854:8: testlist[expr_contextType.Load]
+					// Truffle.g:851:8: testlist[expr_contextType.Load]
 					{
-					pushFollow(FOLLOW_testlist_in_return_stmt2822);
+					pushFollow(FOLLOW_testlist_in_return_stmt2821);
 					testlist101=testlist(expr_contextType.Load);
 					state._fsp--;
 					if (state.failed) return retval;
@@ -5460,7 +5459,7 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 2 :
-					// Truffle.g:859:8: 
+					// Truffle.g:856:8: 
 					{
 					if ( state.backtracking==0 ) {
 					           stype = actions.makeReturn(RETURN100, null);
@@ -5505,7 +5504,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "yield_stmt"
-	// Truffle.g:866:1: yield_stmt : yield_expr ;
+	// Truffle.g:863:1: yield_stmt : yield_expr ;
 	public final TruffleParser.yield_stmt_return yield_stmt() throws RecognitionException {
 		TruffleParser.yield_stmt_return retval = new TruffleParser.yield_stmt_return();
 		retval.start = input.LT(1);
@@ -5519,13 +5518,13 @@ public class TruffleParser extends Parser {
 		    PNode stype = null;
 
 		try {
-			// Truffle.g:873:5: ( yield_expr )
-			// Truffle.g:873:7: yield_expr
+			// Truffle.g:870:5: ( yield_expr )
+			// Truffle.g:870:7: yield_expr
 			{
 			root_0 = (PNode)adaptor.nil();
 
 
-			pushFollow(FOLLOW_yield_expr_in_yield_stmt2887);
+			pushFollow(FOLLOW_yield_expr_in_yield_stmt2886);
 			yield_expr102=yield_expr();
 			state._fsp--;
 			if (state.failed) return retval;
@@ -5569,7 +5568,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "raise_stmt"
-	// Truffle.g:880:1: raise_stmt : RAISE (t1= test[expr_contextType.Load] ( COMMA t2= test[expr_contextType.Load] ( COMMA t3= test[expr_contextType.Load] )? )? )? ;
+	// Truffle.g:877:1: raise_stmt : RAISE (t1= test[expr_contextType.Load] ( COMMA t2= test[expr_contextType.Load] ( COMMA t3= test[expr_contextType.Load] )? )? )? ;
 	public final TruffleParser.raise_stmt_return raise_stmt() throws RecognitionException {
 		TruffleParser.raise_stmt_return retval = new TruffleParser.raise_stmt_return();
 		retval.start = input.LT(1);
@@ -5591,19 +5590,19 @@ public class TruffleParser extends Parser {
 		    StatementNode stype = null;
 
 		try {
-			// Truffle.g:887:5: ( RAISE (t1= test[expr_contextType.Load] ( COMMA t2= test[expr_contextType.Load] ( COMMA t3= test[expr_contextType.Load] )? )? )? )
-			// Truffle.g:887:7: RAISE (t1= test[expr_contextType.Load] ( COMMA t2= test[expr_contextType.Load] ( COMMA t3= test[expr_contextType.Load] )? )? )?
+			// Truffle.g:884:5: ( RAISE (t1= test[expr_contextType.Load] ( COMMA t2= test[expr_contextType.Load] ( COMMA t3= test[expr_contextType.Load] )? )? )? )
+			// Truffle.g:884:7: RAISE (t1= test[expr_contextType.Load] ( COMMA t2= test[expr_contextType.Load] ( COMMA t3= test[expr_contextType.Load] )? )? )?
 			{
 			root_0 = (PNode)adaptor.nil();
 
 
-			RAISE103=(Token)match(input,RAISE,FOLLOW_RAISE_in_raise_stmt2923); if (state.failed) return retval;
+			RAISE103=(Token)match(input,RAISE,FOLLOW_RAISE_in_raise_stmt2922); if (state.failed) return retval;
 			if ( state.backtracking==0 ) {
 			RAISE103_tree = (PNode)adaptor.create(RAISE103);
 			adaptor.addChild(root_0, RAISE103_tree);
 			}
 
-			// Truffle.g:887:13: (t1= test[expr_contextType.Load] ( COMMA t2= test[expr_contextType.Load] ( COMMA t3= test[expr_contextType.Load] )? )? )?
+			// Truffle.g:884:13: (t1= test[expr_contextType.Load] ( COMMA t2= test[expr_contextType.Load] ( COMMA t3= test[expr_contextType.Load] )? )? )?
 			int alt49=2;
 			int LA49_0 = input.LA(1);
 			if ( (LA49_0==BACKQUOTE||(LA49_0 >= LBRACK && LA49_0 <= LCURLY)||(LA49_0 >= LPAREN && LA49_0 <= MINUS)||LA49_0==NAME||LA49_0==NOT||LA49_0==PLUS||LA49_0==TILDE) ) {
@@ -5617,15 +5616,15 @@ public class TruffleParser extends Parser {
 			}
 			switch (alt49) {
 				case 1 :
-					// Truffle.g:887:14: t1= test[expr_contextType.Load] ( COMMA t2= test[expr_contextType.Load] ( COMMA t3= test[expr_contextType.Load] )? )?
+					// Truffle.g:884:14: t1= test[expr_contextType.Load] ( COMMA t2= test[expr_contextType.Load] ( COMMA t3= test[expr_contextType.Load] )? )?
 					{
-					pushFollow(FOLLOW_test_in_raise_stmt2928);
+					pushFollow(FOLLOW_test_in_raise_stmt2927);
 					t1=test(expr_contextType.Load);
 					state._fsp--;
 					if (state.failed) return retval;
 					if ( state.backtracking==0 ) adaptor.addChild(root_0, t1.getTree());
 
-					// Truffle.g:887:45: ( COMMA t2= test[expr_contextType.Load] ( COMMA t3= test[expr_contextType.Load] )? )?
+					// Truffle.g:884:45: ( COMMA t2= test[expr_contextType.Load] ( COMMA t3= test[expr_contextType.Load] )? )?
 					int alt48=2;
 					int LA48_0 = input.LA(1);
 					if ( (LA48_0==COMMA) ) {
@@ -5633,21 +5632,21 @@ public class TruffleParser extends Parser {
 					}
 					switch (alt48) {
 						case 1 :
-							// Truffle.g:887:46: COMMA t2= test[expr_contextType.Load] ( COMMA t3= test[expr_contextType.Load] )?
+							// Truffle.g:884:46: COMMA t2= test[expr_contextType.Load] ( COMMA t3= test[expr_contextType.Load] )?
 							{
-							COMMA104=(Token)match(input,COMMA,FOLLOW_COMMA_in_raise_stmt2932); if (state.failed) return retval;
+							COMMA104=(Token)match(input,COMMA,FOLLOW_COMMA_in_raise_stmt2931); if (state.failed) return retval;
 							if ( state.backtracking==0 ) {
 							COMMA104_tree = (PNode)adaptor.create(COMMA104);
 							adaptor.addChild(root_0, COMMA104_tree);
 							}
 
-							pushFollow(FOLLOW_test_in_raise_stmt2936);
+							pushFollow(FOLLOW_test_in_raise_stmt2935);
 							t2=test(expr_contextType.Load);
 							state._fsp--;
 							if (state.failed) return retval;
 							if ( state.backtracking==0 ) adaptor.addChild(root_0, t2.getTree());
 
-							// Truffle.g:888:9: ( COMMA t3= test[expr_contextType.Load] )?
+							// Truffle.g:885:9: ( COMMA t3= test[expr_contextType.Load] )?
 							int alt47=2;
 							int LA47_0 = input.LA(1);
 							if ( (LA47_0==COMMA) ) {
@@ -5655,15 +5654,15 @@ public class TruffleParser extends Parser {
 							}
 							switch (alt47) {
 								case 1 :
-									// Truffle.g:888:10: COMMA t3= test[expr_contextType.Load]
+									// Truffle.g:885:10: COMMA t3= test[expr_contextType.Load]
 									{
-									COMMA105=(Token)match(input,COMMA,FOLLOW_COMMA_in_raise_stmt2948); if (state.failed) return retval;
+									COMMA105=(Token)match(input,COMMA,FOLLOW_COMMA_in_raise_stmt2947); if (state.failed) return retval;
 									if ( state.backtracking==0 ) {
 									COMMA105_tree = (PNode)adaptor.create(COMMA105);
 									adaptor.addChild(root_0, COMMA105_tree);
 									}
 
-									pushFollow(FOLLOW_test_in_raise_stmt2952);
+									pushFollow(FOLLOW_test_in_raise_stmt2951);
 									t3=test(expr_contextType.Load);
 									state._fsp--;
 									if (state.failed) return retval;
@@ -5722,7 +5721,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "import_stmt"
-	// Truffle.g:895:1: import_stmt : ( import_name | import_from );
+	// Truffle.g:892:1: import_stmt : ( import_name | import_from );
 	public final TruffleParser.import_stmt_return import_stmt() throws RecognitionException {
 		TruffleParser.import_stmt_return retval = new TruffleParser.import_stmt_return();
 		retval.start = input.LT(1);
@@ -5734,7 +5733,7 @@ public class TruffleParser extends Parser {
 
 
 		try {
-			// Truffle.g:896:5: ( import_name | import_from )
+			// Truffle.g:893:5: ( import_name | import_from )
 			int alt50=2;
 			int LA50_0 = input.LA(1);
 			if ( (LA50_0==IMPORT) ) {
@@ -5753,12 +5752,12 @@ public class TruffleParser extends Parser {
 
 			switch (alt50) {
 				case 1 :
-					// Truffle.g:896:7: import_name
+					// Truffle.g:893:7: import_name
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					pushFollow(FOLLOW_import_name_in_import_stmt2985);
+					pushFollow(FOLLOW_import_name_in_import_stmt2984);
 					import_name106=import_name();
 					state._fsp--;
 					if (state.failed) return retval;
@@ -5767,12 +5766,12 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 2 :
-					// Truffle.g:897:7: import_from
+					// Truffle.g:894:7: import_from
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					pushFollow(FOLLOW_import_from_in_import_stmt2993);
+					pushFollow(FOLLOW_import_from_in_import_stmt2992);
 					import_from107=import_from();
 					state._fsp--;
 					if (state.failed) return retval;
@@ -5812,7 +5811,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "import_name"
-	// Truffle.g:901:1: import_name : IMPORT dotted_as_names ;
+	// Truffle.g:898:1: import_name : IMPORT dotted_as_names ;
 	public final TruffleParser.import_name_return import_name() throws RecognitionException {
 		TruffleParser.import_name_return retval = new TruffleParser.import_name_return();
 		retval.start = input.LT(1);
@@ -5828,19 +5827,19 @@ public class TruffleParser extends Parser {
 		    StatementNode stype = null;
 
 		try {
-			// Truffle.g:908:5: ( IMPORT dotted_as_names )
-			// Truffle.g:908:7: IMPORT dotted_as_names
+			// Truffle.g:905:5: ( IMPORT dotted_as_names )
+			// Truffle.g:905:7: IMPORT dotted_as_names
 			{
 			root_0 = (PNode)adaptor.nil();
 
 
-			IMPORT108=(Token)match(input,IMPORT,FOLLOW_IMPORT_in_import_name3021); if (state.failed) return retval;
+			IMPORT108=(Token)match(input,IMPORT,FOLLOW_IMPORT_in_import_name3020); if (state.failed) return retval;
 			if ( state.backtracking==0 ) {
 			IMPORT108_tree = (PNode)adaptor.create(IMPORT108);
 			adaptor.addChild(root_0, IMPORT108_tree);
 			}
 
-			pushFollow(FOLLOW_dotted_as_names_in_import_name3023);
+			pushFollow(FOLLOW_dotted_as_names_in_import_name3022);
 			dotted_as_names109=dotted_as_names();
 			state._fsp--;
 			if (state.failed) return retval;
@@ -5884,7 +5883,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "import_from"
-	// Truffle.g:916:1: import_from : FROM ( (d+= DOT )* dotted_name | (d+= DOT )+ ) IMPORT ( STAR |i1= import_as_names | LPAREN i2= import_as_names ( COMMA )? RPAREN ) ;
+	// Truffle.g:913:1: import_from : FROM ( (d+= DOT )* dotted_name | (d+= DOT )+ ) IMPORT ( STAR |i1= import_as_names | LPAREN i2= import_as_names ( COMMA )? RPAREN ) ;
 	public final TruffleParser.import_from_return import_from() throws RecognitionException {
 		TruffleParser.import_from_return retval = new TruffleParser.import_from_return();
 		retval.start = input.LT(1);
@@ -5916,26 +5915,26 @@ public class TruffleParser extends Parser {
 		//    actions.beginScope();
 
 		try {
-			// Truffle.g:924:5: ( FROM ( (d+= DOT )* dotted_name | (d+= DOT )+ ) IMPORT ( STAR |i1= import_as_names | LPAREN i2= import_as_names ( COMMA )? RPAREN ) )
-			// Truffle.g:924:7: FROM ( (d+= DOT )* dotted_name | (d+= DOT )+ ) IMPORT ( STAR |i1= import_as_names | LPAREN i2= import_as_names ( COMMA )? RPAREN )
+			// Truffle.g:921:5: ( FROM ( (d+= DOT )* dotted_name | (d+= DOT )+ ) IMPORT ( STAR |i1= import_as_names | LPAREN i2= import_as_names ( COMMA )? RPAREN ) )
+			// Truffle.g:921:7: FROM ( (d+= DOT )* dotted_name | (d+= DOT )+ ) IMPORT ( STAR |i1= import_as_names | LPAREN i2= import_as_names ( COMMA )? RPAREN )
 			{
 			root_0 = (PNode)adaptor.nil();
 
 
-			FROM110=(Token)match(input,FROM,FOLLOW_FROM_in_import_from3060); if (state.failed) return retval;
+			FROM110=(Token)match(input,FROM,FOLLOW_FROM_in_import_from3059); if (state.failed) return retval;
 			if ( state.backtracking==0 ) {
 			FROM110_tree = (PNode)adaptor.create(FROM110);
 			adaptor.addChild(root_0, FROM110_tree);
 			}
 
-			// Truffle.g:924:12: ( (d+= DOT )* dotted_name | (d+= DOT )+ )
+			// Truffle.g:921:12: ( (d+= DOT )* dotted_name | (d+= DOT )+ )
 			int alt53=2;
 			alt53 = dfa53.predict(input);
 			switch (alt53) {
 				case 1 :
-					// Truffle.g:924:13: (d+= DOT )* dotted_name
+					// Truffle.g:921:13: (d+= DOT )* dotted_name
 					{
-					// Truffle.g:924:14: (d+= DOT )*
+					// Truffle.g:921:14: (d+= DOT )*
 					loop51:
 					while (true) {
 						int alt51=2;
@@ -5946,9 +5945,9 @@ public class TruffleParser extends Parser {
 
 						switch (alt51) {
 						case 1 :
-							// Truffle.g:924:14: d+= DOT
+							// Truffle.g:921:14: d+= DOT
 							{
-							d=(Token)match(input,DOT,FOLLOW_DOT_in_import_from3065); if (state.failed) return retval;
+							d=(Token)match(input,DOT,FOLLOW_DOT_in_import_from3064); if (state.failed) return retval;
 							if ( state.backtracking==0 ) {
 							d_tree = (PNode)adaptor.create(d);
 							adaptor.addChild(root_0, d_tree);
@@ -5964,7 +5963,7 @@ public class TruffleParser extends Parser {
 						}
 					}
 
-					pushFollow(FOLLOW_dotted_name_in_import_from3068);
+					pushFollow(FOLLOW_dotted_name_in_import_from3067);
 					dotted_name111=dotted_name();
 					state._fsp--;
 					if (state.failed) return retval;
@@ -5973,9 +5972,9 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 2 :
-					// Truffle.g:924:35: (d+= DOT )+
+					// Truffle.g:921:35: (d+= DOT )+
 					{
-					// Truffle.g:924:36: (d+= DOT )+
+					// Truffle.g:921:36: (d+= DOT )+
 					int cnt52=0;
 					loop52:
 					while (true) {
@@ -5987,9 +5986,9 @@ public class TruffleParser extends Parser {
 
 						switch (alt52) {
 						case 1 :
-							// Truffle.g:924:36: d+= DOT
+							// Truffle.g:921:36: d+= DOT
 							{
-							d=(Token)match(input,DOT,FOLLOW_DOT_in_import_from3074); if (state.failed) return retval;
+							d=(Token)match(input,DOT,FOLLOW_DOT_in_import_from3073); if (state.failed) return retval;
 							if ( state.backtracking==0 ) {
 							d_tree = (PNode)adaptor.create(d);
 							adaptor.addChild(root_0, d_tree);
@@ -6014,13 +6013,13 @@ public class TruffleParser extends Parser {
 
 			}
 
-			IMPORT112=(Token)match(input,IMPORT,FOLLOW_IMPORT_in_import_from3078); if (state.failed) return retval;
+			IMPORT112=(Token)match(input,IMPORT,FOLLOW_IMPORT_in_import_from3077); if (state.failed) return retval;
 			if ( state.backtracking==0 ) {
 			IMPORT112_tree = (PNode)adaptor.create(IMPORT112);
 			adaptor.addChild(root_0, IMPORT112_tree);
 			}
 
-			// Truffle.g:925:9: ( STAR |i1= import_as_names | LPAREN i2= import_as_names ( COMMA )? RPAREN )
+			// Truffle.g:922:9: ( STAR |i1= import_as_names | LPAREN i2= import_as_names ( COMMA )? RPAREN )
 			int alt55=3;
 			switch ( input.LA(1) ) {
 			case STAR:
@@ -6046,9 +6045,9 @@ public class TruffleParser extends Parser {
 			}
 			switch (alt55) {
 				case 1 :
-					// Truffle.g:925:10: STAR
+					// Truffle.g:922:10: STAR
 					{
-					STAR113=(Token)match(input,STAR,FOLLOW_STAR_in_import_from3089); if (state.failed) return retval;
+					STAR113=(Token)match(input,STAR,FOLLOW_STAR_in_import_from3088); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					STAR113_tree = (PNode)adaptor.create(STAR113);
 					adaptor.addChild(root_0, STAR113_tree);
@@ -6062,9 +6061,9 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 2 :
-					// Truffle.g:931:11: i1= import_as_names
+					// Truffle.g:928:11: i1= import_as_names
 					{
-					pushFollow(FOLLOW_import_as_names_in_import_from3114);
+					pushFollow(FOLLOW_import_as_names_in_import_from3113);
 					i1=import_as_names();
 					state._fsp--;
 					if (state.failed) return retval;
@@ -6091,21 +6090,21 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 3 :
-					// Truffle.g:950:11: LPAREN i2= import_as_names ( COMMA )? RPAREN
+					// Truffle.g:947:11: LPAREN i2= import_as_names ( COMMA )? RPAREN
 					{
-					LPAREN114=(Token)match(input,LPAREN,FOLLOW_LPAREN_in_import_from3137); if (state.failed) return retval;
+					LPAREN114=(Token)match(input,LPAREN,FOLLOW_LPAREN_in_import_from3136); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					LPAREN114_tree = (PNode)adaptor.create(LPAREN114);
 					adaptor.addChild(root_0, LPAREN114_tree);
 					}
 
-					pushFollow(FOLLOW_import_as_names_in_import_from3141);
+					pushFollow(FOLLOW_import_as_names_in_import_from3140);
 					i2=import_as_names();
 					state._fsp--;
 					if (state.failed) return retval;
 					if ( state.backtracking==0 ) adaptor.addChild(root_0, i2.getTree());
 
-					// Truffle.g:950:37: ( COMMA )?
+					// Truffle.g:947:37: ( COMMA )?
 					int alt54=2;
 					int LA54_0 = input.LA(1);
 					if ( (LA54_0==COMMA) ) {
@@ -6113,9 +6112,9 @@ public class TruffleParser extends Parser {
 					}
 					switch (alt54) {
 						case 1 :
-							// Truffle.g:950:37: COMMA
+							// Truffle.g:947:37: COMMA
 							{
-							COMMA115=(Token)match(input,COMMA,FOLLOW_COMMA_in_import_from3143); if (state.failed) return retval;
+							COMMA115=(Token)match(input,COMMA,FOLLOW_COMMA_in_import_from3142); if (state.failed) return retval;
 							if ( state.backtracking==0 ) {
 							COMMA115_tree = (PNode)adaptor.create(COMMA115);
 							adaptor.addChild(root_0, COMMA115_tree);
@@ -6126,7 +6125,7 @@ public class TruffleParser extends Parser {
 
 					}
 
-					RPAREN116=(Token)match(input,RPAREN,FOLLOW_RPAREN_in_import_from3146); if (state.failed) return retval;
+					RPAREN116=(Token)match(input,RPAREN,FOLLOW_RPAREN_in_import_from3145); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					RPAREN116_tree = (PNode)adaptor.create(RPAREN116);
 					adaptor.addChild(root_0, RPAREN116_tree);
@@ -6193,7 +6192,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "import_as_names"
-	// Truffle.g:975:1: import_as_names returns [List atypes] :n+= import_as_name ( COMMA !n+= import_as_name )* ;
+	// Truffle.g:972:1: import_as_names returns [List atypes] :n+= import_as_name ( COMMA !n+= import_as_name )* ;
 	public final TruffleParser.import_as_names_return import_as_names() throws RecognitionException {
 		TruffleParser.import_as_names_return retval = new TruffleParser.import_as_names_return();
 		retval.start = input.LT(1);
@@ -6206,13 +6205,13 @@ public class TruffleParser extends Parser {
 		PNode COMMA117_tree=null;
 
 		try {
-			// Truffle.g:977:5: (n+= import_as_name ( COMMA !n+= import_as_name )* )
-			// Truffle.g:977:7: n+= import_as_name ( COMMA !n+= import_as_name )*
+			// Truffle.g:974:5: (n+= import_as_name ( COMMA !n+= import_as_name )* )
+			// Truffle.g:974:7: n+= import_as_name ( COMMA !n+= import_as_name )*
 			{
 			root_0 = (PNode)adaptor.nil();
 
 
-			pushFollow(FOLLOW_import_as_name_in_import_as_names3195);
+			pushFollow(FOLLOW_import_as_name_in_import_as_names3194);
 			n=import_as_name();
 			state._fsp--;
 			if (state.failed) return retval;
@@ -6220,7 +6219,7 @@ public class TruffleParser extends Parser {
 
 			if (list_n==null) list_n=new ArrayList<Object>();
 			list_n.add(n.getTree());
-			// Truffle.g:977:25: ( COMMA !n+= import_as_name )*
+			// Truffle.g:974:25: ( COMMA !n+= import_as_name )*
 			loop56:
 			while (true) {
 				int alt56=2;
@@ -6235,10 +6234,10 @@ public class TruffleParser extends Parser {
 
 				switch (alt56) {
 				case 1 :
-					// Truffle.g:977:26: COMMA !n+= import_as_name
+					// Truffle.g:974:26: COMMA !n+= import_as_name
 					{
-					COMMA117=(Token)match(input,COMMA,FOLLOW_COMMA_in_import_as_names3198); if (state.failed) return retval;
-					pushFollow(FOLLOW_import_as_name_in_import_as_names3203);
+					COMMA117=(Token)match(input,COMMA,FOLLOW_COMMA_in_import_as_names3197); if (state.failed) return retval;
+					pushFollow(FOLLOW_import_as_name_in_import_as_names3202);
 					n=import_as_name();
 					state._fsp--;
 					if (state.failed) return retval;
@@ -6290,7 +6289,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "import_as_name"
-	// Truffle.g:984:1: import_as_name returns [PNode atype] : name= NAME ( AS asname= NAME )? ;
+	// Truffle.g:981:1: import_as_name returns [PNode atype] : name= NAME ( AS asname= NAME )? ;
 	public final TruffleParser.import_as_name_return import_as_name() throws RecognitionException {
 		TruffleParser.import_as_name_return retval = new TruffleParser.import_as_name_return();
 		retval.start = input.LT(1);
@@ -6306,19 +6305,19 @@ public class TruffleParser extends Parser {
 		PNode AS118_tree=null;
 
 		try {
-			// Truffle.g:989:5: (name= NAME ( AS asname= NAME )? )
-			// Truffle.g:989:7: name= NAME ( AS asname= NAME )?
+			// Truffle.g:986:5: (name= NAME ( AS asname= NAME )? )
+			// Truffle.g:986:7: name= NAME ( AS asname= NAME )?
 			{
 			root_0 = (PNode)adaptor.nil();
 
 
-			name=(Token)match(input,NAME,FOLLOW_NAME_in_import_as_name3244); if (state.failed) return retval;
+			name=(Token)match(input,NAME,FOLLOW_NAME_in_import_as_name3243); if (state.failed) return retval;
 			if ( state.backtracking==0 ) {
 			name_tree = (PNode)adaptor.create(name);
 			adaptor.addChild(root_0, name_tree);
 			}
 
-			// Truffle.g:989:17: ( AS asname= NAME )?
+			// Truffle.g:986:17: ( AS asname= NAME )?
 			int alt57=2;
 			int LA57_0 = input.LA(1);
 			if ( (LA57_0==AS) ) {
@@ -6326,15 +6325,15 @@ public class TruffleParser extends Parser {
 			}
 			switch (alt57) {
 				case 1 :
-					// Truffle.g:989:18: AS asname= NAME
+					// Truffle.g:986:18: AS asname= NAME
 					{
-					AS118=(Token)match(input,AS,FOLLOW_AS_in_import_as_name3247); if (state.failed) return retval;
+					AS118=(Token)match(input,AS,FOLLOW_AS_in_import_as_name3246); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					AS118_tree = (PNode)adaptor.create(AS118);
 					adaptor.addChild(root_0, AS118_tree);
 					}
 
-					asname=(Token)match(input,NAME,FOLLOW_NAME_in_import_as_name3251); if (state.failed) return retval;
+					asname=(Token)match(input,NAME,FOLLOW_NAME_in_import_as_name3250); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					asname_tree = (PNode)adaptor.create(asname);
 					adaptor.addChild(root_0, asname_tree);
@@ -6384,7 +6383,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "dotted_as_name"
-	// Truffle.g:997:1: dotted_as_name returns [PAlias atype] : dotted_name ( AS asname= NAME )? ;
+	// Truffle.g:994:1: dotted_as_name returns [PAlias atype] : dotted_name ( AS asname= NAME )? ;
 	public final TruffleParser.dotted_as_name_return dotted_as_name() throws RecognitionException {
 		TruffleParser.dotted_as_name_return retval = new TruffleParser.dotted_as_name_return();
 		retval.start = input.LT(1);
@@ -6399,19 +6398,19 @@ public class TruffleParser extends Parser {
 		PNode AS120_tree=null;
 
 		try {
-			// Truffle.g:1002:5: ( dotted_name ( AS asname= NAME )? )
-			// Truffle.g:1002:7: dotted_name ( AS asname= NAME )?
+			// Truffle.g:999:5: ( dotted_name ( AS asname= NAME )? )
+			// Truffle.g:999:7: dotted_name ( AS asname= NAME )?
 			{
 			root_0 = (PNode)adaptor.nil();
 
 
-			pushFollow(FOLLOW_dotted_name_in_dotted_as_name3291);
+			pushFollow(FOLLOW_dotted_name_in_dotted_as_name3290);
 			dotted_name119=dotted_name();
 			state._fsp--;
 			if (state.failed) return retval;
 			if ( state.backtracking==0 ) adaptor.addChild(root_0, dotted_name119.getTree());
 
-			// Truffle.g:1002:19: ( AS asname= NAME )?
+			// Truffle.g:999:19: ( AS asname= NAME )?
 			int alt58=2;
 			int LA58_0 = input.LA(1);
 			if ( (LA58_0==AS) ) {
@@ -6419,15 +6418,15 @@ public class TruffleParser extends Parser {
 			}
 			switch (alt58) {
 				case 1 :
-					// Truffle.g:1002:20: AS asname= NAME
+					// Truffle.g:999:20: AS asname= NAME
 					{
-					AS120=(Token)match(input,AS,FOLLOW_AS_in_dotted_as_name3294); if (state.failed) return retval;
+					AS120=(Token)match(input,AS,FOLLOW_AS_in_dotted_as_name3293); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					AS120_tree = (PNode)adaptor.create(AS120);
 					adaptor.addChild(root_0, AS120_tree);
 					}
 
-					asname=(Token)match(input,NAME,FOLLOW_NAME_in_dotted_as_name3298); if (state.failed) return retval;
+					asname=(Token)match(input,NAME,FOLLOW_NAME_in_dotted_as_name3297); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					asname_tree = (PNode)adaptor.create(asname);
 					adaptor.addChild(root_0, asname_tree);
@@ -6477,7 +6476,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "dotted_as_names"
-	// Truffle.g:1009:1: dotted_as_names returns [List atypes] :d+= dotted_as_name ( COMMA !d+= dotted_as_name )* ;
+	// Truffle.g:1006:1: dotted_as_names returns [List atypes] :d+= dotted_as_name ( COMMA !d+= dotted_as_name )* ;
 	public final TruffleParser.dotted_as_names_return dotted_as_names() throws RecognitionException {
 		TruffleParser.dotted_as_names_return retval = new TruffleParser.dotted_as_names_return();
 		retval.start = input.LT(1);
@@ -6490,13 +6489,13 @@ public class TruffleParser extends Parser {
 		PNode COMMA121_tree=null;
 
 		try {
-			// Truffle.g:1011:5: (d+= dotted_as_name ( COMMA !d+= dotted_as_name )* )
-			// Truffle.g:1011:7: d+= dotted_as_name ( COMMA !d+= dotted_as_name )*
+			// Truffle.g:1008:5: (d+= dotted_as_name ( COMMA !d+= dotted_as_name )* )
+			// Truffle.g:1008:7: d+= dotted_as_name ( COMMA !d+= dotted_as_name )*
 			{
 			root_0 = (PNode)adaptor.nil();
 
 
-			pushFollow(FOLLOW_dotted_as_name_in_dotted_as_names3334);
+			pushFollow(FOLLOW_dotted_as_name_in_dotted_as_names3333);
 			d=dotted_as_name();
 			state._fsp--;
 			if (state.failed) return retval;
@@ -6504,7 +6503,7 @@ public class TruffleParser extends Parser {
 
 			if (list_d==null) list_d=new ArrayList<Object>();
 			list_d.add(d.getTree());
-			// Truffle.g:1011:25: ( COMMA !d+= dotted_as_name )*
+			// Truffle.g:1008:25: ( COMMA !d+= dotted_as_name )*
 			loop59:
 			while (true) {
 				int alt59=2;
@@ -6515,10 +6514,10 @@ public class TruffleParser extends Parser {
 
 				switch (alt59) {
 				case 1 :
-					// Truffle.g:1011:26: COMMA !d+= dotted_as_name
+					// Truffle.g:1008:26: COMMA !d+= dotted_as_name
 					{
-					COMMA121=(Token)match(input,COMMA,FOLLOW_COMMA_in_dotted_as_names3337); if (state.failed) return retval;
-					pushFollow(FOLLOW_dotted_as_name_in_dotted_as_names3342);
+					COMMA121=(Token)match(input,COMMA,FOLLOW_COMMA_in_dotted_as_names3336); if (state.failed) return retval;
+					pushFollow(FOLLOW_dotted_as_name_in_dotted_as_names3341);
 					d=dotted_as_name();
 					state._fsp--;
 					if (state.failed) return retval;
@@ -6570,7 +6569,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "dotted_name"
-	// Truffle.g:1018:1: dotted_name returns [List<PNode> names] : NAME ( DOT dn+= attr )* ;
+	// Truffle.g:1015:1: dotted_name returns [List<PNode> names] : NAME ( DOT dn+= attr )* ;
 	public final TruffleParser.dotted_name_return dotted_name() throws RecognitionException {
 		TruffleParser.dotted_name_return retval = new TruffleParser.dotted_name_return();
 		retval.start = input.LT(1);
@@ -6585,19 +6584,19 @@ public class TruffleParser extends Parser {
 		PNode DOT123_tree=null;
 
 		try {
-			// Truffle.g:1020:5: ( NAME ( DOT dn+= attr )* )
-			// Truffle.g:1020:7: NAME ( DOT dn+= attr )*
+			// Truffle.g:1017:5: ( NAME ( DOT dn+= attr )* )
+			// Truffle.g:1017:7: NAME ( DOT dn+= attr )*
 			{
 			root_0 = (PNode)adaptor.nil();
 
 
-			NAME122=(Token)match(input,NAME,FOLLOW_NAME_in_dotted_name3376); if (state.failed) return retval;
+			NAME122=(Token)match(input,NAME,FOLLOW_NAME_in_dotted_name3375); if (state.failed) return retval;
 			if ( state.backtracking==0 ) {
 			NAME122_tree = (PNode)adaptor.create(NAME122);
 			adaptor.addChild(root_0, NAME122_tree);
 			}
 
-			// Truffle.g:1020:12: ( DOT dn+= attr )*
+			// Truffle.g:1017:12: ( DOT dn+= attr )*
 			loop60:
 			while (true) {
 				int alt60=2;
@@ -6608,15 +6607,15 @@ public class TruffleParser extends Parser {
 
 				switch (alt60) {
 				case 1 :
-					// Truffle.g:1020:13: DOT dn+= attr
+					// Truffle.g:1017:13: DOT dn+= attr
 					{
-					DOT123=(Token)match(input,DOT,FOLLOW_DOT_in_dotted_name3379); if (state.failed) return retval;
+					DOT123=(Token)match(input,DOT,FOLLOW_DOT_in_dotted_name3378); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					DOT123_tree = (PNode)adaptor.create(DOT123);
 					adaptor.addChild(root_0, DOT123_tree);
 					}
 
-					pushFollow(FOLLOW_attr_in_dotted_name3383);
+					pushFollow(FOLLOW_attr_in_dotted_name3382);
 					dn=attr();
 					state._fsp--;
 					if (state.failed) return retval;
@@ -6667,7 +6666,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "global_stmt"
-	// Truffle.g:1027:1: global_stmt : GLOBAL n+= NAME ( COMMA n+= NAME )* ;
+	// Truffle.g:1024:1: global_stmt : GLOBAL n+= NAME ( COMMA n+= NAME )* ;
 	public final TruffleParser.global_stmt_return global_stmt() throws RecognitionException {
 		TruffleParser.global_stmt_return retval = new TruffleParser.global_stmt_return();
 		retval.start = input.LT(1);
@@ -6687,19 +6686,19 @@ public class TruffleParser extends Parser {
 		    PNode stype = null;
 
 		try {
-			// Truffle.g:1034:5: ( GLOBAL n+= NAME ( COMMA n+= NAME )* )
-			// Truffle.g:1034:7: GLOBAL n+= NAME ( COMMA n+= NAME )*
+			// Truffle.g:1031:5: ( GLOBAL n+= NAME ( COMMA n+= NAME )* )
+			// Truffle.g:1031:7: GLOBAL n+= NAME ( COMMA n+= NAME )*
 			{
 			root_0 = (PNode)adaptor.nil();
 
 
-			GLOBAL124=(Token)match(input,GLOBAL,FOLLOW_GLOBAL_in_global_stmt3419); if (state.failed) return retval;
+			GLOBAL124=(Token)match(input,GLOBAL,FOLLOW_GLOBAL_in_global_stmt3418); if (state.failed) return retval;
 			if ( state.backtracking==0 ) {
 			GLOBAL124_tree = (PNode)adaptor.create(GLOBAL124);
 			adaptor.addChild(root_0, GLOBAL124_tree);
 			}
 
-			n=(Token)match(input,NAME,FOLLOW_NAME_in_global_stmt3423); if (state.failed) return retval;
+			n=(Token)match(input,NAME,FOLLOW_NAME_in_global_stmt3422); if (state.failed) return retval;
 			if ( state.backtracking==0 ) {
 			n_tree = (PNode)adaptor.create(n);
 			adaptor.addChild(root_0, n_tree);
@@ -6707,7 +6706,7 @@ public class TruffleParser extends Parser {
 
 			if (list_n==null) list_n=new ArrayList<Object>();
 			list_n.add(n);
-			// Truffle.g:1034:22: ( COMMA n+= NAME )*
+			// Truffle.g:1031:22: ( COMMA n+= NAME )*
 			loop61:
 			while (true) {
 				int alt61=2;
@@ -6718,15 +6717,15 @@ public class TruffleParser extends Parser {
 
 				switch (alt61) {
 				case 1 :
-					// Truffle.g:1034:23: COMMA n+= NAME
+					// Truffle.g:1031:23: COMMA n+= NAME
 					{
-					COMMA125=(Token)match(input,COMMA,FOLLOW_COMMA_in_global_stmt3426); if (state.failed) return retval;
+					COMMA125=(Token)match(input,COMMA,FOLLOW_COMMA_in_global_stmt3425); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					COMMA125_tree = (PNode)adaptor.create(COMMA125);
 					adaptor.addChild(root_0, COMMA125_tree);
 					}
 
-					n=(Token)match(input,NAME,FOLLOW_NAME_in_global_stmt3430); if (state.failed) return retval;
+					n=(Token)match(input,NAME,FOLLOW_NAME_in_global_stmt3429); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					n_tree = (PNode)adaptor.create(n);
 					adaptor.addChild(root_0, n_tree);
@@ -6780,7 +6779,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "exec_stmt"
-	// Truffle.g:1041:1: exec_stmt : EXEC expr[expr_contextType.Load] ( IN t1= test[expr_contextType.Load] ( COMMA t2= test[expr_contextType.Load] )? )? ;
+	// Truffle.g:1038:1: exec_stmt : EXEC expr[expr_contextType.Load] ( IN t1= test[expr_contextType.Load] ( COMMA t2= test[expr_contextType.Load] )? )? ;
 	public final TruffleParser.exec_stmt_return exec_stmt() throws RecognitionException {
 		TruffleParser.exec_stmt_return retval = new TruffleParser.exec_stmt_return();
 		retval.start = input.LT(1);
@@ -6802,25 +6801,25 @@ public class TruffleParser extends Parser {
 		    StatementNode stype = null;
 
 		try {
-			// Truffle.g:1048:5: ( EXEC expr[expr_contextType.Load] ( IN t1= test[expr_contextType.Load] ( COMMA t2= test[expr_contextType.Load] )? )? )
-			// Truffle.g:1048:7: EXEC expr[expr_contextType.Load] ( IN t1= test[expr_contextType.Load] ( COMMA t2= test[expr_contextType.Load] )? )?
+			// Truffle.g:1045:5: ( EXEC expr[expr_contextType.Load] ( IN t1= test[expr_contextType.Load] ( COMMA t2= test[expr_contextType.Load] )? )? )
+			// Truffle.g:1045:7: EXEC expr[expr_contextType.Load] ( IN t1= test[expr_contextType.Load] ( COMMA t2= test[expr_contextType.Load] )? )?
 			{
 			root_0 = (PNode)adaptor.nil();
 
 
-			EXEC126=(Token)match(input,EXEC,FOLLOW_EXEC_in_exec_stmt3468); if (state.failed) return retval;
+			EXEC126=(Token)match(input,EXEC,FOLLOW_EXEC_in_exec_stmt3467); if (state.failed) return retval;
 			if ( state.backtracking==0 ) {
 			EXEC126_tree = (PNode)adaptor.create(EXEC126);
 			adaptor.addChild(root_0, EXEC126_tree);
 			}
 
-			pushFollow(FOLLOW_expr_in_exec_stmt3470);
+			pushFollow(FOLLOW_expr_in_exec_stmt3469);
 			expr127=expr(expr_contextType.Load);
 			state._fsp--;
 			if (state.failed) return retval;
 			if ( state.backtracking==0 ) adaptor.addChild(root_0, expr127.getTree());
 
-			// Truffle.g:1048:40: ( IN t1= test[expr_contextType.Load] ( COMMA t2= test[expr_contextType.Load] )? )?
+			// Truffle.g:1045:40: ( IN t1= test[expr_contextType.Load] ( COMMA t2= test[expr_contextType.Load] )? )?
 			int alt63=2;
 			int LA63_0 = input.LA(1);
 			if ( (LA63_0==IN) ) {
@@ -6828,21 +6827,21 @@ public class TruffleParser extends Parser {
 			}
 			switch (alt63) {
 				case 1 :
-					// Truffle.g:1048:41: IN t1= test[expr_contextType.Load] ( COMMA t2= test[expr_contextType.Load] )?
+					// Truffle.g:1045:41: IN t1= test[expr_contextType.Load] ( COMMA t2= test[expr_contextType.Load] )?
 					{
-					IN128=(Token)match(input,IN,FOLLOW_IN_in_exec_stmt3474); if (state.failed) return retval;
+					IN128=(Token)match(input,IN,FOLLOW_IN_in_exec_stmt3473); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					IN128_tree = (PNode)adaptor.create(IN128);
 					adaptor.addChild(root_0, IN128_tree);
 					}
 
-					pushFollow(FOLLOW_test_in_exec_stmt3478);
+					pushFollow(FOLLOW_test_in_exec_stmt3477);
 					t1=test(expr_contextType.Load);
 					state._fsp--;
 					if (state.failed) return retval;
 					if ( state.backtracking==0 ) adaptor.addChild(root_0, t1.getTree());
 
-					// Truffle.g:1048:75: ( COMMA t2= test[expr_contextType.Load] )?
+					// Truffle.g:1045:75: ( COMMA t2= test[expr_contextType.Load] )?
 					int alt62=2;
 					int LA62_0 = input.LA(1);
 					if ( (LA62_0==COMMA) ) {
@@ -6850,15 +6849,15 @@ public class TruffleParser extends Parser {
 					}
 					switch (alt62) {
 						case 1 :
-							// Truffle.g:1048:76: COMMA t2= test[expr_contextType.Load]
+							// Truffle.g:1045:76: COMMA t2= test[expr_contextType.Load]
 							{
-							COMMA129=(Token)match(input,COMMA,FOLLOW_COMMA_in_exec_stmt3482); if (state.failed) return retval;
+							COMMA129=(Token)match(input,COMMA,FOLLOW_COMMA_in_exec_stmt3481); if (state.failed) return retval;
 							if ( state.backtracking==0 ) {
 							COMMA129_tree = (PNode)adaptor.create(COMMA129);
 							adaptor.addChild(root_0, COMMA129_tree);
 							}
 
-							pushFollow(FOLLOW_test_in_exec_stmt3486);
+							pushFollow(FOLLOW_test_in_exec_stmt3485);
 							t2=test(expr_contextType.Load);
 							state._fsp--;
 							if (state.failed) return retval;
@@ -6912,7 +6911,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "assert_stmt"
-	// Truffle.g:1055:1: assert_stmt : ASSERT t1= test[expr_contextType.Load] ( COMMA t2= test[expr_contextType.Load] )? ;
+	// Truffle.g:1052:1: assert_stmt : ASSERT t1= test[expr_contextType.Load] ( COMMA t2= test[expr_contextType.Load] )? ;
 	public final TruffleParser.assert_stmt_return assert_stmt() throws RecognitionException {
 		TruffleParser.assert_stmt_return retval = new TruffleParser.assert_stmt_return();
 		retval.start = input.LT(1);
@@ -6931,25 +6930,25 @@ public class TruffleParser extends Parser {
 		    StatementNode stype = null;
 
 		try {
-			// Truffle.g:1062:5: ( ASSERT t1= test[expr_contextType.Load] ( COMMA t2= test[expr_contextType.Load] )? )
-			// Truffle.g:1062:7: ASSERT t1= test[expr_contextType.Load] ( COMMA t2= test[expr_contextType.Load] )?
+			// Truffle.g:1059:5: ( ASSERT t1= test[expr_contextType.Load] ( COMMA t2= test[expr_contextType.Load] )? )
+			// Truffle.g:1059:7: ASSERT t1= test[expr_contextType.Load] ( COMMA t2= test[expr_contextType.Load] )?
 			{
 			root_0 = (PNode)adaptor.nil();
 
 
-			ASSERT130=(Token)match(input,ASSERT,FOLLOW_ASSERT_in_assert_stmt3527); if (state.failed) return retval;
+			ASSERT130=(Token)match(input,ASSERT,FOLLOW_ASSERT_in_assert_stmt3526); if (state.failed) return retval;
 			if ( state.backtracking==0 ) {
 			ASSERT130_tree = (PNode)adaptor.create(ASSERT130);
 			adaptor.addChild(root_0, ASSERT130_tree);
 			}
 
-			pushFollow(FOLLOW_test_in_assert_stmt3531);
+			pushFollow(FOLLOW_test_in_assert_stmt3530);
 			t1=test(expr_contextType.Load);
 			state._fsp--;
 			if (state.failed) return retval;
 			if ( state.backtracking==0 ) adaptor.addChild(root_0, t1.getTree());
 
-			// Truffle.g:1062:45: ( COMMA t2= test[expr_contextType.Load] )?
+			// Truffle.g:1059:45: ( COMMA t2= test[expr_contextType.Load] )?
 			int alt64=2;
 			int LA64_0 = input.LA(1);
 			if ( (LA64_0==COMMA) ) {
@@ -6957,15 +6956,15 @@ public class TruffleParser extends Parser {
 			}
 			switch (alt64) {
 				case 1 :
-					// Truffle.g:1062:46: COMMA t2= test[expr_contextType.Load]
+					// Truffle.g:1059:46: COMMA t2= test[expr_contextType.Load]
 					{
-					COMMA131=(Token)match(input,COMMA,FOLLOW_COMMA_in_assert_stmt3535); if (state.failed) return retval;
+					COMMA131=(Token)match(input,COMMA,FOLLOW_COMMA_in_assert_stmt3534); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					COMMA131_tree = (PNode)adaptor.create(COMMA131);
 					adaptor.addChild(root_0, COMMA131_tree);
 					}
 
-					pushFollow(FOLLOW_test_in_assert_stmt3539);
+					pushFollow(FOLLOW_test_in_assert_stmt3538);
 					t2=test(expr_contextType.Load);
 					state._fsp--;
 					if (state.failed) return retval;
@@ -7014,7 +7013,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "compound_stmt"
-	// Truffle.g:1069:1: compound_stmt : ( if_stmt | while_stmt | for_stmt | try_stmt | with_stmt | ( ( decorators )? DEF )=> funcdef | classdef );
+	// Truffle.g:1066:1: compound_stmt : ( if_stmt | while_stmt | for_stmt | try_stmt | with_stmt | ( ( decorators )? DEF )=> funcdef | classdef );
 	public final TruffleParser.compound_stmt_return compound_stmt() throws RecognitionException {
 		TruffleParser.compound_stmt_return retval = new TruffleParser.compound_stmt_return();
 		retval.start = input.LT(1);
@@ -7031,7 +7030,7 @@ public class TruffleParser extends Parser {
 
 
 		try {
-			// Truffle.g:1070:5: ( if_stmt | while_stmt | for_stmt | try_stmt | with_stmt | ( ( decorators )? DEF )=> funcdef | classdef )
+			// Truffle.g:1067:5: ( if_stmt | while_stmt | for_stmt | try_stmt | with_stmt | ( ( decorators )? DEF )=> funcdef | classdef )
 			int alt65=7;
 			int LA65_0 = input.LA(1);
 			if ( (LA65_0==IF) ) {
@@ -7075,12 +7074,12 @@ public class TruffleParser extends Parser {
 
 			switch (alt65) {
 				case 1 :
-					// Truffle.g:1070:7: if_stmt
+					// Truffle.g:1067:7: if_stmt
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					pushFollow(FOLLOW_if_stmt_in_compound_stmt3568);
+					pushFollow(FOLLOW_if_stmt_in_compound_stmt3567);
 					if_stmt132=if_stmt();
 					state._fsp--;
 					if (state.failed) return retval;
@@ -7089,12 +7088,12 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 2 :
-					// Truffle.g:1071:7: while_stmt
+					// Truffle.g:1068:7: while_stmt
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					pushFollow(FOLLOW_while_stmt_in_compound_stmt3576);
+					pushFollow(FOLLOW_while_stmt_in_compound_stmt3575);
 					while_stmt133=while_stmt();
 					state._fsp--;
 					if (state.failed) return retval;
@@ -7103,12 +7102,12 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 3 :
-					// Truffle.g:1072:7: for_stmt
+					// Truffle.g:1069:7: for_stmt
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					pushFollow(FOLLOW_for_stmt_in_compound_stmt3584);
+					pushFollow(FOLLOW_for_stmt_in_compound_stmt3583);
 					for_stmt134=for_stmt();
 					state._fsp--;
 					if (state.failed) return retval;
@@ -7117,12 +7116,12 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 4 :
-					// Truffle.g:1073:7: try_stmt
+					// Truffle.g:1070:7: try_stmt
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					pushFollow(FOLLOW_try_stmt_in_compound_stmt3592);
+					pushFollow(FOLLOW_try_stmt_in_compound_stmt3591);
 					try_stmt135=try_stmt();
 					state._fsp--;
 					if (state.failed) return retval;
@@ -7131,12 +7130,12 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 5 :
-					// Truffle.g:1074:7: with_stmt
+					// Truffle.g:1071:7: with_stmt
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					pushFollow(FOLLOW_with_stmt_in_compound_stmt3600);
+					pushFollow(FOLLOW_with_stmt_in_compound_stmt3599);
 					with_stmt136=with_stmt();
 					state._fsp--;
 					if (state.failed) return retval;
@@ -7145,12 +7144,12 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 6 :
-					// Truffle.g:1075:7: ( ( decorators )? DEF )=> funcdef
+					// Truffle.g:1072:7: ( ( decorators )? DEF )=> funcdef
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					pushFollow(FOLLOW_funcdef_in_compound_stmt3617);
+					pushFollow(FOLLOW_funcdef_in_compound_stmt3616);
 					funcdef137=funcdef();
 					state._fsp--;
 					if (state.failed) return retval;
@@ -7159,12 +7158,12 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 7 :
-					// Truffle.g:1076:7: classdef
+					// Truffle.g:1073:7: classdef
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					pushFollow(FOLLOW_classdef_in_compound_stmt3625);
+					pushFollow(FOLLOW_classdef_in_compound_stmt3624);
 					classdef138=classdef();
 					state._fsp--;
 					if (state.failed) return retval;
@@ -7204,7 +7203,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "if_stmt"
-	// Truffle.g:1080:1: if_stmt : IF test[expr_contextType.Load] COLON ifsuite= suite[false] ( elif_clause )? ;
+	// Truffle.g:1077:1: if_stmt : IF test[expr_contextType.Load] COLON ifsuite= suite[false] ( elif_clause )? ;
 	public final TruffleParser.if_stmt_return if_stmt() throws RecognitionException {
 		TruffleParser.if_stmt_return retval = new TruffleParser.if_stmt_return();
 		retval.start = input.LT(1);
@@ -7224,37 +7223,37 @@ public class TruffleParser extends Parser {
 		    StatementNode stype = null;
 
 		try {
-			// Truffle.g:1087:5: ( IF test[expr_contextType.Load] COLON ifsuite= suite[false] ( elif_clause )? )
-			// Truffle.g:1087:7: IF test[expr_contextType.Load] COLON ifsuite= suite[false] ( elif_clause )?
+			// Truffle.g:1084:5: ( IF test[expr_contextType.Load] COLON ifsuite= suite[false] ( elif_clause )? )
+			// Truffle.g:1084:7: IF test[expr_contextType.Load] COLON ifsuite= suite[false] ( elif_clause )?
 			{
 			root_0 = (PNode)adaptor.nil();
 
 
-			IF139=(Token)match(input,IF,FOLLOW_IF_in_if_stmt3653); if (state.failed) return retval;
+			IF139=(Token)match(input,IF,FOLLOW_IF_in_if_stmt3652); if (state.failed) return retval;
 			if ( state.backtracking==0 ) {
 			IF139_tree = (PNode)adaptor.create(IF139);
 			adaptor.addChild(root_0, IF139_tree);
 			}
 
-			pushFollow(FOLLOW_test_in_if_stmt3655);
+			pushFollow(FOLLOW_test_in_if_stmt3654);
 			test140=test(expr_contextType.Load);
 			state._fsp--;
 			if (state.failed) return retval;
 			if ( state.backtracking==0 ) adaptor.addChild(root_0, test140.getTree());
 
-			COLON141=(Token)match(input,COLON,FOLLOW_COLON_in_if_stmt3658); if (state.failed) return retval;
+			COLON141=(Token)match(input,COLON,FOLLOW_COLON_in_if_stmt3657); if (state.failed) return retval;
 			if ( state.backtracking==0 ) {
 			COLON141_tree = (PNode)adaptor.create(COLON141);
 			adaptor.addChild(root_0, COLON141_tree);
 			}
 
-			pushFollow(FOLLOW_suite_in_if_stmt3662);
+			pushFollow(FOLLOW_suite_in_if_stmt3661);
 			ifsuite=suite(false);
 			state._fsp--;
 			if (state.failed) return retval;
 			if ( state.backtracking==0 ) adaptor.addChild(root_0, ifsuite.getTree());
 
-			// Truffle.g:1087:65: ( elif_clause )?
+			// Truffle.g:1084:65: ( elif_clause )?
 			int alt66=2;
 			int LA66_0 = input.LA(1);
 			if ( (LA66_0==ELIF||LA66_0==ORELSE) ) {
@@ -7262,9 +7261,9 @@ public class TruffleParser extends Parser {
 			}
 			switch (alt66) {
 				case 1 :
-					// Truffle.g:1087:65: elif_clause
+					// Truffle.g:1084:65: elif_clause
 					{
-					pushFollow(FOLLOW_elif_clause_in_if_stmt3665);
+					pushFollow(FOLLOW_elif_clause_in_if_stmt3664);
 					elif_clause142=elif_clause();
 					state._fsp--;
 					if (state.failed) return retval;
@@ -7315,7 +7314,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "elif_clause"
-	// Truffle.g:1095:1: elif_clause returns [List stypes] : ( else_clause | ELIF test[expr_contextType.Load] COLON suite[false] (e2= elif_clause |) );
+	// Truffle.g:1092:1: elif_clause returns [List stypes] : ( else_clause | ELIF test[expr_contextType.Load] COLON suite[false] (e2= elif_clause |) );
 	public final TruffleParser.elif_clause_return elif_clause() throws RecognitionException {
 		TruffleParser.elif_clause_return retval = new TruffleParser.elif_clause_return();
 		retval.start = input.LT(1);
@@ -7336,7 +7335,7 @@ public class TruffleParser extends Parser {
 		    StatementNode stype = null;
 
 		try {
-			// Truffle.g:1105:5: ( else_clause | ELIF test[expr_contextType.Load] COLON suite[false] (e2= elif_clause |) )
+			// Truffle.g:1102:5: ( else_clause | ELIF test[expr_contextType.Load] COLON suite[false] (e2= elif_clause |) )
 			int alt68=2;
 			int LA68_0 = input.LA(1);
 			if ( (LA68_0==ORELSE) ) {
@@ -7355,12 +7354,12 @@ public class TruffleParser extends Parser {
 
 			switch (alt68) {
 				case 1 :
-					// Truffle.g:1105:7: else_clause
+					// Truffle.g:1102:7: else_clause
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					pushFollow(FOLLOW_else_clause_in_elif_clause3710);
+					pushFollow(FOLLOW_else_clause_in_elif_clause3709);
 					else_clause143=else_clause();
 					state._fsp--;
 					if (state.failed) return retval;
@@ -7372,36 +7371,36 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 2 :
-					// Truffle.g:1109:7: ELIF test[expr_contextType.Load] COLON suite[false] (e2= elif_clause |)
+					// Truffle.g:1106:7: ELIF test[expr_contextType.Load] COLON suite[false] (e2= elif_clause |)
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					ELIF144=(Token)match(input,ELIF,FOLLOW_ELIF_in_elif_clause3726); if (state.failed) return retval;
+					ELIF144=(Token)match(input,ELIF,FOLLOW_ELIF_in_elif_clause3725); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					ELIF144_tree = (PNode)adaptor.create(ELIF144);
 					adaptor.addChild(root_0, ELIF144_tree);
 					}
 
-					pushFollow(FOLLOW_test_in_elif_clause3728);
+					pushFollow(FOLLOW_test_in_elif_clause3727);
 					test145=test(expr_contextType.Load);
 					state._fsp--;
 					if (state.failed) return retval;
 					if ( state.backtracking==0 ) adaptor.addChild(root_0, test145.getTree());
 
-					COLON146=(Token)match(input,COLON,FOLLOW_COLON_in_elif_clause3731); if (state.failed) return retval;
+					COLON146=(Token)match(input,COLON,FOLLOW_COLON_in_elif_clause3730); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					COLON146_tree = (PNode)adaptor.create(COLON146);
 					adaptor.addChild(root_0, COLON146_tree);
 					}
 
-					pushFollow(FOLLOW_suite_in_elif_clause3733);
+					pushFollow(FOLLOW_suite_in_elif_clause3732);
 					suite147=suite(false);
 					state._fsp--;
 					if (state.failed) return retval;
 					if ( state.backtracking==0 ) adaptor.addChild(root_0, suite147.getTree());
 
-					// Truffle.g:1110:7: (e2= elif_clause |)
+					// Truffle.g:1107:7: (e2= elif_clause |)
 					int alt67=2;
 					int LA67_0 = input.LA(1);
 					if ( (LA67_0==ELIF||LA67_0==ORELSE) ) {
@@ -7420,9 +7419,9 @@ public class TruffleParser extends Parser {
 
 					switch (alt67) {
 						case 1 :
-							// Truffle.g:1110:8: e2= elif_clause
+							// Truffle.g:1107:8: e2= elif_clause
 							{
-							pushFollow(FOLLOW_elif_clause_in_elif_clause3745);
+							pushFollow(FOLLOW_elif_clause_in_elif_clause3744);
 							e2=elif_clause();
 							state._fsp--;
 							if (state.failed) return retval;
@@ -7434,7 +7433,7 @@ public class TruffleParser extends Parser {
 							}
 							break;
 						case 2 :
-							// Truffle.g:1115:8: 
+							// Truffle.g:1112:8: 
 							{
 							if ( state.backtracking==0 ) {
 							           stype = actions.makeIf((test145!=null?(test145.start):null), actions.castExpr((test145!=null?((PNode)test145.getTree()):null)), actions.castStmts((suite147!=null?((TruffleParser.suite_return)suite147).stypes:null)), new ArrayList<PNode>());
@@ -7484,7 +7483,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "else_clause"
-	// Truffle.g:1122:1: else_clause returns [List stypes] : ORELSE COLON elsesuite= suite[false] ;
+	// Truffle.g:1119:1: else_clause returns [List stypes] : ORELSE COLON elsesuite= suite[false] ;
 	public final TruffleParser.else_clause_return else_clause() throws RecognitionException {
 		TruffleParser.else_clause_return retval = new TruffleParser.else_clause_return();
 		retval.start = input.LT(1);
@@ -7499,25 +7498,25 @@ public class TruffleParser extends Parser {
 		PNode COLON149_tree=null;
 
 		try {
-			// Truffle.g:1124:5: ( ORELSE COLON elsesuite= suite[false] )
-			// Truffle.g:1124:7: ORELSE COLON elsesuite= suite[false]
+			// Truffle.g:1121:5: ( ORELSE COLON elsesuite= suite[false] )
+			// Truffle.g:1121:7: ORELSE COLON elsesuite= suite[false]
 			{
 			root_0 = (PNode)adaptor.nil();
 
 
-			ORELSE148=(Token)match(input,ORELSE,FOLLOW_ORELSE_in_else_clause3805); if (state.failed) return retval;
+			ORELSE148=(Token)match(input,ORELSE,FOLLOW_ORELSE_in_else_clause3804); if (state.failed) return retval;
 			if ( state.backtracking==0 ) {
 			ORELSE148_tree = (PNode)adaptor.create(ORELSE148);
 			adaptor.addChild(root_0, ORELSE148_tree);
 			}
 
-			COLON149=(Token)match(input,COLON,FOLLOW_COLON_in_else_clause3807); if (state.failed) return retval;
+			COLON149=(Token)match(input,COLON,FOLLOW_COLON_in_else_clause3806); if (state.failed) return retval;
 			if ( state.backtracking==0 ) {
 			COLON149_tree = (PNode)adaptor.create(COLON149);
 			adaptor.addChild(root_0, COLON149_tree);
 			}
 
-			pushFollow(FOLLOW_suite_in_else_clause3811);
+			pushFollow(FOLLOW_suite_in_else_clause3810);
 			elsesuite=suite(false);
 			state._fsp--;
 			if (state.failed) return retval;
@@ -7558,7 +7557,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "while_stmt"
-	// Truffle.g:1131:1: while_stmt : WHILE test[expr_contextType.Load] COLON s1= suite[false] ( ORELSE COLON s2= suite[false] )? ;
+	// Truffle.g:1128:1: while_stmt : WHILE test[expr_contextType.Load] COLON s1= suite[false] ( ORELSE COLON s2= suite[false] )? ;
 	public final TruffleParser.while_stmt_return while_stmt() throws RecognitionException {
 		TruffleParser.while_stmt_return retval = new TruffleParser.while_stmt_return();
 		retval.start = input.LT(1);
@@ -7580,40 +7579,40 @@ public class TruffleParser extends Parser {
 
 
 		    StatementNode stype = null;
-		    actions.beginLoopLevel();
+		//    actions.beginLoopLevel();
 
 		try {
-			// Truffle.g:1139:5: ( WHILE test[expr_contextType.Load] COLON s1= suite[false] ( ORELSE COLON s2= suite[false] )? )
-			// Truffle.g:1139:7: WHILE test[expr_contextType.Load] COLON s1= suite[false] ( ORELSE COLON s2= suite[false] )?
+			// Truffle.g:1136:5: ( WHILE test[expr_contextType.Load] COLON s1= suite[false] ( ORELSE COLON s2= suite[false] )? )
+			// Truffle.g:1136:7: WHILE test[expr_contextType.Load] COLON s1= suite[false] ( ORELSE COLON s2= suite[false] )?
 			{
 			root_0 = (PNode)adaptor.nil();
 
 
-			WHILE150=(Token)match(input,WHILE,FOLLOW_WHILE_in_while_stmt3848); if (state.failed) return retval;
+			WHILE150=(Token)match(input,WHILE,FOLLOW_WHILE_in_while_stmt3847); if (state.failed) return retval;
 			if ( state.backtracking==0 ) {
 			WHILE150_tree = (PNode)adaptor.create(WHILE150);
 			adaptor.addChild(root_0, WHILE150_tree);
 			}
 
-			pushFollow(FOLLOW_test_in_while_stmt3850);
+			pushFollow(FOLLOW_test_in_while_stmt3849);
 			test151=test(expr_contextType.Load);
 			state._fsp--;
 			if (state.failed) return retval;
 			if ( state.backtracking==0 ) adaptor.addChild(root_0, test151.getTree());
 
-			COLON152=(Token)match(input,COLON,FOLLOW_COLON_in_while_stmt3853); if (state.failed) return retval;
+			COLON152=(Token)match(input,COLON,FOLLOW_COLON_in_while_stmt3852); if (state.failed) return retval;
 			if ( state.backtracking==0 ) {
 			COLON152_tree = (PNode)adaptor.create(COLON152);
 			adaptor.addChild(root_0, COLON152_tree);
 			}
 
-			pushFollow(FOLLOW_suite_in_while_stmt3857);
+			pushFollow(FOLLOW_suite_in_while_stmt3856);
 			s1=suite(false);
 			state._fsp--;
 			if (state.failed) return retval;
 			if ( state.backtracking==0 ) adaptor.addChild(root_0, s1.getTree());
 
-			// Truffle.g:1139:63: ( ORELSE COLON s2= suite[false] )?
+			// Truffle.g:1136:63: ( ORELSE COLON s2= suite[false] )?
 			int alt69=2;
 			int LA69_0 = input.LA(1);
 			if ( (LA69_0==ORELSE) ) {
@@ -7621,21 +7620,21 @@ public class TruffleParser extends Parser {
 			}
 			switch (alt69) {
 				case 1 :
-					// Truffle.g:1139:64: ORELSE COLON s2= suite[false]
+					// Truffle.g:1136:64: ORELSE COLON s2= suite[false]
 					{
-					ORELSE153=(Token)match(input,ORELSE,FOLLOW_ORELSE_in_while_stmt3861); if (state.failed) return retval;
+					ORELSE153=(Token)match(input,ORELSE,FOLLOW_ORELSE_in_while_stmt3860); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					ORELSE153_tree = (PNode)adaptor.create(ORELSE153);
 					adaptor.addChild(root_0, ORELSE153_tree);
 					}
 
-					COLON154=(Token)match(input,COLON,FOLLOW_COLON_in_while_stmt3863); if (state.failed) return retval;
+					COLON154=(Token)match(input,COLON,FOLLOW_COLON_in_while_stmt3862); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					COLON154_tree = (PNode)adaptor.create(COLON154);
 					adaptor.addChild(root_0, COLON154_tree);
 					}
 
-					pushFollow(FOLLOW_suite_in_while_stmt3867);
+					pushFollow(FOLLOW_suite_in_while_stmt3866);
 					s2=suite(false);
 					state._fsp--;
 					if (state.failed) return retval;
@@ -7684,7 +7683,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "for_stmt"
-	// Truffle.g:1146:1: for_stmt : FOR exprlist[expr_contextType.Store] IN testlist[expr_contextType.Load] COLON s1= suite[false] ( ORELSE COLON s2= suite[false] )? ;
+	// Truffle.g:1143:1: for_stmt : FOR exprlist[expr_contextType.Store] IN testlist[expr_contextType.Load] COLON s1= suite[false] ( ORELSE COLON s2= suite[false] )? ;
 	public final TruffleParser.for_stmt_return for_stmt() throws RecognitionException {
 		TruffleParser.for_stmt_return retval = new TruffleParser.for_stmt_return();
 		retval.start = input.LT(1);
@@ -7709,52 +7708,52 @@ public class TruffleParser extends Parser {
 
 
 		    StatementNode stype = null;
-		    actions.beginLoopLevel();
+		//    actions.beginLoopLevel();
 
 		try {
-			// Truffle.g:1154:5: ( FOR exprlist[expr_contextType.Store] IN testlist[expr_contextType.Load] COLON s1= suite[false] ( ORELSE COLON s2= suite[false] )? )
-			// Truffle.g:1154:7: FOR exprlist[expr_contextType.Store] IN testlist[expr_contextType.Load] COLON s1= suite[false] ( ORELSE COLON s2= suite[false] )?
+			// Truffle.g:1151:5: ( FOR exprlist[expr_contextType.Store] IN testlist[expr_contextType.Load] COLON s1= suite[false] ( ORELSE COLON s2= suite[false] )? )
+			// Truffle.g:1151:7: FOR exprlist[expr_contextType.Store] IN testlist[expr_contextType.Load] COLON s1= suite[false] ( ORELSE COLON s2= suite[false] )?
 			{
 			root_0 = (PNode)adaptor.nil();
 
 
-			FOR155=(Token)match(input,FOR,FOLLOW_FOR_in_for_stmt3906); if (state.failed) return retval;
+			FOR155=(Token)match(input,FOR,FOLLOW_FOR_in_for_stmt3905); if (state.failed) return retval;
 			if ( state.backtracking==0 ) {
 			FOR155_tree = (PNode)adaptor.create(FOR155);
 			adaptor.addChild(root_0, FOR155_tree);
 			}
 
-			pushFollow(FOLLOW_exprlist_in_for_stmt3908);
+			pushFollow(FOLLOW_exprlist_in_for_stmt3907);
 			exprlist156=exprlist(expr_contextType.Store);
 			state._fsp--;
 			if (state.failed) return retval;
 			if ( state.backtracking==0 ) adaptor.addChild(root_0, exprlist156.getTree());
 
-			IN157=(Token)match(input,IN,FOLLOW_IN_in_for_stmt3911); if (state.failed) return retval;
+			IN157=(Token)match(input,IN,FOLLOW_IN_in_for_stmt3910); if (state.failed) return retval;
 			if ( state.backtracking==0 ) {
 			IN157_tree = (PNode)adaptor.create(IN157);
 			adaptor.addChild(root_0, IN157_tree);
 			}
 
-			pushFollow(FOLLOW_testlist_in_for_stmt3913);
+			pushFollow(FOLLOW_testlist_in_for_stmt3912);
 			testlist158=testlist(expr_contextType.Load);
 			state._fsp--;
 			if (state.failed) return retval;
 			if ( state.backtracking==0 ) adaptor.addChild(root_0, testlist158.getTree());
 
-			COLON159=(Token)match(input,COLON,FOLLOW_COLON_in_for_stmt3916); if (state.failed) return retval;
+			COLON159=(Token)match(input,COLON,FOLLOW_COLON_in_for_stmt3915); if (state.failed) return retval;
 			if ( state.backtracking==0 ) {
 			COLON159_tree = (PNode)adaptor.create(COLON159);
 			adaptor.addChild(root_0, COLON159_tree);
 			}
 
-			pushFollow(FOLLOW_suite_in_for_stmt3920);
+			pushFollow(FOLLOW_suite_in_for_stmt3919);
 			s1=suite(false);
 			state._fsp--;
 			if (state.failed) return retval;
 			if ( state.backtracking==0 ) adaptor.addChild(root_0, s1.getTree());
 
-			// Truffle.g:1155:9: ( ORELSE COLON s2= suite[false] )?
+			// Truffle.g:1152:9: ( ORELSE COLON s2= suite[false] )?
 			int alt70=2;
 			int LA70_0 = input.LA(1);
 			if ( (LA70_0==ORELSE) ) {
@@ -7762,21 +7761,21 @@ public class TruffleParser extends Parser {
 			}
 			switch (alt70) {
 				case 1 :
-					// Truffle.g:1155:10: ORELSE COLON s2= suite[false]
+					// Truffle.g:1152:10: ORELSE COLON s2= suite[false]
 					{
-					ORELSE160=(Token)match(input,ORELSE,FOLLOW_ORELSE_in_for_stmt3932); if (state.failed) return retval;
+					ORELSE160=(Token)match(input,ORELSE,FOLLOW_ORELSE_in_for_stmt3931); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					ORELSE160_tree = (PNode)adaptor.create(ORELSE160);
 					adaptor.addChild(root_0, ORELSE160_tree);
 					}
 
-					COLON161=(Token)match(input,COLON,FOLLOW_COLON_in_for_stmt3934); if (state.failed) return retval;
+					COLON161=(Token)match(input,COLON,FOLLOW_COLON_in_for_stmt3933); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					COLON161_tree = (PNode)adaptor.create(COLON161);
 					adaptor.addChild(root_0, COLON161_tree);
 					}
 
-					pushFollow(FOLLOW_suite_in_for_stmt3938);
+					pushFollow(FOLLOW_suite_in_for_stmt3937);
 					s2=suite(false);
 					state._fsp--;
 					if (state.failed) return retval;
@@ -7825,7 +7824,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "try_stmt"
-	// Truffle.g:1166:1: try_stmt : TRY COLON trysuite= suite[!$suite.isEmpty() && $suite::continueIllegal] ( (e+= except_clause )+ ( ORELSE COLON elsesuite= suite[!$suite.isEmpty() && $suite::continueIllegal] )? ( FINALLY COLON finalsuite= suite[true] )? | FINALLY COLON finalsuite= suite[true] ) ;
+	// Truffle.g:1163:1: try_stmt : TRY COLON trysuite= suite[!$suite.isEmpty() && $suite::continueIllegal] ( (e+= except_clause )+ ( ORELSE COLON elsesuite= suite[!$suite.isEmpty() && $suite::continueIllegal] )? ( FINALLY COLON finalsuite= suite[true] )? | FINALLY COLON finalsuite= suite[true] ) ;
 	public final TruffleParser.try_stmt_return try_stmt() throws RecognitionException {
 		TruffleParser.try_stmt_return retval = new TruffleParser.try_stmt_return();
 		retval.start = input.LT(1);
@@ -7858,31 +7857,31 @@ public class TruffleParser extends Parser {
 		    StatementNode stype = null;
 
 		try {
-			// Truffle.g:1173:5: ( TRY COLON trysuite= suite[!$suite.isEmpty() && $suite::continueIllegal] ( (e+= except_clause )+ ( ORELSE COLON elsesuite= suite[!$suite.isEmpty() && $suite::continueIllegal] )? ( FINALLY COLON finalsuite= suite[true] )? | FINALLY COLON finalsuite= suite[true] ) )
-			// Truffle.g:1173:7: TRY COLON trysuite= suite[!$suite.isEmpty() && $suite::continueIllegal] ( (e+= except_clause )+ ( ORELSE COLON elsesuite= suite[!$suite.isEmpty() && $suite::continueIllegal] )? ( FINALLY COLON finalsuite= suite[true] )? | FINALLY COLON finalsuite= suite[true] )
+			// Truffle.g:1170:5: ( TRY COLON trysuite= suite[!$suite.isEmpty() && $suite::continueIllegal] ( (e+= except_clause )+ ( ORELSE COLON elsesuite= suite[!$suite.isEmpty() && $suite::continueIllegal] )? ( FINALLY COLON finalsuite= suite[true] )? | FINALLY COLON finalsuite= suite[true] ) )
+			// Truffle.g:1170:7: TRY COLON trysuite= suite[!$suite.isEmpty() && $suite::continueIllegal] ( (e+= except_clause )+ ( ORELSE COLON elsesuite= suite[!$suite.isEmpty() && $suite::continueIllegal] )? ( FINALLY COLON finalsuite= suite[true] )? | FINALLY COLON finalsuite= suite[true] )
 			{
 			root_0 = (PNode)adaptor.nil();
 
 
-			TRY162=(Token)match(input,TRY,FOLLOW_TRY_in_try_stmt3981); if (state.failed) return retval;
+			TRY162=(Token)match(input,TRY,FOLLOW_TRY_in_try_stmt3980); if (state.failed) return retval;
 			if ( state.backtracking==0 ) {
 			TRY162_tree = (PNode)adaptor.create(TRY162);
 			adaptor.addChild(root_0, TRY162_tree);
 			}
 
-			COLON163=(Token)match(input,COLON,FOLLOW_COLON_in_try_stmt3983); if (state.failed) return retval;
+			COLON163=(Token)match(input,COLON,FOLLOW_COLON_in_try_stmt3982); if (state.failed) return retval;
 			if ( state.backtracking==0 ) {
 			COLON163_tree = (PNode)adaptor.create(COLON163);
 			adaptor.addChild(root_0, COLON163_tree);
 			}
 
-			pushFollow(FOLLOW_suite_in_try_stmt3987);
+			pushFollow(FOLLOW_suite_in_try_stmt3986);
 			trysuite=suite(!suite_stack.isEmpty() && suite_stack.peek().continueIllegal);
 			state._fsp--;
 			if (state.failed) return retval;
 			if ( state.backtracking==0 ) adaptor.addChild(root_0, trysuite.getTree());
 
-			// Truffle.g:1174:7: ( (e+= except_clause )+ ( ORELSE COLON elsesuite= suite[!$suite.isEmpty() && $suite::continueIllegal] )? ( FINALLY COLON finalsuite= suite[true] )? | FINALLY COLON finalsuite= suite[true] )
+			// Truffle.g:1171:7: ( (e+= except_clause )+ ( ORELSE COLON elsesuite= suite[!$suite.isEmpty() && $suite::continueIllegal] )? ( FINALLY COLON finalsuite= suite[true] )? | FINALLY COLON finalsuite= suite[true] )
 			int alt74=2;
 			int LA74_0 = input.LA(1);
 			if ( (LA74_0==EXCEPT) ) {
@@ -7901,9 +7900,9 @@ public class TruffleParser extends Parser {
 
 			switch (alt74) {
 				case 1 :
-					// Truffle.g:1174:9: (e+= except_clause )+ ( ORELSE COLON elsesuite= suite[!$suite.isEmpty() && $suite::continueIllegal] )? ( FINALLY COLON finalsuite= suite[true] )?
+					// Truffle.g:1171:9: (e+= except_clause )+ ( ORELSE COLON elsesuite= suite[!$suite.isEmpty() && $suite::continueIllegal] )? ( FINALLY COLON finalsuite= suite[true] )?
 					{
-					// Truffle.g:1174:10: (e+= except_clause )+
+					// Truffle.g:1171:10: (e+= except_clause )+
 					int cnt71=0;
 					loop71:
 					while (true) {
@@ -7915,9 +7914,9 @@ public class TruffleParser extends Parser {
 
 						switch (alt71) {
 						case 1 :
-							// Truffle.g:1174:10: e+= except_clause
+							// Truffle.g:1171:10: e+= except_clause
 							{
-							pushFollow(FOLLOW_except_clause_in_try_stmt4000);
+							pushFollow(FOLLOW_except_clause_in_try_stmt3999);
 							e=except_clause();
 							state._fsp--;
 							if (state.failed) return retval;
@@ -7937,7 +7936,7 @@ public class TruffleParser extends Parser {
 						cnt71++;
 					}
 
-					// Truffle.g:1174:27: ( ORELSE COLON elsesuite= suite[!$suite.isEmpty() && $suite::continueIllegal] )?
+					// Truffle.g:1171:27: ( ORELSE COLON elsesuite= suite[!$suite.isEmpty() && $suite::continueIllegal] )?
 					int alt72=2;
 					int LA72_0 = input.LA(1);
 					if ( (LA72_0==ORELSE) ) {
@@ -7945,21 +7944,21 @@ public class TruffleParser extends Parser {
 					}
 					switch (alt72) {
 						case 1 :
-							// Truffle.g:1174:28: ORELSE COLON elsesuite= suite[!$suite.isEmpty() && $suite::continueIllegal]
+							// Truffle.g:1171:28: ORELSE COLON elsesuite= suite[!$suite.isEmpty() && $suite::continueIllegal]
 							{
-							ORELSE164=(Token)match(input,ORELSE,FOLLOW_ORELSE_in_try_stmt4004); if (state.failed) return retval;
+							ORELSE164=(Token)match(input,ORELSE,FOLLOW_ORELSE_in_try_stmt4003); if (state.failed) return retval;
 							if ( state.backtracking==0 ) {
 							ORELSE164_tree = (PNode)adaptor.create(ORELSE164);
 							adaptor.addChild(root_0, ORELSE164_tree);
 							}
 
-							COLON165=(Token)match(input,COLON,FOLLOW_COLON_in_try_stmt4006); if (state.failed) return retval;
+							COLON165=(Token)match(input,COLON,FOLLOW_COLON_in_try_stmt4005); if (state.failed) return retval;
 							if ( state.backtracking==0 ) {
 							COLON165_tree = (PNode)adaptor.create(COLON165);
 							adaptor.addChild(root_0, COLON165_tree);
 							}
 
-							pushFollow(FOLLOW_suite_in_try_stmt4010);
+							pushFollow(FOLLOW_suite_in_try_stmt4009);
 							elsesuite=suite(!suite_stack.isEmpty() && suite_stack.peek().continueIllegal);
 							state._fsp--;
 							if (state.failed) return retval;
@@ -7970,7 +7969,7 @@ public class TruffleParser extends Parser {
 
 					}
 
-					// Truffle.g:1174:105: ( FINALLY COLON finalsuite= suite[true] )?
+					// Truffle.g:1171:105: ( FINALLY COLON finalsuite= suite[true] )?
 					int alt73=2;
 					int LA73_0 = input.LA(1);
 					if ( (LA73_0==FINALLY) ) {
@@ -7978,21 +7977,21 @@ public class TruffleParser extends Parser {
 					}
 					switch (alt73) {
 						case 1 :
-							// Truffle.g:1174:106: FINALLY COLON finalsuite= suite[true]
+							// Truffle.g:1171:106: FINALLY COLON finalsuite= suite[true]
 							{
-							FINALLY166=(Token)match(input,FINALLY,FOLLOW_FINALLY_in_try_stmt4016); if (state.failed) return retval;
+							FINALLY166=(Token)match(input,FINALLY,FOLLOW_FINALLY_in_try_stmt4015); if (state.failed) return retval;
 							if ( state.backtracking==0 ) {
 							FINALLY166_tree = (PNode)adaptor.create(FINALLY166);
 							adaptor.addChild(root_0, FINALLY166_tree);
 							}
 
-							COLON167=(Token)match(input,COLON,FOLLOW_COLON_in_try_stmt4018); if (state.failed) return retval;
+							COLON167=(Token)match(input,COLON,FOLLOW_COLON_in_try_stmt4017); if (state.failed) return retval;
 							if ( state.backtracking==0 ) {
 							COLON167_tree = (PNode)adaptor.create(COLON167);
 							adaptor.addChild(root_0, COLON167_tree);
 							}
 
-							pushFollow(FOLLOW_suite_in_try_stmt4022);
+							pushFollow(FOLLOW_suite_in_try_stmt4021);
 							finalsuite=suite(true);
 							state._fsp--;
 							if (state.failed) return retval;
@@ -8009,21 +8008,21 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 2 :
-					// Truffle.g:1178:9: FINALLY COLON finalsuite= suite[true]
+					// Truffle.g:1175:9: FINALLY COLON finalsuite= suite[true]
 					{
-					FINALLY168=(Token)match(input,FINALLY,FOLLOW_FINALLY_in_try_stmt4045); if (state.failed) return retval;
+					FINALLY168=(Token)match(input,FINALLY,FOLLOW_FINALLY_in_try_stmt4044); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					FINALLY168_tree = (PNode)adaptor.create(FINALLY168);
 					adaptor.addChild(root_0, FINALLY168_tree);
 					}
 
-					COLON169=(Token)match(input,COLON,FOLLOW_COLON_in_try_stmt4047); if (state.failed) return retval;
+					COLON169=(Token)match(input,COLON,FOLLOW_COLON_in_try_stmt4046); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					COLON169_tree = (PNode)adaptor.create(COLON169);
 					adaptor.addChild(root_0, COLON169_tree);
 					}
 
-					pushFollow(FOLLOW_suite_in_try_stmt4051);
+					pushFollow(FOLLOW_suite_in_try_stmt4050);
 					finalsuite=suite(true);
 					state._fsp--;
 					if (state.failed) return retval;
@@ -8072,7 +8071,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "with_stmt"
-	// Truffle.g:1186:1: with_stmt : WITH w+= with_item ( options {greedy=true; } : COMMA w+= with_item )* COLON suite[false] ;
+	// Truffle.g:1183:1: with_stmt : WITH w+= with_item ( options {greedy=true; } : COMMA w+= with_item )* COLON suite[false] ;
 	public final TruffleParser.with_stmt_return with_stmt() throws RecognitionException {
 		TruffleParser.with_stmt_return retval = new TruffleParser.with_stmt_return();
 		retval.start = input.LT(1);
@@ -8093,19 +8092,19 @@ public class TruffleParser extends Parser {
 		    StatementNode stype = null;
 
 		try {
-			// Truffle.g:1193:5: ( WITH w+= with_item ( options {greedy=true; } : COMMA w+= with_item )* COLON suite[false] )
-			// Truffle.g:1193:7: WITH w+= with_item ( options {greedy=true; } : COMMA w+= with_item )* COLON suite[false]
+			// Truffle.g:1190:5: ( WITH w+= with_item ( options {greedy=true; } : COMMA w+= with_item )* COLON suite[false] )
+			// Truffle.g:1190:7: WITH w+= with_item ( options {greedy=true; } : COMMA w+= with_item )* COLON suite[false]
 			{
 			root_0 = (PNode)adaptor.nil();
 
 
-			WITH170=(Token)match(input,WITH,FOLLOW_WITH_in_with_stmt4100); if (state.failed) return retval;
+			WITH170=(Token)match(input,WITH,FOLLOW_WITH_in_with_stmt4099); if (state.failed) return retval;
 			if ( state.backtracking==0 ) {
 			WITH170_tree = (PNode)adaptor.create(WITH170);
 			adaptor.addChild(root_0, WITH170_tree);
 			}
 
-			pushFollow(FOLLOW_with_item_in_with_stmt4104);
+			pushFollow(FOLLOW_with_item_in_with_stmt4103);
 			w=with_item();
 			state._fsp--;
 			if (state.failed) return retval;
@@ -8113,7 +8112,7 @@ public class TruffleParser extends Parser {
 
 			if (list_w==null) list_w=new ArrayList<Object>();
 			list_w.add(w.getTree());
-			// Truffle.g:1193:25: ( options {greedy=true; } : COMMA w+= with_item )*
+			// Truffle.g:1190:25: ( options {greedy=true; } : COMMA w+= with_item )*
 			loop75:
 			while (true) {
 				int alt75=2;
@@ -8124,15 +8123,15 @@ public class TruffleParser extends Parser {
 
 				switch (alt75) {
 				case 1 :
-					// Truffle.g:1193:49: COMMA w+= with_item
+					// Truffle.g:1190:49: COMMA w+= with_item
 					{
-					COMMA171=(Token)match(input,COMMA,FOLLOW_COMMA_in_with_stmt4114); if (state.failed) return retval;
+					COMMA171=(Token)match(input,COMMA,FOLLOW_COMMA_in_with_stmt4113); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					COMMA171_tree = (PNode)adaptor.create(COMMA171);
 					adaptor.addChild(root_0, COMMA171_tree);
 					}
 
-					pushFollow(FOLLOW_with_item_in_with_stmt4118);
+					pushFollow(FOLLOW_with_item_in_with_stmt4117);
 					w=with_item();
 					state._fsp--;
 					if (state.failed) return retval;
@@ -8148,13 +8147,13 @@ public class TruffleParser extends Parser {
 				}
 			}
 
-			COLON172=(Token)match(input,COLON,FOLLOW_COLON_in_with_stmt4122); if (state.failed) return retval;
+			COLON172=(Token)match(input,COLON,FOLLOW_COLON_in_with_stmt4121); if (state.failed) return retval;
 			if ( state.backtracking==0 ) {
 			COLON172_tree = (PNode)adaptor.create(COLON172);
 			adaptor.addChild(root_0, COLON172_tree);
 			}
 
-			pushFollow(FOLLOW_suite_in_with_stmt4124);
+			pushFollow(FOLLOW_suite_in_with_stmt4123);
 			suite173=suite(false);
 			state._fsp--;
 			if (state.failed) return retval;
@@ -8198,7 +8197,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "with_item"
-	// Truffle.g:1200:1: with_item : test[expr_contextType.Load] ( AS expr[expr_contextType.Store] )? ;
+	// Truffle.g:1197:1: with_item : test[expr_contextType.Load] ( AS expr[expr_contextType.Store] )? ;
 	public final TruffleParser.with_item_return with_item() throws RecognitionException {
 		TruffleParser.with_item_return retval = new TruffleParser.with_item_return();
 		retval.start = input.LT(1);
@@ -8215,19 +8214,19 @@ public class TruffleParser extends Parser {
 		    StatementNode stype = null;
 
 		try {
-			// Truffle.g:1207:5: ( test[expr_contextType.Load] ( AS expr[expr_contextType.Store] )? )
-			// Truffle.g:1207:7: test[expr_contextType.Load] ( AS expr[expr_contextType.Store] )?
+			// Truffle.g:1204:5: ( test[expr_contextType.Load] ( AS expr[expr_contextType.Store] )? )
+			// Truffle.g:1204:7: test[expr_contextType.Load] ( AS expr[expr_contextType.Store] )?
 			{
 			root_0 = (PNode)adaptor.nil();
 
 
-			pushFollow(FOLLOW_test_in_with_item4161);
+			pushFollow(FOLLOW_test_in_with_item4160);
 			test174=test(expr_contextType.Load);
 			state._fsp--;
 			if (state.failed) return retval;
 			if ( state.backtracking==0 ) adaptor.addChild(root_0, test174.getTree());
 
-			// Truffle.g:1207:35: ( AS expr[expr_contextType.Store] )?
+			// Truffle.g:1204:35: ( AS expr[expr_contextType.Store] )?
 			int alt76=2;
 			int LA76_0 = input.LA(1);
 			if ( (LA76_0==AS) ) {
@@ -8235,15 +8234,15 @@ public class TruffleParser extends Parser {
 			}
 			switch (alt76) {
 				case 1 :
-					// Truffle.g:1207:36: AS expr[expr_contextType.Store]
+					// Truffle.g:1204:36: AS expr[expr_contextType.Store]
 					{
-					AS175=(Token)match(input,AS,FOLLOW_AS_in_with_item4165); if (state.failed) return retval;
+					AS175=(Token)match(input,AS,FOLLOW_AS_in_with_item4164); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					AS175_tree = (PNode)adaptor.create(AS175);
 					adaptor.addChild(root_0, AS175_tree);
 					}
 
-					pushFollow(FOLLOW_expr_in_with_item4167);
+					pushFollow(FOLLOW_expr_in_with_item4166);
 					expr176=expr(expr_contextType.Store);
 					state._fsp--;
 					if (state.failed) return retval;
@@ -8298,7 +8297,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "except_clause"
-	// Truffle.g:1220:1: except_clause : EXCEPT (t1= test[expr_contextType.Load] ( ( COMMA | AS ) t2= test[expr_contextType.Store] )? )? COLON suite[!$suite.isEmpty() && $suite::continueIllegal] ;
+	// Truffle.g:1217:1: except_clause : EXCEPT (t1= test[expr_contextType.Load] ( ( COMMA | AS ) t2= test[expr_contextType.Store] )? )? COLON suite[!$suite.isEmpty() && $suite::continueIllegal] ;
 	public final TruffleParser.except_clause_return except_clause() throws RecognitionException {
 		TruffleParser.except_clause_return retval = new TruffleParser.except_clause_return();
 		retval.start = input.LT(1);
@@ -8320,19 +8319,19 @@ public class TruffleParser extends Parser {
 		    PNode extype = null;
 
 		try {
-			// Truffle.g:1227:5: ( EXCEPT (t1= test[expr_contextType.Load] ( ( COMMA | AS ) t2= test[expr_contextType.Store] )? )? COLON suite[!$suite.isEmpty() && $suite::continueIllegal] )
-			// Truffle.g:1227:7: EXCEPT (t1= test[expr_contextType.Load] ( ( COMMA | AS ) t2= test[expr_contextType.Store] )? )? COLON suite[!$suite.isEmpty() && $suite::continueIllegal]
+			// Truffle.g:1224:5: ( EXCEPT (t1= test[expr_contextType.Load] ( ( COMMA | AS ) t2= test[expr_contextType.Store] )? )? COLON suite[!$suite.isEmpty() && $suite::continueIllegal] )
+			// Truffle.g:1224:7: EXCEPT (t1= test[expr_contextType.Load] ( ( COMMA | AS ) t2= test[expr_contextType.Store] )? )? COLON suite[!$suite.isEmpty() && $suite::continueIllegal]
 			{
 			root_0 = (PNode)adaptor.nil();
 
 
-			EXCEPT177=(Token)match(input,EXCEPT,FOLLOW_EXCEPT_in_except_clause4206); if (state.failed) return retval;
+			EXCEPT177=(Token)match(input,EXCEPT,FOLLOW_EXCEPT_in_except_clause4205); if (state.failed) return retval;
 			if ( state.backtracking==0 ) {
 			EXCEPT177_tree = (PNode)adaptor.create(EXCEPT177);
 			adaptor.addChild(root_0, EXCEPT177_tree);
 			}
 
-			// Truffle.g:1227:14: (t1= test[expr_contextType.Load] ( ( COMMA | AS ) t2= test[expr_contextType.Store] )? )?
+			// Truffle.g:1224:14: (t1= test[expr_contextType.Load] ( ( COMMA | AS ) t2= test[expr_contextType.Store] )? )?
 			int alt78=2;
 			int LA78_0 = input.LA(1);
 			if ( (LA78_0==BACKQUOTE||(LA78_0 >= LBRACK && LA78_0 <= LCURLY)||(LA78_0 >= LPAREN && LA78_0 <= MINUS)||LA78_0==NAME||LA78_0==NOT||LA78_0==PLUS||LA78_0==TILDE) ) {
@@ -8346,15 +8345,15 @@ public class TruffleParser extends Parser {
 			}
 			switch (alt78) {
 				case 1 :
-					// Truffle.g:1227:15: t1= test[expr_contextType.Load] ( ( COMMA | AS ) t2= test[expr_contextType.Store] )?
+					// Truffle.g:1224:15: t1= test[expr_contextType.Load] ( ( COMMA | AS ) t2= test[expr_contextType.Store] )?
 					{
-					pushFollow(FOLLOW_test_in_except_clause4211);
+					pushFollow(FOLLOW_test_in_except_clause4210);
 					t1=test(expr_contextType.Load);
 					state._fsp--;
 					if (state.failed) return retval;
 					if ( state.backtracking==0 ) adaptor.addChild(root_0, t1.getTree());
 
-					// Truffle.g:1227:46: ( ( COMMA | AS ) t2= test[expr_contextType.Store] )?
+					// Truffle.g:1224:46: ( ( COMMA | AS ) t2= test[expr_contextType.Store] )?
 					int alt77=2;
 					int LA77_0 = input.LA(1);
 					if ( (LA77_0==AS||LA77_0==COMMA) ) {
@@ -8362,7 +8361,7 @@ public class TruffleParser extends Parser {
 					}
 					switch (alt77) {
 						case 1 :
-							// Truffle.g:1227:47: ( COMMA | AS ) t2= test[expr_contextType.Store]
+							// Truffle.g:1224:47: ( COMMA | AS ) t2= test[expr_contextType.Store]
 							{
 							set178=input.LT(1);
 							if ( input.LA(1)==AS||input.LA(1)==COMMA ) {
@@ -8376,7 +8375,7 @@ public class TruffleParser extends Parser {
 								MismatchedSetException mse = new MismatchedSetException(null,input);
 								throw mse;
 							}
-							pushFollow(FOLLOW_test_in_except_clause4225);
+							pushFollow(FOLLOW_test_in_except_clause4224);
 							t2=test(expr_contextType.Store);
 							state._fsp--;
 							if (state.failed) return retval;
@@ -8392,13 +8391,13 @@ public class TruffleParser extends Parser {
 
 			}
 
-			COLON179=(Token)match(input,COLON,FOLLOW_COLON_in_except_clause4232); if (state.failed) return retval;
+			COLON179=(Token)match(input,COLON,FOLLOW_COLON_in_except_clause4231); if (state.failed) return retval;
 			if ( state.backtracking==0 ) {
 			COLON179_tree = (PNode)adaptor.create(COLON179);
 			adaptor.addChild(root_0, COLON179_tree);
 			}
 
-			pushFollow(FOLLOW_suite_in_except_clause4234);
+			pushFollow(FOLLOW_suite_in_except_clause4233);
 			suite180=suite(!suite_stack.isEmpty() && suite_stack.peek().continueIllegal);
 			state._fsp--;
 			if (state.failed) return retval;
@@ -8449,7 +8448,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "suite"
-	// Truffle.g:1235:1: suite[boolean fromFinally] returns [List stypes] : ( simple_stmt | NEWLINE INDENT ( stmt )+ DEDENT );
+	// Truffle.g:1232:1: suite[boolean fromFinally] returns [List stypes] : ( simple_stmt | NEWLINE INDENT ( stmt )+ DEDENT );
 	public final TruffleParser.suite_return suite(boolean fromFinally) throws RecognitionException {
 		suite_stack.push(new suite_scope());
 		TruffleParser.suite_return retval = new TruffleParser.suite_return();
@@ -8476,7 +8475,7 @@ public class TruffleParser extends Parser {
 		    retval.stypes = new ArrayList();
 
 		try {
-			// Truffle.g:1248:5: ( simple_stmt | NEWLINE INDENT ( stmt )+ DEDENT )
+			// Truffle.g:1245:5: ( simple_stmt | NEWLINE INDENT ( stmt )+ DEDENT )
 			int alt80=2;
 			int LA80_0 = input.LA(1);
 			if ( (LA80_0==BACKQUOTE||(LA80_0 >= LBRACK && LA80_0 <= LCURLY)||(LA80_0 >= LPAREN && LA80_0 <= MINUS)||LA80_0==NAME||LA80_0==NOT||LA80_0==PLUS||LA80_0==TILDE) ) {
@@ -8501,12 +8500,12 @@ public class TruffleParser extends Parser {
 
 			switch (alt80) {
 				case 1 :
-					// Truffle.g:1248:7: simple_stmt
+					// Truffle.g:1245:7: simple_stmt
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					pushFollow(FOLLOW_simple_stmt_in_suite4280);
+					pushFollow(FOLLOW_simple_stmt_in_suite4279);
 					simple_stmt181=simple_stmt();
 					state._fsp--;
 					if (state.failed) return retval;
@@ -8518,24 +8517,24 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 2 :
-					// Truffle.g:1252:7: NEWLINE INDENT ( stmt )+ DEDENT
+					// Truffle.g:1249:7: NEWLINE INDENT ( stmt )+ DEDENT
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					NEWLINE182=(Token)match(input,NEWLINE,FOLLOW_NEWLINE_in_suite4296); if (state.failed) return retval;
+					NEWLINE182=(Token)match(input,NEWLINE,FOLLOW_NEWLINE_in_suite4295); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					NEWLINE182_tree = (PNode)adaptor.create(NEWLINE182);
 					adaptor.addChild(root_0, NEWLINE182_tree);
 					}
 
-					INDENT183=(Token)match(input,INDENT,FOLLOW_INDENT_in_suite4298); if (state.failed) return retval;
+					INDENT183=(Token)match(input,INDENT,FOLLOW_INDENT_in_suite4297); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					INDENT183_tree = (PNode)adaptor.create(INDENT183);
 					adaptor.addChild(root_0, INDENT183_tree);
 					}
 
-					// Truffle.g:1253:7: ( stmt )+
+					// Truffle.g:1250:7: ( stmt )+
 					int cnt79=0;
 					loop79:
 					while (true) {
@@ -8553,9 +8552,9 @@ public class TruffleParser extends Parser {
 
 						switch (alt79) {
 						case 1 :
-							// Truffle.g:1253:8: stmt
+							// Truffle.g:1250:8: stmt
 							{
-							pushFollow(FOLLOW_stmt_in_suite4307);
+							pushFollow(FOLLOW_stmt_in_suite4306);
 							stmt184=stmt();
 							state._fsp--;
 							if (state.failed) return retval;
@@ -8578,7 +8577,7 @@ public class TruffleParser extends Parser {
 						cnt79++;
 					}
 
-					DEDENT185=(Token)match(input,DEDENT,FOLLOW_DEDENT_in_suite4327); if (state.failed) return retval;
+					DEDENT185=(Token)match(input,DEDENT,FOLLOW_DEDENT_in_suite4326); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					DEDENT185_tree = (PNode)adaptor.create(DEDENT185);
 					adaptor.addChild(root_0, DEDENT185_tree);
@@ -8619,7 +8618,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "test"
-	// Truffle.g:1263:1: test[expr_contextType ctype] : (o1= or_test[ctype] ( ( IF or_test[null] ORELSE )=> IF o2= or_test[ctype] ORELSE e= test[expr_contextType.Load] | -> or_test ) | lambdef );
+	// Truffle.g:1260:1: test[expr_contextType ctype] : (o1= or_test[ctype] ( ( IF or_test[null] ORELSE )=> IF o2= or_test[ctype] ORELSE e= test[expr_contextType.Load] | -> or_test ) | lambdef );
 	public final TruffleParser.test_return test(expr_contextType ctype) throws RecognitionException {
 		TruffleParser.test_return retval = new TruffleParser.test_return();
 		retval.start = input.LT(1);
@@ -8644,7 +8643,7 @@ public class TruffleParser extends Parser {
 		    PNode etype = null;
 
 		try {
-			// Truffle.g:1272:5: (o1= or_test[ctype] ( ( IF or_test[null] ORELSE )=> IF o2= or_test[ctype] ORELSE e= test[expr_contextType.Load] | -> or_test ) | lambdef )
+			// Truffle.g:1269:5: (o1= or_test[ctype] ( ( IF or_test[null] ORELSE )=> IF o2= or_test[ctype] ORELSE e= test[expr_contextType.Load] | -> or_test ) | lambdef )
 			int alt82=2;
 			int LA82_0 = input.LA(1);
 			if ( (LA82_0==BACKQUOTE||(LA82_0 >= LBRACK && LA82_0 <= LCURLY)||(LA82_0 >= LPAREN && LA82_0 <= MINUS)||LA82_0==NAME||LA82_0==NOT||LA82_0==PLUS||LA82_0==TILDE) ) {
@@ -8669,14 +8668,14 @@ public class TruffleParser extends Parser {
 
 			switch (alt82) {
 				case 1 :
-					// Truffle.g:1272:6: o1= or_test[ctype] ( ( IF or_test[null] ORELSE )=> IF o2= or_test[ctype] ORELSE e= test[expr_contextType.Load] | -> or_test )
+					// Truffle.g:1269:6: o1= or_test[ctype] ( ( IF or_test[null] ORELSE )=> IF o2= or_test[ctype] ORELSE e= test[expr_contextType.Load] | -> or_test )
 					{
-					pushFollow(FOLLOW_or_test_in_test4357);
+					pushFollow(FOLLOW_or_test_in_test4356);
 					o1=or_test(ctype);
 					state._fsp--;
 					if (state.failed) return retval;
 					if ( state.backtracking==0 ) stream_or_test.add(o1.getTree());
-					// Truffle.g:1273:7: ( ( IF or_test[null] ORELSE )=> IF o2= or_test[ctype] ORELSE e= test[expr_contextType.Load] | -> or_test )
+					// Truffle.g:1270:7: ( ( IF or_test[null] ORELSE )=> IF o2= or_test[ctype] ORELSE e= test[expr_contextType.Load] | -> or_test )
 					int alt81=2;
 					int LA81_0 = input.LA(1);
 					if ( (LA81_0==IF) ) {
@@ -8702,20 +8701,20 @@ public class TruffleParser extends Parser {
 
 					switch (alt81) {
 						case 1 :
-							// Truffle.g:1273:9: ( IF or_test[null] ORELSE )=> IF o2= or_test[ctype] ORELSE e= test[expr_contextType.Load]
+							// Truffle.g:1270:9: ( IF or_test[null] ORELSE )=> IF o2= or_test[ctype] ORELSE e= test[expr_contextType.Load]
 							{
-							IF186=(Token)match(input,IF,FOLLOW_IF_in_test4379); if (state.failed) return retval; 
+							IF186=(Token)match(input,IF,FOLLOW_IF_in_test4378); if (state.failed) return retval; 
 							if ( state.backtracking==0 ) stream_IF.add(IF186);
 
-							pushFollow(FOLLOW_or_test_in_test4383);
+							pushFollow(FOLLOW_or_test_in_test4382);
 							o2=or_test(ctype);
 							state._fsp--;
 							if (state.failed) return retval;
 							if ( state.backtracking==0 ) stream_or_test.add(o2.getTree());
-							ORELSE187=(Token)match(input,ORELSE,FOLLOW_ORELSE_in_test4386); if (state.failed) return retval; 
+							ORELSE187=(Token)match(input,ORELSE,FOLLOW_ORELSE_in_test4385); if (state.failed) return retval; 
 							if ( state.backtracking==0 ) stream_ORELSE.add(ORELSE187);
 
-							pushFollow(FOLLOW_test_in_test4390);
+							pushFollow(FOLLOW_test_in_test4389);
 							e=test(expr_contextType.Load);
 							state._fsp--;
 							if (state.failed) return retval;
@@ -8726,7 +8725,7 @@ public class TruffleParser extends Parser {
 							}
 							break;
 						case 2 :
-							// Truffle.g:1278:6: 
+							// Truffle.g:1275:6: 
 							{
 							// AST REWRITE
 							// elements: or_test
@@ -8740,7 +8739,7 @@ public class TruffleParser extends Parser {
 							RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
 							root_0 = (PNode)adaptor.nil();
-							// 1278:6: -> or_test
+							// 1275:6: -> or_test
 							{
 								adaptor.addChild(root_0, stream_or_test.nextTree());
 							}
@@ -8757,12 +8756,12 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 2 :
-					// Truffle.g:1280:7: lambdef
+					// Truffle.g:1277:7: lambdef
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					pushFollow(FOLLOW_lambdef_in_test4435);
+					pushFollow(FOLLOW_lambdef_in_test4434);
 					lambdef188=lambdef();
 					state._fsp--;
 					if (state.failed) return retval;
@@ -8808,7 +8807,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "or_test"
-	// Truffle.g:1284:1: or_test[expr_contextType ctype] returns [Token leftTok] : left= and_test[ctype] ( (or= OR right+= and_test[ctype] )+ | -> $left) ;
+	// Truffle.g:1281:1: or_test[expr_contextType ctype] returns [Token leftTok] : left= and_test[ctype] ( (or= OR right+= and_test[ctype] )+ | -> $left) ;
 	public final TruffleParser.or_test_return or_test(expr_contextType ctype) throws RecognitionException {
 		TruffleParser.or_test_return retval = new TruffleParser.or_test_return();
 		retval.start = input.LT(1);
@@ -8824,15 +8823,15 @@ public class TruffleParser extends Parser {
 		RewriteRuleSubtreeStream stream_and_test=new RewriteRuleSubtreeStream(adaptor,"rule and_test");
 
 		try {
-			// Truffle.g:1295:5: (left= and_test[ctype] ( (or= OR right+= and_test[ctype] )+ | -> $left) )
-			// Truffle.g:1295:7: left= and_test[ctype] ( (or= OR right+= and_test[ctype] )+ | -> $left)
+			// Truffle.g:1292:5: (left= and_test[ctype] ( (or= OR right+= and_test[ctype] )+ | -> $left) )
+			// Truffle.g:1292:7: left= and_test[ctype] ( (or= OR right+= and_test[ctype] )+ | -> $left)
 			{
-			pushFollow(FOLLOW_and_test_in_or_test4470);
+			pushFollow(FOLLOW_and_test_in_or_test4469);
 			left=and_test(ctype);
 			state._fsp--;
 			if (state.failed) return retval;
 			if ( state.backtracking==0 ) stream_and_test.add(left.getTree());
-			// Truffle.g:1296:9: ( (or= OR right+= and_test[ctype] )+ | -> $left)
+			// Truffle.g:1293:9: ( (or= OR right+= and_test[ctype] )+ | -> $left)
 			int alt84=2;
 			int LA84_0 = input.LA(1);
 			if ( (LA84_0==OR) ) {
@@ -8851,9 +8850,9 @@ public class TruffleParser extends Parser {
 
 			switch (alt84) {
 				case 1 :
-					// Truffle.g:1296:11: (or= OR right+= and_test[ctype] )+
+					// Truffle.g:1293:11: (or= OR right+= and_test[ctype] )+
 					{
-					// Truffle.g:1296:11: (or= OR right+= and_test[ctype] )+
+					// Truffle.g:1293:11: (or= OR right+= and_test[ctype] )+
 					int cnt83=0;
 					loop83:
 					while (true) {
@@ -8865,12 +8864,12 @@ public class TruffleParser extends Parser {
 
 						switch (alt83) {
 						case 1 :
-							// Truffle.g:1296:12: or= OR right+= and_test[ctype]
+							// Truffle.g:1293:12: or= OR right+= and_test[ctype]
 							{
-							or=(Token)match(input,OR,FOLLOW_OR_in_or_test4486); if (state.failed) return retval; 
+							or=(Token)match(input,OR,FOLLOW_OR_in_or_test4485); if (state.failed) return retval; 
 							if ( state.backtracking==0 ) stream_OR.add(or);
 
-							pushFollow(FOLLOW_and_test_in_or_test4490);
+							pushFollow(FOLLOW_and_test_in_or_test4489);
 							right=and_test(ctype);
 							state._fsp--;
 							if (state.failed) return retval;
@@ -8892,7 +8891,7 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 2 :
-					// Truffle.g:1299:8: 
+					// Truffle.g:1296:8: 
 					{
 					// AST REWRITE
 					// elements: left
@@ -8907,7 +8906,7 @@ public class TruffleParser extends Parser {
 					RewriteRuleSubtreeStream stream_left=new RewriteRuleSubtreeStream(adaptor,"rule left",left!=null?left.getTree():null);
 
 					root_0 = (PNode)adaptor.nil();
-					// 1299:8: -> $left
+					// 1296:8: -> $left
 					{
 						adaptor.addChild(root_0, stream_left.nextTree());
 					}
@@ -8963,7 +8962,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "and_test"
-	// Truffle.g:1304:1: and_test[expr_contextType ctype] returns [Token leftTok] : left= not_test[ctype] ( (and= AND right+= not_test[ctype] )+ | -> $left) ;
+	// Truffle.g:1301:1: and_test[expr_contextType ctype] returns [Token leftTok] : left= not_test[ctype] ( (and= AND right+= not_test[ctype] )+ | -> $left) ;
 	public final TruffleParser.and_test_return and_test(expr_contextType ctype) throws RecognitionException {
 		TruffleParser.and_test_return retval = new TruffleParser.and_test_return();
 		retval.start = input.LT(1);
@@ -8979,15 +8978,15 @@ public class TruffleParser extends Parser {
 		RewriteRuleSubtreeStream stream_not_test=new RewriteRuleSubtreeStream(adaptor,"rule not_test");
 
 		try {
-			// Truffle.g:1315:5: (left= not_test[ctype] ( (and= AND right+= not_test[ctype] )+ | -> $left) )
-			// Truffle.g:1315:7: left= not_test[ctype] ( (and= AND right+= not_test[ctype] )+ | -> $left)
+			// Truffle.g:1312:5: (left= not_test[ctype] ( (and= AND right+= not_test[ctype] )+ | -> $left) )
+			// Truffle.g:1312:7: left= not_test[ctype] ( (and= AND right+= not_test[ctype] )+ | -> $left)
 			{
-			pushFollow(FOLLOW_not_test_in_and_test4571);
+			pushFollow(FOLLOW_not_test_in_and_test4570);
 			left=not_test(ctype);
 			state._fsp--;
 			if (state.failed) return retval;
 			if ( state.backtracking==0 ) stream_not_test.add(left.getTree());
-			// Truffle.g:1316:9: ( (and= AND right+= not_test[ctype] )+ | -> $left)
+			// Truffle.g:1313:9: ( (and= AND right+= not_test[ctype] )+ | -> $left)
 			int alt86=2;
 			int LA86_0 = input.LA(1);
 			if ( (LA86_0==AND) ) {
@@ -9006,9 +9005,9 @@ public class TruffleParser extends Parser {
 
 			switch (alt86) {
 				case 1 :
-					// Truffle.g:1316:11: (and= AND right+= not_test[ctype] )+
+					// Truffle.g:1313:11: (and= AND right+= not_test[ctype] )+
 					{
-					// Truffle.g:1316:11: (and= AND right+= not_test[ctype] )+
+					// Truffle.g:1313:11: (and= AND right+= not_test[ctype] )+
 					int cnt85=0;
 					loop85:
 					while (true) {
@@ -9020,12 +9019,12 @@ public class TruffleParser extends Parser {
 
 						switch (alt85) {
 						case 1 :
-							// Truffle.g:1316:12: and= AND right+= not_test[ctype]
+							// Truffle.g:1313:12: and= AND right+= not_test[ctype]
 							{
-							and=(Token)match(input,AND,FOLLOW_AND_in_and_test4587); if (state.failed) return retval; 
+							and=(Token)match(input,AND,FOLLOW_AND_in_and_test4586); if (state.failed) return retval; 
 							if ( state.backtracking==0 ) stream_AND.add(and);
 
-							pushFollow(FOLLOW_not_test_in_and_test4591);
+							pushFollow(FOLLOW_not_test_in_and_test4590);
 							right=not_test(ctype);
 							state._fsp--;
 							if (state.failed) return retval;
@@ -9047,7 +9046,7 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 2 :
-					// Truffle.g:1319:8: 
+					// Truffle.g:1316:8: 
 					{
 					// AST REWRITE
 					// elements: left
@@ -9062,7 +9061,7 @@ public class TruffleParser extends Parser {
 					RewriteRuleSubtreeStream stream_left=new RewriteRuleSubtreeStream(adaptor,"rule left",left!=null?left.getTree():null);
 
 					root_0 = (PNode)adaptor.nil();
-					// 1319:8: -> $left
+					// 1316:8: -> $left
 					{
 						adaptor.addChild(root_0, stream_left.nextTree());
 					}
@@ -9118,7 +9117,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "not_test"
-	// Truffle.g:1324:1: not_test[expr_contextType ctype] returns [Token leftTok] : ( NOT nt= not_test[ctype] | comparison[ctype] );
+	// Truffle.g:1321:1: not_test[expr_contextType ctype] returns [Token leftTok] : ( NOT nt= not_test[ctype] | comparison[ctype] );
 	public final TruffleParser.not_test_return not_test(expr_contextType ctype) throws RecognitionException {
 		TruffleParser.not_test_return retval = new TruffleParser.not_test_return();
 		retval.start = input.LT(1);
@@ -9135,7 +9134,7 @@ public class TruffleParser extends Parser {
 		    PNode etype = null;
 
 		try {
-			// Truffle.g:1334:5: ( NOT nt= not_test[ctype] | comparison[ctype] )
+			// Truffle.g:1331:5: ( NOT nt= not_test[ctype] | comparison[ctype] )
 			int alt87=2;
 			int LA87_0 = input.LA(1);
 			if ( (LA87_0==NOT) ) {
@@ -9160,18 +9159,18 @@ public class TruffleParser extends Parser {
 
 			switch (alt87) {
 				case 1 :
-					// Truffle.g:1334:7: NOT nt= not_test[ctype]
+					// Truffle.g:1331:7: NOT nt= not_test[ctype]
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					NOT189=(Token)match(input,NOT,FOLLOW_NOT_in_not_test4675); if (state.failed) return retval;
+					NOT189=(Token)match(input,NOT,FOLLOW_NOT_in_not_test4674); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					NOT189_tree = (PNode)adaptor.create(NOT189);
 					adaptor.addChild(root_0, NOT189_tree);
 					}
 
-					pushFollow(FOLLOW_not_test_in_not_test4679);
+					pushFollow(FOLLOW_not_test_in_not_test4678);
 					nt=not_test(ctype);
 					state._fsp--;
 					if (state.failed) return retval;
@@ -9183,12 +9182,12 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 2 :
-					// Truffle.g:1338:7: comparison[ctype]
+					// Truffle.g:1335:7: comparison[ctype]
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					pushFollow(FOLLOW_comparison_in_not_test4696);
+					pushFollow(FOLLOW_comparison_in_not_test4695);
 					comparison190=comparison(ctype);
 					state._fsp--;
 					if (state.failed) return retval;
@@ -9237,7 +9236,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "comparison"
-	// Truffle.g:1345:1: comparison[expr_contextType ctype] returns [Token leftTok] : left= expr[ctype] ( ( comp_op right+= expr[ctype] )+ | -> $left) ;
+	// Truffle.g:1342:1: comparison[expr_contextType ctype] returns [Token leftTok] : left= expr[ctype] ( ( comp_op right+= expr[ctype] )+ | -> $left) ;
 	public final TruffleParser.comparison_return comparison(expr_contextType ctype) throws RecognitionException {
 		TruffleParser.comparison_return retval = new TruffleParser.comparison_return();
 		retval.start = input.LT(1);
@@ -9255,15 +9254,15 @@ public class TruffleParser extends Parser {
 		    List cmps = new ArrayList();
 
 		try {
-			// Truffle.g:1357:5: (left= expr[ctype] ( ( comp_op right+= expr[ctype] )+ | -> $left) )
-			// Truffle.g:1357:7: left= expr[ctype] ( ( comp_op right+= expr[ctype] )+ | -> $left)
+			// Truffle.g:1354:5: (left= expr[ctype] ( ( comp_op right+= expr[ctype] )+ | -> $left) )
+			// Truffle.g:1354:7: left= expr[ctype] ( ( comp_op right+= expr[ctype] )+ | -> $left)
 			{
-			pushFollow(FOLLOW_expr_in_comparison4745);
+			pushFollow(FOLLOW_expr_in_comparison4744);
 			left=expr(ctype);
 			state._fsp--;
 			if (state.failed) return retval;
 			if ( state.backtracking==0 ) stream_expr.add(left.getTree());
-			// Truffle.g:1358:8: ( ( comp_op right+= expr[ctype] )+ | -> $left)
+			// Truffle.g:1355:8: ( ( comp_op right+= expr[ctype] )+ | -> $left)
 			int alt89=2;
 			int LA89_0 = input.LA(1);
 			if ( (LA89_0==EQUAL||(LA89_0 >= GREATER && LA89_0 <= GREATEREQUAL)||LA89_0==IN||LA89_0==IS||(LA89_0 >= LESS && LA89_0 <= LESSEQUAL)||(LA89_0 >= NOT && LA89_0 <= NOTEQUAL)) ) {
@@ -9282,9 +9281,9 @@ public class TruffleParser extends Parser {
 
 			switch (alt89) {
 				case 1 :
-					// Truffle.g:1358:10: ( comp_op right+= expr[ctype] )+
+					// Truffle.g:1355:10: ( comp_op right+= expr[ctype] )+
 					{
-					// Truffle.g:1358:10: ( comp_op right+= expr[ctype] )+
+					// Truffle.g:1355:10: ( comp_op right+= expr[ctype] )+
 					int cnt88=0;
 					loop88:
 					while (true) {
@@ -9296,14 +9295,14 @@ public class TruffleParser extends Parser {
 
 						switch (alt88) {
 						case 1 :
-							// Truffle.g:1358:12: comp_op right+= expr[ctype]
+							// Truffle.g:1355:12: comp_op right+= expr[ctype]
 							{
-							pushFollow(FOLLOW_comp_op_in_comparison4759);
+							pushFollow(FOLLOW_comp_op_in_comparison4758);
 							comp_op191=comp_op();
 							state._fsp--;
 							if (state.failed) return retval;
 							if ( state.backtracking==0 ) stream_comp_op.add(comp_op191.getTree());
-							pushFollow(FOLLOW_expr_in_comparison4763);
+							pushFollow(FOLLOW_expr_in_comparison4762);
 							right=expr(ctype);
 							state._fsp--;
 							if (state.failed) return retval;
@@ -9328,7 +9327,7 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 2 :
-					// Truffle.g:1364:7: 
+					// Truffle.g:1361:7: 
 					{
 					// AST REWRITE
 					// elements: left
@@ -9343,7 +9342,7 @@ public class TruffleParser extends Parser {
 					RewriteRuleSubtreeStream stream_left=new RewriteRuleSubtreeStream(adaptor,"rule left",left!=null?left.getTree():null);
 
 					root_0 = (PNode)adaptor.nil();
-					// 1364:7: -> $left
+					// 1361:7: -> $left
 					{
 						adaptor.addChild(root_0, stream_left.nextTree());
 					}
@@ -9397,7 +9396,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "comp_op"
-	// Truffle.g:1369:1: comp_op returns [cmpopType op] : ( LESS | GREATER | EQUAL | GREATEREQUAL | LESSEQUAL | NOTEQUAL | IN | NOT IN | IS | IS NOT );
+	// Truffle.g:1366:1: comp_op returns [cmpopType op] : ( LESS | GREATER | EQUAL | GREATEREQUAL | LESSEQUAL | NOTEQUAL | IN | NOT IN | IS | IS NOT );
 	public final TruffleParser.comp_op_return comp_op() throws RecognitionException {
 		TruffleParser.comp_op_return retval = new TruffleParser.comp_op_return();
 		retval.start = input.LT(1);
@@ -9431,7 +9430,7 @@ public class TruffleParser extends Parser {
 		PNode NOT203_tree=null;
 
 		try {
-			// Truffle.g:1371:5: ( LESS | GREATER | EQUAL | GREATEREQUAL | LESSEQUAL | NOTEQUAL | IN | NOT IN | IS | IS NOT )
+			// Truffle.g:1368:5: ( LESS | GREATER | EQUAL | GREATEREQUAL | LESSEQUAL | NOTEQUAL | IN | NOT IN | IS | IS NOT )
 			int alt90=10;
 			switch ( input.LA(1) ) {
 			case LESS:
@@ -9507,12 +9506,12 @@ public class TruffleParser extends Parser {
 			}
 			switch (alt90) {
 				case 1 :
-					// Truffle.g:1371:7: LESS
+					// Truffle.g:1368:7: LESS
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					LESS192=(Token)match(input,LESS,FOLLOW_LESS_in_comp_op4844); if (state.failed) return retval;
+					LESS192=(Token)match(input,LESS,FOLLOW_LESS_in_comp_op4843); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					LESS192_tree = (PNode)adaptor.create(LESS192);
 					adaptor.addChild(root_0, LESS192_tree);
@@ -9524,12 +9523,12 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 2 :
-					// Truffle.g:1375:7: GREATER
+					// Truffle.g:1372:7: GREATER
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					GREATER193=(Token)match(input,GREATER,FOLLOW_GREATER_in_comp_op4860); if (state.failed) return retval;
+					GREATER193=(Token)match(input,GREATER,FOLLOW_GREATER_in_comp_op4859); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					GREATER193_tree = (PNode)adaptor.create(GREATER193);
 					adaptor.addChild(root_0, GREATER193_tree);
@@ -9541,12 +9540,12 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 3 :
-					// Truffle.g:1379:7: EQUAL
+					// Truffle.g:1376:7: EQUAL
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					EQUAL194=(Token)match(input,EQUAL,FOLLOW_EQUAL_in_comp_op4876); if (state.failed) return retval;
+					EQUAL194=(Token)match(input,EQUAL,FOLLOW_EQUAL_in_comp_op4875); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					EQUAL194_tree = (PNode)adaptor.create(EQUAL194);
 					adaptor.addChild(root_0, EQUAL194_tree);
@@ -9558,12 +9557,12 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 4 :
-					// Truffle.g:1383:7: GREATEREQUAL
+					// Truffle.g:1380:7: GREATEREQUAL
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					GREATEREQUAL195=(Token)match(input,GREATEREQUAL,FOLLOW_GREATEREQUAL_in_comp_op4892); if (state.failed) return retval;
+					GREATEREQUAL195=(Token)match(input,GREATEREQUAL,FOLLOW_GREATEREQUAL_in_comp_op4891); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					GREATEREQUAL195_tree = (PNode)adaptor.create(GREATEREQUAL195);
 					adaptor.addChild(root_0, GREATEREQUAL195_tree);
@@ -9575,12 +9574,12 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 5 :
-					// Truffle.g:1387:7: LESSEQUAL
+					// Truffle.g:1384:7: LESSEQUAL
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					LESSEQUAL196=(Token)match(input,LESSEQUAL,FOLLOW_LESSEQUAL_in_comp_op4908); if (state.failed) return retval;
+					LESSEQUAL196=(Token)match(input,LESSEQUAL,FOLLOW_LESSEQUAL_in_comp_op4907); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					LESSEQUAL196_tree = (PNode)adaptor.create(LESSEQUAL196);
 					adaptor.addChild(root_0, LESSEQUAL196_tree);
@@ -9592,12 +9591,12 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 6 :
-					// Truffle.g:1395:7: NOTEQUAL
+					// Truffle.g:1392:7: NOTEQUAL
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					NOTEQUAL197=(Token)match(input,NOTEQUAL,FOLLOW_NOTEQUAL_in_comp_op4944); if (state.failed) return retval;
+					NOTEQUAL197=(Token)match(input,NOTEQUAL,FOLLOW_NOTEQUAL_in_comp_op4943); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					NOTEQUAL197_tree = (PNode)adaptor.create(NOTEQUAL197);
 					adaptor.addChild(root_0, NOTEQUAL197_tree);
@@ -9609,12 +9608,12 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 7 :
-					// Truffle.g:1399:7: IN
+					// Truffle.g:1396:7: IN
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					IN198=(Token)match(input,IN,FOLLOW_IN_in_comp_op4960); if (state.failed) return retval;
+					IN198=(Token)match(input,IN,FOLLOW_IN_in_comp_op4959); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					IN198_tree = (PNode)adaptor.create(IN198);
 					adaptor.addChild(root_0, IN198_tree);
@@ -9626,18 +9625,18 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 8 :
-					// Truffle.g:1403:7: NOT IN
+					// Truffle.g:1400:7: NOT IN
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					NOT199=(Token)match(input,NOT,FOLLOW_NOT_in_comp_op4976); if (state.failed) return retval;
+					NOT199=(Token)match(input,NOT,FOLLOW_NOT_in_comp_op4975); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					NOT199_tree = (PNode)adaptor.create(NOT199);
 					adaptor.addChild(root_0, NOT199_tree);
 					}
 
-					IN200=(Token)match(input,IN,FOLLOW_IN_in_comp_op4978); if (state.failed) return retval;
+					IN200=(Token)match(input,IN,FOLLOW_IN_in_comp_op4977); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					IN200_tree = (PNode)adaptor.create(IN200);
 					adaptor.addChild(root_0, IN200_tree);
@@ -9649,12 +9648,12 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 9 :
-					// Truffle.g:1407:7: IS
+					// Truffle.g:1404:7: IS
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					IS201=(Token)match(input,IS,FOLLOW_IS_in_comp_op4994); if (state.failed) return retval;
+					IS201=(Token)match(input,IS,FOLLOW_IS_in_comp_op4993); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					IS201_tree = (PNode)adaptor.create(IS201);
 					adaptor.addChild(root_0, IS201_tree);
@@ -9666,18 +9665,18 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 10 :
-					// Truffle.g:1411:7: IS NOT
+					// Truffle.g:1408:7: IS NOT
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					IS202=(Token)match(input,IS,FOLLOW_IS_in_comp_op5010); if (state.failed) return retval;
+					IS202=(Token)match(input,IS,FOLLOW_IS_in_comp_op5009); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					IS202_tree = (PNode)adaptor.create(IS202);
 					adaptor.addChild(root_0, IS202_tree);
 					}
 
-					NOT203=(Token)match(input,NOT,FOLLOW_NOT_in_comp_op5012); if (state.failed) return retval;
+					NOT203=(Token)match(input,NOT,FOLLOW_NOT_in_comp_op5011); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					NOT203_tree = (PNode)adaptor.create(NOT203);
 					adaptor.addChild(root_0, NOT203_tree);
@@ -9726,7 +9725,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "expr"
-	// Truffle.g:1418:1: expr[expr_contextType ect] returns [Token leftTok] : left= xor_expr ( (op= VBAR right+= xor_expr )+ | -> $left) ;
+	// Truffle.g:1415:1: expr[expr_contextType ect] returns [Token leftTok] : left= xor_expr ( (op= VBAR right+= xor_expr )+ | -> $left) ;
 	public final TruffleParser.expr_return expr(expr_contextType ect) throws RecognitionException {
 		expr_stack.push(new expr_scope());
 		TruffleParser.expr_return retval = new TruffleParser.expr_return();
@@ -9746,15 +9745,15 @@ public class TruffleParser extends Parser {
 		    expr_stack.peek().ctype = ect;
 
 		try {
-			// Truffle.g:1436:5: (left= xor_expr ( (op= VBAR right+= xor_expr )+ | -> $left) )
-			// Truffle.g:1436:7: left= xor_expr ( (op= VBAR right+= xor_expr )+ | -> $left)
+			// Truffle.g:1433:5: (left= xor_expr ( (op= VBAR right+= xor_expr )+ | -> $left) )
+			// Truffle.g:1433:7: left= xor_expr ( (op= VBAR right+= xor_expr )+ | -> $left)
 			{
-			pushFollow(FOLLOW_xor_expr_in_expr5064);
+			pushFollow(FOLLOW_xor_expr_in_expr5063);
 			left=xor_expr();
 			state._fsp--;
 			if (state.failed) return retval;
 			if ( state.backtracking==0 ) stream_xor_expr.add(left.getTree());
-			// Truffle.g:1437:9: ( (op= VBAR right+= xor_expr )+ | -> $left)
+			// Truffle.g:1434:9: ( (op= VBAR right+= xor_expr )+ | -> $left)
 			int alt92=2;
 			int LA92_0 = input.LA(1);
 			if ( (LA92_0==VBAR) ) {
@@ -9773,9 +9772,9 @@ public class TruffleParser extends Parser {
 
 			switch (alt92) {
 				case 1 :
-					// Truffle.g:1437:11: (op= VBAR right+= xor_expr )+
+					// Truffle.g:1434:11: (op= VBAR right+= xor_expr )+
 					{
-					// Truffle.g:1437:11: (op= VBAR right+= xor_expr )+
+					// Truffle.g:1434:11: (op= VBAR right+= xor_expr )+
 					int cnt91=0;
 					loop91:
 					while (true) {
@@ -9787,12 +9786,12 @@ public class TruffleParser extends Parser {
 
 						switch (alt91) {
 						case 1 :
-							// Truffle.g:1437:12: op= VBAR right+= xor_expr
+							// Truffle.g:1434:12: op= VBAR right+= xor_expr
 							{
-							op=(Token)match(input,VBAR,FOLLOW_VBAR_in_expr5079); if (state.failed) return retval; 
+							op=(Token)match(input,VBAR,FOLLOW_VBAR_in_expr5078); if (state.failed) return retval; 
 							if ( state.backtracking==0 ) stream_VBAR.add(op);
 
-							pushFollow(FOLLOW_xor_expr_in_expr5083);
+							pushFollow(FOLLOW_xor_expr_in_expr5082);
 							right=xor_expr();
 							state._fsp--;
 							if (state.failed) return retval;
@@ -9814,7 +9813,7 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 2 :
-					// Truffle.g:1440:8: 
+					// Truffle.g:1437:8: 
 					{
 					// AST REWRITE
 					// elements: left
@@ -9829,7 +9828,7 @@ public class TruffleParser extends Parser {
 					RewriteRuleSubtreeStream stream_left=new RewriteRuleSubtreeStream(adaptor,"rule left",left!=null?left.getTree():null);
 
 					root_0 = (PNode)adaptor.nil();
-					// 1440:8: -> $left
+					// 1437:8: -> $left
 					{
 						adaptor.addChild(root_0, stream_left.nextTree());
 					}
@@ -9887,7 +9886,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "xor_expr"
-	// Truffle.g:1446:1: xor_expr returns [Token lparen = null] : left= and_expr ( (op= CIRCUMFLEX right+= and_expr )+ | -> $left) ;
+	// Truffle.g:1443:1: xor_expr returns [Token lparen = null] : left= and_expr ( (op= CIRCUMFLEX right+= and_expr )+ | -> $left) ;
 	public final TruffleParser.xor_expr_return xor_expr() throws RecognitionException {
 		TruffleParser.xor_expr_return retval = new TruffleParser.xor_expr_return();
 		retval.start = input.LT(1);
@@ -9903,15 +9902,15 @@ public class TruffleParser extends Parser {
 		RewriteRuleSubtreeStream stream_and_expr=new RewriteRuleSubtreeStream(adaptor,"rule and_expr");
 
 		try {
-			// Truffle.g:1458:5: (left= and_expr ( (op= CIRCUMFLEX right+= and_expr )+ | -> $left) )
-			// Truffle.g:1458:7: left= and_expr ( (op= CIRCUMFLEX right+= and_expr )+ | -> $left)
+			// Truffle.g:1455:5: (left= and_expr ( (op= CIRCUMFLEX right+= and_expr )+ | -> $left) )
+			// Truffle.g:1455:7: left= and_expr ( (op= CIRCUMFLEX right+= and_expr )+ | -> $left)
 			{
-			pushFollow(FOLLOW_and_expr_in_xor_expr5162);
+			pushFollow(FOLLOW_and_expr_in_xor_expr5161);
 			left=and_expr();
 			state._fsp--;
 			if (state.failed) return retval;
 			if ( state.backtracking==0 ) stream_and_expr.add(left.getTree());
-			// Truffle.g:1459:9: ( (op= CIRCUMFLEX right+= and_expr )+ | -> $left)
+			// Truffle.g:1456:9: ( (op= CIRCUMFLEX right+= and_expr )+ | -> $left)
 			int alt94=2;
 			int LA94_0 = input.LA(1);
 			if ( (LA94_0==CIRCUMFLEX) ) {
@@ -9930,9 +9929,9 @@ public class TruffleParser extends Parser {
 
 			switch (alt94) {
 				case 1 :
-					// Truffle.g:1459:11: (op= CIRCUMFLEX right+= and_expr )+
+					// Truffle.g:1456:11: (op= CIRCUMFLEX right+= and_expr )+
 					{
-					// Truffle.g:1459:11: (op= CIRCUMFLEX right+= and_expr )+
+					// Truffle.g:1456:11: (op= CIRCUMFLEX right+= and_expr )+
 					int cnt93=0;
 					loop93:
 					while (true) {
@@ -9944,12 +9943,12 @@ public class TruffleParser extends Parser {
 
 						switch (alt93) {
 						case 1 :
-							// Truffle.g:1459:12: op= CIRCUMFLEX right+= and_expr
+							// Truffle.g:1456:12: op= CIRCUMFLEX right+= and_expr
 							{
-							op=(Token)match(input,CIRCUMFLEX,FOLLOW_CIRCUMFLEX_in_xor_expr5177); if (state.failed) return retval; 
+							op=(Token)match(input,CIRCUMFLEX,FOLLOW_CIRCUMFLEX_in_xor_expr5176); if (state.failed) return retval; 
 							if ( state.backtracking==0 ) stream_CIRCUMFLEX.add(op);
 
-							pushFollow(FOLLOW_and_expr_in_xor_expr5181);
+							pushFollow(FOLLOW_and_expr_in_xor_expr5180);
 							right=and_expr();
 							state._fsp--;
 							if (state.failed) return retval;
@@ -9971,7 +9970,7 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 2 :
-					// Truffle.g:1462:8: 
+					// Truffle.g:1459:8: 
 					{
 					// AST REWRITE
 					// elements: left
@@ -9986,7 +9985,7 @@ public class TruffleParser extends Parser {
 					RewriteRuleSubtreeStream stream_left=new RewriteRuleSubtreeStream(adaptor,"rule left",left!=null?left.getTree():null);
 
 					root_0 = (PNode)adaptor.nil();
-					// 1462:8: -> $left
+					// 1459:8: -> $left
 					{
 						adaptor.addChild(root_0, stream_left.nextTree());
 					}
@@ -10043,7 +10042,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "and_expr"
-	// Truffle.g:1467:1: and_expr returns [Token lparen = null] : left= shift_expr ( (op= AMPER right+= shift_expr )+ | -> $left) ;
+	// Truffle.g:1464:1: and_expr returns [Token lparen = null] : left= shift_expr ( (op= AMPER right+= shift_expr )+ | -> $left) ;
 	public final TruffleParser.and_expr_return and_expr() throws RecognitionException {
 		TruffleParser.and_expr_return retval = new TruffleParser.and_expr_return();
 		retval.start = input.LT(1);
@@ -10059,15 +10058,15 @@ public class TruffleParser extends Parser {
 		RewriteRuleSubtreeStream stream_shift_expr=new RewriteRuleSubtreeStream(adaptor,"rule shift_expr");
 
 		try {
-			// Truffle.g:1479:5: (left= shift_expr ( (op= AMPER right+= shift_expr )+ | -> $left) )
-			// Truffle.g:1479:7: left= shift_expr ( (op= AMPER right+= shift_expr )+ | -> $left)
+			// Truffle.g:1476:5: (left= shift_expr ( (op= AMPER right+= shift_expr )+ | -> $left) )
+			// Truffle.g:1476:7: left= shift_expr ( (op= AMPER right+= shift_expr )+ | -> $left)
 			{
-			pushFollow(FOLLOW_shift_expr_in_and_expr5259);
+			pushFollow(FOLLOW_shift_expr_in_and_expr5258);
 			left=shift_expr();
 			state._fsp--;
 			if (state.failed) return retval;
 			if ( state.backtracking==0 ) stream_shift_expr.add(left.getTree());
-			// Truffle.g:1480:9: ( (op= AMPER right+= shift_expr )+ | -> $left)
+			// Truffle.g:1477:9: ( (op= AMPER right+= shift_expr )+ | -> $left)
 			int alt96=2;
 			int LA96_0 = input.LA(1);
 			if ( (LA96_0==AMPER) ) {
@@ -10086,9 +10085,9 @@ public class TruffleParser extends Parser {
 
 			switch (alt96) {
 				case 1 :
-					// Truffle.g:1480:11: (op= AMPER right+= shift_expr )+
+					// Truffle.g:1477:11: (op= AMPER right+= shift_expr )+
 					{
-					// Truffle.g:1480:11: (op= AMPER right+= shift_expr )+
+					// Truffle.g:1477:11: (op= AMPER right+= shift_expr )+
 					int cnt95=0;
 					loop95:
 					while (true) {
@@ -10100,12 +10099,12 @@ public class TruffleParser extends Parser {
 
 						switch (alt95) {
 						case 1 :
-							// Truffle.g:1480:12: op= AMPER right+= shift_expr
+							// Truffle.g:1477:12: op= AMPER right+= shift_expr
 							{
-							op=(Token)match(input,AMPER,FOLLOW_AMPER_in_and_expr5274); if (state.failed) return retval; 
+							op=(Token)match(input,AMPER,FOLLOW_AMPER_in_and_expr5273); if (state.failed) return retval; 
 							if ( state.backtracking==0 ) stream_AMPER.add(op);
 
-							pushFollow(FOLLOW_shift_expr_in_and_expr5278);
+							pushFollow(FOLLOW_shift_expr_in_and_expr5277);
 							right=shift_expr();
 							state._fsp--;
 							if (state.failed) return retval;
@@ -10127,7 +10126,7 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 2 :
-					// Truffle.g:1483:8: 
+					// Truffle.g:1480:8: 
 					{
 					// AST REWRITE
 					// elements: left
@@ -10142,7 +10141,7 @@ public class TruffleParser extends Parser {
 					RewriteRuleSubtreeStream stream_left=new RewriteRuleSubtreeStream(adaptor,"rule left",left!=null?left.getTree():null);
 
 					root_0 = (PNode)adaptor.nil();
-					// 1483:8: -> $left
+					// 1480:8: -> $left
 					{
 						adaptor.addChild(root_0, stream_left.nextTree());
 					}
@@ -10199,7 +10198,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "shift_expr"
-	// Truffle.g:1488:1: shift_expr returns [Token lparen = null] : left= arith_expr ( ( shift_op right+= arith_expr )+ | -> $left) ;
+	// Truffle.g:1485:1: shift_expr returns [Token lparen = null] : left= arith_expr ( ( shift_op right+= arith_expr )+ | -> $left) ;
 	public final TruffleParser.shift_expr_return shift_expr() throws RecognitionException {
 		TruffleParser.shift_expr_return retval = new TruffleParser.shift_expr_return();
 		retval.start = input.LT(1);
@@ -10218,15 +10217,15 @@ public class TruffleParser extends Parser {
 		    List toks = new ArrayList();
 
 		try {
-			// Truffle.g:1504:5: (left= arith_expr ( ( shift_op right+= arith_expr )+ | -> $left) )
-			// Truffle.g:1504:7: left= arith_expr ( ( shift_op right+= arith_expr )+ | -> $left)
+			// Truffle.g:1501:5: (left= arith_expr ( ( shift_op right+= arith_expr )+ | -> $left) )
+			// Truffle.g:1501:7: left= arith_expr ( ( shift_op right+= arith_expr )+ | -> $left)
 			{
-			pushFollow(FOLLOW_arith_expr_in_shift_expr5361);
+			pushFollow(FOLLOW_arith_expr_in_shift_expr5360);
 			left=arith_expr();
 			state._fsp--;
 			if (state.failed) return retval;
 			if ( state.backtracking==0 ) stream_arith_expr.add(left.getTree());
-			// Truffle.g:1505:9: ( ( shift_op right+= arith_expr )+ | -> $left)
+			// Truffle.g:1502:9: ( ( shift_op right+= arith_expr )+ | -> $left)
 			int alt98=2;
 			int LA98_0 = input.LA(1);
 			if ( (LA98_0==LEFTSHIFT||LA98_0==RIGHTSHIFT) ) {
@@ -10245,9 +10244,9 @@ public class TruffleParser extends Parser {
 
 			switch (alt98) {
 				case 1 :
-					// Truffle.g:1505:11: ( shift_op right+= arith_expr )+
+					// Truffle.g:1502:11: ( shift_op right+= arith_expr )+
 					{
-					// Truffle.g:1505:11: ( shift_op right+= arith_expr )+
+					// Truffle.g:1502:11: ( shift_op right+= arith_expr )+
 					int cnt97=0;
 					loop97:
 					while (true) {
@@ -10259,14 +10258,14 @@ public class TruffleParser extends Parser {
 
 						switch (alt97) {
 						case 1 :
-							// Truffle.g:1505:13: shift_op right+= arith_expr
+							// Truffle.g:1502:13: shift_op right+= arith_expr
 							{
-							pushFollow(FOLLOW_shift_op_in_shift_expr5375);
+							pushFollow(FOLLOW_shift_op_in_shift_expr5374);
 							shift_op204=shift_op();
 							state._fsp--;
 							if (state.failed) return retval;
 							if ( state.backtracking==0 ) stream_shift_op.add(shift_op204.getTree());
-							pushFollow(FOLLOW_arith_expr_in_shift_expr5379);
+							pushFollow(FOLLOW_arith_expr_in_shift_expr5378);
 							right=arith_expr();
 							state._fsp--;
 							if (state.failed) return retval;
@@ -10292,7 +10291,7 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 2 :
-					// Truffle.g:1512:8: 
+					// Truffle.g:1509:8: 
 					{
 					// AST REWRITE
 					// elements: left
@@ -10307,7 +10306,7 @@ public class TruffleParser extends Parser {
 					RewriteRuleSubtreeStream stream_left=new RewriteRuleSubtreeStream(adaptor,"rule left",left!=null?left.getTree():null);
 
 					root_0 = (PNode)adaptor.nil();
-					// 1512:8: -> $left
+					// 1509:8: -> $left
 					{
 						adaptor.addChild(root_0, stream_left.nextTree());
 					}
@@ -10364,7 +10363,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "shift_op"
-	// Truffle.g:1516:1: shift_op returns [operatorType op] : ( LEFTSHIFT | RIGHTSHIFT );
+	// Truffle.g:1513:1: shift_op returns [operatorType op] : ( LEFTSHIFT | RIGHTSHIFT );
 	public final TruffleParser.shift_op_return shift_op() throws RecognitionException {
 		TruffleParser.shift_op_return retval = new TruffleParser.shift_op_return();
 		retval.start = input.LT(1);
@@ -10378,7 +10377,7 @@ public class TruffleParser extends Parser {
 		PNode RIGHTSHIFT206_tree=null;
 
 		try {
-			// Truffle.g:1518:5: ( LEFTSHIFT | RIGHTSHIFT )
+			// Truffle.g:1515:5: ( LEFTSHIFT | RIGHTSHIFT )
 			int alt99=2;
 			int LA99_0 = input.LA(1);
 			if ( (LA99_0==LEFTSHIFT) ) {
@@ -10397,12 +10396,12 @@ public class TruffleParser extends Parser {
 
 			switch (alt99) {
 				case 1 :
-					// Truffle.g:1518:7: LEFTSHIFT
+					// Truffle.g:1515:7: LEFTSHIFT
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					LEFTSHIFT205=(Token)match(input,LEFTSHIFT,FOLLOW_LEFTSHIFT_in_shift_op5463); if (state.failed) return retval;
+					LEFTSHIFT205=(Token)match(input,LEFTSHIFT,FOLLOW_LEFTSHIFT_in_shift_op5462); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					LEFTSHIFT205_tree = (PNode)adaptor.create(LEFTSHIFT205);
 					adaptor.addChild(root_0, LEFTSHIFT205_tree);
@@ -10414,12 +10413,12 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 2 :
-					// Truffle.g:1522:7: RIGHTSHIFT
+					// Truffle.g:1519:7: RIGHTSHIFT
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					RIGHTSHIFT206=(Token)match(input,RIGHTSHIFT,FOLLOW_RIGHTSHIFT_in_shift_op5479); if (state.failed) return retval;
+					RIGHTSHIFT206=(Token)match(input,RIGHTSHIFT,FOLLOW_RIGHTSHIFT_in_shift_op5478); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					RIGHTSHIFT206_tree = (PNode)adaptor.create(RIGHTSHIFT206);
 					adaptor.addChild(root_0, RIGHTSHIFT206_tree);
@@ -10463,7 +10462,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "arith_expr"
-	// Truffle.g:1529:1: arith_expr returns [Token lparen = null] : left= term ( ( arith_op right+= term )+ | -> $left) ;
+	// Truffle.g:1526:1: arith_expr returns [Token lparen = null] : left= term ( ( arith_op right+= term )+ | -> $left) ;
 	public final TruffleParser.arith_expr_return arith_expr() throws RecognitionException {
 		TruffleParser.arith_expr_return retval = new TruffleParser.arith_expr_return();
 		retval.start = input.LT(1);
@@ -10482,15 +10481,15 @@ public class TruffleParser extends Parser {
 		    List toks = new ArrayList();
 
 		try {
-			// Truffle.g:1545:5: (left= term ( ( arith_op right+= term )+ | -> $left) )
-			// Truffle.g:1545:7: left= term ( ( arith_op right+= term )+ | -> $left)
+			// Truffle.g:1542:5: (left= term ( ( arith_op right+= term )+ | -> $left) )
+			// Truffle.g:1542:7: left= term ( ( arith_op right+= term )+ | -> $left)
 			{
-			pushFollow(FOLLOW_term_in_arith_expr5525);
+			pushFollow(FOLLOW_term_in_arith_expr5524);
 			left=term();
 			state._fsp--;
 			if (state.failed) return retval;
 			if ( state.backtracking==0 ) stream_term.add(left.getTree());
-			// Truffle.g:1546:9: ( ( arith_op right+= term )+ | -> $left)
+			// Truffle.g:1543:9: ( ( arith_op right+= term )+ | -> $left)
 			int alt101=2;
 			int LA101_0 = input.LA(1);
 			if ( (LA101_0==MINUS||LA101_0==PLUS) ) {
@@ -10509,9 +10508,9 @@ public class TruffleParser extends Parser {
 
 			switch (alt101) {
 				case 1 :
-					// Truffle.g:1546:11: ( arith_op right+= term )+
+					// Truffle.g:1543:11: ( arith_op right+= term )+
 					{
-					// Truffle.g:1546:11: ( arith_op right+= term )+
+					// Truffle.g:1543:11: ( arith_op right+= term )+
 					int cnt100=0;
 					loop100:
 					while (true) {
@@ -10523,14 +10522,14 @@ public class TruffleParser extends Parser {
 
 						switch (alt100) {
 						case 1 :
-							// Truffle.g:1546:12: arith_op right+= term
+							// Truffle.g:1543:12: arith_op right+= term
 							{
-							pushFollow(FOLLOW_arith_op_in_arith_expr5538);
+							pushFollow(FOLLOW_arith_op_in_arith_expr5537);
 							arith_op207=arith_op();
 							state._fsp--;
 							if (state.failed) return retval;
 							if ( state.backtracking==0 ) stream_arith_op.add(arith_op207.getTree());
-							pushFollow(FOLLOW_term_in_arith_expr5542);
+							pushFollow(FOLLOW_term_in_arith_expr5541);
 							right=term();
 							state._fsp--;
 							if (state.failed) return retval;
@@ -10556,7 +10555,7 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 2 :
-					// Truffle.g:1553:8: 
+					// Truffle.g:1550:8: 
 					{
 					// AST REWRITE
 					// elements: left
@@ -10571,7 +10570,7 @@ public class TruffleParser extends Parser {
 					RewriteRuleSubtreeStream stream_left=new RewriteRuleSubtreeStream(adaptor,"rule left",left!=null?left.getTree():null);
 
 					root_0 = (PNode)adaptor.nil();
-					// 1553:8: -> $left
+					// 1550:8: -> $left
 					{
 						adaptor.addChild(root_0, stream_left.nextTree());
 					}
@@ -10629,7 +10628,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "arith_op"
-	// Truffle.g:1565:1: arith_op returns [operatorType op] : ( PLUS | MINUS );
+	// Truffle.g:1562:1: arith_op returns [operatorType op] : ( PLUS | MINUS );
 	public final TruffleParser.arith_op_return arith_op() throws RecognitionException {
 		TruffleParser.arith_op_return retval = new TruffleParser.arith_op_return();
 		retval.start = input.LT(1);
@@ -10643,7 +10642,7 @@ public class TruffleParser extends Parser {
 		PNode MINUS209_tree=null;
 
 		try {
-			// Truffle.g:1567:5: ( PLUS | MINUS )
+			// Truffle.g:1564:5: ( PLUS | MINUS )
 			int alt102=2;
 			int LA102_0 = input.LA(1);
 			if ( (LA102_0==PLUS) ) {
@@ -10662,12 +10661,12 @@ public class TruffleParser extends Parser {
 
 			switch (alt102) {
 				case 1 :
-					// Truffle.g:1567:7: PLUS
+					// Truffle.g:1564:7: PLUS
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					PLUS208=(Token)match(input,PLUS,FOLLOW_PLUS_in_arith_op5650); if (state.failed) return retval;
+					PLUS208=(Token)match(input,PLUS,FOLLOW_PLUS_in_arith_op5649); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					PLUS208_tree = (PNode)adaptor.create(PLUS208);
 					adaptor.addChild(root_0, PLUS208_tree);
@@ -10679,12 +10678,12 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 2 :
-					// Truffle.g:1571:7: MINUS
+					// Truffle.g:1568:7: MINUS
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					MINUS209=(Token)match(input,MINUS,FOLLOW_MINUS_in_arith_op5666); if (state.failed) return retval;
+					MINUS209=(Token)match(input,MINUS,FOLLOW_MINUS_in_arith_op5665); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					MINUS209_tree = (PNode)adaptor.create(MINUS209);
 					adaptor.addChild(root_0, MINUS209_tree);
@@ -10728,7 +10727,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "term"
-	// Truffle.g:1578:1: term returns [Token lparen = null] : left= factor ( ( term_op right+= factor )+ | -> $left) ;
+	// Truffle.g:1575:1: term returns [Token lparen = null] : left= factor ( ( term_op right+= factor )+ | -> $left) ;
 	public final TruffleParser.term_return term() throws RecognitionException {
 		TruffleParser.term_return retval = new TruffleParser.term_return();
 		retval.start = input.LT(1);
@@ -10747,15 +10746,15 @@ public class TruffleParser extends Parser {
 		    List toks = new ArrayList();
 
 		try {
-			// Truffle.g:1594:5: (left= factor ( ( term_op right+= factor )+ | -> $left) )
-			// Truffle.g:1594:7: left= factor ( ( term_op right+= factor )+ | -> $left)
+			// Truffle.g:1591:5: (left= factor ( ( term_op right+= factor )+ | -> $left) )
+			// Truffle.g:1591:7: left= factor ( ( term_op right+= factor )+ | -> $left)
 			{
-			pushFollow(FOLLOW_factor_in_term5712);
+			pushFollow(FOLLOW_factor_in_term5711);
 			left=factor();
 			state._fsp--;
 			if (state.failed) return retval;
 			if ( state.backtracking==0 ) stream_factor.add(left.getTree());
-			// Truffle.g:1595:9: ( ( term_op right+= factor )+ | -> $left)
+			// Truffle.g:1592:9: ( ( term_op right+= factor )+ | -> $left)
 			int alt104=2;
 			int LA104_0 = input.LA(1);
 			if ( (LA104_0==DOUBLESLASH||LA104_0==PERCENT||LA104_0==SLASH||LA104_0==STAR) ) {
@@ -10774,9 +10773,9 @@ public class TruffleParser extends Parser {
 
 			switch (alt104) {
 				case 1 :
-					// Truffle.g:1595:11: ( term_op right+= factor )+
+					// Truffle.g:1592:11: ( term_op right+= factor )+
 					{
-					// Truffle.g:1595:11: ( term_op right+= factor )+
+					// Truffle.g:1592:11: ( term_op right+= factor )+
 					int cnt103=0;
 					loop103:
 					while (true) {
@@ -10788,14 +10787,14 @@ public class TruffleParser extends Parser {
 
 						switch (alt103) {
 						case 1 :
-							// Truffle.g:1595:12: term_op right+= factor
+							// Truffle.g:1592:12: term_op right+= factor
 							{
-							pushFollow(FOLLOW_term_op_in_term5725);
+							pushFollow(FOLLOW_term_op_in_term5724);
 							term_op210=term_op();
 							state._fsp--;
 							if (state.failed) return retval;
 							if ( state.backtracking==0 ) stream_term_op.add(term_op210.getTree());
-							pushFollow(FOLLOW_factor_in_term5729);
+							pushFollow(FOLLOW_factor_in_term5728);
 							right=factor();
 							state._fsp--;
 							if (state.failed) return retval;
@@ -10821,7 +10820,7 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 2 :
-					// Truffle.g:1602:8: 
+					// Truffle.g:1599:8: 
 					{
 					// AST REWRITE
 					// elements: left
@@ -10836,7 +10835,7 @@ public class TruffleParser extends Parser {
 					RewriteRuleSubtreeStream stream_left=new RewriteRuleSubtreeStream(adaptor,"rule left",left!=null?left.getTree():null);
 
 					root_0 = (PNode)adaptor.nil();
-					// 1602:8: -> $left
+					// 1599:8: -> $left
 					{
 						adaptor.addChild(root_0, stream_left.nextTree());
 					}
@@ -10893,7 +10892,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "term_op"
-	// Truffle.g:1606:1: term_op returns [operatorType op] : ( STAR | SLASH | PERCENT | DOUBLESLASH );
+	// Truffle.g:1603:1: term_op returns [operatorType op] : ( STAR | SLASH | PERCENT | DOUBLESLASH );
 	public final TruffleParser.term_op_return term_op() throws RecognitionException {
 		TruffleParser.term_op_return retval = new TruffleParser.term_op_return();
 		retval.start = input.LT(1);
@@ -10911,7 +10910,7 @@ public class TruffleParser extends Parser {
 		PNode DOUBLESLASH214_tree=null;
 
 		try {
-			// Truffle.g:1608:5: ( STAR | SLASH | PERCENT | DOUBLESLASH )
+			// Truffle.g:1605:5: ( STAR | SLASH | PERCENT | DOUBLESLASH )
 			int alt105=4;
 			switch ( input.LA(1) ) {
 			case STAR:
@@ -10942,12 +10941,12 @@ public class TruffleParser extends Parser {
 			}
 			switch (alt105) {
 				case 1 :
-					// Truffle.g:1608:7: STAR
+					// Truffle.g:1605:7: STAR
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					STAR211=(Token)match(input,STAR,FOLLOW_STAR_in_term_op5811); if (state.failed) return retval;
+					STAR211=(Token)match(input,STAR,FOLLOW_STAR_in_term_op5810); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					STAR211_tree = (PNode)adaptor.create(STAR211);
 					adaptor.addChild(root_0, STAR211_tree);
@@ -10959,12 +10958,12 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 2 :
-					// Truffle.g:1612:7: SLASH
+					// Truffle.g:1609:7: SLASH
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					SLASH212=(Token)match(input,SLASH,FOLLOW_SLASH_in_term_op5827); if (state.failed) return retval;
+					SLASH212=(Token)match(input,SLASH,FOLLOW_SLASH_in_term_op5826); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					SLASH212_tree = (PNode)adaptor.create(SLASH212);
 					adaptor.addChild(root_0, SLASH212_tree);
@@ -10976,12 +10975,12 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 3 :
-					// Truffle.g:1616:7: PERCENT
+					// Truffle.g:1613:7: PERCENT
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					PERCENT213=(Token)match(input,PERCENT,FOLLOW_PERCENT_in_term_op5843); if (state.failed) return retval;
+					PERCENT213=(Token)match(input,PERCENT,FOLLOW_PERCENT_in_term_op5842); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					PERCENT213_tree = (PNode)adaptor.create(PERCENT213);
 					adaptor.addChild(root_0, PERCENT213_tree);
@@ -10993,12 +10992,12 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 4 :
-					// Truffle.g:1620:7: DOUBLESLASH
+					// Truffle.g:1617:7: DOUBLESLASH
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					DOUBLESLASH214=(Token)match(input,DOUBLESLASH,FOLLOW_DOUBLESLASH_in_term_op5859); if (state.failed) return retval;
+					DOUBLESLASH214=(Token)match(input,DOUBLESLASH,FOLLOW_DOUBLESLASH_in_term_op5858); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					DOUBLESLASH214_tree = (PNode)adaptor.create(DOUBLESLASH214);
 					adaptor.addChild(root_0, DOUBLESLASH214_tree);
@@ -11043,7 +11042,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "factor"
-	// Truffle.g:1627:1: factor returns [PNode etype, Token lparen = null] : ( PLUS p= factor | MINUS m= factor | TILDE t= factor | power );
+	// Truffle.g:1624:1: factor returns [PNode etype, Token lparen = null] : ( PLUS p= factor | MINUS m= factor | TILDE t= factor | power );
 	public final TruffleParser.factor_return factor() throws RecognitionException {
 		TruffleParser.factor_return retval = new TruffleParser.factor_return();
 		retval.start = input.LT(1);
@@ -11063,7 +11062,7 @@ public class TruffleParser extends Parser {
 		PNode TILDE217_tree=null;
 
 		try {
-			// Truffle.g:1632:5: ( PLUS p= factor | MINUS m= factor | TILDE t= factor | power )
+			// Truffle.g:1629:5: ( PLUS p= factor | MINUS m= factor | TILDE t= factor | power )
 			int alt106=4;
 			int LA106_0 = input.LA(1);
 			if ( (LA106_0==PLUS) ) {
@@ -11094,18 +11093,18 @@ public class TruffleParser extends Parser {
 
 			switch (alt106) {
 				case 1 :
-					// Truffle.g:1632:7: PLUS p= factor
+					// Truffle.g:1629:7: PLUS p= factor
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					PLUS215=(Token)match(input,PLUS,FOLLOW_PLUS_in_factor5898); if (state.failed) return retval;
+					PLUS215=(Token)match(input,PLUS,FOLLOW_PLUS_in_factor5897); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					PLUS215_tree = (PNode)adaptor.create(PLUS215);
 					adaptor.addChild(root_0, PLUS215_tree);
 					}
 
-					pushFollow(FOLLOW_factor_in_factor5902);
+					pushFollow(FOLLOW_factor_in_factor5901);
 					p=factor();
 					state._fsp--;
 					if (state.failed) return retval;
@@ -11117,18 +11116,18 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 2 :
-					// Truffle.g:1636:7: MINUS m= factor
+					// Truffle.g:1633:7: MINUS m= factor
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					MINUS216=(Token)match(input,MINUS,FOLLOW_MINUS_in_factor5918); if (state.failed) return retval;
+					MINUS216=(Token)match(input,MINUS,FOLLOW_MINUS_in_factor5917); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					MINUS216_tree = (PNode)adaptor.create(MINUS216);
 					adaptor.addChild(root_0, MINUS216_tree);
 					}
 
-					pushFollow(FOLLOW_factor_in_factor5922);
+					pushFollow(FOLLOW_factor_in_factor5921);
 					m=factor();
 					state._fsp--;
 					if (state.failed) return retval;
@@ -11140,18 +11139,18 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 3 :
-					// Truffle.g:1640:7: TILDE t= factor
+					// Truffle.g:1637:7: TILDE t= factor
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					TILDE217=(Token)match(input,TILDE,FOLLOW_TILDE_in_factor5938); if (state.failed) return retval;
+					TILDE217=(Token)match(input,TILDE,FOLLOW_TILDE_in_factor5937); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					TILDE217_tree = (PNode)adaptor.create(TILDE217);
 					adaptor.addChild(root_0, TILDE217_tree);
 					}
 
-					pushFollow(FOLLOW_factor_in_factor5942);
+					pushFollow(FOLLOW_factor_in_factor5941);
 					t=factor();
 					state._fsp--;
 					if (state.failed) return retval;
@@ -11163,12 +11162,12 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 4 :
-					// Truffle.g:1644:7: power
+					// Truffle.g:1641:7: power
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					pushFollow(FOLLOW_power_in_factor5958);
+					pushFollow(FOLLOW_power_in_factor5957);
 					power218=power();
 					state._fsp--;
 					if (state.failed) return retval;
@@ -11217,7 +11216,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "power"
-	// Truffle.g:1652:1: power returns [PNode etype, Token lparen = null] : atom (t+= trailer[$atom.start, $atom.tree] )* ( options {greedy=true; } :d= DOUBLESTAR factor )? ;
+	// Truffle.g:1649:1: power returns [PNode etype, Token lparen = null] : atom (t+= trailer[$atom.start, $atom.tree] )* ( options {greedy=true; } :d= DOUBLESTAR factor )? ;
 	public final TruffleParser.power_return power() throws RecognitionException {
 		TruffleParser.power_return retval = new TruffleParser.power_return();
 		retval.start = input.LT(1);
@@ -11232,19 +11231,19 @@ public class TruffleParser extends Parser {
 		PNode d_tree=null;
 
 		try {
-			// Truffle.g:1657:5: ( atom (t+= trailer[$atom.start, $atom.tree] )* ( options {greedy=true; } :d= DOUBLESTAR factor )? )
-			// Truffle.g:1657:7: atom (t+= trailer[$atom.start, $atom.tree] )* ( options {greedy=true; } :d= DOUBLESTAR factor )?
+			// Truffle.g:1654:5: ( atom (t+= trailer[$atom.start, $atom.tree] )* ( options {greedy=true; } :d= DOUBLESTAR factor )? )
+			// Truffle.g:1654:7: atom (t+= trailer[$atom.start, $atom.tree] )* ( options {greedy=true; } :d= DOUBLESTAR factor )?
 			{
 			root_0 = (PNode)adaptor.nil();
 
 
-			pushFollow(FOLLOW_atom_in_power5997);
+			pushFollow(FOLLOW_atom_in_power5996);
 			atom219=atom();
 			state._fsp--;
 			if (state.failed) return retval;
 			if ( state.backtracking==0 ) adaptor.addChild(root_0, atom219.getTree());
 
-			// Truffle.g:1657:12: (t+= trailer[$atom.start, $atom.tree] )*
+			// Truffle.g:1654:12: (t+= trailer[$atom.start, $atom.tree] )*
 			loop107:
 			while (true) {
 				int alt107=2;
@@ -11255,9 +11254,9 @@ public class TruffleParser extends Parser {
 
 				switch (alt107) {
 				case 1 :
-					// Truffle.g:1657:13: t+= trailer[$atom.start, $atom.tree]
+					// Truffle.g:1654:13: t+= trailer[$atom.start, $atom.tree]
 					{
-					pushFollow(FOLLOW_trailer_in_power6002);
+					pushFollow(FOLLOW_trailer_in_power6001);
 					t=trailer((atom219!=null?(atom219.start):null), (atom219!=null?((PNode)atom219.getTree()):null));
 					state._fsp--;
 					if (state.failed) return retval;
@@ -11273,7 +11272,7 @@ public class TruffleParser extends Parser {
 				}
 			}
 
-			// Truffle.g:1657:51: ( options {greedy=true; } :d= DOUBLESTAR factor )?
+			// Truffle.g:1654:51: ( options {greedy=true; } :d= DOUBLESTAR factor )?
 			int alt108=2;
 			int LA108_0 = input.LA(1);
 			if ( (LA108_0==DOUBLESTAR) ) {
@@ -11281,15 +11280,15 @@ public class TruffleParser extends Parser {
 			}
 			switch (alt108) {
 				case 1 :
-					// Truffle.g:1657:75: d= DOUBLESTAR factor
+					// Truffle.g:1654:75: d= DOUBLESTAR factor
 					{
-					d=(Token)match(input,DOUBLESTAR,FOLLOW_DOUBLESTAR_in_power6017); if (state.failed) return retval;
+					d=(Token)match(input,DOUBLESTAR,FOLLOW_DOUBLESTAR_in_power6016); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					d_tree = (PNode)adaptor.create(d);
 					adaptor.addChild(root_0, d_tree);
 					}
 
-					pushFollow(FOLLOW_factor_in_power6019);
+					pushFollow(FOLLOW_factor_in_power6018);
 					factor220=factor();
 					state._fsp--;
 					if (state.failed) return retval;
@@ -11351,7 +11350,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "atom"
-	// Truffle.g:1680:1: atom returns [Token lparen = null] : ( LPAREN ( yield_expr | testlist_gexp -> testlist_gexp |) RPAREN | LBRACK ( listmaker[$LBRACK] -> listmaker |) RBRACK | LCURLY ( dictorsetmaker[$LCURLY] -> dictorsetmaker |) RCURLY |lb= BACKQUOTE testlist[expr_contextType.Load] rb= BACKQUOTE | name_or_print | NONE | TRUE | FALSE | INT | FLOAT | COMPLEX | (S+= STRING )+ );
+	// Truffle.g:1677:1: atom returns [Token lparen = null] : ( LPAREN ( yield_expr | testlist_gexp -> testlist_gexp |) RPAREN | LBRACK ( listmaker[$LBRACK] -> listmaker |) RBRACK | LCURLY ( dictorsetmaker[$LCURLY] -> dictorsetmaker |) RCURLY |lb= BACKQUOTE testlist[expr_contextType.Load] rb= BACKQUOTE | name_or_print | NONE | TRUE | FALSE | INT | FLOAT | COMPLEX | (S+= STRING )+ );
 	public final TruffleParser.atom_return atom() throws RecognitionException {
 		TruffleParser.atom_return retval = new TruffleParser.atom_return();
 		retval.start = input.LT(1);
@@ -11411,7 +11410,7 @@ public class TruffleParser extends Parser {
 		    PNode etype = null;
 
 		try {
-			// Truffle.g:1690:5: ( LPAREN ( yield_expr | testlist_gexp -> testlist_gexp |) RPAREN | LBRACK ( listmaker[$LBRACK] -> listmaker |) RBRACK | LCURLY ( dictorsetmaker[$LCURLY] -> dictorsetmaker |) RCURLY |lb= BACKQUOTE testlist[expr_contextType.Load] rb= BACKQUOTE | name_or_print | NONE | TRUE | FALSE | INT | FLOAT | COMPLEX | (S+= STRING )+ )
+			// Truffle.g:1687:5: ( LPAREN ( yield_expr | testlist_gexp -> testlist_gexp |) RPAREN | LBRACK ( listmaker[$LBRACK] -> listmaker |) RBRACK | LCURLY ( dictorsetmaker[$LCURLY] -> dictorsetmaker |) RCURLY |lb= BACKQUOTE testlist[expr_contextType.Load] rb= BACKQUOTE | name_or_print | NONE | TRUE | FALSE | INT | FLOAT | COMPLEX | (S+= STRING )+ )
 			int alt113=12;
 			int LA113_0 = input.LA(1);
 			if ( (LA113_0==LPAREN) ) {
@@ -11463,15 +11462,15 @@ public class TruffleParser extends Parser {
 
 			switch (alt113) {
 				case 1 :
-					// Truffle.g:1690:7: LPAREN ( yield_expr | testlist_gexp -> testlist_gexp |) RPAREN
+					// Truffle.g:1687:7: LPAREN ( yield_expr | testlist_gexp -> testlist_gexp |) RPAREN
 					{
-					LPAREN221=(Token)match(input,LPAREN,FOLLOW_LPAREN_in_atom6069); if (state.failed) return retval; 
+					LPAREN221=(Token)match(input,LPAREN,FOLLOW_LPAREN_in_atom6068); if (state.failed) return retval; 
 					if ( state.backtracking==0 ) stream_LPAREN.add(LPAREN221);
 
 					if ( state.backtracking==0 ) {
 					          retval.lparen = LPAREN221;
 					      }
-					// Truffle.g:1694:7: ( yield_expr | testlist_gexp -> testlist_gexp |)
+					// Truffle.g:1691:7: ( yield_expr | testlist_gexp -> testlist_gexp |)
 					int alt109=3;
 					int LA109_0 = input.LA(1);
 					if ( (LA109_0==YIELD) ) {
@@ -11499,9 +11498,9 @@ public class TruffleParser extends Parser {
 
 					switch (alt109) {
 						case 1 :
-							// Truffle.g:1694:9: yield_expr
+							// Truffle.g:1691:9: yield_expr
 							{
-							pushFollow(FOLLOW_yield_expr_in_atom6087);
+							pushFollow(FOLLOW_yield_expr_in_atom6086);
 							yield_expr222=yield_expr();
 							state._fsp--;
 							if (state.failed) return retval;
@@ -11512,9 +11511,9 @@ public class TruffleParser extends Parser {
 							}
 							break;
 						case 2 :
-							// Truffle.g:1698:9: testlist_gexp
+							// Truffle.g:1695:9: testlist_gexp
 							{
-							pushFollow(FOLLOW_testlist_gexp_in_atom6107);
+							pushFollow(FOLLOW_testlist_gexp_in_atom6106);
 							testlist_gexp223=testlist_gexp();
 							state._fsp--;
 							if (state.failed) return retval;
@@ -11531,7 +11530,7 @@ public class TruffleParser extends Parser {
 							RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
 							root_0 = (PNode)adaptor.nil();
-							// 1699:6: -> testlist_gexp
+							// 1696:6: -> testlist_gexp
 							{
 								adaptor.addChild(root_0, stream_testlist_gexp.nextTree());
 							}
@@ -11543,7 +11542,7 @@ public class TruffleParser extends Parser {
 							}
 							break;
 						case 3 :
-							// Truffle.g:1701:9: 
+							// Truffle.g:1698:9: 
 							{
 							if ( state.backtracking==0 ) {
 							            etype = actions.makeTuple(LPAREN221, new ArrayList<PNode>(), expr_stack.peek().ctype);
@@ -11553,18 +11552,18 @@ public class TruffleParser extends Parser {
 
 					}
 
-					RPAREN224=(Token)match(input,RPAREN,FOLLOW_RPAREN_in_atom6150); if (state.failed) return retval; 
+					RPAREN224=(Token)match(input,RPAREN,FOLLOW_RPAREN_in_atom6149); if (state.failed) return retval; 
 					if ( state.backtracking==0 ) stream_RPAREN.add(RPAREN224);
 
 					}
 					break;
 				case 2 :
-					// Truffle.g:1706:7: LBRACK ( listmaker[$LBRACK] -> listmaker |) RBRACK
+					// Truffle.g:1703:7: LBRACK ( listmaker[$LBRACK] -> listmaker |) RBRACK
 					{
-					LBRACK225=(Token)match(input,LBRACK,FOLLOW_LBRACK_in_atom6158); if (state.failed) return retval; 
+					LBRACK225=(Token)match(input,LBRACK,FOLLOW_LBRACK_in_atom6157); if (state.failed) return retval; 
 					if ( state.backtracking==0 ) stream_LBRACK.add(LBRACK225);
 
-					// Truffle.g:1707:7: ( listmaker[$LBRACK] -> listmaker |)
+					// Truffle.g:1704:7: ( listmaker[$LBRACK] -> listmaker |)
 					int alt110=2;
 					int LA110_0 = input.LA(1);
 					if ( (LA110_0==BACKQUOTE||(LA110_0 >= LBRACK && LA110_0 <= LCURLY)||(LA110_0 >= LPAREN && LA110_0 <= MINUS)||LA110_0==NAME||LA110_0==NOT||LA110_0==PLUS||LA110_0==TILDE) ) {
@@ -11589,9 +11588,9 @@ public class TruffleParser extends Parser {
 
 					switch (alt110) {
 						case 1 :
-							// Truffle.g:1707:8: listmaker[$LBRACK]
+							// Truffle.g:1704:8: listmaker[$LBRACK]
 							{
-							pushFollow(FOLLOW_listmaker_in_atom6167);
+							pushFollow(FOLLOW_listmaker_in_atom6166);
 							listmaker226=listmaker(LBRACK225);
 							state._fsp--;
 							if (state.failed) return retval;
@@ -11608,7 +11607,7 @@ public class TruffleParser extends Parser {
 							RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
 							root_0 = (PNode)adaptor.nil();
-							// 1708:6: -> listmaker
+							// 1705:6: -> listmaker
 							{
 								adaptor.addChild(root_0, stream_listmaker.nextTree());
 							}
@@ -11620,7 +11619,7 @@ public class TruffleParser extends Parser {
 							}
 							break;
 						case 2 :
-							// Truffle.g:1710:8: 
+							// Truffle.g:1707:8: 
 							{
 							if ( state.backtracking==0 ) {
 							           etype = actions.makeList(LBRACK225, new ArrayList<PNode>(), expr_stack.peek().ctype);
@@ -11630,18 +11629,18 @@ public class TruffleParser extends Parser {
 
 					}
 
-					RBRACK227=(Token)match(input,RBRACK,FOLLOW_RBRACK_in_atom6210); if (state.failed) return retval; 
+					RBRACK227=(Token)match(input,RBRACK,FOLLOW_RBRACK_in_atom6209); if (state.failed) return retval; 
 					if ( state.backtracking==0 ) stream_RBRACK.add(RBRACK227);
 
 					}
 					break;
 				case 3 :
-					// Truffle.g:1715:7: LCURLY ( dictorsetmaker[$LCURLY] -> dictorsetmaker |) RCURLY
+					// Truffle.g:1712:7: LCURLY ( dictorsetmaker[$LCURLY] -> dictorsetmaker |) RCURLY
 					{
-					LCURLY228=(Token)match(input,LCURLY,FOLLOW_LCURLY_in_atom6218); if (state.failed) return retval; 
+					LCURLY228=(Token)match(input,LCURLY,FOLLOW_LCURLY_in_atom6217); if (state.failed) return retval; 
 					if ( state.backtracking==0 ) stream_LCURLY.add(LCURLY228);
 
-					// Truffle.g:1716:7: ( dictorsetmaker[$LCURLY] -> dictorsetmaker |)
+					// Truffle.g:1713:7: ( dictorsetmaker[$LCURLY] -> dictorsetmaker |)
 					int alt111=2;
 					int LA111_0 = input.LA(1);
 					if ( (LA111_0==BACKQUOTE||(LA111_0 >= LBRACK && LA111_0 <= LCURLY)||(LA111_0 >= LPAREN && LA111_0 <= MINUS)||LA111_0==NAME||LA111_0==NOT||LA111_0==PLUS||LA111_0==TILDE) ) {
@@ -11666,9 +11665,9 @@ public class TruffleParser extends Parser {
 
 					switch (alt111) {
 						case 1 :
-							// Truffle.g:1716:8: dictorsetmaker[$LCURLY]
+							// Truffle.g:1713:8: dictorsetmaker[$LCURLY]
 							{
-							pushFollow(FOLLOW_dictorsetmaker_in_atom6227);
+							pushFollow(FOLLOW_dictorsetmaker_in_atom6226);
 							dictorsetmaker229=dictorsetmaker(LCURLY228);
 							state._fsp--;
 							if (state.failed) return retval;
@@ -11685,7 +11684,7 @@ public class TruffleParser extends Parser {
 							RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
 							root_0 = (PNode)adaptor.nil();
-							// 1717:6: -> dictorsetmaker
+							// 1714:6: -> dictorsetmaker
 							{
 								adaptor.addChild(root_0, stream_dictorsetmaker.nextTree());
 							}
@@ -11697,7 +11696,7 @@ public class TruffleParser extends Parser {
 							}
 							break;
 						case 2 :
-							// Truffle.g:1719:8: 
+							// Truffle.g:1716:8: 
 							{
 							if ( state.backtracking==0 ) {
 							           etype = actions.makeDict(LCURLY228, new ArrayList<PNode>(), new ArrayList<PNode>());
@@ -11707,30 +11706,30 @@ public class TruffleParser extends Parser {
 
 					}
 
-					RCURLY230=(Token)match(input,RCURLY,FOLLOW_RCURLY_in_atom6271); if (state.failed) return retval; 
+					RCURLY230=(Token)match(input,RCURLY,FOLLOW_RCURLY_in_atom6270); if (state.failed) return retval; 
 					if ( state.backtracking==0 ) stream_RCURLY.add(RCURLY230);
 
 					}
 					break;
 				case 4 :
-					// Truffle.g:1724:8: lb= BACKQUOTE testlist[expr_contextType.Load] rb= BACKQUOTE
+					// Truffle.g:1721:8: lb= BACKQUOTE testlist[expr_contextType.Load] rb= BACKQUOTE
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					lb=(Token)match(input,BACKQUOTE,FOLLOW_BACKQUOTE_in_atom6282); if (state.failed) return retval;
+					lb=(Token)match(input,BACKQUOTE,FOLLOW_BACKQUOTE_in_atom6281); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					lb_tree = (PNode)adaptor.create(lb);
 					adaptor.addChild(root_0, lb_tree);
 					}
 
-					pushFollow(FOLLOW_testlist_in_atom6284);
+					pushFollow(FOLLOW_testlist_in_atom6283);
 					testlist231=testlist(expr_contextType.Load);
 					state._fsp--;
 					if (state.failed) return retval;
 					if ( state.backtracking==0 ) adaptor.addChild(root_0, testlist231.getTree());
 
-					rb=(Token)match(input,BACKQUOTE,FOLLOW_BACKQUOTE_in_atom6289); if (state.failed) return retval;
+					rb=(Token)match(input,BACKQUOTE,FOLLOW_BACKQUOTE_in_atom6288); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					rb_tree = (PNode)adaptor.create(rb);
 					adaptor.addChild(root_0, rb_tree);
@@ -11742,12 +11741,12 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 5 :
-					// Truffle.g:1728:8: name_or_print
+					// Truffle.g:1725:8: name_or_print
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					pushFollow(FOLLOW_name_or_print_in_atom6307);
+					pushFollow(FOLLOW_name_or_print_in_atom6306);
 					name_or_print232=name_or_print();
 					state._fsp--;
 					if (state.failed) return retval;
@@ -11759,12 +11758,12 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 6 :
-					// Truffle.g:1732:8: NONE
+					// Truffle.g:1729:8: NONE
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					NONE233=(Token)match(input,NONE,FOLLOW_NONE_in_atom6325); if (state.failed) return retval;
+					NONE233=(Token)match(input,NONE,FOLLOW_NONE_in_atom6324); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					NONE233_tree = (PNode)adaptor.create(NONE233);
 					adaptor.addChild(root_0, NONE233_tree);
@@ -11776,12 +11775,12 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 7 :
-					// Truffle.g:1736:8: TRUE
+					// Truffle.g:1733:8: TRUE
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					TRUE234=(Token)match(input,TRUE,FOLLOW_TRUE_in_atom6344); if (state.failed) return retval;
+					TRUE234=(Token)match(input,TRUE,FOLLOW_TRUE_in_atom6343); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					TRUE234_tree = (PNode)adaptor.create(TRUE234);
 					adaptor.addChild(root_0, TRUE234_tree);
@@ -11793,12 +11792,12 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 8 :
-					// Truffle.g:1740:8: FALSE
+					// Truffle.g:1737:8: FALSE
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					FALSE235=(Token)match(input,FALSE,FOLLOW_FALSE_in_atom6363); if (state.failed) return retval;
+					FALSE235=(Token)match(input,FALSE,FOLLOW_FALSE_in_atom6362); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					FALSE235_tree = (PNode)adaptor.create(FALSE235);
 					adaptor.addChild(root_0, FALSE235_tree);
@@ -11810,12 +11809,12 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 9 :
-					// Truffle.g:1744:8: INT
+					// Truffle.g:1741:8: INT
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					INT236=(Token)match(input,INT,FOLLOW_INT_in_atom6382); if (state.failed) return retval;
+					INT236=(Token)match(input,INT,FOLLOW_INT_in_atom6381); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					INT236_tree = (PNode)adaptor.create(INT236);
 					adaptor.addChild(root_0, INT236_tree);
@@ -11829,12 +11828,12 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 10 :
-					// Truffle.g:1754:8: FLOAT
+					// Truffle.g:1751:8: FLOAT
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					FLOAT237=(Token)match(input,FLOAT,FOLLOW_FLOAT_in_atom6421); if (state.failed) return retval;
+					FLOAT237=(Token)match(input,FLOAT,FOLLOW_FLOAT_in_atom6420); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					FLOAT237_tree = (PNode)adaptor.create(FLOAT237);
 					adaptor.addChild(root_0, FLOAT237_tree);
@@ -11847,12 +11846,12 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 11 :
-					// Truffle.g:1759:8: COMPLEX
+					// Truffle.g:1756:8: COMPLEX
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					COMPLEX238=(Token)match(input,COMPLEX,FOLLOW_COMPLEX_in_atom6439); if (state.failed) return retval;
+					COMPLEX238=(Token)match(input,COMPLEX,FOLLOW_COMPLEX_in_atom6438); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					COMPLEX238_tree = (PNode)adaptor.create(COMPLEX238);
 					adaptor.addChild(root_0, COMPLEX238_tree);
@@ -11865,12 +11864,12 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 12 :
-					// Truffle.g:1764:8: (S+= STRING )+
+					// Truffle.g:1761:8: (S+= STRING )+
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					// Truffle.g:1764:8: (S+= STRING )+
+					// Truffle.g:1761:8: (S+= STRING )+
 					int cnt112=0;
 					loop112:
 					while (true) {
@@ -11882,9 +11881,9 @@ public class TruffleParser extends Parser {
 
 						switch (alt112) {
 						case 1 :
-							// Truffle.g:1764:9: S+= STRING
+							// Truffle.g:1761:9: S+= STRING
 							{
-							S=(Token)match(input,STRING,FOLLOW_STRING_in_atom6460); if (state.failed) return retval;
+							S=(Token)match(input,STRING,FOLLOW_STRING_in_atom6459); if (state.failed) return retval;
 							if ( state.backtracking==0 ) {
 							S_tree = (PNode)adaptor.create(S);
 							adaptor.addChild(root_0, S_tree);
@@ -11946,7 +11945,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "listmaker"
-	// Truffle.g:1771:1: listmaker[Token lbrack] :t+= test[$expr::ctype] ( list_for[gens] | ( options {greedy=true; } : COMMA t+= test[$expr::ctype] )* ) ( COMMA )? ;
+	// Truffle.g:1768:1: listmaker[Token lbrack] :t+= test[$expr::ctype] ( list_for[gens] | ( options {greedy=true; } : COMMA t+= test[$expr::ctype] )* ) ( COMMA )? ;
 	public final TruffleParser.listmaker_return listmaker(Token lbrack) throws RecognitionException {
 		TruffleParser.listmaker_return retval = new TruffleParser.listmaker_return();
 		retval.start = input.LT(1);
@@ -11966,13 +11965,13 @@ public class TruffleParser extends Parser {
 		    PNode etype = null;
 
 		try {
-			// Truffle.g:1779:5: (t+= test[$expr::ctype] ( list_for[gens] | ( options {greedy=true; } : COMMA t+= test[$expr::ctype] )* ) ( COMMA )? )
-			// Truffle.g:1779:7: t+= test[$expr::ctype] ( list_for[gens] | ( options {greedy=true; } : COMMA t+= test[$expr::ctype] )* ) ( COMMA )?
+			// Truffle.g:1776:5: (t+= test[$expr::ctype] ( list_for[gens] | ( options {greedy=true; } : COMMA t+= test[$expr::ctype] )* ) ( COMMA )? )
+			// Truffle.g:1776:7: t+= test[$expr::ctype] ( list_for[gens] | ( options {greedy=true; } : COMMA t+= test[$expr::ctype] )* ) ( COMMA )?
 			{
 			root_0 = (PNode)adaptor.nil();
 
 
-			pushFollow(FOLLOW_test_in_listmaker6503);
+			pushFollow(FOLLOW_test_in_listmaker6502);
 			t=test(expr_stack.peek().ctype);
 			state._fsp--;
 			if (state.failed) return retval;
@@ -11980,7 +11979,7 @@ public class TruffleParser extends Parser {
 
 			if (list_t==null) list_t=new ArrayList<Object>();
 			list_t.add(t.getTree());
-			// Truffle.g:1780:9: ( list_for[gens] | ( options {greedy=true; } : COMMA t+= test[$expr::ctype] )* )
+			// Truffle.g:1777:9: ( list_for[gens] | ( options {greedy=true; } : COMMA t+= test[$expr::ctype] )* )
 			int alt115=2;
 			int LA115_0 = input.LA(1);
 			if ( (LA115_0==FOR) ) {
@@ -11999,9 +11998,9 @@ public class TruffleParser extends Parser {
 
 			switch (alt115) {
 				case 1 :
-					// Truffle.g:1780:10: list_for[gens]
+					// Truffle.g:1777:10: list_for[gens]
 					{
-					pushFollow(FOLLOW_list_for_in_listmaker6515);
+					pushFollow(FOLLOW_list_for_in_listmaker6514);
 					list_for239=list_for(gens);
 					state._fsp--;
 					if (state.failed) return retval;
@@ -12015,9 +12014,9 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 2 :
-					// Truffle.g:1786:11: ( options {greedy=true; } : COMMA t+= test[$expr::ctype] )*
+					// Truffle.g:1783:11: ( options {greedy=true; } : COMMA t+= test[$expr::ctype] )*
 					{
-					// Truffle.g:1786:11: ( options {greedy=true; } : COMMA t+= test[$expr::ctype] )*
+					// Truffle.g:1783:11: ( options {greedy=true; } : COMMA t+= test[$expr::ctype] )*
 					loop114:
 					while (true) {
 						int alt114=2;
@@ -12032,15 +12031,15 @@ public class TruffleParser extends Parser {
 
 						switch (alt114) {
 						case 1 :
-							// Truffle.g:1786:35: COMMA t+= test[$expr::ctype]
+							// Truffle.g:1783:35: COMMA t+= test[$expr::ctype]
 							{
-							COMMA240=(Token)match(input,COMMA,FOLLOW_COMMA_in_listmaker6547); if (state.failed) return retval;
+							COMMA240=(Token)match(input,COMMA,FOLLOW_COMMA_in_listmaker6546); if (state.failed) return retval;
 							if ( state.backtracking==0 ) {
 							COMMA240_tree = (PNode)adaptor.create(COMMA240);
 							adaptor.addChild(root_0, COMMA240_tree);
 							}
 
-							pushFollow(FOLLOW_test_in_listmaker6551);
+							pushFollow(FOLLOW_test_in_listmaker6550);
 							t=test(expr_stack.peek().ctype);
 							state._fsp--;
 							if (state.failed) return retval;
@@ -12064,7 +12063,7 @@ public class TruffleParser extends Parser {
 
 			}
 
-			// Truffle.g:1790:11: ( COMMA )?
+			// Truffle.g:1787:11: ( COMMA )?
 			int alt116=2;
 			int LA116_0 = input.LA(1);
 			if ( (LA116_0==COMMA) ) {
@@ -12072,9 +12071,9 @@ public class TruffleParser extends Parser {
 			}
 			switch (alt116) {
 				case 1 :
-					// Truffle.g:1790:12: COMMA
+					// Truffle.g:1787:12: COMMA
 					{
-					COMMA241=(Token)match(input,COMMA,FOLLOW_COMMA_in_listmaker6580); if (state.failed) return retval;
+					COMMA241=(Token)match(input,COMMA,FOLLOW_COMMA_in_listmaker6579); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					COMMA241_tree = (PNode)adaptor.create(COMMA241);
 					adaptor.addChild(root_0, COMMA241_tree);
@@ -12120,7 +12119,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "testlist_gexp"
-	// Truffle.g:1794:1: testlist_gexp :t+= test[$expr::ctype] ( ( options {k=2; } :c1= COMMA t+= test[$expr::ctype] )* (c2= COMMA )? {...}?| -> test | ( comp_for[gens] ) ) ;
+	// Truffle.g:1791:1: testlist_gexp :t+= test[$expr::ctype] ( ( options {k=2; } :c1= COMMA t+= test[$expr::ctype] )* (c2= COMMA )? {...}?| -> test | ( comp_for[gens] ) ) ;
 	public final TruffleParser.testlist_gexp_return testlist_gexp() throws RecognitionException {
 		TruffleParser.testlist_gexp_return retval = new TruffleParser.testlist_gexp_return();
 		retval.start = input.LT(1);
@@ -12144,17 +12143,17 @@ public class TruffleParser extends Parser {
 		    
 
 		try {
-			// Truffle.g:1805:5: (t+= test[$expr::ctype] ( ( options {k=2; } :c1= COMMA t+= test[$expr::ctype] )* (c2= COMMA )? {...}?| -> test | ( comp_for[gens] ) ) )
-			// Truffle.g:1805:7: t+= test[$expr::ctype] ( ( options {k=2; } :c1= COMMA t+= test[$expr::ctype] )* (c2= COMMA )? {...}?| -> test | ( comp_for[gens] ) )
+			// Truffle.g:1802:5: (t+= test[$expr::ctype] ( ( options {k=2; } :c1= COMMA t+= test[$expr::ctype] )* (c2= COMMA )? {...}?| -> test | ( comp_for[gens] ) ) )
+			// Truffle.g:1802:7: t+= test[$expr::ctype] ( ( options {k=2; } :c1= COMMA t+= test[$expr::ctype] )* (c2= COMMA )? {...}?| -> test | ( comp_for[gens] ) )
 			{
-			pushFollow(FOLLOW_test_in_testlist_gexp6612);
+			pushFollow(FOLLOW_test_in_testlist_gexp6611);
 			t=test(expr_stack.peek().ctype);
 			state._fsp--;
 			if (state.failed) return retval;
 			if ( state.backtracking==0 ) stream_test.add(t.getTree());
 			if (list_t==null) list_t=new ArrayList<Object>();
 			list_t.add(t.getTree());
-			// Truffle.g:1806:9: ( ( options {k=2; } :c1= COMMA t+= test[$expr::ctype] )* (c2= COMMA )? {...}?| -> test | ( comp_for[gens] ) )
+			// Truffle.g:1803:9: ( ( options {k=2; } :c1= COMMA t+= test[$expr::ctype] )* (c2= COMMA )? {...}?| -> test | ( comp_for[gens] ) )
 			int alt119=3;
 			switch ( input.LA(1) ) {
 			case COMMA:
@@ -12187,9 +12186,9 @@ public class TruffleParser extends Parser {
 			}
 			switch (alt119) {
 				case 1 :
-					// Truffle.g:1806:11: ( options {k=2; } :c1= COMMA t+= test[$expr::ctype] )* (c2= COMMA )? {...}?
+					// Truffle.g:1803:11: ( options {k=2; } :c1= COMMA t+= test[$expr::ctype] )* (c2= COMMA )? {...}?
 					{
-					// Truffle.g:1806:11: ( options {k=2; } :c1= COMMA t+= test[$expr::ctype] )*
+					// Truffle.g:1803:11: ( options {k=2; } :c1= COMMA t+= test[$expr::ctype] )*
 					loop117:
 					while (true) {
 						int alt117=2;
@@ -12204,12 +12203,12 @@ public class TruffleParser extends Parser {
 
 						switch (alt117) {
 						case 1 :
-							// Truffle.g:1806:28: c1= COMMA t+= test[$expr::ctype]
+							// Truffle.g:1803:28: c1= COMMA t+= test[$expr::ctype]
 							{
-							c1=(Token)match(input,COMMA,FOLLOW_COMMA_in_testlist_gexp6636); if (state.failed) return retval; 
+							c1=(Token)match(input,COMMA,FOLLOW_COMMA_in_testlist_gexp6635); if (state.failed) return retval; 
 							if ( state.backtracking==0 ) stream_COMMA.add(c1);
 
-							pushFollow(FOLLOW_test_in_testlist_gexp6640);
+							pushFollow(FOLLOW_test_in_testlist_gexp6639);
 							t=test(expr_stack.peek().ctype);
 							state._fsp--;
 							if (state.failed) return retval;
@@ -12224,7 +12223,7 @@ public class TruffleParser extends Parser {
 						}
 					}
 
-					// Truffle.g:1806:61: (c2= COMMA )?
+					// Truffle.g:1803:61: (c2= COMMA )?
 					int alt118=2;
 					int LA118_0 = input.LA(1);
 					if ( (LA118_0==COMMA) ) {
@@ -12232,9 +12231,9 @@ public class TruffleParser extends Parser {
 					}
 					switch (alt118) {
 						case 1 :
-							// Truffle.g:1806:62: c2= COMMA
+							// Truffle.g:1803:62: c2= COMMA
 							{
-							c2=(Token)match(input,COMMA,FOLLOW_COMMA_in_testlist_gexp6648); if (state.failed) return retval; 
+							c2=(Token)match(input,COMMA,FOLLOW_COMMA_in_testlist_gexp6647); if (state.failed) return retval; 
 							if ( state.backtracking==0 ) stream_COMMA.add(c2);
 
 							}
@@ -12252,7 +12251,7 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 2 :
-					// Truffle.g:1811:11: 
+					// Truffle.g:1808:11: 
 					{
 					// AST REWRITE
 					// elements: test
@@ -12266,7 +12265,7 @@ public class TruffleParser extends Parser {
 					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
 					root_0 = (PNode)adaptor.nil();
-					// 1811:11: -> test
+					// 1808:11: -> test
 					{
 						adaptor.addChild(root_0, stream_test.nextTree());
 					}
@@ -12278,13 +12277,13 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 3 :
-					// Truffle.g:1812:11: ( comp_for[gens] )
+					// Truffle.g:1809:11: ( comp_for[gens] )
 					{
-					// Truffle.g:1812:11: ( comp_for[gens] )
-					// Truffle.g:1812:12: comp_for[gens]
+					// Truffle.g:1809:11: ( comp_for[gens] )
+					// Truffle.g:1809:12: comp_for[gens]
 					{
 					if ( state.backtracking==0 ) {actions.beginScope();}
-					pushFollow(FOLLOW_comp_for_in_testlist_gexp6704);
+					pushFollow(FOLLOW_comp_for_in_testlist_gexp6703);
 					comp_for242=comp_for(gens);
 					state._fsp--;
 					if (state.failed) return retval;
@@ -12343,7 +12342,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "lambdef"
-	// Truffle.g:1828:1: lambdef : LAMBDA ( varargslist )? COLON test[expr_contextType.Load] ;
+	// Truffle.g:1825:1: lambdef : LAMBDA ( varargslist )? COLON test[expr_contextType.Load] ;
 	public final TruffleParser.lambdef_return lambdef() throws RecognitionException {
 		TruffleParser.lambdef_return retval = new TruffleParser.lambdef_return();
 		retval.start = input.LT(1);
@@ -12362,19 +12361,19 @@ public class TruffleParser extends Parser {
 		    PNode etype = null;
 
 		try {
-			// Truffle.g:1835:5: ( LAMBDA ( varargslist )? COLON test[expr_contextType.Load] )
-			// Truffle.g:1835:7: LAMBDA ( varargslist )? COLON test[expr_contextType.Load]
+			// Truffle.g:1832:5: ( LAMBDA ( varargslist )? COLON test[expr_contextType.Load] )
+			// Truffle.g:1832:7: LAMBDA ( varargslist )? COLON test[expr_contextType.Load]
 			{
 			root_0 = (PNode)adaptor.nil();
 
 
-			LAMBDA243=(Token)match(input,LAMBDA,FOLLOW_LAMBDA_in_lambdef6768); if (state.failed) return retval;
+			LAMBDA243=(Token)match(input,LAMBDA,FOLLOW_LAMBDA_in_lambdef6767); if (state.failed) return retval;
 			if ( state.backtracking==0 ) {
 			LAMBDA243_tree = (PNode)adaptor.create(LAMBDA243);
 			adaptor.addChild(root_0, LAMBDA243_tree);
 			}
 
-			// Truffle.g:1835:14: ( varargslist )?
+			// Truffle.g:1832:14: ( varargslist )?
 			int alt120=2;
 			int LA120_0 = input.LA(1);
 			if ( (LA120_0==DOUBLESTAR||LA120_0==LPAREN||LA120_0==NAME||LA120_0==STAR) ) {
@@ -12382,9 +12381,9 @@ public class TruffleParser extends Parser {
 			}
 			switch (alt120) {
 				case 1 :
-					// Truffle.g:1835:15: varargslist
+					// Truffle.g:1832:15: varargslist
 					{
-					pushFollow(FOLLOW_varargslist_in_lambdef6771);
+					pushFollow(FOLLOW_varargslist_in_lambdef6770);
 					varargslist244=varargslist();
 					state._fsp--;
 					if (state.failed) return retval;
@@ -12395,13 +12394,13 @@ public class TruffleParser extends Parser {
 
 			}
 
-			COLON245=(Token)match(input,COLON,FOLLOW_COLON_in_lambdef6775); if (state.failed) return retval;
+			COLON245=(Token)match(input,COLON,FOLLOW_COLON_in_lambdef6774); if (state.failed) return retval;
 			if ( state.backtracking==0 ) {
 			COLON245_tree = (PNode)adaptor.create(COLON245);
 			adaptor.addChild(root_0, COLON245_tree);
 			}
 
-			pushFollow(FOLLOW_test_in_lambdef6777);
+			pushFollow(FOLLOW_test_in_lambdef6776);
 			test246=test(expr_contextType.Load);
 			state._fsp--;
 			if (state.failed) return retval;
@@ -12449,7 +12448,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "trailer"
-	// Truffle.g:1846:1: trailer[Token begin, PNode ptree] : ( LPAREN ( arglist |) RPAREN | LBRACK subscriptlist[$begin] RBRACK | DOT attr );
+	// Truffle.g:1843:1: trailer[Token begin, PNode ptree] : ( LPAREN ( arglist |) RPAREN | LBRACK subscriptlist[$begin] RBRACK | DOT attr );
 	public final TruffleParser.trailer_return trailer(Token begin, PNode ptree) throws RecognitionException {
 		TruffleParser.trailer_return retval = new TruffleParser.trailer_return();
 		retval.start = input.LT(1);
@@ -12475,7 +12474,7 @@ public class TruffleParser extends Parser {
 		    PNode etype = null;
 
 		try {
-			// Truffle.g:1855:5: ( LPAREN ( arglist |) RPAREN | LBRACK subscriptlist[$begin] RBRACK | DOT attr )
+			// Truffle.g:1852:5: ( LPAREN ( arglist |) RPAREN | LBRACK subscriptlist[$begin] RBRACK | DOT attr )
 			int alt122=3;
 			switch ( input.LA(1) ) {
 			case LPAREN:
@@ -12501,18 +12500,18 @@ public class TruffleParser extends Parser {
 			}
 			switch (alt122) {
 				case 1 :
-					// Truffle.g:1855:7: LPAREN ( arglist |) RPAREN
+					// Truffle.g:1852:7: LPAREN ( arglist |) RPAREN
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					LPAREN247=(Token)match(input,LPAREN,FOLLOW_LPAREN_in_trailer6816); if (state.failed) return retval;
+					LPAREN247=(Token)match(input,LPAREN,FOLLOW_LPAREN_in_trailer6815); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					LPAREN247_tree = (PNode)adaptor.create(LPAREN247);
 					adaptor.addChild(root_0, LPAREN247_tree);
 					}
 
-					// Truffle.g:1856:7: ( arglist |)
+					// Truffle.g:1853:7: ( arglist |)
 					int alt121=2;
 					int LA121_0 = input.LA(1);
 					if ( (LA121_0==BACKQUOTE||(LA121_0 >= LBRACK && LA121_0 <= LCURLY)||(LA121_0 >= LPAREN && LA121_0 <= MINUS)||LA121_0==NAME||LA121_0==NOT||LA121_0==PLUS||LA121_0==TILDE) ) {
@@ -12537,9 +12536,9 @@ public class TruffleParser extends Parser {
 
 					switch (alt121) {
 						case 1 :
-							// Truffle.g:1856:8: arglist
+							// Truffle.g:1853:8: arglist
 							{
-							pushFollow(FOLLOW_arglist_in_trailer6825);
+							pushFollow(FOLLOW_arglist_in_trailer6824);
 							arglist248=arglist();
 							state._fsp--;
 							if (state.failed) return retval;
@@ -12554,7 +12553,7 @@ public class TruffleParser extends Parser {
 							}
 							break;
 						case 2 :
-							// Truffle.g:1864:8: 
+							// Truffle.g:1861:8: 
 							{
 							if ( state.backtracking==0 ) {
 							//           etype = new Call(begin, actions.castExpr(ptree), new ArrayList<PNode>(), new ArrayList<keyword>(), null, null);
@@ -12565,7 +12564,7 @@ public class TruffleParser extends Parser {
 
 					}
 
-					RPAREN249=(Token)match(input,RPAREN,FOLLOW_RPAREN_in_trailer6867); if (state.failed) return retval;
+					RPAREN249=(Token)match(input,RPAREN,FOLLOW_RPAREN_in_trailer6866); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					RPAREN249_tree = (PNode)adaptor.create(RPAREN249);
 					adaptor.addChild(root_0, RPAREN249_tree);
@@ -12574,24 +12573,24 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 2 :
-					// Truffle.g:1870:7: LBRACK subscriptlist[$begin] RBRACK
+					// Truffle.g:1867:7: LBRACK subscriptlist[$begin] RBRACK
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					LBRACK250=(Token)match(input,LBRACK,FOLLOW_LBRACK_in_trailer6875); if (state.failed) return retval;
+					LBRACK250=(Token)match(input,LBRACK,FOLLOW_LBRACK_in_trailer6874); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					LBRACK250_tree = (PNode)adaptor.create(LBRACK250);
 					adaptor.addChild(root_0, LBRACK250_tree);
 					}
 
-					pushFollow(FOLLOW_subscriptlist_in_trailer6877);
+					pushFollow(FOLLOW_subscriptlist_in_trailer6876);
 					subscriptlist251=subscriptlist(begin);
 					state._fsp--;
 					if (state.failed) return retval;
 					if ( state.backtracking==0 ) adaptor.addChild(root_0, subscriptlist251.getTree());
 
-					RBRACK252=(Token)match(input,RBRACK,FOLLOW_RBRACK_in_trailer6880); if (state.failed) return retval;
+					RBRACK252=(Token)match(input,RBRACK,FOLLOW_RBRACK_in_trailer6879); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					RBRACK252_tree = (PNode)adaptor.create(RBRACK252);
 					adaptor.addChild(root_0, RBRACK252_tree);
@@ -12603,18 +12602,18 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 3 :
-					// Truffle.g:1874:7: DOT attr
+					// Truffle.g:1871:7: DOT attr
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					DOT253=(Token)match(input,DOT,FOLLOW_DOT_in_trailer6896); if (state.failed) return retval;
+					DOT253=(Token)match(input,DOT,FOLLOW_DOT_in_trailer6895); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					DOT253_tree = (PNode)adaptor.create(DOT253);
 					adaptor.addChild(root_0, DOT253_tree);
 					}
 
-					pushFollow(FOLLOW_attr_in_trailer6898);
+					pushFollow(FOLLOW_attr_in_trailer6897);
 					attr254=attr();
 					state._fsp--;
 					if (state.failed) return retval;
@@ -12664,7 +12663,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "subscriptlist"
-	// Truffle.g:1883:1: subscriptlist[Token begin] :sub+= subscript ( options {greedy=true; } :c1= COMMA sub+= subscript )* (c2= COMMA )? ;
+	// Truffle.g:1880:1: subscriptlist[Token begin] :sub+= subscript ( options {greedy=true; } :c1= COMMA sub+= subscript )* (c2= COMMA )? ;
 	public final TruffleParser.subscriptlist_return subscriptlist(Token begin) throws RecognitionException {
 		TruffleParser.subscriptlist_return retval = new TruffleParser.subscriptlist_return();
 		retval.start = input.LT(1);
@@ -12682,13 +12681,13 @@ public class TruffleParser extends Parser {
 		    PNode sltype = null;
 
 		try {
-			// Truffle.g:1890:5: (sub+= subscript ( options {greedy=true; } :c1= COMMA sub+= subscript )* (c2= COMMA )? )
-			// Truffle.g:1890:7: sub+= subscript ( options {greedy=true; } :c1= COMMA sub+= subscript )* (c2= COMMA )?
+			// Truffle.g:1887:5: (sub+= subscript ( options {greedy=true; } :c1= COMMA sub+= subscript )* (c2= COMMA )? )
+			// Truffle.g:1887:7: sub+= subscript ( options {greedy=true; } :c1= COMMA sub+= subscript )* (c2= COMMA )?
 			{
 			root_0 = (PNode)adaptor.nil();
 
 
-			pushFollow(FOLLOW_subscript_in_subscriptlist6937);
+			pushFollow(FOLLOW_subscript_in_subscriptlist6936);
 			sub=subscript();
 			state._fsp--;
 			if (state.failed) return retval;
@@ -12696,7 +12695,7 @@ public class TruffleParser extends Parser {
 
 			if (list_sub==null) list_sub=new ArrayList<Object>();
 			list_sub.add(sub.getTree());
-			// Truffle.g:1890:22: ( options {greedy=true; } :c1= COMMA sub+= subscript )*
+			// Truffle.g:1887:22: ( options {greedy=true; } :c1= COMMA sub+= subscript )*
 			loop123:
 			while (true) {
 				int alt123=2;
@@ -12711,15 +12710,15 @@ public class TruffleParser extends Parser {
 
 				switch (alt123) {
 				case 1 :
-					// Truffle.g:1890:46: c1= COMMA sub+= subscript
+					// Truffle.g:1887:46: c1= COMMA sub+= subscript
 					{
-					c1=(Token)match(input,COMMA,FOLLOW_COMMA_in_subscriptlist6949); if (state.failed) return retval;
+					c1=(Token)match(input,COMMA,FOLLOW_COMMA_in_subscriptlist6948); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					c1_tree = (PNode)adaptor.create(c1);
 					adaptor.addChild(root_0, c1_tree);
 					}
 
-					pushFollow(FOLLOW_subscript_in_subscriptlist6953);
+					pushFollow(FOLLOW_subscript_in_subscriptlist6952);
 					sub=subscript();
 					state._fsp--;
 					if (state.failed) return retval;
@@ -12735,7 +12734,7 @@ public class TruffleParser extends Parser {
 				}
 			}
 
-			// Truffle.g:1890:72: (c2= COMMA )?
+			// Truffle.g:1887:72: (c2= COMMA )?
 			int alt124=2;
 			int LA124_0 = input.LA(1);
 			if ( (LA124_0==COMMA) ) {
@@ -12743,9 +12742,9 @@ public class TruffleParser extends Parser {
 			}
 			switch (alt124) {
 				case 1 :
-					// Truffle.g:1890:73: c2= COMMA
+					// Truffle.g:1887:73: c2= COMMA
 					{
-					c2=(Token)match(input,COMMA,FOLLOW_COMMA_in_subscriptlist6960); if (state.failed) return retval;
+					c2=(Token)match(input,COMMA,FOLLOW_COMMA_in_subscriptlist6959); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					c2_tree = (PNode)adaptor.create(c2);
 					adaptor.addChild(root_0, c2_tree);
@@ -12795,7 +12794,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "subscript"
-	// Truffle.g:1897:1: subscript returns [PNode sltype] : (d1= DOT DOT DOT | ( test[null] COLON )=>lower= test[expr_contextType.Load] (c1= COLON (upper1= test[expr_contextType.Load] )? ( sliceop )? )? | ( COLON )=>c2= COLON (upper2= test[expr_contextType.Load] )? ( sliceop )? | test[expr_contextType.Load] );
+	// Truffle.g:1894:1: subscript returns [PNode sltype] : (d1= DOT DOT DOT | ( test[null] COLON )=>lower= test[expr_contextType.Load] (c1= COLON (upper1= test[expr_contextType.Load] )? ( sliceop )? )? | ( COLON )=>c2= COLON (upper2= test[expr_contextType.Load] )? ( sliceop )? | test[expr_contextType.Load] );
 	public final TruffleParser.subscript_return subscript() throws RecognitionException {
 		TruffleParser.subscript_return retval = new TruffleParser.subscript_return();
 		retval.start = input.LT(1);
@@ -12821,7 +12820,7 @@ public class TruffleParser extends Parser {
 		PNode DOT256_tree=null;
 
 		try {
-			// Truffle.g:1902:5: (d1= DOT DOT DOT | ( test[null] COLON )=>lower= test[expr_contextType.Load] (c1= COLON (upper1= test[expr_contextType.Load] )? ( sliceop )? )? | ( COLON )=>c2= COLON (upper2= test[expr_contextType.Load] )? ( sliceop )? | test[expr_contextType.Load] )
+			// Truffle.g:1899:5: (d1= DOT DOT DOT | ( test[null] COLON )=>lower= test[expr_contextType.Load] (c1= COLON (upper1= test[expr_contextType.Load] )? ( sliceop )? )? | ( COLON )=>c2= COLON (upper2= test[expr_contextType.Load] )? ( sliceop )? | test[expr_contextType.Load] )
 			int alt130=4;
 			int LA130_0 = input.LA(1);
 			if ( (LA130_0==DOT) ) {
@@ -13026,24 +13025,24 @@ public class TruffleParser extends Parser {
 
 			switch (alt130) {
 				case 1 :
-					// Truffle.g:1902:7: d1= DOT DOT DOT
+					// Truffle.g:1899:7: d1= DOT DOT DOT
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					d1=(Token)match(input,DOT,FOLLOW_DOT_in_subscript7003); if (state.failed) return retval;
+					d1=(Token)match(input,DOT,FOLLOW_DOT_in_subscript7002); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					d1_tree = (PNode)adaptor.create(d1);
 					adaptor.addChild(root_0, d1_tree);
 					}
 
-					DOT255=(Token)match(input,DOT,FOLLOW_DOT_in_subscript7005); if (state.failed) return retval;
+					DOT255=(Token)match(input,DOT,FOLLOW_DOT_in_subscript7004); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					DOT255_tree = (PNode)adaptor.create(DOT255);
 					adaptor.addChild(root_0, DOT255_tree);
 					}
 
-					DOT256=(Token)match(input,DOT,FOLLOW_DOT_in_subscript7007); if (state.failed) return retval;
+					DOT256=(Token)match(input,DOT,FOLLOW_DOT_in_subscript7006); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					DOT256_tree = (PNode)adaptor.create(DOT256);
 					adaptor.addChild(root_0, DOT256_tree);
@@ -13055,18 +13054,18 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 2 :
-					// Truffle.g:1906:7: ( test[null] COLON )=>lower= test[expr_contextType.Load] (c1= COLON (upper1= test[expr_contextType.Load] )? ( sliceop )? )?
+					// Truffle.g:1903:7: ( test[null] COLON )=>lower= test[expr_contextType.Load] (c1= COLON (upper1= test[expr_contextType.Load] )? ( sliceop )? )?
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					pushFollow(FOLLOW_test_in_subscript7037);
+					pushFollow(FOLLOW_test_in_subscript7036);
 					lower=test(expr_contextType.Load);
 					state._fsp--;
 					if (state.failed) return retval;
 					if ( state.backtracking==0 ) adaptor.addChild(root_0, lower.getTree());
 
-					// Truffle.g:1907:41: (c1= COLON (upper1= test[expr_contextType.Load] )? ( sliceop )? )?
+					// Truffle.g:1904:41: (c1= COLON (upper1= test[expr_contextType.Load] )? ( sliceop )? )?
 					int alt127=2;
 					int LA127_0 = input.LA(1);
 					if ( (LA127_0==COLON) ) {
@@ -13074,15 +13073,15 @@ public class TruffleParser extends Parser {
 					}
 					switch (alt127) {
 						case 1 :
-							// Truffle.g:1907:42: c1= COLON (upper1= test[expr_contextType.Load] )? ( sliceop )?
+							// Truffle.g:1904:42: c1= COLON (upper1= test[expr_contextType.Load] )? ( sliceop )?
 							{
-							c1=(Token)match(input,COLON,FOLLOW_COLON_in_subscript7043); if (state.failed) return retval;
+							c1=(Token)match(input,COLON,FOLLOW_COLON_in_subscript7042); if (state.failed) return retval;
 							if ( state.backtracking==0 ) {
 							c1_tree = (PNode)adaptor.create(c1);
 							adaptor.addChild(root_0, c1_tree);
 							}
 
-							// Truffle.g:1907:51: (upper1= test[expr_contextType.Load] )?
+							// Truffle.g:1904:51: (upper1= test[expr_contextType.Load] )?
 							int alt125=2;
 							int LA125_0 = input.LA(1);
 							if ( (LA125_0==BACKQUOTE||(LA125_0 >= LBRACK && LA125_0 <= LCURLY)||(LA125_0 >= LPAREN && LA125_0 <= MINUS)||LA125_0==NAME||LA125_0==NOT||LA125_0==PLUS||LA125_0==TILDE) ) {
@@ -13096,9 +13095,9 @@ public class TruffleParser extends Parser {
 							}
 							switch (alt125) {
 								case 1 :
-									// Truffle.g:1907:52: upper1= test[expr_contextType.Load]
+									// Truffle.g:1904:52: upper1= test[expr_contextType.Load]
 									{
-									pushFollow(FOLLOW_test_in_subscript7048);
+									pushFollow(FOLLOW_test_in_subscript7047);
 									upper1=test(expr_contextType.Load);
 									state._fsp--;
 									if (state.failed) return retval;
@@ -13109,7 +13108,7 @@ public class TruffleParser extends Parser {
 
 							}
 
-							// Truffle.g:1907:89: ( sliceop )?
+							// Truffle.g:1904:89: ( sliceop )?
 							int alt126=2;
 							int LA126_0 = input.LA(1);
 							if ( (LA126_0==COLON) ) {
@@ -13117,9 +13116,9 @@ public class TruffleParser extends Parser {
 							}
 							switch (alt126) {
 								case 1 :
-									// Truffle.g:1907:90: sliceop
+									// Truffle.g:1904:90: sliceop
 									{
-									pushFollow(FOLLOW_sliceop_in_subscript7054);
+									pushFollow(FOLLOW_sliceop_in_subscript7053);
 									sliceop257=sliceop();
 									state._fsp--;
 									if (state.failed) return retval;
@@ -13141,18 +13140,18 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 3 :
-					// Truffle.g:1911:7: ( COLON )=>c2= COLON (upper2= test[expr_contextType.Load] )? ( sliceop )?
+					// Truffle.g:1908:7: ( COLON )=>c2= COLON (upper2= test[expr_contextType.Load] )? ( sliceop )?
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					c2=(Token)match(input,COLON,FOLLOW_COLON_in_subscript7085); if (state.failed) return retval;
+					c2=(Token)match(input,COLON,FOLLOW_COLON_in_subscript7084); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					c2_tree = (PNode)adaptor.create(c2);
 					adaptor.addChild(root_0, c2_tree);
 					}
 
-					// Truffle.g:1912:16: (upper2= test[expr_contextType.Load] )?
+					// Truffle.g:1909:16: (upper2= test[expr_contextType.Load] )?
 					int alt128=2;
 					int LA128_0 = input.LA(1);
 					if ( (LA128_0==BACKQUOTE||(LA128_0 >= LBRACK && LA128_0 <= LCURLY)||(LA128_0 >= LPAREN && LA128_0 <= MINUS)||LA128_0==NAME||LA128_0==NOT||LA128_0==PLUS||LA128_0==TILDE) ) {
@@ -13166,9 +13165,9 @@ public class TruffleParser extends Parser {
 					}
 					switch (alt128) {
 						case 1 :
-							// Truffle.g:1912:17: upper2= test[expr_contextType.Load]
+							// Truffle.g:1909:17: upper2= test[expr_contextType.Load]
 							{
-							pushFollow(FOLLOW_test_in_subscript7090);
+							pushFollow(FOLLOW_test_in_subscript7089);
 							upper2=test(expr_contextType.Load);
 							state._fsp--;
 							if (state.failed) return retval;
@@ -13179,7 +13178,7 @@ public class TruffleParser extends Parser {
 
 					}
 
-					// Truffle.g:1912:54: ( sliceop )?
+					// Truffle.g:1909:54: ( sliceop )?
 					int alt129=2;
 					int LA129_0 = input.LA(1);
 					if ( (LA129_0==COLON) ) {
@@ -13187,9 +13186,9 @@ public class TruffleParser extends Parser {
 					}
 					switch (alt129) {
 						case 1 :
-							// Truffle.g:1912:55: sliceop
+							// Truffle.g:1909:55: sliceop
 							{
-							pushFollow(FOLLOW_sliceop_in_subscript7096);
+							pushFollow(FOLLOW_sliceop_in_subscript7095);
 							sliceop258=sliceop();
 							state._fsp--;
 							if (state.failed) return retval;
@@ -13206,12 +13205,12 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 4 :
-					// Truffle.g:1916:7: test[expr_contextType.Load]
+					// Truffle.g:1913:7: test[expr_contextType.Load]
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					pushFollow(FOLLOW_test_in_subscript7114);
+					pushFollow(FOLLOW_test_in_subscript7113);
 					test259=test(expr_contextType.Load);
 					state._fsp--;
 					if (state.failed) return retval;
@@ -13257,7 +13256,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "sliceop"
-	// Truffle.g:1923:1: sliceop : COLON ( test[expr_contextType.Load] -> test |) ;
+	// Truffle.g:1920:1: sliceop : COLON ( test[expr_contextType.Load] -> test |) ;
 	public final TruffleParser.sliceop_return sliceop() throws RecognitionException {
 		TruffleParser.sliceop_return retval = new TruffleParser.sliceop_return();
 		retval.start = input.LT(1);
@@ -13275,13 +13274,13 @@ public class TruffleParser extends Parser {
 		    PNode etype = null;
 
 		try {
-			// Truffle.g:1932:5: ( COLON ( test[expr_contextType.Load] -> test |) )
-			// Truffle.g:1932:7: COLON ( test[expr_contextType.Load] -> test |)
+			// Truffle.g:1929:5: ( COLON ( test[expr_contextType.Load] -> test |) )
+			// Truffle.g:1929:7: COLON ( test[expr_contextType.Load] -> test |)
 			{
-			COLON260=(Token)match(input,COLON,FOLLOW_COLON_in_sliceop7151); if (state.failed) return retval; 
+			COLON260=(Token)match(input,COLON,FOLLOW_COLON_in_sliceop7150); if (state.failed) return retval; 
 			if ( state.backtracking==0 ) stream_COLON.add(COLON260);
 
-			// Truffle.g:1933:6: ( test[expr_contextType.Load] -> test |)
+			// Truffle.g:1930:6: ( test[expr_contextType.Load] -> test |)
 			int alt131=2;
 			int LA131_0 = input.LA(1);
 			if ( (LA131_0==BACKQUOTE||(LA131_0 >= LBRACK && LA131_0 <= LCURLY)||(LA131_0 >= LPAREN && LA131_0 <= MINUS)||LA131_0==NAME||LA131_0==NOT||LA131_0==PLUS||LA131_0==TILDE) ) {
@@ -13306,9 +13305,9 @@ public class TruffleParser extends Parser {
 
 			switch (alt131) {
 				case 1 :
-					// Truffle.g:1933:7: test[expr_contextType.Load]
+					// Truffle.g:1930:7: test[expr_contextType.Load]
 					{
-					pushFollow(FOLLOW_test_in_sliceop7159);
+					pushFollow(FOLLOW_test_in_sliceop7158);
 					test261=test(expr_contextType.Load);
 					state._fsp--;
 					if (state.failed) return retval;
@@ -13325,7 +13324,7 @@ public class TruffleParser extends Parser {
 					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
 					root_0 = (PNode)adaptor.nil();
-					// 1934:5: -> test
+					// 1931:5: -> test
 					{
 						adaptor.addChild(root_0, stream_test.nextTree());
 					}
@@ -13337,7 +13336,7 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 2 :
-					// Truffle.g:1936:8: 
+					// Truffle.g:1933:8: 
 					{
 					if ( state.backtracking==0 ) {
 					           etype = actions.makeName(COLON260, "None", expr_contextType.Load);
@@ -13385,7 +13384,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "exprlist"
-	// Truffle.g:1943:1: exprlist[expr_contextType ctype] returns [PNode etype] : ( ( expr[null] COMMA )=>e+= expr[ctype] ( options {k=2; } : COMMA e+= expr[ctype] )* ( COMMA )? | expr[ctype] );
+	// Truffle.g:1940:1: exprlist[expr_contextType ctype] returns [PNode etype] : ( ( expr[null] COMMA )=>e+= expr[ctype] ( options {k=2; } : COMMA e+= expr[ctype] )* ( COMMA )? | expr[ctype] );
 	public final TruffleParser.exprlist_return exprlist(expr_contextType ctype) throws RecognitionException {
 		TruffleParser.exprlist_return retval = new TruffleParser.exprlist_return();
 		retval.start = input.LT(1);
@@ -13401,7 +13400,7 @@ public class TruffleParser extends Parser {
 		PNode COMMA263_tree=null;
 
 		try {
-			// Truffle.g:1945:5: ( ( expr[null] COMMA )=>e+= expr[ctype] ( options {k=2; } : COMMA e+= expr[ctype] )* ( COMMA )? | expr[ctype] )
+			// Truffle.g:1942:5: ( ( expr[null] COMMA )=>e+= expr[ctype] ( options {k=2; } : COMMA e+= expr[ctype] )* ( COMMA )? | expr[ctype] )
 			int alt134=2;
 			int LA134_0 = input.LA(1);
 			if ( (LA134_0==PLUS) ) {
@@ -13587,12 +13586,12 @@ public class TruffleParser extends Parser {
 
 			switch (alt134) {
 				case 1 :
-					// Truffle.g:1945:7: ( expr[null] COMMA )=>e+= expr[ctype] ( options {k=2; } : COMMA e+= expr[ctype] )* ( COMMA )?
+					// Truffle.g:1942:7: ( expr[null] COMMA )=>e+= expr[ctype] ( options {k=2; } : COMMA e+= expr[ctype] )* ( COMMA )?
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					pushFollow(FOLLOW_expr_in_exprlist7230);
+					pushFollow(FOLLOW_expr_in_exprlist7229);
 					e=expr(ctype);
 					state._fsp--;
 					if (state.failed) return retval;
@@ -13600,7 +13599,7 @@ public class TruffleParser extends Parser {
 
 					if (list_e==null) list_e=new ArrayList<Object>();
 					list_e.add(e.getTree());
-					// Truffle.g:1945:44: ( options {k=2; } : COMMA e+= expr[ctype] )*
+					// Truffle.g:1942:44: ( options {k=2; } : COMMA e+= expr[ctype] )*
 					loop132:
 					while (true) {
 						int alt132=2;
@@ -13615,15 +13614,15 @@ public class TruffleParser extends Parser {
 
 						switch (alt132) {
 						case 1 :
-							// Truffle.g:1945:61: COMMA e+= expr[ctype]
+							// Truffle.g:1942:61: COMMA e+= expr[ctype]
 							{
-							COMMA262=(Token)match(input,COMMA,FOLLOW_COMMA_in_exprlist7242); if (state.failed) return retval;
+							COMMA262=(Token)match(input,COMMA,FOLLOW_COMMA_in_exprlist7241); if (state.failed) return retval;
 							if ( state.backtracking==0 ) {
 							COMMA262_tree = (PNode)adaptor.create(COMMA262);
 							adaptor.addChild(root_0, COMMA262_tree);
 							}
 
-							pushFollow(FOLLOW_expr_in_exprlist7246);
+							pushFollow(FOLLOW_expr_in_exprlist7245);
 							e=expr(ctype);
 							state._fsp--;
 							if (state.failed) return retval;
@@ -13639,7 +13638,7 @@ public class TruffleParser extends Parser {
 						}
 					}
 
-					// Truffle.g:1945:84: ( COMMA )?
+					// Truffle.g:1942:84: ( COMMA )?
 					int alt133=2;
 					int LA133_0 = input.LA(1);
 					if ( (LA133_0==COMMA) ) {
@@ -13647,9 +13646,9 @@ public class TruffleParser extends Parser {
 					}
 					switch (alt133) {
 						case 1 :
-							// Truffle.g:1945:85: COMMA
+							// Truffle.g:1942:85: COMMA
 							{
-							COMMA263=(Token)match(input,COMMA,FOLLOW_COMMA_in_exprlist7252); if (state.failed) return retval;
+							COMMA263=(Token)match(input,COMMA,FOLLOW_COMMA_in_exprlist7251); if (state.failed) return retval;
 							if ( state.backtracking==0 ) {
 							COMMA263_tree = (PNode)adaptor.create(COMMA263);
 							adaptor.addChild(root_0, COMMA263_tree);
@@ -13667,12 +13666,12 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 2 :
-					// Truffle.g:1950:7: expr[ctype]
+					// Truffle.g:1947:7: expr[ctype]
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					pushFollow(FOLLOW_expr_in_exprlist7271);
+					pushFollow(FOLLOW_expr_in_exprlist7270);
 					expr264=expr(ctype);
 					state._fsp--;
 					if (state.failed) return retval;
@@ -13717,7 +13716,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "del_list"
-	// Truffle.g:1959:1: del_list returns [List<PNode> etypes] :e+= expr[expr_contextType.Del] ( options {k=2; } : COMMA e+= expr[expr_contextType.Del] )* ( COMMA )? ;
+	// Truffle.g:1956:1: del_list returns [List<PNode> etypes] :e+= expr[expr_contextType.Del] ( options {k=2; } : COMMA e+= expr[expr_contextType.Del] )* ( COMMA )? ;
 	public final TruffleParser.del_list_return del_list() throws RecognitionException {
 		TruffleParser.del_list_return retval = new TruffleParser.del_list_return();
 		retval.start = input.LT(1);
@@ -13732,13 +13731,13 @@ public class TruffleParser extends Parser {
 		PNode COMMA266_tree=null;
 
 		try {
-			// Truffle.g:1961:5: (e+= expr[expr_contextType.Del] ( options {k=2; } : COMMA e+= expr[expr_contextType.Del] )* ( COMMA )? )
-			// Truffle.g:1961:7: e+= expr[expr_contextType.Del] ( options {k=2; } : COMMA e+= expr[expr_contextType.Del] )* ( COMMA )?
+			// Truffle.g:1958:5: (e+= expr[expr_contextType.Del] ( options {k=2; } : COMMA e+= expr[expr_contextType.Del] )* ( COMMA )? )
+			// Truffle.g:1958:7: e+= expr[expr_contextType.Del] ( options {k=2; } : COMMA e+= expr[expr_contextType.Del] )* ( COMMA )?
 			{
 			root_0 = (PNode)adaptor.nil();
 
 
-			pushFollow(FOLLOW_expr_in_del_list7309);
+			pushFollow(FOLLOW_expr_in_del_list7308);
 			e=expr(expr_contextType.Del);
 			state._fsp--;
 			if (state.failed) return retval;
@@ -13746,7 +13745,7 @@ public class TruffleParser extends Parser {
 
 			if (list_e==null) list_e=new ArrayList<Object>();
 			list_e.add(e.getTree());
-			// Truffle.g:1961:37: ( options {k=2; } : COMMA e+= expr[expr_contextType.Del] )*
+			// Truffle.g:1958:37: ( options {k=2; } : COMMA e+= expr[expr_contextType.Del] )*
 			loop135:
 			while (true) {
 				int alt135=2;
@@ -13761,15 +13760,15 @@ public class TruffleParser extends Parser {
 
 				switch (alt135) {
 				case 1 :
-					// Truffle.g:1961:54: COMMA e+= expr[expr_contextType.Del]
+					// Truffle.g:1958:54: COMMA e+= expr[expr_contextType.Del]
 					{
-					COMMA265=(Token)match(input,COMMA,FOLLOW_COMMA_in_del_list7321); if (state.failed) return retval;
+					COMMA265=(Token)match(input,COMMA,FOLLOW_COMMA_in_del_list7320); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					COMMA265_tree = (PNode)adaptor.create(COMMA265);
 					adaptor.addChild(root_0, COMMA265_tree);
 					}
 
-					pushFollow(FOLLOW_expr_in_del_list7325);
+					pushFollow(FOLLOW_expr_in_del_list7324);
 					e=expr(expr_contextType.Del);
 					state._fsp--;
 					if (state.failed) return retval;
@@ -13785,7 +13784,7 @@ public class TruffleParser extends Parser {
 				}
 			}
 
-			// Truffle.g:1961:92: ( COMMA )?
+			// Truffle.g:1958:92: ( COMMA )?
 			int alt136=2;
 			int LA136_0 = input.LA(1);
 			if ( (LA136_0==COMMA) ) {
@@ -13793,9 +13792,9 @@ public class TruffleParser extends Parser {
 			}
 			switch (alt136) {
 				case 1 :
-					// Truffle.g:1961:93: COMMA
+					// Truffle.g:1958:93: COMMA
 					{
-					COMMA266=(Token)match(input,COMMA,FOLLOW_COMMA_in_del_list7331); if (state.failed) return retval;
+					COMMA266=(Token)match(input,COMMA,FOLLOW_COMMA_in_del_list7330); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					COMMA266_tree = (PNode)adaptor.create(COMMA266);
 					adaptor.addChild(root_0, COMMA266_tree);
@@ -13841,7 +13840,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "testlist"
-	// Truffle.g:1968:1: testlist[expr_contextType ctype] : ( ( test[null] COMMA )=>t+= test[ctype] ( options {k=2; } : COMMA t+= test[ctype] )* ( COMMA )? | test[ctype] );
+	// Truffle.g:1965:1: testlist[expr_contextType ctype] : ( ( test[null] COMMA )=>t+= test[ctype] ( options {k=2; } : COMMA t+= test[ctype] )* ( COMMA )? | test[ctype] );
 	public final TruffleParser.testlist_return testlist(expr_contextType ctype) throws RecognitionException {
 		TruffleParser.testlist_return retval = new TruffleParser.testlist_return();
 		retval.start = input.LT(1);
@@ -13860,7 +13859,7 @@ public class TruffleParser extends Parser {
 		    PNode etype = null;
 
 		try {
-			// Truffle.g:1977:5: ( ( test[null] COMMA )=>t+= test[ctype] ( options {k=2; } : COMMA t+= test[ctype] )* ( COMMA )? | test[ctype] )
+			// Truffle.g:1974:5: ( ( test[null] COMMA )=>t+= test[ctype] ( options {k=2; } : COMMA t+= test[ctype] )* ( COMMA )? | test[ctype] )
 			int alt139=2;
 			int LA139_0 = input.LA(1);
 			if ( (LA139_0==NOT) ) {
@@ -14066,12 +14065,12 @@ public class TruffleParser extends Parser {
 
 			switch (alt139) {
 				case 1 :
-					// Truffle.g:1977:7: ( test[null] COMMA )=>t+= test[ctype] ( options {k=2; } : COMMA t+= test[ctype] )* ( COMMA )?
+					// Truffle.g:1974:7: ( test[null] COMMA )=>t+= test[ctype] ( options {k=2; } : COMMA t+= test[ctype] )* ( COMMA )?
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					pushFollow(FOLLOW_test_in_testlist7384);
+					pushFollow(FOLLOW_test_in_testlist7383);
 					t=test(ctype);
 					state._fsp--;
 					if (state.failed) return retval;
@@ -14079,22 +14078,22 @@ public class TruffleParser extends Parser {
 
 					if (list_t==null) list_t=new ArrayList<Object>();
 					list_t.add(t.getTree());
-					// Truffle.g:1978:22: ( options {k=2; } : COMMA t+= test[ctype] )*
+					// Truffle.g:1975:22: ( options {k=2; } : COMMA t+= test[ctype] )*
 					loop137:
 					while (true) {
 						int alt137=2;
 						alt137 = dfa137.predict(input);
 						switch (alt137) {
 						case 1 :
-							// Truffle.g:1978:39: COMMA t+= test[ctype]
+							// Truffle.g:1975:39: COMMA t+= test[ctype]
 							{
-							COMMA267=(Token)match(input,COMMA,FOLLOW_COMMA_in_testlist7396); if (state.failed) return retval;
+							COMMA267=(Token)match(input,COMMA,FOLLOW_COMMA_in_testlist7395); if (state.failed) return retval;
 							if ( state.backtracking==0 ) {
 							COMMA267_tree = (PNode)adaptor.create(COMMA267);
 							adaptor.addChild(root_0, COMMA267_tree);
 							}
 
-							pushFollow(FOLLOW_test_in_testlist7400);
+							pushFollow(FOLLOW_test_in_testlist7399);
 							t=test(ctype);
 							state._fsp--;
 							if (state.failed) return retval;
@@ -14110,7 +14109,7 @@ public class TruffleParser extends Parser {
 						}
 					}
 
-					// Truffle.g:1978:62: ( COMMA )?
+					// Truffle.g:1975:62: ( COMMA )?
 					int alt138=2;
 					int LA138_0 = input.LA(1);
 					if ( (LA138_0==COMMA) ) {
@@ -14118,9 +14117,9 @@ public class TruffleParser extends Parser {
 					}
 					switch (alt138) {
 						case 1 :
-							// Truffle.g:1978:63: COMMA
+							// Truffle.g:1975:63: COMMA
 							{
-							COMMA268=(Token)match(input,COMMA,FOLLOW_COMMA_in_testlist7406); if (state.failed) return retval;
+							COMMA268=(Token)match(input,COMMA,FOLLOW_COMMA_in_testlist7405); if (state.failed) return retval;
 							if ( state.backtracking==0 ) {
 							COMMA268_tree = (PNode)adaptor.create(COMMA268);
 							adaptor.addChild(root_0, COMMA268_tree);
@@ -14137,12 +14136,12 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 2 :
-					// Truffle.g:1982:7: test[ctype]
+					// Truffle.g:1979:7: test[ctype]
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					pushFollow(FOLLOW_test_in_testlist7424);
+					pushFollow(FOLLOW_test_in_testlist7423);
 					test269=test(ctype);
 					state._fsp--;
 					if (state.failed) return retval;
@@ -14187,7 +14186,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "dictorsetmaker"
-	// Truffle.g:1989:1: dictorsetmaker[Token lcurly] :k+= test[expr_contextType.Load] ( ( COLON v+= test[expr_contextType.Load] ( comp_for[gens] | ( options {k=2; } : COMMA k+= test[expr_contextType.Load] COLON v+= test[expr_contextType.Load] )* ) | ( COMMA k+= test[expr_contextType.Load] )* ) ( COMMA )? | comp_for[gens] ) ;
+	// Truffle.g:1986:1: dictorsetmaker[Token lcurly] :k+= test[expr_contextType.Load] ( ( COLON v+= test[expr_contextType.Load] ( comp_for[gens] | ( options {k=2; } : COMMA k+= test[expr_contextType.Load] COLON v+= test[expr_contextType.Load] )* ) | ( COMMA k+= test[expr_contextType.Load] )* ) ( COMMA )? | comp_for[gens] ) ;
 	public final TruffleParser.dictorsetmaker_return dictorsetmaker(Token lcurly) throws RecognitionException {
 		TruffleParser.dictorsetmaker_return retval = new TruffleParser.dictorsetmaker_return();
 		retval.start = input.LT(1);
@@ -14216,13 +14215,13 @@ public class TruffleParser extends Parser {
 		    PNode etype = null;
 
 		try {
-			// Truffle.g:1999:5: (k+= test[expr_contextType.Load] ( ( COLON v+= test[expr_contextType.Load] ( comp_for[gens] | ( options {k=2; } : COMMA k+= test[expr_contextType.Load] COLON v+= test[expr_contextType.Load] )* ) | ( COMMA k+= test[expr_contextType.Load] )* ) ( COMMA )? | comp_for[gens] ) )
-			// Truffle.g:1999:7: k+= test[expr_contextType.Load] ( ( COLON v+= test[expr_contextType.Load] ( comp_for[gens] | ( options {k=2; } : COMMA k+= test[expr_contextType.Load] COLON v+= test[expr_contextType.Load] )* ) | ( COMMA k+= test[expr_contextType.Load] )* ) ( COMMA )? | comp_for[gens] )
+			// Truffle.g:1996:5: (k+= test[expr_contextType.Load] ( ( COLON v+= test[expr_contextType.Load] ( comp_for[gens] | ( options {k=2; } : COMMA k+= test[expr_contextType.Load] COLON v+= test[expr_contextType.Load] )* ) | ( COMMA k+= test[expr_contextType.Load] )* ) ( COMMA )? | comp_for[gens] ) )
+			// Truffle.g:1996:7: k+= test[expr_contextType.Load] ( ( COLON v+= test[expr_contextType.Load] ( comp_for[gens] | ( options {k=2; } : COMMA k+= test[expr_contextType.Load] COLON v+= test[expr_contextType.Load] )* ) | ( COMMA k+= test[expr_contextType.Load] )* ) ( COMMA )? | comp_for[gens] )
 			{
 			root_0 = (PNode)adaptor.nil();
 
 
-			pushFollow(FOLLOW_test_in_dictorsetmaker7459);
+			pushFollow(FOLLOW_test_in_dictorsetmaker7458);
 			k=test(expr_contextType.Load);
 			state._fsp--;
 			if (state.failed) return retval;
@@ -14230,7 +14229,7 @@ public class TruffleParser extends Parser {
 
 			if (list_k==null) list_k=new ArrayList<Object>();
 			list_k.add(k.getTree());
-			// Truffle.g:2000:10: ( ( COLON v+= test[expr_contextType.Load] ( comp_for[gens] | ( options {k=2; } : COMMA k+= test[expr_contextType.Load] COLON v+= test[expr_contextType.Load] )* ) | ( COMMA k+= test[expr_contextType.Load] )* ) ( COMMA )? | comp_for[gens] )
+			// Truffle.g:1997:10: ( ( COLON v+= test[expr_contextType.Load] ( comp_for[gens] | ( options {k=2; } : COMMA k+= test[expr_contextType.Load] COLON v+= test[expr_contextType.Load] )* ) | ( COMMA k+= test[expr_contextType.Load] )* ) ( COMMA )? | comp_for[gens] )
 			int alt145=2;
 			int LA145_0 = input.LA(1);
 			if ( ((LA145_0 >= COLON && LA145_0 <= COMMA)||LA145_0==RCURLY) ) {
@@ -14249,9 +14248,9 @@ public class TruffleParser extends Parser {
 
 			switch (alt145) {
 				case 1 :
-					// Truffle.g:2001:14: ( COLON v+= test[expr_contextType.Load] ( comp_for[gens] | ( options {k=2; } : COMMA k+= test[expr_contextType.Load] COLON v+= test[expr_contextType.Load] )* ) | ( COMMA k+= test[expr_contextType.Load] )* ) ( COMMA )?
+					// Truffle.g:1998:14: ( COLON v+= test[expr_contextType.Load] ( comp_for[gens] | ( options {k=2; } : COMMA k+= test[expr_contextType.Load] COLON v+= test[expr_contextType.Load] )* ) | ( COMMA k+= test[expr_contextType.Load] )* ) ( COMMA )?
 					{
-					// Truffle.g:2001:14: ( COLON v+= test[expr_contextType.Load] ( comp_for[gens] | ( options {k=2; } : COMMA k+= test[expr_contextType.Load] COLON v+= test[expr_contextType.Load] )* ) | ( COMMA k+= test[expr_contextType.Load] )* )
+					// Truffle.g:1998:14: ( COLON v+= test[expr_contextType.Load] ( comp_for[gens] | ( options {k=2; } : COMMA k+= test[expr_contextType.Load] COLON v+= test[expr_contextType.Load] )* ) | ( COMMA k+= test[expr_contextType.Load] )* )
 					int alt143=2;
 					int LA143_0 = input.LA(1);
 					if ( (LA143_0==COLON) ) {
@@ -14270,15 +14269,15 @@ public class TruffleParser extends Parser {
 
 					switch (alt143) {
 						case 1 :
-							// Truffle.g:2001:15: COLON v+= test[expr_contextType.Load] ( comp_for[gens] | ( options {k=2; } : COMMA k+= test[expr_contextType.Load] COLON v+= test[expr_contextType.Load] )* )
+							// Truffle.g:1998:15: COLON v+= test[expr_contextType.Load] ( comp_for[gens] | ( options {k=2; } : COMMA k+= test[expr_contextType.Load] COLON v+= test[expr_contextType.Load] )* )
 							{
-							COLON270=(Token)match(input,COLON,FOLLOW_COLON_in_dictorsetmaker7487); if (state.failed) return retval;
+							COLON270=(Token)match(input,COLON,FOLLOW_COLON_in_dictorsetmaker7486); if (state.failed) return retval;
 							if ( state.backtracking==0 ) {
 							COLON270_tree = (PNode)adaptor.create(COLON270);
 							adaptor.addChild(root_0, COLON270_tree);
 							}
 
-							pushFollow(FOLLOW_test_in_dictorsetmaker7491);
+							pushFollow(FOLLOW_test_in_dictorsetmaker7490);
 							v=test(expr_contextType.Load);
 							state._fsp--;
 							if (state.failed) return retval;
@@ -14286,7 +14285,7 @@ public class TruffleParser extends Parser {
 
 							if (list_v==null) list_v=new ArrayList<Object>();
 							list_v.add(v.getTree());
-							// Truffle.g:2002:16: ( comp_for[gens] | ( options {k=2; } : COMMA k+= test[expr_contextType.Load] COLON v+= test[expr_contextType.Load] )* )
+							// Truffle.g:1999:16: ( comp_for[gens] | ( options {k=2; } : COMMA k+= test[expr_contextType.Load] COLON v+= test[expr_contextType.Load] )* )
 							int alt141=2;
 							int LA141_0 = input.LA(1);
 							if ( (LA141_0==FOR) ) {
@@ -14305,9 +14304,9 @@ public class TruffleParser extends Parser {
 
 							switch (alt141) {
 								case 1 :
-									// Truffle.g:2002:18: comp_for[gens]
+									// Truffle.g:1999:18: comp_for[gens]
 									{
-									pushFollow(FOLLOW_comp_for_in_dictorsetmaker7511);
+									pushFollow(FOLLOW_comp_for_in_dictorsetmaker7510);
 									comp_for271=comp_for(gens);
 									state._fsp--;
 									if (state.failed) return retval;
@@ -14321,9 +14320,9 @@ public class TruffleParser extends Parser {
 									}
 									break;
 								case 2 :
-									// Truffle.g:2008:18: ( options {k=2; } : COMMA k+= test[expr_contextType.Load] COLON v+= test[expr_contextType.Load] )*
+									// Truffle.g:2005:18: ( options {k=2; } : COMMA k+= test[expr_contextType.Load] COLON v+= test[expr_contextType.Load] )*
 									{
-									// Truffle.g:2008:18: ( options {k=2; } : COMMA k+= test[expr_contextType.Load] COLON v+= test[expr_contextType.Load] )*
+									// Truffle.g:2005:18: ( options {k=2; } : COMMA k+= test[expr_contextType.Load] COLON v+= test[expr_contextType.Load] )*
 									loop140:
 									while (true) {
 										int alt140=2;
@@ -14338,15 +14337,15 @@ public class TruffleParser extends Parser {
 
 										switch (alt140) {
 										case 1 :
-											// Truffle.g:2008:34: COMMA k+= test[expr_contextType.Load] COLON v+= test[expr_contextType.Load]
+											// Truffle.g:2005:34: COMMA k+= test[expr_contextType.Load] COLON v+= test[expr_contextType.Load]
 											{
-											COMMA272=(Token)match(input,COMMA,FOLLOW_COMMA_in_dictorsetmaker7558); if (state.failed) return retval;
+											COMMA272=(Token)match(input,COMMA,FOLLOW_COMMA_in_dictorsetmaker7557); if (state.failed) return retval;
 											if ( state.backtracking==0 ) {
 											COMMA272_tree = (PNode)adaptor.create(COMMA272);
 											adaptor.addChild(root_0, COMMA272_tree);
 											}
 
-											pushFollow(FOLLOW_test_in_dictorsetmaker7562);
+											pushFollow(FOLLOW_test_in_dictorsetmaker7561);
 											k=test(expr_contextType.Load);
 											state._fsp--;
 											if (state.failed) return retval;
@@ -14354,13 +14353,13 @@ public class TruffleParser extends Parser {
 
 											if (list_k==null) list_k=new ArrayList<Object>();
 											list_k.add(k.getTree());
-											COLON273=(Token)match(input,COLON,FOLLOW_COLON_in_dictorsetmaker7565); if (state.failed) return retval;
+											COLON273=(Token)match(input,COLON,FOLLOW_COLON_in_dictorsetmaker7564); if (state.failed) return retval;
 											if ( state.backtracking==0 ) {
 											COLON273_tree = (PNode)adaptor.create(COLON273);
 											adaptor.addChild(root_0, COLON273_tree);
 											}
 
-											pushFollow(FOLLOW_test_in_dictorsetmaker7569);
+											pushFollow(FOLLOW_test_in_dictorsetmaker7568);
 											v=test(expr_contextType.Load);
 											state._fsp--;
 											if (state.failed) return retval;
@@ -14387,9 +14386,9 @@ public class TruffleParser extends Parser {
 							}
 							break;
 						case 2 :
-							// Truffle.g:2013:15: ( COMMA k+= test[expr_contextType.Load] )*
+							// Truffle.g:2010:15: ( COMMA k+= test[expr_contextType.Load] )*
 							{
-							// Truffle.g:2013:15: ( COMMA k+= test[expr_contextType.Load] )*
+							// Truffle.g:2010:15: ( COMMA k+= test[expr_contextType.Load] )*
 							loop142:
 							while (true) {
 								int alt142=2;
@@ -14404,15 +14403,15 @@ public class TruffleParser extends Parser {
 
 								switch (alt142) {
 								case 1 :
-									// Truffle.g:2013:16: COMMA k+= test[expr_contextType.Load]
+									// Truffle.g:2010:16: COMMA k+= test[expr_contextType.Load]
 									{
-									COMMA274=(Token)match(input,COMMA,FOLLOW_COMMA_in_dictorsetmaker7625); if (state.failed) return retval;
+									COMMA274=(Token)match(input,COMMA,FOLLOW_COMMA_in_dictorsetmaker7624); if (state.failed) return retval;
 									if ( state.backtracking==0 ) {
 									COMMA274_tree = (PNode)adaptor.create(COMMA274);
 									adaptor.addChild(root_0, COMMA274_tree);
 									}
 
-									pushFollow(FOLLOW_test_in_dictorsetmaker7629);
+									pushFollow(FOLLOW_test_in_dictorsetmaker7628);
 									k=test(expr_contextType.Load);
 									state._fsp--;
 									if (state.failed) return retval;
@@ -14436,7 +14435,7 @@ public class TruffleParser extends Parser {
 
 					}
 
-					// Truffle.g:2018:14: ( COMMA )?
+					// Truffle.g:2015:14: ( COMMA )?
 					int alt144=2;
 					int LA144_0 = input.LA(1);
 					if ( (LA144_0==COMMA) ) {
@@ -14444,9 +14443,9 @@ public class TruffleParser extends Parser {
 					}
 					switch (alt144) {
 						case 1 :
-							// Truffle.g:2018:15: COMMA
+							// Truffle.g:2015:15: COMMA
 							{
-							COMMA275=(Token)match(input,COMMA,FOLLOW_COMMA_in_dictorsetmaker7679); if (state.failed) return retval;
+							COMMA275=(Token)match(input,COMMA,FOLLOW_COMMA_in_dictorsetmaker7678); if (state.failed) return retval;
 							if ( state.backtracking==0 ) {
 							COMMA275_tree = (PNode)adaptor.create(COMMA275);
 							adaptor.addChild(root_0, COMMA275_tree);
@@ -14460,9 +14459,9 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 2 :
-					// Truffle.g:2019:12: comp_for[gens]
+					// Truffle.g:2016:12: comp_for[gens]
 					{
-					pushFollow(FOLLOW_comp_for_in_dictorsetmaker7694);
+					pushFollow(FOLLOW_comp_for_in_dictorsetmaker7693);
 					comp_for276=comp_for(gens);
 					state._fsp--;
 					if (state.failed) return retval;
@@ -14519,7 +14518,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "classdef"
-	// Truffle.g:2033:1: classdef : ( decorators )? CLASS NAME ( LPAREN ( testlist[expr_contextType.Load] )? RPAREN )? COLON suite[false] ;
+	// Truffle.g:2030:1: classdef : ( decorators )? CLASS NAME ( LPAREN ( testlist[expr_contextType.Load] )? RPAREN )? COLON suite[false] ;
 	public final TruffleParser.classdef_return classdef() throws RecognitionException {
 		TruffleParser.classdef_return retval = new TruffleParser.classdef_return();
 		retval.start = input.LT(1);
@@ -14545,13 +14544,13 @@ public class TruffleParser extends Parser {
 		    StatementNode stype = null;
 
 		try {
-			// Truffle.g:2040:5: ( ( decorators )? CLASS NAME ( LPAREN ( testlist[expr_contextType.Load] )? RPAREN )? COLON suite[false] )
-			// Truffle.g:2040:7: ( decorators )? CLASS NAME ( LPAREN ( testlist[expr_contextType.Load] )? RPAREN )? COLON suite[false]
+			// Truffle.g:2037:5: ( ( decorators )? CLASS NAME ( LPAREN ( testlist[expr_contextType.Load] )? RPAREN )? COLON suite[false] )
+			// Truffle.g:2037:7: ( decorators )? CLASS NAME ( LPAREN ( testlist[expr_contextType.Load] )? RPAREN )? COLON suite[false]
 			{
 			root_0 = (PNode)adaptor.nil();
 
 
-			// Truffle.g:2040:7: ( decorators )?
+			// Truffle.g:2037:7: ( decorators )?
 			int alt146=2;
 			int LA146_0 = input.LA(1);
 			if ( (LA146_0==AT) ) {
@@ -14559,9 +14558,9 @@ public class TruffleParser extends Parser {
 			}
 			switch (alt146) {
 				case 1 :
-					// Truffle.g:2040:7: decorators
+					// Truffle.g:2037:7: decorators
 					{
-					pushFollow(FOLLOW_decorators_in_classdef7747);
+					pushFollow(FOLLOW_decorators_in_classdef7746);
 					decorators277=decorators();
 					state._fsp--;
 					if (state.failed) return retval;
@@ -14572,19 +14571,19 @@ public class TruffleParser extends Parser {
 
 			}
 
-			CLASS278=(Token)match(input,CLASS,FOLLOW_CLASS_in_classdef7750); if (state.failed) return retval;
+			CLASS278=(Token)match(input,CLASS,FOLLOW_CLASS_in_classdef7749); if (state.failed) return retval;
 			if ( state.backtracking==0 ) {
 			CLASS278_tree = (PNode)adaptor.create(CLASS278);
 			adaptor.addChild(root_0, CLASS278_tree);
 			}
 
-			NAME279=(Token)match(input,NAME,FOLLOW_NAME_in_classdef7752); if (state.failed) return retval;
+			NAME279=(Token)match(input,NAME,FOLLOW_NAME_in_classdef7751); if (state.failed) return retval;
 			if ( state.backtracking==0 ) {
 			NAME279_tree = (PNode)adaptor.create(NAME279);
 			adaptor.addChild(root_0, NAME279_tree);
 			}
 
-			// Truffle.g:2040:30: ( LPAREN ( testlist[expr_contextType.Load] )? RPAREN )?
+			// Truffle.g:2037:30: ( LPAREN ( testlist[expr_contextType.Load] )? RPAREN )?
 			int alt148=2;
 			int LA148_0 = input.LA(1);
 			if ( (LA148_0==LPAREN) ) {
@@ -14592,15 +14591,15 @@ public class TruffleParser extends Parser {
 			}
 			switch (alt148) {
 				case 1 :
-					// Truffle.g:2040:31: LPAREN ( testlist[expr_contextType.Load] )? RPAREN
+					// Truffle.g:2037:31: LPAREN ( testlist[expr_contextType.Load] )? RPAREN
 					{
-					LPAREN280=(Token)match(input,LPAREN,FOLLOW_LPAREN_in_classdef7755); if (state.failed) return retval;
+					LPAREN280=(Token)match(input,LPAREN,FOLLOW_LPAREN_in_classdef7754); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					LPAREN280_tree = (PNode)adaptor.create(LPAREN280);
 					adaptor.addChild(root_0, LPAREN280_tree);
 					}
 
-					// Truffle.g:2040:38: ( testlist[expr_contextType.Load] )?
+					// Truffle.g:2037:38: ( testlist[expr_contextType.Load] )?
 					int alt147=2;
 					int LA147_0 = input.LA(1);
 					if ( (LA147_0==BACKQUOTE||(LA147_0 >= LBRACK && LA147_0 <= LCURLY)||(LA147_0 >= LPAREN && LA147_0 <= MINUS)||LA147_0==NAME||LA147_0==NOT||LA147_0==PLUS||LA147_0==TILDE) ) {
@@ -14614,9 +14613,9 @@ public class TruffleParser extends Parser {
 					}
 					switch (alt147) {
 						case 1 :
-							// Truffle.g:2040:38: testlist[expr_contextType.Load]
+							// Truffle.g:2037:38: testlist[expr_contextType.Load]
 							{
-							pushFollow(FOLLOW_testlist_in_classdef7757);
+							pushFollow(FOLLOW_testlist_in_classdef7756);
 							testlist281=testlist(expr_contextType.Load);
 							state._fsp--;
 							if (state.failed) return retval;
@@ -14627,7 +14626,7 @@ public class TruffleParser extends Parser {
 
 					}
 
-					RPAREN282=(Token)match(input,RPAREN,FOLLOW_RPAREN_in_classdef7761); if (state.failed) return retval;
+					RPAREN282=(Token)match(input,RPAREN,FOLLOW_RPAREN_in_classdef7760); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					RPAREN282_tree = (PNode)adaptor.create(RPAREN282);
 					adaptor.addChild(root_0, RPAREN282_tree);
@@ -14638,13 +14637,13 @@ public class TruffleParser extends Parser {
 
 			}
 
-			COLON283=(Token)match(input,COLON,FOLLOW_COLON_in_classdef7765); if (state.failed) return retval;
+			COLON283=(Token)match(input,COLON,FOLLOW_COLON_in_classdef7764); if (state.failed) return retval;
 			if ( state.backtracking==0 ) {
 			COLON283_tree = (PNode)adaptor.create(COLON283);
 			adaptor.addChild(root_0, COLON283_tree);
 			}
 
-			pushFollow(FOLLOW_suite_in_classdef7767);
+			pushFollow(FOLLOW_suite_in_classdef7766);
 			suite284=suite(false);
 			state._fsp--;
 			if (state.failed) return retval;
@@ -14700,7 +14699,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "arglist"
-	// Truffle.g:2057:1: arglist returns [List args, List keywords, PNode starargs, PNode kwargs] : ( argument[arguments, kws, gens, true, false] ( COMMA argument[arguments, kws, gens, false, false] )* ( COMMA ( STAR s= test[expr_contextType.Load] ( COMMA argument[arguments, kws, gens, false, true] )* ( COMMA DOUBLESTAR k= test[expr_contextType.Load] )? | DOUBLESTAR k= test[expr_contextType.Load] )? )? | STAR s= test[expr_contextType.Load] ( COMMA argument[arguments, kws, gens, false, true] )* ( COMMA DOUBLESTAR k= test[expr_contextType.Load] )? | DOUBLESTAR k= test[expr_contextType.Load] );
+	// Truffle.g:2054:1: arglist returns [List args, List keywords, PNode starargs, PNode kwargs] : ( argument[arguments, kws, gens, true, false] ( COMMA argument[arguments, kws, gens, false, false] )* ( COMMA ( STAR s= test[expr_contextType.Load] ( COMMA argument[arguments, kws, gens, false, true] )* ( COMMA DOUBLESTAR k= test[expr_contextType.Load] )? | DOUBLESTAR k= test[expr_contextType.Load] )? )? | STAR s= test[expr_contextType.Load] ( COMMA argument[arguments, kws, gens, false, true] )* ( COMMA DOUBLESTAR k= test[expr_contextType.Load] )? | DOUBLESTAR k= test[expr_contextType.Load] );
 	public final TruffleParser.arglist_return arglist() throws RecognitionException {
 		TruffleParser.arglist_return retval = new TruffleParser.arglist_return();
 		retval.start = input.LT(1);
@@ -14745,7 +14744,7 @@ public class TruffleParser extends Parser {
 		    List gens = new ArrayList();
 
 		try {
-			// Truffle.g:2064:5: ( argument[arguments, kws, gens, true, false] ( COMMA argument[arguments, kws, gens, false, false] )* ( COMMA ( STAR s= test[expr_contextType.Load] ( COMMA argument[arguments, kws, gens, false, true] )* ( COMMA DOUBLESTAR k= test[expr_contextType.Load] )? | DOUBLESTAR k= test[expr_contextType.Load] )? )? | STAR s= test[expr_contextType.Load] ( COMMA argument[arguments, kws, gens, false, true] )* ( COMMA DOUBLESTAR k= test[expr_contextType.Load] )? | DOUBLESTAR k= test[expr_contextType.Load] )
+			// Truffle.g:2061:5: ( argument[arguments, kws, gens, true, false] ( COMMA argument[arguments, kws, gens, false, false] )* ( COMMA ( STAR s= test[expr_contextType.Load] ( COMMA argument[arguments, kws, gens, false, true] )* ( COMMA DOUBLESTAR k= test[expr_contextType.Load] )? | DOUBLESTAR k= test[expr_contextType.Load] )? )? | STAR s= test[expr_contextType.Load] ( COMMA argument[arguments, kws, gens, false, true] )* ( COMMA DOUBLESTAR k= test[expr_contextType.Load] )? | DOUBLESTAR k= test[expr_contextType.Load] )
 			int alt156=3;
 			int LA156_0 = input.LA(1);
 			if ( (LA156_0==BACKQUOTE||(LA156_0 >= LBRACK && LA156_0 <= LCURLY)||(LA156_0 >= LPAREN && LA156_0 <= MINUS)||LA156_0==NAME||LA156_0==NOT||LA156_0==PLUS||LA156_0==TILDE) ) {
@@ -14773,18 +14772,18 @@ public class TruffleParser extends Parser {
 
 			switch (alt156) {
 				case 1 :
-					// Truffle.g:2064:7: argument[arguments, kws, gens, true, false] ( COMMA argument[arguments, kws, gens, false, false] )* ( COMMA ( STAR s= test[expr_contextType.Load] ( COMMA argument[arguments, kws, gens, false, true] )* ( COMMA DOUBLESTAR k= test[expr_contextType.Load] )? | DOUBLESTAR k= test[expr_contextType.Load] )? )?
+					// Truffle.g:2061:7: argument[arguments, kws, gens, true, false] ( COMMA argument[arguments, kws, gens, false, false] )* ( COMMA ( STAR s= test[expr_contextType.Load] ( COMMA argument[arguments, kws, gens, false, true] )* ( COMMA DOUBLESTAR k= test[expr_contextType.Load] )? | DOUBLESTAR k= test[expr_contextType.Load] )? )?
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					pushFollow(FOLLOW_argument_in_arglist7809);
+					pushFollow(FOLLOW_argument_in_arglist7808);
 					argument285=argument(arguments, kws, gens, true, false);
 					state._fsp--;
 					if (state.failed) return retval;
 					if ( state.backtracking==0 ) adaptor.addChild(root_0, argument285.getTree());
 
-					// Truffle.g:2064:51: ( COMMA argument[arguments, kws, gens, false, false] )*
+					// Truffle.g:2061:51: ( COMMA argument[arguments, kws, gens, false, false] )*
 					loop149:
 					while (true) {
 						int alt149=2;
@@ -14799,15 +14798,15 @@ public class TruffleParser extends Parser {
 
 						switch (alt149) {
 						case 1 :
-							// Truffle.g:2064:52: COMMA argument[arguments, kws, gens, false, false]
+							// Truffle.g:2061:52: COMMA argument[arguments, kws, gens, false, false]
 							{
-							COMMA286=(Token)match(input,COMMA,FOLLOW_COMMA_in_arglist7813); if (state.failed) return retval;
+							COMMA286=(Token)match(input,COMMA,FOLLOW_COMMA_in_arglist7812); if (state.failed) return retval;
 							if ( state.backtracking==0 ) {
 							COMMA286_tree = (PNode)adaptor.create(COMMA286);
 							adaptor.addChild(root_0, COMMA286_tree);
 							}
 
-							pushFollow(FOLLOW_argument_in_arglist7815);
+							pushFollow(FOLLOW_argument_in_arglist7814);
 							argument287=argument(arguments, kws, gens, false, false);
 							state._fsp--;
 							if (state.failed) return retval;
@@ -14821,7 +14820,7 @@ public class TruffleParser extends Parser {
 						}
 					}
 
-					// Truffle.g:2065:11: ( COMMA ( STAR s= test[expr_contextType.Load] ( COMMA argument[arguments, kws, gens, false, true] )* ( COMMA DOUBLESTAR k= test[expr_contextType.Load] )? | DOUBLESTAR k= test[expr_contextType.Load] )? )?
+					// Truffle.g:2062:11: ( COMMA ( STAR s= test[expr_contextType.Load] ( COMMA argument[arguments, kws, gens, false, true] )* ( COMMA DOUBLESTAR k= test[expr_contextType.Load] )? | DOUBLESTAR k= test[expr_contextType.Load] )? )?
 					int alt153=2;
 					int LA153_0 = input.LA(1);
 					if ( (LA153_0==COMMA) ) {
@@ -14829,15 +14828,15 @@ public class TruffleParser extends Parser {
 					}
 					switch (alt153) {
 						case 1 :
-							// Truffle.g:2065:12: COMMA ( STAR s= test[expr_contextType.Load] ( COMMA argument[arguments, kws, gens, false, true] )* ( COMMA DOUBLESTAR k= test[expr_contextType.Load] )? | DOUBLESTAR k= test[expr_contextType.Load] )?
+							// Truffle.g:2062:12: COMMA ( STAR s= test[expr_contextType.Load] ( COMMA argument[arguments, kws, gens, false, true] )* ( COMMA DOUBLESTAR k= test[expr_contextType.Load] )? | DOUBLESTAR k= test[expr_contextType.Load] )?
 							{
-							COMMA288=(Token)match(input,COMMA,FOLLOW_COMMA_in_arglist7831); if (state.failed) return retval;
+							COMMA288=(Token)match(input,COMMA,FOLLOW_COMMA_in_arglist7830); if (state.failed) return retval;
 							if ( state.backtracking==0 ) {
 							COMMA288_tree = (PNode)adaptor.create(COMMA288);
 							adaptor.addChild(root_0, COMMA288_tree);
 							}
 
-							// Truffle.g:2066:15: ( STAR s= test[expr_contextType.Load] ( COMMA argument[arguments, kws, gens, false, true] )* ( COMMA DOUBLESTAR k= test[expr_contextType.Load] )? | DOUBLESTAR k= test[expr_contextType.Load] )?
+							// Truffle.g:2063:15: ( STAR s= test[expr_contextType.Load] ( COMMA argument[arguments, kws, gens, false, true] )* ( COMMA DOUBLESTAR k= test[expr_contextType.Load] )? | DOUBLESTAR k= test[expr_contextType.Load] )?
 							int alt152=3;
 							int LA152_0 = input.LA(1);
 							if ( (LA152_0==STAR) ) {
@@ -14848,21 +14847,21 @@ public class TruffleParser extends Parser {
 							}
 							switch (alt152) {
 								case 1 :
-									// Truffle.g:2066:17: STAR s= test[expr_contextType.Load] ( COMMA argument[arguments, kws, gens, false, true] )* ( COMMA DOUBLESTAR k= test[expr_contextType.Load] )?
+									// Truffle.g:2063:17: STAR s= test[expr_contextType.Load] ( COMMA argument[arguments, kws, gens, false, true] )* ( COMMA DOUBLESTAR k= test[expr_contextType.Load] )?
 									{
-									STAR289=(Token)match(input,STAR,FOLLOW_STAR_in_arglist7849); if (state.failed) return retval;
+									STAR289=(Token)match(input,STAR,FOLLOW_STAR_in_arglist7848); if (state.failed) return retval;
 									if ( state.backtracking==0 ) {
 									STAR289_tree = (PNode)adaptor.create(STAR289);
 									adaptor.addChild(root_0, STAR289_tree);
 									}
 
-									pushFollow(FOLLOW_test_in_arglist7853);
+									pushFollow(FOLLOW_test_in_arglist7852);
 									s=test(expr_contextType.Load);
 									state._fsp--;
 									if (state.failed) return retval;
 									if ( state.backtracking==0 ) adaptor.addChild(root_0, s.getTree());
 
-									// Truffle.g:2066:52: ( COMMA argument[arguments, kws, gens, false, true] )*
+									// Truffle.g:2063:52: ( COMMA argument[arguments, kws, gens, false, true] )*
 									loop150:
 									while (true) {
 										int alt150=2;
@@ -14877,15 +14876,15 @@ public class TruffleParser extends Parser {
 
 										switch (alt150) {
 										case 1 :
-											// Truffle.g:2066:53: COMMA argument[arguments, kws, gens, false, true]
+											// Truffle.g:2063:53: COMMA argument[arguments, kws, gens, false, true]
 											{
-											COMMA290=(Token)match(input,COMMA,FOLLOW_COMMA_in_arglist7857); if (state.failed) return retval;
+											COMMA290=(Token)match(input,COMMA,FOLLOW_COMMA_in_arglist7856); if (state.failed) return retval;
 											if ( state.backtracking==0 ) {
 											COMMA290_tree = (PNode)adaptor.create(COMMA290);
 											adaptor.addChild(root_0, COMMA290_tree);
 											}
 
-											pushFollow(FOLLOW_argument_in_arglist7859);
+											pushFollow(FOLLOW_argument_in_arglist7858);
 											argument291=argument(arguments, kws, gens, false, true);
 											state._fsp--;
 											if (state.failed) return retval;
@@ -14899,7 +14898,7 @@ public class TruffleParser extends Parser {
 										}
 									}
 
-									// Truffle.g:2066:105: ( COMMA DOUBLESTAR k= test[expr_contextType.Load] )?
+									// Truffle.g:2063:105: ( COMMA DOUBLESTAR k= test[expr_contextType.Load] )?
 									int alt151=2;
 									int LA151_0 = input.LA(1);
 									if ( (LA151_0==COMMA) ) {
@@ -14907,21 +14906,21 @@ public class TruffleParser extends Parser {
 									}
 									switch (alt151) {
 										case 1 :
-											// Truffle.g:2066:106: COMMA DOUBLESTAR k= test[expr_contextType.Load]
+											// Truffle.g:2063:106: COMMA DOUBLESTAR k= test[expr_contextType.Load]
 											{
-											COMMA292=(Token)match(input,COMMA,FOLLOW_COMMA_in_arglist7865); if (state.failed) return retval;
+											COMMA292=(Token)match(input,COMMA,FOLLOW_COMMA_in_arglist7864); if (state.failed) return retval;
 											if ( state.backtracking==0 ) {
 											COMMA292_tree = (PNode)adaptor.create(COMMA292);
 											adaptor.addChild(root_0, COMMA292_tree);
 											}
 
-											DOUBLESTAR293=(Token)match(input,DOUBLESTAR,FOLLOW_DOUBLESTAR_in_arglist7867); if (state.failed) return retval;
+											DOUBLESTAR293=(Token)match(input,DOUBLESTAR,FOLLOW_DOUBLESTAR_in_arglist7866); if (state.failed) return retval;
 											if ( state.backtracking==0 ) {
 											DOUBLESTAR293_tree = (PNode)adaptor.create(DOUBLESTAR293);
 											adaptor.addChild(root_0, DOUBLESTAR293_tree);
 											}
 
-											pushFollow(FOLLOW_test_in_arglist7871);
+											pushFollow(FOLLOW_test_in_arglist7870);
 											k=test(expr_contextType.Load);
 											state._fsp--;
 											if (state.failed) return retval;
@@ -14935,15 +14934,15 @@ public class TruffleParser extends Parser {
 									}
 									break;
 								case 2 :
-									// Truffle.g:2067:17: DOUBLESTAR k= test[expr_contextType.Load]
+									// Truffle.g:2064:17: DOUBLESTAR k= test[expr_contextType.Load]
 									{
-									DOUBLESTAR294=(Token)match(input,DOUBLESTAR,FOLLOW_DOUBLESTAR_in_arglist7892); if (state.failed) return retval;
+									DOUBLESTAR294=(Token)match(input,DOUBLESTAR,FOLLOW_DOUBLESTAR_in_arglist7891); if (state.failed) return retval;
 									if ( state.backtracking==0 ) {
 									DOUBLESTAR294_tree = (PNode)adaptor.create(DOUBLESTAR294);
 									adaptor.addChild(root_0, DOUBLESTAR294_tree);
 									}
 
-									pushFollow(FOLLOW_test_in_arglist7896);
+									pushFollow(FOLLOW_test_in_arglist7895);
 									k=test(expr_contextType.Load);
 									state._fsp--;
 									if (state.failed) return retval;
@@ -14971,24 +14970,24 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 2 :
-					// Truffle.g:2079:7: STAR s= test[expr_contextType.Load] ( COMMA argument[arguments, kws, gens, false, true] )* ( COMMA DOUBLESTAR k= test[expr_contextType.Load] )?
+					// Truffle.g:2076:7: STAR s= test[expr_contextType.Load] ( COMMA argument[arguments, kws, gens, false, true] )* ( COMMA DOUBLESTAR k= test[expr_contextType.Load] )?
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					STAR295=(Token)match(input,STAR,FOLLOW_STAR_in_arglist7943); if (state.failed) return retval;
+					STAR295=(Token)match(input,STAR,FOLLOW_STAR_in_arglist7942); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					STAR295_tree = (PNode)adaptor.create(STAR295);
 					adaptor.addChild(root_0, STAR295_tree);
 					}
 
-					pushFollow(FOLLOW_test_in_arglist7947);
+					pushFollow(FOLLOW_test_in_arglist7946);
 					s=test(expr_contextType.Load);
 					state._fsp--;
 					if (state.failed) return retval;
 					if ( state.backtracking==0 ) adaptor.addChild(root_0, s.getTree());
 
-					// Truffle.g:2079:42: ( COMMA argument[arguments, kws, gens, false, true] )*
+					// Truffle.g:2076:42: ( COMMA argument[arguments, kws, gens, false, true] )*
 					loop154:
 					while (true) {
 						int alt154=2;
@@ -15003,15 +15002,15 @@ public class TruffleParser extends Parser {
 
 						switch (alt154) {
 						case 1 :
-							// Truffle.g:2079:43: COMMA argument[arguments, kws, gens, false, true]
+							// Truffle.g:2076:43: COMMA argument[arguments, kws, gens, false, true]
 							{
-							COMMA296=(Token)match(input,COMMA,FOLLOW_COMMA_in_arglist7951); if (state.failed) return retval;
+							COMMA296=(Token)match(input,COMMA,FOLLOW_COMMA_in_arglist7950); if (state.failed) return retval;
 							if ( state.backtracking==0 ) {
 							COMMA296_tree = (PNode)adaptor.create(COMMA296);
 							adaptor.addChild(root_0, COMMA296_tree);
 							}
 
-							pushFollow(FOLLOW_argument_in_arglist7953);
+							pushFollow(FOLLOW_argument_in_arglist7952);
 							argument297=argument(arguments, kws, gens, false, true);
 							state._fsp--;
 							if (state.failed) return retval;
@@ -15025,7 +15024,7 @@ public class TruffleParser extends Parser {
 						}
 					}
 
-					// Truffle.g:2079:95: ( COMMA DOUBLESTAR k= test[expr_contextType.Load] )?
+					// Truffle.g:2076:95: ( COMMA DOUBLESTAR k= test[expr_contextType.Load] )?
 					int alt155=2;
 					int LA155_0 = input.LA(1);
 					if ( (LA155_0==COMMA) ) {
@@ -15033,21 +15032,21 @@ public class TruffleParser extends Parser {
 					}
 					switch (alt155) {
 						case 1 :
-							// Truffle.g:2079:96: COMMA DOUBLESTAR k= test[expr_contextType.Load]
+							// Truffle.g:2076:96: COMMA DOUBLESTAR k= test[expr_contextType.Load]
 							{
-							COMMA298=(Token)match(input,COMMA,FOLLOW_COMMA_in_arglist7959); if (state.failed) return retval;
+							COMMA298=(Token)match(input,COMMA,FOLLOW_COMMA_in_arglist7958); if (state.failed) return retval;
 							if ( state.backtracking==0 ) {
 							COMMA298_tree = (PNode)adaptor.create(COMMA298);
 							adaptor.addChild(root_0, COMMA298_tree);
 							}
 
-							DOUBLESTAR299=(Token)match(input,DOUBLESTAR,FOLLOW_DOUBLESTAR_in_arglist7961); if (state.failed) return retval;
+							DOUBLESTAR299=(Token)match(input,DOUBLESTAR,FOLLOW_DOUBLESTAR_in_arglist7960); if (state.failed) return retval;
 							if ( state.backtracking==0 ) {
 							DOUBLESTAR299_tree = (PNode)adaptor.create(DOUBLESTAR299);
 							adaptor.addChild(root_0, DOUBLESTAR299_tree);
 							}
 
-							pushFollow(FOLLOW_test_in_arglist7965);
+							pushFollow(FOLLOW_test_in_arglist7964);
 							k=test(expr_contextType.Load);
 							state._fsp--;
 							if (state.failed) return retval;
@@ -15066,18 +15065,18 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 3 :
-					// Truffle.g:2085:7: DOUBLESTAR k= test[expr_contextType.Load]
+					// Truffle.g:2082:7: DOUBLESTAR k= test[expr_contextType.Load]
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					DOUBLESTAR300=(Token)match(input,DOUBLESTAR,FOLLOW_DOUBLESTAR_in_arglist7984); if (state.failed) return retval;
+					DOUBLESTAR300=(Token)match(input,DOUBLESTAR,FOLLOW_DOUBLESTAR_in_arglist7983); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					DOUBLESTAR300_tree = (PNode)adaptor.create(DOUBLESTAR300);
 					adaptor.addChild(root_0, DOUBLESTAR300_tree);
 					}
 
-					pushFollow(FOLLOW_test_in_arglist7988);
+					pushFollow(FOLLOW_test_in_arglist7987);
 					k=test(expr_contextType.Load);
 					state._fsp--;
 					if (state.failed) return retval;
@@ -15121,7 +15120,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "argument"
-	// Truffle.g:2092:1: argument[List arguments, List kws, List gens, boolean first, boolean afterStar] returns [boolean genarg] : t1= test[expr_contextType.Load] ( ( ASSIGN t2= test[expr_contextType.Load] ) | comp_for[$gens] |) ;
+	// Truffle.g:2089:1: argument[List arguments, List kws, List gens, boolean first, boolean afterStar] returns [boolean genarg] : t1= test[expr_contextType.Load] ( ( ASSIGN t2= test[expr_contextType.Load] ) | comp_for[$gens] |) ;
 	public final TruffleParser.argument_return argument(List arguments, List kws, List gens, boolean first, boolean afterStar) throws RecognitionException {
 		TruffleParser.argument_return retval = new TruffleParser.argument_return();
 		retval.start = input.LT(1);
@@ -15136,19 +15135,19 @@ public class TruffleParser extends Parser {
 		PNode ASSIGN301_tree=null;
 
 		try {
-			// Truffle.g:2094:5: (t1= test[expr_contextType.Load] ( ( ASSIGN t2= test[expr_contextType.Load] ) | comp_for[$gens] |) )
-			// Truffle.g:2094:7: t1= test[expr_contextType.Load] ( ( ASSIGN t2= test[expr_contextType.Load] ) | comp_for[$gens] |)
+			// Truffle.g:2091:5: (t1= test[expr_contextType.Load] ( ( ASSIGN t2= test[expr_contextType.Load] ) | comp_for[$gens] |) )
+			// Truffle.g:2091:7: t1= test[expr_contextType.Load] ( ( ASSIGN t2= test[expr_contextType.Load] ) | comp_for[$gens] |)
 			{
 			root_0 = (PNode)adaptor.nil();
 
 
-			pushFollow(FOLLOW_test_in_argument8027);
+			pushFollow(FOLLOW_test_in_argument8026);
 			t1=test(expr_contextType.Load);
 			state._fsp--;
 			if (state.failed) return retval;
 			if ( state.backtracking==0 ) adaptor.addChild(root_0, t1.getTree());
 
-			// Truffle.g:2095:9: ( ( ASSIGN t2= test[expr_contextType.Load] ) | comp_for[$gens] |)
+			// Truffle.g:2092:9: ( ( ASSIGN t2= test[expr_contextType.Load] ) | comp_for[$gens] |)
 			int alt157=3;
 			switch ( input.LA(1) ) {
 			case ASSIGN:
@@ -15175,18 +15174,18 @@ public class TruffleParser extends Parser {
 			}
 			switch (alt157) {
 				case 1 :
-					// Truffle.g:2095:10: ( ASSIGN t2= test[expr_contextType.Load] )
+					// Truffle.g:2092:10: ( ASSIGN t2= test[expr_contextType.Load] )
 					{
-					// Truffle.g:2095:10: ( ASSIGN t2= test[expr_contextType.Load] )
-					// Truffle.g:2095:11: ASSIGN t2= test[expr_contextType.Load]
+					// Truffle.g:2092:10: ( ASSIGN t2= test[expr_contextType.Load] )
+					// Truffle.g:2092:11: ASSIGN t2= test[expr_contextType.Load]
 					{
-					ASSIGN301=(Token)match(input,ASSIGN,FOLLOW_ASSIGN_in_argument8040); if (state.failed) return retval;
+					ASSIGN301=(Token)match(input,ASSIGN,FOLLOW_ASSIGN_in_argument8039); if (state.failed) return retval;
 					if ( state.backtracking==0 ) {
 					ASSIGN301_tree = (PNode)adaptor.create(ASSIGN301);
 					adaptor.addChild(root_0, ASSIGN301_tree);
 					}
 
-					pushFollow(FOLLOW_test_in_argument8044);
+					pushFollow(FOLLOW_test_in_argument8043);
 					t2=test(expr_contextType.Load);
 					state._fsp--;
 					if (state.failed) return retval;
@@ -15214,10 +15213,10 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 2 :
-					// Truffle.g:2113:11: comp_for[$gens]
+					// Truffle.g:2110:11: comp_for[$gens]
 					{
 					if ( state.backtracking==0 ) {actions.beginScope();}
-					pushFollow(FOLLOW_comp_for_in_argument8072);
+					pushFollow(FOLLOW_comp_for_in_argument8071);
 					comp_for302=comp_for(gens);
 					state._fsp--;
 					if (state.failed) return retval;
@@ -15236,7 +15235,7 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 3 :
-					// Truffle.g:2125:11: 
+					// Truffle.g:2122:11: 
 					{
 					if ( state.backtracking==0 ) {
 					              if (kws.size() > 0) {
@@ -15283,7 +15282,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "list_iter"
-	// Truffle.g:2137:1: list_iter[List gens, List ifs] : ( list_for[gens] | list_if[gens, ifs] );
+	// Truffle.g:2134:1: list_iter[List gens, List ifs] : ( list_for[gens] | list_if[gens, ifs] );
 	public final TruffleParser.list_iter_return list_iter(List gens, List ifs) throws RecognitionException {
 		TruffleParser.list_iter_return retval = new TruffleParser.list_iter_return();
 		retval.start = input.LT(1);
@@ -15295,7 +15294,7 @@ public class TruffleParser extends Parser {
 
 
 		try {
-			// Truffle.g:2138:5: ( list_for[gens] | list_if[gens, ifs] )
+			// Truffle.g:2135:5: ( list_for[gens] | list_if[gens, ifs] )
 			int alt158=2;
 			int LA158_0 = input.LA(1);
 			if ( (LA158_0==FOR) ) {
@@ -15314,12 +15313,12 @@ public class TruffleParser extends Parser {
 
 			switch (alt158) {
 				case 1 :
-					// Truffle.g:2138:7: list_for[gens]
+					// Truffle.g:2135:7: list_for[gens]
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					pushFollow(FOLLOW_list_for_in_list_iter8137);
+					pushFollow(FOLLOW_list_for_in_list_iter8136);
 					list_for303=list_for(gens);
 					state._fsp--;
 					if (state.failed) return retval;
@@ -15328,12 +15327,12 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 2 :
-					// Truffle.g:2139:7: list_if[gens, ifs]
+					// Truffle.g:2136:7: list_if[gens, ifs]
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					pushFollow(FOLLOW_list_if_in_list_iter8146);
+					pushFollow(FOLLOW_list_if_in_list_iter8145);
 					list_if304=list_if(gens, ifs);
 					state._fsp--;
 					if (state.failed) return retval;
@@ -15373,7 +15372,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "list_for"
-	// Truffle.g:2143:1: list_for[List gens] : FOR exprlist[expr_contextType.Store] IN testlist[expr_contextType.Load] ( list_iter[gens, ifs] )? ;
+	// Truffle.g:2140:1: list_for[List gens] : FOR exprlist[expr_contextType.Store] IN testlist[expr_contextType.Load] ( list_iter[gens, ifs] )? ;
 	public final TruffleParser.list_for_return list_for(List gens) throws RecognitionException {
 		TruffleParser.list_for_return retval = new TruffleParser.list_for_return();
 		retval.start = input.LT(1);
@@ -15393,37 +15392,37 @@ public class TruffleParser extends Parser {
 		    List ifs = new ArrayList();
 
 		try {
-			// Truffle.g:2147:5: ( FOR exprlist[expr_contextType.Store] IN testlist[expr_contextType.Load] ( list_iter[gens, ifs] )? )
-			// Truffle.g:2147:7: FOR exprlist[expr_contextType.Store] IN testlist[expr_contextType.Load] ( list_iter[gens, ifs] )?
+			// Truffle.g:2144:5: ( FOR exprlist[expr_contextType.Store] IN testlist[expr_contextType.Load] ( list_iter[gens, ifs] )? )
+			// Truffle.g:2144:7: FOR exprlist[expr_contextType.Store] IN testlist[expr_contextType.Load] ( list_iter[gens, ifs] )?
 			{
 			root_0 = (PNode)adaptor.nil();
 
 
-			FOR305=(Token)match(input,FOR,FOLLOW_FOR_in_list_for8172); if (state.failed) return retval;
+			FOR305=(Token)match(input,FOR,FOLLOW_FOR_in_list_for8171); if (state.failed) return retval;
 			if ( state.backtracking==0 ) {
 			FOR305_tree = (PNode)adaptor.create(FOR305);
 			adaptor.addChild(root_0, FOR305_tree);
 			}
 
-			pushFollow(FOLLOW_exprlist_in_list_for8174);
+			pushFollow(FOLLOW_exprlist_in_list_for8173);
 			exprlist306=exprlist(expr_contextType.Store);
 			state._fsp--;
 			if (state.failed) return retval;
 			if ( state.backtracking==0 ) adaptor.addChild(root_0, exprlist306.getTree());
 
-			IN307=(Token)match(input,IN,FOLLOW_IN_in_list_for8177); if (state.failed) return retval;
+			IN307=(Token)match(input,IN,FOLLOW_IN_in_list_for8176); if (state.failed) return retval;
 			if ( state.backtracking==0 ) {
 			IN307_tree = (PNode)adaptor.create(IN307);
 			adaptor.addChild(root_0, IN307_tree);
 			}
 
-			pushFollow(FOLLOW_testlist_in_list_for8179);
+			pushFollow(FOLLOW_testlist_in_list_for8178);
 			testlist308=testlist(expr_contextType.Load);
 			state._fsp--;
 			if (state.failed) return retval;
 			if ( state.backtracking==0 ) adaptor.addChild(root_0, testlist308.getTree());
 
-			// Truffle.g:2147:79: ( list_iter[gens, ifs] )?
+			// Truffle.g:2144:79: ( list_iter[gens, ifs] )?
 			int alt159=2;
 			int LA159_0 = input.LA(1);
 			if ( (LA159_0==FOR||LA159_0==IF) ) {
@@ -15431,9 +15430,9 @@ public class TruffleParser extends Parser {
 			}
 			switch (alt159) {
 				case 1 :
-					// Truffle.g:2147:80: list_iter[gens, ifs]
+					// Truffle.g:2144:80: list_iter[gens, ifs]
 					{
-					pushFollow(FOLLOW_list_iter_in_list_for8183);
+					pushFollow(FOLLOW_list_iter_in_list_for8182);
 					list_iter309=list_iter(gens, ifs);
 					state._fsp--;
 					if (state.failed) return retval;
@@ -15480,7 +15479,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "list_if"
-	// Truffle.g:2155:1: list_if[List gens, List ifs] : IF test[expr_contextType.Load] ( list_iter[gens, ifs] )? ;
+	// Truffle.g:2152:1: list_if[List gens, List ifs] : IF test[expr_contextType.Load] ( list_iter[gens, ifs] )? ;
 	public final TruffleParser.list_if_return list_if(List gens, List ifs) throws RecognitionException {
 		TruffleParser.list_if_return retval = new TruffleParser.list_if_return();
 		retval.start = input.LT(1);
@@ -15494,25 +15493,25 @@ public class TruffleParser extends Parser {
 		PNode IF310_tree=null;
 
 		try {
-			// Truffle.g:2156:5: ( IF test[expr_contextType.Load] ( list_iter[gens, ifs] )? )
-			// Truffle.g:2156:7: IF test[expr_contextType.Load] ( list_iter[gens, ifs] )?
+			// Truffle.g:2153:5: ( IF test[expr_contextType.Load] ( list_iter[gens, ifs] )? )
+			// Truffle.g:2153:7: IF test[expr_contextType.Load] ( list_iter[gens, ifs] )?
 			{
 			root_0 = (PNode)adaptor.nil();
 
 
-			IF310=(Token)match(input,IF,FOLLOW_IF_in_list_if8213); if (state.failed) return retval;
+			IF310=(Token)match(input,IF,FOLLOW_IF_in_list_if8212); if (state.failed) return retval;
 			if ( state.backtracking==0 ) {
 			IF310_tree = (PNode)adaptor.create(IF310);
 			adaptor.addChild(root_0, IF310_tree);
 			}
 
-			pushFollow(FOLLOW_test_in_list_if8215);
+			pushFollow(FOLLOW_test_in_list_if8214);
 			test311=test(expr_contextType.Load);
 			state._fsp--;
 			if (state.failed) return retval;
 			if ( state.backtracking==0 ) adaptor.addChild(root_0, test311.getTree());
 
-			// Truffle.g:2156:38: ( list_iter[gens, ifs] )?
+			// Truffle.g:2153:38: ( list_iter[gens, ifs] )?
 			int alt160=2;
 			int LA160_0 = input.LA(1);
 			if ( (LA160_0==FOR||LA160_0==IF) ) {
@@ -15520,9 +15519,9 @@ public class TruffleParser extends Parser {
 			}
 			switch (alt160) {
 				case 1 :
-					// Truffle.g:2156:39: list_iter[gens, ifs]
+					// Truffle.g:2153:39: list_iter[gens, ifs]
 					{
-					pushFollow(FOLLOW_list_iter_in_list_if8219);
+					pushFollow(FOLLOW_list_iter_in_list_if8218);
 					list_iter312=list_iter(gens, ifs);
 					state._fsp--;
 					if (state.failed) return retval;
@@ -15568,7 +15567,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "comp_iter"
-	// Truffle.g:2163:1: comp_iter[List gens, List ifs] : ( comp_for[gens] | comp_if[gens, ifs] );
+	// Truffle.g:2160:1: comp_iter[List gens, List ifs] : ( comp_for[gens] | comp_if[gens, ifs] );
 	public final TruffleParser.comp_iter_return comp_iter(List gens, List ifs) throws RecognitionException {
 		TruffleParser.comp_iter_return retval = new TruffleParser.comp_iter_return();
 		retval.start = input.LT(1);
@@ -15580,7 +15579,7 @@ public class TruffleParser extends Parser {
 
 
 		try {
-			// Truffle.g:2164:5: ( comp_for[gens] | comp_if[gens, ifs] )
+			// Truffle.g:2161:5: ( comp_for[gens] | comp_if[gens, ifs] )
 			int alt161=2;
 			int LA161_0 = input.LA(1);
 			if ( (LA161_0==FOR) ) {
@@ -15599,12 +15598,12 @@ public class TruffleParser extends Parser {
 
 			switch (alt161) {
 				case 1 :
-					// Truffle.g:2164:7: comp_for[gens]
+					// Truffle.g:2161:7: comp_for[gens]
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					pushFollow(FOLLOW_comp_for_in_comp_iter8250);
+					pushFollow(FOLLOW_comp_for_in_comp_iter8249);
 					comp_for313=comp_for(gens);
 					state._fsp--;
 					if (state.failed) return retval;
@@ -15613,12 +15612,12 @@ public class TruffleParser extends Parser {
 					}
 					break;
 				case 2 :
-					// Truffle.g:2165:7: comp_if[gens, ifs]
+					// Truffle.g:2162:7: comp_if[gens, ifs]
 					{
 					root_0 = (PNode)adaptor.nil();
 
 
-					pushFollow(FOLLOW_comp_if_in_comp_iter8259);
+					pushFollow(FOLLOW_comp_if_in_comp_iter8258);
 					comp_if314=comp_if(gens, ifs);
 					state._fsp--;
 					if (state.failed) return retval;
@@ -15658,7 +15657,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "comp_for"
-	// Truffle.g:2169:1: comp_for[List gens] : FOR exprlist[expr_contextType.Store] IN or_test[expr_contextType.Load] ( comp_iter[gens, ifs] )? ;
+	// Truffle.g:2166:1: comp_for[List gens] : FOR exprlist[expr_contextType.Store] IN or_test[expr_contextType.Load] ( comp_iter[gens, ifs] )? ;
 	public final TruffleParser.comp_for_return comp_for(List gens) throws RecognitionException {
 		TruffleParser.comp_for_return retval = new TruffleParser.comp_for_return();
 		retval.start = input.LT(1);
@@ -15678,37 +15677,37 @@ public class TruffleParser extends Parser {
 		    List ifs = new ArrayList();
 
 		try {
-			// Truffle.g:2173:5: ( FOR exprlist[expr_contextType.Store] IN or_test[expr_contextType.Load] ( comp_iter[gens, ifs] )? )
-			// Truffle.g:2173:7: FOR exprlist[expr_contextType.Store] IN or_test[expr_contextType.Load] ( comp_iter[gens, ifs] )?
+			// Truffle.g:2170:5: ( FOR exprlist[expr_contextType.Store] IN or_test[expr_contextType.Load] ( comp_iter[gens, ifs] )? )
+			// Truffle.g:2170:7: FOR exprlist[expr_contextType.Store] IN or_test[expr_contextType.Load] ( comp_iter[gens, ifs] )?
 			{
 			root_0 = (PNode)adaptor.nil();
 
 
-			FOR315=(Token)match(input,FOR,FOLLOW_FOR_in_comp_for8285); if (state.failed) return retval;
+			FOR315=(Token)match(input,FOR,FOLLOW_FOR_in_comp_for8284); if (state.failed) return retval;
 			if ( state.backtracking==0 ) {
 			FOR315_tree = (PNode)adaptor.create(FOR315);
 			adaptor.addChild(root_0, FOR315_tree);
 			}
 
-			pushFollow(FOLLOW_exprlist_in_comp_for8287);
+			pushFollow(FOLLOW_exprlist_in_comp_for8286);
 			exprlist316=exprlist(expr_contextType.Store);
 			state._fsp--;
 			if (state.failed) return retval;
 			if ( state.backtracking==0 ) adaptor.addChild(root_0, exprlist316.getTree());
 
-			IN317=(Token)match(input,IN,FOLLOW_IN_in_comp_for8290); if (state.failed) return retval;
+			IN317=(Token)match(input,IN,FOLLOW_IN_in_comp_for8289); if (state.failed) return retval;
 			if ( state.backtracking==0 ) {
 			IN317_tree = (PNode)adaptor.create(IN317);
 			adaptor.addChild(root_0, IN317_tree);
 			}
 
-			pushFollow(FOLLOW_or_test_in_comp_for8292);
+			pushFollow(FOLLOW_or_test_in_comp_for8291);
 			or_test318=or_test(expr_contextType.Load);
 			state._fsp--;
 			if (state.failed) return retval;
 			if ( state.backtracking==0 ) adaptor.addChild(root_0, or_test318.getTree());
 
-			// Truffle.g:2173:78: ( comp_iter[gens, ifs] )?
+			// Truffle.g:2170:78: ( comp_iter[gens, ifs] )?
 			int alt162=2;
 			int LA162_0 = input.LA(1);
 			if ( (LA162_0==FOR||LA162_0==IF) ) {
@@ -15716,9 +15715,9 @@ public class TruffleParser extends Parser {
 			}
 			switch (alt162) {
 				case 1 :
-					// Truffle.g:2173:78: comp_iter[gens, ifs]
+					// Truffle.g:2170:78: comp_iter[gens, ifs]
 					{
-					pushFollow(FOLLOW_comp_iter_in_comp_for8295);
+					pushFollow(FOLLOW_comp_iter_in_comp_for8294);
 					comp_iter319=comp_iter(gens, ifs);
 					state._fsp--;
 					if (state.failed) return retval;
@@ -15765,7 +15764,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "comp_if"
-	// Truffle.g:2181:1: comp_if[List gens, List ifs] : IF test[expr_contextType.Load] ( comp_iter[gens, ifs] )? ;
+	// Truffle.g:2178:1: comp_if[List gens, List ifs] : IF test[expr_contextType.Load] ( comp_iter[gens, ifs] )? ;
 	public final TruffleParser.comp_if_return comp_if(List gens, List ifs) throws RecognitionException {
 		TruffleParser.comp_if_return retval = new TruffleParser.comp_if_return();
 		retval.start = input.LT(1);
@@ -15779,25 +15778,25 @@ public class TruffleParser extends Parser {
 		PNode IF320_tree=null;
 
 		try {
-			// Truffle.g:2182:5: ( IF test[expr_contextType.Load] ( comp_iter[gens, ifs] )? )
-			// Truffle.g:2182:7: IF test[expr_contextType.Load] ( comp_iter[gens, ifs] )?
+			// Truffle.g:2179:5: ( IF test[expr_contextType.Load] ( comp_iter[gens, ifs] )? )
+			// Truffle.g:2179:7: IF test[expr_contextType.Load] ( comp_iter[gens, ifs] )?
 			{
 			root_0 = (PNode)adaptor.nil();
 
 
-			IF320=(Token)match(input,IF,FOLLOW_IF_in_comp_if8324); if (state.failed) return retval;
+			IF320=(Token)match(input,IF,FOLLOW_IF_in_comp_if8323); if (state.failed) return retval;
 			if ( state.backtracking==0 ) {
 			IF320_tree = (PNode)adaptor.create(IF320);
 			adaptor.addChild(root_0, IF320_tree);
 			}
 
-			pushFollow(FOLLOW_test_in_comp_if8326);
+			pushFollow(FOLLOW_test_in_comp_if8325);
 			test321=test(expr_contextType.Load);
 			state._fsp--;
 			if (state.failed) return retval;
 			if ( state.backtracking==0 ) adaptor.addChild(root_0, test321.getTree());
 
-			// Truffle.g:2182:38: ( comp_iter[gens, ifs] )?
+			// Truffle.g:2179:38: ( comp_iter[gens, ifs] )?
 			int alt163=2;
 			int LA163_0 = input.LA(1);
 			if ( (LA163_0==FOR||LA163_0==IF) ) {
@@ -15805,9 +15804,9 @@ public class TruffleParser extends Parser {
 			}
 			switch (alt163) {
 				case 1 :
-					// Truffle.g:2182:38: comp_iter[gens, ifs]
+					// Truffle.g:2179:38: comp_iter[gens, ifs]
 					{
-					pushFollow(FOLLOW_comp_iter_in_comp_if8329);
+					pushFollow(FOLLOW_comp_iter_in_comp_if8328);
 					comp_iter322=comp_iter(gens, ifs);
 					state._fsp--;
 					if (state.failed) return retval;
@@ -15854,7 +15853,7 @@ public class TruffleParser extends Parser {
 
 
 	// $ANTLR start "yield_expr"
-	// Truffle.g:2189:1: yield_expr returns [StatementNode etype] : YIELD ( testlist[expr_contextType.Load] )? ;
+	// Truffle.g:2186:1: yield_expr returns [StatementNode etype] : YIELD ( testlist[expr_contextType.Load] )? ;
 	public final TruffleParser.yield_expr_return yield_expr() throws RecognitionException {
 		TruffleParser.yield_expr_return retval = new TruffleParser.yield_expr_return();
 		retval.start = input.LT(1);
@@ -15867,19 +15866,19 @@ public class TruffleParser extends Parser {
 		PNode YIELD323_tree=null;
 
 		try {
-			// Truffle.g:2195:5: ( YIELD ( testlist[expr_contextType.Load] )? )
-			// Truffle.g:2195:7: YIELD ( testlist[expr_contextType.Load] )?
+			// Truffle.g:2192:5: ( YIELD ( testlist[expr_contextType.Load] )? )
+			// Truffle.g:2192:7: YIELD ( testlist[expr_contextType.Load] )?
 			{
 			root_0 = (PNode)adaptor.nil();
 
 
-			YIELD323=(Token)match(input,YIELD,FOLLOW_YIELD_in_yield_expr8370); if (state.failed) return retval;
+			YIELD323=(Token)match(input,YIELD,FOLLOW_YIELD_in_yield_expr8369); if (state.failed) return retval;
 			if ( state.backtracking==0 ) {
 			YIELD323_tree = (PNode)adaptor.create(YIELD323);
 			adaptor.addChild(root_0, YIELD323_tree);
 			}
 
-			// Truffle.g:2195:13: ( testlist[expr_contextType.Load] )?
+			// Truffle.g:2192:13: ( testlist[expr_contextType.Load] )?
 			int alt164=2;
 			int LA164_0 = input.LA(1);
 			if ( (LA164_0==BACKQUOTE||(LA164_0 >= LBRACK && LA164_0 <= LCURLY)||(LA164_0 >= LPAREN && LA164_0 <= MINUS)||LA164_0==NAME||LA164_0==NOT||LA164_0==PLUS||LA164_0==TILDE) ) {
@@ -15893,9 +15892,9 @@ public class TruffleParser extends Parser {
 			}
 			switch (alt164) {
 				case 1 :
-					// Truffle.g:2195:13: testlist[expr_contextType.Load]
+					// Truffle.g:2192:13: testlist[expr_contextType.Load]
 					{
-					pushFollow(FOLLOW_testlist_in_yield_expr8372);
+					pushFollow(FOLLOW_testlist_in_yield_expr8371);
 					testlist324=testlist(expr_contextType.Load);
 					state._fsp--;
 					if (state.failed) return retval;
@@ -15938,17 +15937,17 @@ public class TruffleParser extends Parser {
 
 	// $ANTLR start synpred1_Truffle
 	public final void synpred1_Truffle_fragment() throws RecognitionException {
-		// Truffle.g:539:7: ( LPAREN fpdef[null] COMMA )
-		// Truffle.g:539:8: LPAREN fpdef[null] COMMA
+		// Truffle.g:536:7: ( LPAREN fpdef[null] COMMA )
+		// Truffle.g:536:8: LPAREN fpdef[null] COMMA
 		{
-		match(input,LPAREN,FOLLOW_LPAREN_in_synpred1_Truffle1326); if (state.failed) return;
+		match(input,LPAREN,FOLLOW_LPAREN_in_synpred1_Truffle1325); if (state.failed) return;
 
-		pushFollow(FOLLOW_fpdef_in_synpred1_Truffle1328);
+		pushFollow(FOLLOW_fpdef_in_synpred1_Truffle1327);
 		fpdef(null);
 		state._fsp--;
 		if (state.failed) return;
 
-		match(input,COMMA,FOLLOW_COMMA_in_synpred1_Truffle1331); if (state.failed) return;
+		match(input,COMMA,FOLLOW_COMMA_in_synpred1_Truffle1330); if (state.failed) return;
 
 		}
 
@@ -15957,15 +15956,15 @@ public class TruffleParser extends Parser {
 
 	// $ANTLR start synpred2_Truffle
 	public final void synpred2_Truffle_fragment() throws RecognitionException {
-		// Truffle.g:618:8: ( testlist[null] augassign )
-		// Truffle.g:618:9: testlist[null] augassign
+		// Truffle.g:615:8: ( testlist[null] augassign )
+		// Truffle.g:615:9: testlist[null] augassign
 		{
-		pushFollow(FOLLOW_testlist_in_synpred2_Truffle1782);
+		pushFollow(FOLLOW_testlist_in_synpred2_Truffle1781);
 		testlist(null);
 		state._fsp--;
 		if (state.failed) return;
 
-		pushFollow(FOLLOW_augassign_in_synpred2_Truffle1785);
+		pushFollow(FOLLOW_augassign_in_synpred2_Truffle1784);
 		augassign();
 		state._fsp--;
 		if (state.failed) return;
@@ -15977,15 +15976,15 @@ public class TruffleParser extends Parser {
 
 	// $ANTLR start synpred3_Truffle
 	public final void synpred3_Truffle_fragment() throws RecognitionException {
-		// Truffle.g:632:7: ( testlist[null] ASSIGN )
-		// Truffle.g:632:8: testlist[null] ASSIGN
+		// Truffle.g:629:7: ( testlist[null] ASSIGN )
+		// Truffle.g:629:8: testlist[null] ASSIGN
 		{
-		pushFollow(FOLLOW_testlist_in_synpred3_Truffle1901);
+		pushFollow(FOLLOW_testlist_in_synpred3_Truffle1900);
 		testlist(null);
 		state._fsp--;
 		if (state.failed) return;
 
-		match(input,ASSIGN,FOLLOW_ASSIGN_in_synpred3_Truffle1904); if (state.failed) return;
+		match(input,ASSIGN,FOLLOW_ASSIGN_in_synpred3_Truffle1903); if (state.failed) return;
 
 		}
 
@@ -15994,15 +15993,15 @@ public class TruffleParser extends Parser {
 
 	// $ANTLR start synpred4_Truffle
 	public final void synpred4_Truffle_fragment() throws RecognitionException {
-		// Truffle.g:740:7: ( test[null] COMMA )
-		// Truffle.g:740:8: test[null] COMMA
+		// Truffle.g:737:7: ( test[null] COMMA )
+		// Truffle.g:737:8: test[null] COMMA
 		{
-		pushFollow(FOLLOW_test_in_synpred4_Truffle2416);
+		pushFollow(FOLLOW_test_in_synpred4_Truffle2415);
 		test(null);
 		state._fsp--;
 		if (state.failed) return;
 
-		match(input,COMMA,FOLLOW_COMMA_in_synpred4_Truffle2419); if (state.failed) return;
+		match(input,COMMA,FOLLOW_COMMA_in_synpred4_Truffle2418); if (state.failed) return;
 
 		}
 
@@ -16011,17 +16010,17 @@ public class TruffleParser extends Parser {
 
 	// $ANTLR start synpred5_Truffle
 	public final void synpred5_Truffle_fragment() throws RecognitionException {
-		// Truffle.g:761:7: ( test[null] COMMA test[null] )
-		// Truffle.g:761:8: test[null] COMMA test[null]
+		// Truffle.g:758:7: ( test[null] COMMA test[null] )
+		// Truffle.g:758:8: test[null] COMMA test[null]
 		{
-		pushFollow(FOLLOW_test_in_synpred5_Truffle2515);
+		pushFollow(FOLLOW_test_in_synpred5_Truffle2514);
 		test(null);
 		state._fsp--;
 		if (state.failed) return;
 
-		match(input,COMMA,FOLLOW_COMMA_in_synpred5_Truffle2518); if (state.failed) return;
+		match(input,COMMA,FOLLOW_COMMA_in_synpred5_Truffle2517); if (state.failed) return;
 
-		pushFollow(FOLLOW_test_in_synpred5_Truffle2520);
+		pushFollow(FOLLOW_test_in_synpred5_Truffle2519);
 		test(null);
 		state._fsp--;
 		if (state.failed) return;
@@ -16033,10 +16032,10 @@ public class TruffleParser extends Parser {
 
 	// $ANTLR start synpred6_Truffle
 	public final void synpred6_Truffle_fragment() throws RecognitionException {
-		// Truffle.g:1075:7: ( ( decorators )? DEF )
-		// Truffle.g:1075:8: ( decorators )? DEF
+		// Truffle.g:1072:7: ( ( decorators )? DEF )
+		// Truffle.g:1072:8: ( decorators )? DEF
 		{
-		// Truffle.g:1075:8: ( decorators )?
+		// Truffle.g:1072:8: ( decorators )?
 		int alt165=2;
 		int LA165_0 = input.LA(1);
 		if ( (LA165_0==AT) ) {
@@ -16044,9 +16043,9 @@ public class TruffleParser extends Parser {
 		}
 		switch (alt165) {
 			case 1 :
-				// Truffle.g:1075:8: decorators
+				// Truffle.g:1072:8: decorators
 				{
-				pushFollow(FOLLOW_decorators_in_synpred6_Truffle3609);
+				pushFollow(FOLLOW_decorators_in_synpred6_Truffle3608);
 				decorators();
 				state._fsp--;
 				if (state.failed) return;
@@ -16056,7 +16055,7 @@ public class TruffleParser extends Parser {
 
 		}
 
-		match(input,DEF,FOLLOW_DEF_in_synpred6_Truffle3612); if (state.failed) return;
+		match(input,DEF,FOLLOW_DEF_in_synpred6_Truffle3611); if (state.failed) return;
 
 		}
 
@@ -16065,17 +16064,17 @@ public class TruffleParser extends Parser {
 
 	// $ANTLR start synpred7_Truffle
 	public final void synpred7_Truffle_fragment() throws RecognitionException {
-		// Truffle.g:1273:9: ( IF or_test[null] ORELSE )
-		// Truffle.g:1273:10: IF or_test[null] ORELSE
+		// Truffle.g:1270:9: ( IF or_test[null] ORELSE )
+		// Truffle.g:1270:10: IF or_test[null] ORELSE
 		{
-		match(input,IF,FOLLOW_IF_in_synpred7_Truffle4369); if (state.failed) return;
+		match(input,IF,FOLLOW_IF_in_synpred7_Truffle4368); if (state.failed) return;
 
-		pushFollow(FOLLOW_or_test_in_synpred7_Truffle4371);
+		pushFollow(FOLLOW_or_test_in_synpred7_Truffle4370);
 		or_test(null);
 		state._fsp--;
 		if (state.failed) return;
 
-		match(input,ORELSE,FOLLOW_ORELSE_in_synpred7_Truffle4374); if (state.failed) return;
+		match(input,ORELSE,FOLLOW_ORELSE_in_synpred7_Truffle4373); if (state.failed) return;
 
 		}
 
@@ -16084,15 +16083,15 @@ public class TruffleParser extends Parser {
 
 	// $ANTLR start synpred8_Truffle
 	public final void synpred8_Truffle_fragment() throws RecognitionException {
-		// Truffle.g:1906:7: ( test[null] COLON )
-		// Truffle.g:1906:8: test[null] COLON
+		// Truffle.g:1903:7: ( test[null] COLON )
+		// Truffle.g:1903:8: test[null] COLON
 		{
-		pushFollow(FOLLOW_test_in_synpred8_Truffle7024);
+		pushFollow(FOLLOW_test_in_synpred8_Truffle7023);
 		test(null);
 		state._fsp--;
 		if (state.failed) return;
 
-		match(input,COLON,FOLLOW_COLON_in_synpred8_Truffle7027); if (state.failed) return;
+		match(input,COLON,FOLLOW_COLON_in_synpred8_Truffle7026); if (state.failed) return;
 
 		}
 
@@ -16101,10 +16100,10 @@ public class TruffleParser extends Parser {
 
 	// $ANTLR start synpred9_Truffle
 	public final void synpred9_Truffle_fragment() throws RecognitionException {
-		// Truffle.g:1911:7: ( COLON )
-		// Truffle.g:1911:8: COLON
+		// Truffle.g:1908:7: ( COLON )
+		// Truffle.g:1908:8: COLON
 		{
-		match(input,COLON,FOLLOW_COLON_in_synpred9_Truffle7075); if (state.failed) return;
+		match(input,COLON,FOLLOW_COLON_in_synpred9_Truffle7074); if (state.failed) return;
 
 		}
 
@@ -16113,15 +16112,15 @@ public class TruffleParser extends Parser {
 
 	// $ANTLR start synpred10_Truffle
 	public final void synpred10_Truffle_fragment() throws RecognitionException {
-		// Truffle.g:1945:7: ( expr[null] COMMA )
-		// Truffle.g:1945:8: expr[null] COMMA
+		// Truffle.g:1942:7: ( expr[null] COMMA )
+		// Truffle.g:1942:8: expr[null] COMMA
 		{
-		pushFollow(FOLLOW_expr_in_synpred10_Truffle7220);
+		pushFollow(FOLLOW_expr_in_synpred10_Truffle7219);
 		expr(null);
 		state._fsp--;
 		if (state.failed) return;
 
-		match(input,COMMA,FOLLOW_COMMA_in_synpred10_Truffle7223); if (state.failed) return;
+		match(input,COMMA,FOLLOW_COMMA_in_synpred10_Truffle7222); if (state.failed) return;
 
 		}
 
@@ -16130,15 +16129,15 @@ public class TruffleParser extends Parser {
 
 	// $ANTLR start synpred11_Truffle
 	public final void synpred11_Truffle_fragment() throws RecognitionException {
-		// Truffle.g:1977:7: ( test[null] COMMA )
-		// Truffle.g:1977:8: test[null] COMMA
+		// Truffle.g:1974:7: ( test[null] COMMA )
+		// Truffle.g:1974:8: test[null] COMMA
 		{
-		pushFollow(FOLLOW_test_in_synpred11_Truffle7371);
+		pushFollow(FOLLOW_test_in_synpred11_Truffle7370);
 		test(null);
 		state._fsp--;
 		if (state.failed) return;
 
-		match(input,COMMA,FOLLOW_COMMA_in_synpred11_Truffle7374); if (state.failed) return;
+		match(input,COMMA,FOLLOW_COMMA_in_synpred11_Truffle7373); if (state.failed) return;
 
 		}
 
@@ -16355,7 +16354,7 @@ public class TruffleParser extends Parser {
 		}
 		@Override
 		public String getDescription() {
-			return "924:12: ( (d+= DOT )* dotted_name | (d+= DOT )+ )";
+			return "921:12: ( (d+= DOT )* dotted_name | (d+= DOT )+ )";
 		}
 	}
 
@@ -16476,500 +16475,500 @@ public class TruffleParser extends Parser {
 		}
 		@Override
 		public String getDescription() {
-			return "()* loopback of 1978:22: ( options {k=2; } : COMMA t+= test[ctype] )*";
+			return "()* loopback of 1975:22: ( options {k=2; } : COMMA t+= test[ctype] )*";
 		}
 	}
 
-	public static final BitSet FOLLOW_NEWLINE_in_single_input119 = new BitSet(new long[]{0x8000000000000000L});
-	public static final BitSet FOLLOW_EOF_in_single_input122 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_simple_stmt_in_single_input138 = new BitSet(new long[]{0x8000000000000000L});
-	public static final BitSet FOLLOW_NEWLINE_in_single_input140 = new BitSet(new long[]{0x8000000000000000L});
-	public static final BitSet FOLLOW_EOF_in_single_input143 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_compound_stmt_in_single_input159 = new BitSet(new long[]{0x8000000000000000L});
-	public static final BitSet FOLLOW_NEWLINE_in_single_input161 = new BitSet(new long[]{0x8000000000000000L});
-	public static final BitSet FOLLOW_EOF_in_single_input164 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_NEWLINE_in_file_input216 = new BitSet(new long[]{0xD83A67A001989D00L,0x0000001663009A47L});
-	public static final BitSet FOLLOW_stmt_in_file_input226 = new BitSet(new long[]{0xD83A67A001989D00L,0x0000001663009A47L});
-	public static final BitSet FOLLOW_EOF_in_file_input245 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_LEADING_WS_in_eval_input299 = new BitSet(new long[]{0xD83A00A000080800L,0x0000000023000A05L});
-	public static final BitSet FOLLOW_NEWLINE_in_eval_input303 = new BitSet(new long[]{0xD83A00A000080800L,0x0000000023000A05L});
-	public static final BitSet FOLLOW_testlist_in_eval_input307 = new BitSet(new long[]{0x8000000000000000L});
-	public static final BitSet FOLLOW_NEWLINE_in_eval_input311 = new BitSet(new long[]{0x8000000000000000L});
-	public static final BitSet FOLLOW_EOF_in_eval_input315 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_NAME_in_dotted_attr367 = new BitSet(new long[]{0x0000000004000002L});
-	public static final BitSet FOLLOW_DOT_in_dotted_attr378 = new BitSet(new long[]{0x4000000000000000L});
-	public static final BitSet FOLLOW_NAME_in_dotted_attr382 = new BitSet(new long[]{0x0000000004000002L});
-	public static final BitSet FOLLOW_NAME_in_name_or_print447 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_PRINT_in_name_or_print461 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_AT_in_decorator792 = new BitSet(new long[]{0x4000000000000000L});
-	public static final BitSet FOLLOW_dotted_attr_in_decorator794 = new BitSet(new long[]{0x8800000000000000L});
-	public static final BitSet FOLLOW_LPAREN_in_decorator802 = new BitSet(new long[]{0x583A00A020080800L,0x0000000023440A05L});
-	public static final BitSet FOLLOW_arglist_in_decorator812 = new BitSet(new long[]{0x0000000000000000L,0x0000000000040000L});
-	public static final BitSet FOLLOW_RPAREN_in_decorator856 = new BitSet(new long[]{0x8000000000000000L});
-	public static final BitSet FOLLOW_NEWLINE_in_decorator878 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_decorator_in_decorators906 = new BitSet(new long[]{0x0000000000000402L});
-	public static final BitSet FOLLOW_decorators_in_funcdef944 = new BitSet(new long[]{0x0000000000800000L});
-	public static final BitSet FOLLOW_DEF_in_funcdef947 = new BitSet(new long[]{0x4000000000000000L,0x0000000000000800L});
-	public static final BitSet FOLLOW_name_or_print_in_funcdef949 = new BitSet(new long[]{0x0800000000000000L});
-	public static final BitSet FOLLOW_parameters_in_funcdef951 = new BitSet(new long[]{0x0000000000010000L});
-	public static final BitSet FOLLOW_COLON_in_funcdef953 = new BitSet(new long[]{0xD83A46A001181900L,0x0000001023009A47L});
-	public static final BitSet FOLLOW_suite_in_funcdef955 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_LPAREN_in_parameters988 = new BitSet(new long[]{0x4800000020000000L,0x0000000000440000L});
-	public static final BitSet FOLLOW_varargslist_in_parameters997 = new BitSet(new long[]{0x0000000000000000L,0x0000000000040000L});
-	public static final BitSet FOLLOW_RPAREN_in_parameters1041 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_fpdef_in_defparameter1074 = new BitSet(new long[]{0x0000000000000202L});
-	public static final BitSet FOLLOW_ASSIGN_in_defparameter1078 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
-	public static final BitSet FOLLOW_test_in_defparameter1080 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_defparameter_in_varargslist1126 = new BitSet(new long[]{0x0000000000020002L});
-	public static final BitSet FOLLOW_COMMA_in_varargslist1137 = new BitSet(new long[]{0x4800000000000000L});
-	public static final BitSet FOLLOW_defparameter_in_varargslist1141 = new BitSet(new long[]{0x0000000000020002L});
-	public static final BitSet FOLLOW_COMMA_in_varargslist1153 = new BitSet(new long[]{0x0000000020000002L,0x0000000000400000L});
-	public static final BitSet FOLLOW_STAR_in_varargslist1166 = new BitSet(new long[]{0x4000000000000000L});
-	public static final BitSet FOLLOW_NAME_in_varargslist1170 = new BitSet(new long[]{0x0000000000020002L});
-	public static final BitSet FOLLOW_COMMA_in_varargslist1173 = new BitSet(new long[]{0x0000000020000000L});
-	public static final BitSet FOLLOW_DOUBLESTAR_in_varargslist1175 = new BitSet(new long[]{0x4000000000000000L});
-	public static final BitSet FOLLOW_NAME_in_varargslist1179 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_DOUBLESTAR_in_varargslist1195 = new BitSet(new long[]{0x4000000000000000L});
-	public static final BitSet FOLLOW_NAME_in_varargslist1199 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_STAR_in_varargslist1237 = new BitSet(new long[]{0x4000000000000000L});
-	public static final BitSet FOLLOW_NAME_in_varargslist1241 = new BitSet(new long[]{0x0000000000020002L});
-	public static final BitSet FOLLOW_COMMA_in_varargslist1244 = new BitSet(new long[]{0x0000000020000000L});
-	public static final BitSet FOLLOW_DOUBLESTAR_in_varargslist1246 = new BitSet(new long[]{0x4000000000000000L});
-	public static final BitSet FOLLOW_NAME_in_varargslist1250 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_DOUBLESTAR_in_varargslist1268 = new BitSet(new long[]{0x4000000000000000L});
-	public static final BitSet FOLLOW_NAME_in_varargslist1272 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_NAME_in_fpdef1309 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_LPAREN_in_fpdef1336 = new BitSet(new long[]{0x4800000000000000L});
-	public static final BitSet FOLLOW_fplist_in_fpdef1338 = new BitSet(new long[]{0x0000000000000000L,0x0000000000040000L});
-	public static final BitSet FOLLOW_RPAREN_in_fpdef1340 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_LPAREN_in_fpdef1356 = new BitSet(new long[]{0x4800000000000000L});
-	public static final BitSet FOLLOW_fplist_in_fpdef1359 = new BitSet(new long[]{0x0000000000000000L,0x0000000000040000L});
-	public static final BitSet FOLLOW_RPAREN_in_fpdef1361 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_fpdef_in_fplist1390 = new BitSet(new long[]{0x0000000000020002L});
-	public static final BitSet FOLLOW_COMMA_in_fplist1407 = new BitSet(new long[]{0x4800000000000000L});
-	public static final BitSet FOLLOW_fpdef_in_fplist1411 = new BitSet(new long[]{0x0000000000020002L});
-	public static final BitSet FOLLOW_COMMA_in_fplist1417 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_simple_stmt_in_stmt1453 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_compound_stmt_in_stmt1469 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_small_stmt_in_simple_stmt1505 = new BitSet(new long[]{0x8000000000000000L,0x0000000000080000L});
-	public static final BitSet FOLLOW_SEMI_in_simple_stmt1515 = new BitSet(new long[]{0x583A46A001181900L,0x0000001023009A47L});
-	public static final BitSet FOLLOW_small_stmt_in_simple_stmt1519 = new BitSet(new long[]{0x8000000000000000L,0x0000000000080000L});
-	public static final BitSet FOLLOW_SEMI_in_simple_stmt1524 = new BitSet(new long[]{0x8000000000000000L});
-	public static final BitSet FOLLOW_NEWLINE_in_simple_stmt1528 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_expr_stmt_in_small_stmt1551 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_del_stmt_in_small_stmt1566 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_pass_stmt_in_small_stmt1581 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_flow_stmt_in_small_stmt1596 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_import_stmt_in_small_stmt1611 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_global_stmt_in_small_stmt1626 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_assert_stmt_in_small_stmt1653 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_print_stmt_in_small_stmt1672 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_nonlocal_stmt_in_small_stmt1687 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_NONLOCAL_in_nonlocal_stmt1722 = new BitSet(new long[]{0x4000000000000000L});
-	public static final BitSet FOLLOW_NAME_in_nonlocal_stmt1726 = new BitSet(new long[]{0x0000000000020002L});
-	public static final BitSet FOLLOW_COMMA_in_nonlocal_stmt1737 = new BitSet(new long[]{0x4000000000000000L});
-	public static final BitSet FOLLOW_NAME_in_nonlocal_stmt1741 = new BitSet(new long[]{0x0000000000020002L});
-	public static final BitSet FOLLOW_testlist_in_expr_stmt1792 = new BitSet(new long[]{0x2100000050004020L,0x0000000100A20500L});
-	public static final BitSet FOLLOW_augassign_in_expr_stmt1808 = new BitSet(new long[]{0x0000000000000000L,0x0000001000000000L});
-	public static final BitSet FOLLOW_yield_expr_in_expr_stmt1812 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_augassign_in_expr_stmt1852 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
-	public static final BitSet FOLLOW_testlist_in_expr_stmt1856 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_testlist_in_expr_stmt1911 = new BitSet(new long[]{0x0000000000000202L});
-	public static final BitSet FOLLOW_ASSIGN_in_expr_stmt1938 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
-	public static final BitSet FOLLOW_testlist_in_expr_stmt1942 = new BitSet(new long[]{0x0000000000000202L});
-	public static final BitSet FOLLOW_ASSIGN_in_expr_stmt1987 = new BitSet(new long[]{0x0000000000000000L,0x0000001000000000L});
-	public static final BitSet FOLLOW_yield_expr_in_expr_stmt1991 = new BitSet(new long[]{0x0000000000000202L});
-	public static final BitSet FOLLOW_testlist_in_expr_stmt2039 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_PLUSEQUAL_in_augassign2081 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_MINUSEQUAL_in_augassign2099 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_STAREQUAL_in_augassign2117 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_SLASHEQUAL_in_augassign2135 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_PERCENTEQUAL_in_augassign2153 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_AMPEREQUAL_in_augassign2171 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_VBAREQUAL_in_augassign2189 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_CIRCUMFLEXEQUAL_in_augassign2207 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_LEFTSHIFTEQUAL_in_augassign2225 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_RIGHTSHIFTEQUAL_in_augassign2243 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_DOUBLESTAREQUAL_in_augassign2261 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_DOUBLESLASHEQUAL_in_augassign2279 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_PRINT_in_print_stmt2319 = new BitSet(new long[]{0x583A00A000080802L,0x0000000023010A05L});
-	public static final BitSet FOLLOW_printlist_in_print_stmt2330 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_RIGHTSHIFT_in_print_stmt2349 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
-	public static final BitSet FOLLOW_printlist2_in_print_stmt2353 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_test_in_printlist2433 = new BitSet(new long[]{0x0000000000020002L});
-	public static final BitSet FOLLOW_COMMA_in_printlist2445 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
-	public static final BitSet FOLLOW_test_in_printlist2449 = new BitSet(new long[]{0x0000000000020002L});
-	public static final BitSet FOLLOW_COMMA_in_printlist2457 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_test_in_printlist2478 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_test_in_printlist22535 = new BitSet(new long[]{0x0000000000020002L});
-	public static final BitSet FOLLOW_COMMA_in_printlist22547 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
-	public static final BitSet FOLLOW_test_in_printlist22551 = new BitSet(new long[]{0x0000000000020002L});
-	public static final BitSet FOLLOW_COMMA_in_printlist22559 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_test_in_printlist22580 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_DELETE_in_del_stmt2617 = new BitSet(new long[]{0x583200A000080800L,0x0000000023000A01L});
-	public static final BitSet FOLLOW_del_list_in_del_stmt2619 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_PASS_in_pass_stmt2655 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_break_stmt_in_flow_stmt2681 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_continue_stmt_in_flow_stmt2689 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_return_stmt_in_flow_stmt2697 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_raise_stmt_in_flow_stmt2705 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_yield_stmt_in_flow_stmt2713 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_BREAK_in_break_stmt2741 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_CONTINUE_in_continue_stmt2777 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_RETURN_in_return_stmt2813 = new BitSet(new long[]{0x583A00A000080802L,0x0000000023000A05L});
-	public static final BitSet FOLLOW_testlist_in_return_stmt2822 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_yield_expr_in_yield_stmt2887 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_RAISE_in_raise_stmt2923 = new BitSet(new long[]{0x583A00A000080802L,0x0000000023000A05L});
-	public static final BitSet FOLLOW_test_in_raise_stmt2928 = new BitSet(new long[]{0x0000000000020002L});
-	public static final BitSet FOLLOW_COMMA_in_raise_stmt2932 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
-	public static final BitSet FOLLOW_test_in_raise_stmt2936 = new BitSet(new long[]{0x0000000000020002L});
-	public static final BitSet FOLLOW_COMMA_in_raise_stmt2948 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
-	public static final BitSet FOLLOW_test_in_raise_stmt2952 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_import_name_in_import_stmt2985 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_import_from_in_import_stmt2993 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_IMPORT_in_import_name3021 = new BitSet(new long[]{0x4000000000000000L});
-	public static final BitSet FOLLOW_dotted_as_names_in_import_name3023 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_FROM_in_import_from3060 = new BitSet(new long[]{0x4000000004000000L});
-	public static final BitSet FOLLOW_DOT_in_import_from3065 = new BitSet(new long[]{0x4000000004000000L});
-	public static final BitSet FOLLOW_dotted_name_in_import_from3068 = new BitSet(new long[]{0x0000400000000000L});
-	public static final BitSet FOLLOW_DOT_in_import_from3074 = new BitSet(new long[]{0x0000400004000000L});
-	public static final BitSet FOLLOW_IMPORT_in_import_from3078 = new BitSet(new long[]{0x4800000000000000L,0x0000000000400000L});
-	public static final BitSet FOLLOW_STAR_in_import_from3089 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_import_as_names_in_import_from3114 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_LPAREN_in_import_from3137 = new BitSet(new long[]{0x4000000000000000L});
-	public static final BitSet FOLLOW_import_as_names_in_import_from3141 = new BitSet(new long[]{0x0000000000020000L,0x0000000000040000L});
-	public static final BitSet FOLLOW_COMMA_in_import_from3143 = new BitSet(new long[]{0x0000000000000000L,0x0000000000040000L});
-	public static final BitSet FOLLOW_RPAREN_in_import_from3146 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_import_as_name_in_import_as_names3195 = new BitSet(new long[]{0x0000000000020002L});
-	public static final BitSet FOLLOW_COMMA_in_import_as_names3198 = new BitSet(new long[]{0x4000000000000000L});
-	public static final BitSet FOLLOW_import_as_name_in_import_as_names3203 = new BitSet(new long[]{0x0000000000020002L});
-	public static final BitSet FOLLOW_NAME_in_import_as_name3244 = new BitSet(new long[]{0x0000000000000082L});
-	public static final BitSet FOLLOW_AS_in_import_as_name3247 = new BitSet(new long[]{0x4000000000000000L});
-	public static final BitSet FOLLOW_NAME_in_import_as_name3251 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_dotted_name_in_dotted_as_name3291 = new BitSet(new long[]{0x0000000000000082L});
-	public static final BitSet FOLLOW_AS_in_dotted_as_name3294 = new BitSet(new long[]{0x4000000000000000L});
-	public static final BitSet FOLLOW_NAME_in_dotted_as_name3298 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_dotted_as_name_in_dotted_as_names3334 = new BitSet(new long[]{0x0000000000020002L});
-	public static final BitSet FOLLOW_COMMA_in_dotted_as_names3337 = new BitSet(new long[]{0x4000000000000000L});
-	public static final BitSet FOLLOW_dotted_as_name_in_dotted_as_names3342 = new BitSet(new long[]{0x0000000000020002L});
-	public static final BitSet FOLLOW_NAME_in_dotted_name3376 = new BitSet(new long[]{0x0000000004000002L});
-	public static final BitSet FOLLOW_DOT_in_dotted_name3379 = new BitSet(new long[]{0x400CE764819091C0L,0x0000001660009877L});
-	public static final BitSet FOLLOW_attr_in_dotted_name3383 = new BitSet(new long[]{0x0000000004000002L});
-	public static final BitSet FOLLOW_GLOBAL_in_global_stmt3419 = new BitSet(new long[]{0x4000000000000000L});
-	public static final BitSet FOLLOW_NAME_in_global_stmt3423 = new BitSet(new long[]{0x0000000000020002L});
-	public static final BitSet FOLLOW_COMMA_in_global_stmt3426 = new BitSet(new long[]{0x4000000000000000L});
-	public static final BitSet FOLLOW_NAME_in_global_stmt3430 = new BitSet(new long[]{0x0000000000020002L});
-	public static final BitSet FOLLOW_EXEC_in_exec_stmt3468 = new BitSet(new long[]{0x583200A000080800L,0x0000000023000A01L});
-	public static final BitSet FOLLOW_expr_in_exec_stmt3470 = new BitSet(new long[]{0x0000800000000002L});
-	public static final BitSet FOLLOW_IN_in_exec_stmt3474 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
-	public static final BitSet FOLLOW_test_in_exec_stmt3478 = new BitSet(new long[]{0x0000000000020002L});
-	public static final BitSet FOLLOW_COMMA_in_exec_stmt3482 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
-	public static final BitSet FOLLOW_test_in_exec_stmt3486 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_ASSERT_in_assert_stmt3527 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
-	public static final BitSet FOLLOW_test_in_assert_stmt3531 = new BitSet(new long[]{0x0000000000020002L});
-	public static final BitSet FOLLOW_COMMA_in_assert_stmt3535 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
-	public static final BitSet FOLLOW_test_in_assert_stmt3539 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_if_stmt_in_compound_stmt3568 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_while_stmt_in_compound_stmt3576 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_for_stmt_in_compound_stmt3584 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_try_stmt_in_compound_stmt3592 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_with_stmt_in_compound_stmt3600 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_funcdef_in_compound_stmt3617 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_classdef_in_compound_stmt3625 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_IF_in_if_stmt3653 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
-	public static final BitSet FOLLOW_test_in_if_stmt3655 = new BitSet(new long[]{0x0000000000010000L});
-	public static final BitSet FOLLOW_COLON_in_if_stmt3658 = new BitSet(new long[]{0xD83A46A001181900L,0x0000001023009A47L});
-	public static final BitSet FOLLOW_suite_in_if_stmt3662 = new BitSet(new long[]{0x0000000080000002L,0x0000000000000020L});
-	public static final BitSet FOLLOW_elif_clause_in_if_stmt3665 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_else_clause_in_elif_clause3710 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_ELIF_in_elif_clause3726 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
-	public static final BitSet FOLLOW_test_in_elif_clause3728 = new BitSet(new long[]{0x0000000000010000L});
-	public static final BitSet FOLLOW_COLON_in_elif_clause3731 = new BitSet(new long[]{0xD83A46A001181900L,0x0000001023009A47L});
-	public static final BitSet FOLLOW_suite_in_elif_clause3733 = new BitSet(new long[]{0x0000000080000002L,0x0000000000000020L});
-	public static final BitSet FOLLOW_elif_clause_in_elif_clause3745 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_ORELSE_in_else_clause3805 = new BitSet(new long[]{0x0000000000010000L});
-	public static final BitSet FOLLOW_COLON_in_else_clause3807 = new BitSet(new long[]{0xD83A46A001181900L,0x0000001023009A47L});
-	public static final BitSet FOLLOW_suite_in_else_clause3811 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_WHILE_in_while_stmt3848 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
-	public static final BitSet FOLLOW_test_in_while_stmt3850 = new BitSet(new long[]{0x0000000000010000L});
-	public static final BitSet FOLLOW_COLON_in_while_stmt3853 = new BitSet(new long[]{0xD83A46A001181900L,0x0000001023009A47L});
-	public static final BitSet FOLLOW_suite_in_while_stmt3857 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000020L});
-	public static final BitSet FOLLOW_ORELSE_in_while_stmt3861 = new BitSet(new long[]{0x0000000000010000L});
-	public static final BitSet FOLLOW_COLON_in_while_stmt3863 = new BitSet(new long[]{0xD83A46A001181900L,0x0000001023009A47L});
-	public static final BitSet FOLLOW_suite_in_while_stmt3867 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_FOR_in_for_stmt3906 = new BitSet(new long[]{0x583200A000080800L,0x0000000023000A01L});
-	public static final BitSet FOLLOW_exprlist_in_for_stmt3908 = new BitSet(new long[]{0x0000800000000000L});
-	public static final BitSet FOLLOW_IN_in_for_stmt3911 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
-	public static final BitSet FOLLOW_testlist_in_for_stmt3913 = new BitSet(new long[]{0x0000000000010000L});
-	public static final BitSet FOLLOW_COLON_in_for_stmt3916 = new BitSet(new long[]{0xD83A46A001181900L,0x0000001023009A47L});
-	public static final BitSet FOLLOW_suite_in_for_stmt3920 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000020L});
-	public static final BitSet FOLLOW_ORELSE_in_for_stmt3932 = new BitSet(new long[]{0x0000000000010000L});
-	public static final BitSet FOLLOW_COLON_in_for_stmt3934 = new BitSet(new long[]{0xD83A46A001181900L,0x0000001023009A47L});
-	public static final BitSet FOLLOW_suite_in_for_stmt3938 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_TRY_in_try_stmt3981 = new BitSet(new long[]{0x0000000000010000L});
-	public static final BitSet FOLLOW_COLON_in_try_stmt3983 = new BitSet(new long[]{0xD83A46A001181900L,0x0000001023009A47L});
-	public static final BitSet FOLLOW_suite_in_try_stmt3987 = new BitSet(new long[]{0x0000004400000000L});
-	public static final BitSet FOLLOW_except_clause_in_try_stmt4000 = new BitSet(new long[]{0x0000004400000002L,0x0000000000000020L});
-	public static final BitSet FOLLOW_ORELSE_in_try_stmt4004 = new BitSet(new long[]{0x0000000000010000L});
-	public static final BitSet FOLLOW_COLON_in_try_stmt4006 = new BitSet(new long[]{0xD83A46A001181900L,0x0000001023009A47L});
-	public static final BitSet FOLLOW_suite_in_try_stmt4010 = new BitSet(new long[]{0x0000004000000002L});
-	public static final BitSet FOLLOW_FINALLY_in_try_stmt4016 = new BitSet(new long[]{0x0000000000010000L});
-	public static final BitSet FOLLOW_COLON_in_try_stmt4018 = new BitSet(new long[]{0xD83A46A001181900L,0x0000001023009A47L});
-	public static final BitSet FOLLOW_suite_in_try_stmt4022 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_FINALLY_in_try_stmt4045 = new BitSet(new long[]{0x0000000000010000L});
-	public static final BitSet FOLLOW_COLON_in_try_stmt4047 = new BitSet(new long[]{0xD83A46A001181900L,0x0000001023009A47L});
-	public static final BitSet FOLLOW_suite_in_try_stmt4051 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_WITH_in_with_stmt4100 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
-	public static final BitSet FOLLOW_with_item_in_with_stmt4104 = new BitSet(new long[]{0x0000000000030000L});
-	public static final BitSet FOLLOW_COMMA_in_with_stmt4114 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
-	public static final BitSet FOLLOW_with_item_in_with_stmt4118 = new BitSet(new long[]{0x0000000000030000L});
-	public static final BitSet FOLLOW_COLON_in_with_stmt4122 = new BitSet(new long[]{0xD83A46A001181900L,0x0000001023009A47L});
-	public static final BitSet FOLLOW_suite_in_with_stmt4124 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_test_in_with_item4161 = new BitSet(new long[]{0x0000000000000082L});
-	public static final BitSet FOLLOW_AS_in_with_item4165 = new BitSet(new long[]{0x583200A000080800L,0x0000000023000A01L});
-	public static final BitSet FOLLOW_expr_in_with_item4167 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_EXCEPT_in_except_clause4206 = new BitSet(new long[]{0x583A00A000090800L,0x0000000023000A05L});
-	public static final BitSet FOLLOW_test_in_except_clause4211 = new BitSet(new long[]{0x0000000000030080L});
-	public static final BitSet FOLLOW_set_in_except_clause4215 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
-	public static final BitSet FOLLOW_test_in_except_clause4225 = new BitSet(new long[]{0x0000000000010000L});
-	public static final BitSet FOLLOW_COLON_in_except_clause4232 = new BitSet(new long[]{0xD83A46A001181900L,0x0000001023009A47L});
-	public static final BitSet FOLLOW_suite_in_except_clause4234 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_simple_stmt_in_suite4280 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_NEWLINE_in_suite4296 = new BitSet(new long[]{0x0001000000000000L});
-	public static final BitSet FOLLOW_INDENT_in_suite4298 = new BitSet(new long[]{0x583A67A001989D00L,0x0000001663009A47L});
-	public static final BitSet FOLLOW_stmt_in_suite4307 = new BitSet(new long[]{0x583A67A001D89D00L,0x0000001663009A47L});
-	public static final BitSet FOLLOW_DEDENT_in_suite4327 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_or_test_in_test4357 = new BitSet(new long[]{0x0000200000000002L});
-	public static final BitSet FOLLOW_IF_in_test4379 = new BitSet(new long[]{0x583200A000080800L,0x0000000023000A05L});
-	public static final BitSet FOLLOW_or_test_in_test4383 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000020L});
-	public static final BitSet FOLLOW_ORELSE_in_test4386 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
-	public static final BitSet FOLLOW_test_in_test4390 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_lambdef_in_test4435 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_and_test_in_or_test4470 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000010L});
-	public static final BitSet FOLLOW_OR_in_or_test4486 = new BitSet(new long[]{0x583200A000080800L,0x0000000023000A05L});
-	public static final BitSet FOLLOW_and_test_in_or_test4490 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000010L});
-	public static final BitSet FOLLOW_not_test_in_and_test4571 = new BitSet(new long[]{0x0000000000000042L});
-	public static final BitSet FOLLOW_AND_in_and_test4587 = new BitSet(new long[]{0x583200A000080800L,0x0000000023000A05L});
-	public static final BitSet FOLLOW_not_test_in_and_test4591 = new BitSet(new long[]{0x0000000000000042L});
-	public static final BitSet FOLLOW_NOT_in_not_test4675 = new BitSet(new long[]{0x583200A000080800L,0x0000000023000A05L});
-	public static final BitSet FOLLOW_not_test_in_not_test4679 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_comparison_in_not_test4696 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_expr_in_comparison4745 = new BitSet(new long[]{0x0604980100000002L,0x000000000000000CL});
-	public static final BitSet FOLLOW_comp_op_in_comparison4759 = new BitSet(new long[]{0x583200A000080800L,0x0000000023000A01L});
-	public static final BitSet FOLLOW_expr_in_comparison4763 = new BitSet(new long[]{0x0604980100000002L,0x000000000000000CL});
-	public static final BitSet FOLLOW_LESS_in_comp_op4844 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_GREATER_in_comp_op4860 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_EQUAL_in_comp_op4876 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_GREATEREQUAL_in_comp_op4892 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_LESSEQUAL_in_comp_op4908 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_NOTEQUAL_in_comp_op4944 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_IN_in_comp_op4960 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_NOT_in_comp_op4976 = new BitSet(new long[]{0x0000800000000000L});
-	public static final BitSet FOLLOW_IN_in_comp_op4978 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_IS_in_comp_op4994 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_IS_in_comp_op5010 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000004L});
-	public static final BitSet FOLLOW_NOT_in_comp_op5012 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_xor_expr_in_expr5064 = new BitSet(new long[]{0x0000000000000002L,0x0000000080000000L});
-	public static final BitSet FOLLOW_VBAR_in_expr5079 = new BitSet(new long[]{0x583200A000080800L,0x0000000023000A01L});
-	public static final BitSet FOLLOW_xor_expr_in_expr5083 = new BitSet(new long[]{0x0000000000000002L,0x0000000080000000L});
-	public static final BitSet FOLLOW_and_expr_in_xor_expr5162 = new BitSet(new long[]{0x0000000000002002L});
-	public static final BitSet FOLLOW_CIRCUMFLEX_in_xor_expr5177 = new BitSet(new long[]{0x583200A000080800L,0x0000000023000A01L});
-	public static final BitSet FOLLOW_and_expr_in_xor_expr5181 = new BitSet(new long[]{0x0000000000002002L});
-	public static final BitSet FOLLOW_shift_expr_in_and_expr5259 = new BitSet(new long[]{0x0000000000000012L});
-	public static final BitSet FOLLOW_AMPER_in_and_expr5274 = new BitSet(new long[]{0x583200A000080800L,0x0000000023000A01L});
-	public static final BitSet FOLLOW_shift_expr_in_and_expr5278 = new BitSet(new long[]{0x0000000000000012L});
-	public static final BitSet FOLLOW_arith_expr_in_shift_expr5361 = new BitSet(new long[]{0x0080000000000002L,0x0000000000010000L});
-	public static final BitSet FOLLOW_shift_op_in_shift_expr5375 = new BitSet(new long[]{0x583200A000080800L,0x0000000023000A01L});
-	public static final BitSet FOLLOW_arith_expr_in_shift_expr5379 = new BitSet(new long[]{0x0080000000000002L,0x0000000000010000L});
-	public static final BitSet FOLLOW_LEFTSHIFT_in_shift_op5463 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_RIGHTSHIFT_in_shift_op5479 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_term_in_arith_expr5525 = new BitSet(new long[]{0x1000000000000002L,0x0000000000000200L});
-	public static final BitSet FOLLOW_arith_op_in_arith_expr5538 = new BitSet(new long[]{0x583200A000080800L,0x0000000023000A01L});
-	public static final BitSet FOLLOW_term_in_arith_expr5542 = new BitSet(new long[]{0x1000000000000002L,0x0000000000000200L});
-	public static final BitSet FOLLOW_PLUS_in_arith_op5650 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_MINUS_in_arith_op5666 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_factor_in_term5712 = new BitSet(new long[]{0x0000000008000002L,0x0000000000500080L});
-	public static final BitSet FOLLOW_term_op_in_term5725 = new BitSet(new long[]{0x583200A000080800L,0x0000000023000A01L});
-	public static final BitSet FOLLOW_factor_in_term5729 = new BitSet(new long[]{0x0000000008000002L,0x0000000000500080L});
-	public static final BitSet FOLLOW_STAR_in_term_op5811 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_SLASH_in_term_op5827 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_PERCENT_in_term_op5843 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_DOUBLESLASH_in_term_op5859 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_PLUS_in_factor5898 = new BitSet(new long[]{0x583200A000080800L,0x0000000023000A01L});
-	public static final BitSet FOLLOW_factor_in_factor5902 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_MINUS_in_factor5918 = new BitSet(new long[]{0x583200A000080800L,0x0000000023000A01L});
-	public static final BitSet FOLLOW_factor_in_factor5922 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_TILDE_in_factor5938 = new BitSet(new long[]{0x583200A000080800L,0x0000000023000A01L});
-	public static final BitSet FOLLOW_factor_in_factor5942 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_power_in_factor5958 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_atom_in_power5997 = new BitSet(new long[]{0x0810000024000002L});
-	public static final BitSet FOLLOW_trailer_in_power6002 = new BitSet(new long[]{0x0810000024000002L});
-	public static final BitSet FOLLOW_DOUBLESTAR_in_power6017 = new BitSet(new long[]{0x583200A000080800L,0x0000000023000A01L});
-	public static final BitSet FOLLOW_factor_in_power6019 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_LPAREN_in_atom6069 = new BitSet(new long[]{0x583A00A000080800L,0x0000001023040A05L});
-	public static final BitSet FOLLOW_yield_expr_in_atom6087 = new BitSet(new long[]{0x0000000000000000L,0x0000000000040000L});
-	public static final BitSet FOLLOW_testlist_gexp_in_atom6107 = new BitSet(new long[]{0x0000000000000000L,0x0000000000040000L});
-	public static final BitSet FOLLOW_RPAREN_in_atom6150 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_LBRACK_in_atom6158 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023002A05L});
-	public static final BitSet FOLLOW_listmaker_in_atom6167 = new BitSet(new long[]{0x0000000000000000L,0x0000000000002000L});
-	public static final BitSet FOLLOW_RBRACK_in_atom6210 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_LCURLY_in_atom6218 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023004A05L});
-	public static final BitSet FOLLOW_dictorsetmaker_in_atom6227 = new BitSet(new long[]{0x0000000000000000L,0x0000000000004000L});
-	public static final BitSet FOLLOW_RCURLY_in_atom6271 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_BACKQUOTE_in_atom6282 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
-	public static final BitSet FOLLOW_testlist_in_atom6284 = new BitSet(new long[]{0x0000000000000800L});
-	public static final BitSet FOLLOW_BACKQUOTE_in_atom6289 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_name_or_print_in_atom6307 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_NONE_in_atom6325 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_TRUE_in_atom6344 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_FALSE_in_atom6363 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_INT_in_atom6382 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_FLOAT_in_atom6421 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_COMPLEX_in_atom6439 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_STRING_in_atom6460 = new BitSet(new long[]{0x0000000000000002L,0x0000000001000000L});
-	public static final BitSet FOLLOW_test_in_listmaker6503 = new BitSet(new long[]{0x0000010000020002L});
-	public static final BitSet FOLLOW_list_for_in_listmaker6515 = new BitSet(new long[]{0x0000000000020002L});
-	public static final BitSet FOLLOW_COMMA_in_listmaker6547 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
-	public static final BitSet FOLLOW_test_in_listmaker6551 = new BitSet(new long[]{0x0000000000020002L});
-	public static final BitSet FOLLOW_COMMA_in_listmaker6580 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_test_in_testlist_gexp6612 = new BitSet(new long[]{0x0000010000020002L});
-	public static final BitSet FOLLOW_COMMA_in_testlist_gexp6636 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
-	public static final BitSet FOLLOW_test_in_testlist_gexp6640 = new BitSet(new long[]{0x0000000000020002L});
-	public static final BitSet FOLLOW_COMMA_in_testlist_gexp6648 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_comp_for_in_testlist_gexp6704 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_LAMBDA_in_lambdef6768 = new BitSet(new long[]{0x4800000020010000L,0x0000000000400000L});
-	public static final BitSet FOLLOW_varargslist_in_lambdef6771 = new BitSet(new long[]{0x0000000000010000L});
-	public static final BitSet FOLLOW_COLON_in_lambdef6775 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
-	public static final BitSet FOLLOW_test_in_lambdef6777 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_LPAREN_in_trailer6816 = new BitSet(new long[]{0x583A00A020080800L,0x0000000023440A05L});
-	public static final BitSet FOLLOW_arglist_in_trailer6825 = new BitSet(new long[]{0x0000000000000000L,0x0000000000040000L});
-	public static final BitSet FOLLOW_RPAREN_in_trailer6867 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_LBRACK_in_trailer6875 = new BitSet(new long[]{0x583A00A004090800L,0x0000000023000A05L});
-	public static final BitSet FOLLOW_subscriptlist_in_trailer6877 = new BitSet(new long[]{0x0000000000000000L,0x0000000000002000L});
-	public static final BitSet FOLLOW_RBRACK_in_trailer6880 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_DOT_in_trailer6896 = new BitSet(new long[]{0x400CE764819091C0L,0x0000001660009877L});
-	public static final BitSet FOLLOW_attr_in_trailer6898 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_subscript_in_subscriptlist6937 = new BitSet(new long[]{0x0000000000020002L});
-	public static final BitSet FOLLOW_COMMA_in_subscriptlist6949 = new BitSet(new long[]{0x583A00A004090800L,0x0000000023000A05L});
-	public static final BitSet FOLLOW_subscript_in_subscriptlist6953 = new BitSet(new long[]{0x0000000000020002L});
-	public static final BitSet FOLLOW_COMMA_in_subscriptlist6960 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_DOT_in_subscript7003 = new BitSet(new long[]{0x0000000004000000L});
-	public static final BitSet FOLLOW_DOT_in_subscript7005 = new BitSet(new long[]{0x0000000004000000L});
-	public static final BitSet FOLLOW_DOT_in_subscript7007 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_test_in_subscript7037 = new BitSet(new long[]{0x0000000000010002L});
-	public static final BitSet FOLLOW_COLON_in_subscript7043 = new BitSet(new long[]{0x583A00A000090802L,0x0000000023000A05L});
-	public static final BitSet FOLLOW_test_in_subscript7048 = new BitSet(new long[]{0x0000000000010002L});
-	public static final BitSet FOLLOW_sliceop_in_subscript7054 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_COLON_in_subscript7085 = new BitSet(new long[]{0x583A00A000090802L,0x0000000023000A05L});
-	public static final BitSet FOLLOW_test_in_subscript7090 = new BitSet(new long[]{0x0000000000010002L});
-	public static final BitSet FOLLOW_sliceop_in_subscript7096 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_test_in_subscript7114 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_COLON_in_sliceop7151 = new BitSet(new long[]{0x583A00A000080802L,0x0000000023000A05L});
-	public static final BitSet FOLLOW_test_in_sliceop7159 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_expr_in_exprlist7230 = new BitSet(new long[]{0x0000000000020002L});
-	public static final BitSet FOLLOW_COMMA_in_exprlist7242 = new BitSet(new long[]{0x583200A000080800L,0x0000000023000A01L});
-	public static final BitSet FOLLOW_expr_in_exprlist7246 = new BitSet(new long[]{0x0000000000020002L});
-	public static final BitSet FOLLOW_COMMA_in_exprlist7252 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_expr_in_exprlist7271 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_expr_in_del_list7309 = new BitSet(new long[]{0x0000000000020002L});
-	public static final BitSet FOLLOW_COMMA_in_del_list7321 = new BitSet(new long[]{0x583200A000080800L,0x0000000023000A01L});
-	public static final BitSet FOLLOW_expr_in_del_list7325 = new BitSet(new long[]{0x0000000000020002L});
-	public static final BitSet FOLLOW_COMMA_in_del_list7331 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_test_in_testlist7384 = new BitSet(new long[]{0x0000000000020002L});
-	public static final BitSet FOLLOW_COMMA_in_testlist7396 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
-	public static final BitSet FOLLOW_test_in_testlist7400 = new BitSet(new long[]{0x0000000000020002L});
-	public static final BitSet FOLLOW_COMMA_in_testlist7406 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_test_in_testlist7424 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_test_in_dictorsetmaker7459 = new BitSet(new long[]{0x0000010000030002L});
-	public static final BitSet FOLLOW_COLON_in_dictorsetmaker7487 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
-	public static final BitSet FOLLOW_test_in_dictorsetmaker7491 = new BitSet(new long[]{0x0000010000020002L});
-	public static final BitSet FOLLOW_comp_for_in_dictorsetmaker7511 = new BitSet(new long[]{0x0000000000020002L});
-	public static final BitSet FOLLOW_COMMA_in_dictorsetmaker7558 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
-	public static final BitSet FOLLOW_test_in_dictorsetmaker7562 = new BitSet(new long[]{0x0000000000010000L});
-	public static final BitSet FOLLOW_COLON_in_dictorsetmaker7565 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
-	public static final BitSet FOLLOW_test_in_dictorsetmaker7569 = new BitSet(new long[]{0x0000000000020002L});
-	public static final BitSet FOLLOW_COMMA_in_dictorsetmaker7625 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
-	public static final BitSet FOLLOW_test_in_dictorsetmaker7629 = new BitSet(new long[]{0x0000000000020002L});
-	public static final BitSet FOLLOW_COMMA_in_dictorsetmaker7679 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_comp_for_in_dictorsetmaker7694 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_decorators_in_classdef7747 = new BitSet(new long[]{0x0000000000008000L});
-	public static final BitSet FOLLOW_CLASS_in_classdef7750 = new BitSet(new long[]{0x4000000000000000L});
-	public static final BitSet FOLLOW_NAME_in_classdef7752 = new BitSet(new long[]{0x0800000000010000L});
-	public static final BitSet FOLLOW_LPAREN_in_classdef7755 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023040A05L});
-	public static final BitSet FOLLOW_testlist_in_classdef7757 = new BitSet(new long[]{0x0000000000000000L,0x0000000000040000L});
-	public static final BitSet FOLLOW_RPAREN_in_classdef7761 = new BitSet(new long[]{0x0000000000010000L});
-	public static final BitSet FOLLOW_COLON_in_classdef7765 = new BitSet(new long[]{0xD83A46A001181900L,0x0000001023009A47L});
-	public static final BitSet FOLLOW_suite_in_classdef7767 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_argument_in_arglist7809 = new BitSet(new long[]{0x0000000000020002L});
-	public static final BitSet FOLLOW_COMMA_in_arglist7813 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
-	public static final BitSet FOLLOW_argument_in_arglist7815 = new BitSet(new long[]{0x0000000000020002L});
-	public static final BitSet FOLLOW_COMMA_in_arglist7831 = new BitSet(new long[]{0x0000000020000002L,0x0000000000400000L});
-	public static final BitSet FOLLOW_STAR_in_arglist7849 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
-	public static final BitSet FOLLOW_test_in_arglist7853 = new BitSet(new long[]{0x0000000000020002L});
-	public static final BitSet FOLLOW_COMMA_in_arglist7857 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
-	public static final BitSet FOLLOW_argument_in_arglist7859 = new BitSet(new long[]{0x0000000000020002L});
-	public static final BitSet FOLLOW_COMMA_in_arglist7865 = new BitSet(new long[]{0x0000000020000000L});
-	public static final BitSet FOLLOW_DOUBLESTAR_in_arglist7867 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
-	public static final BitSet FOLLOW_test_in_arglist7871 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_DOUBLESTAR_in_arglist7892 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
-	public static final BitSet FOLLOW_test_in_arglist7896 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_STAR_in_arglist7943 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
-	public static final BitSet FOLLOW_test_in_arglist7947 = new BitSet(new long[]{0x0000000000020002L});
-	public static final BitSet FOLLOW_COMMA_in_arglist7951 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
-	public static final BitSet FOLLOW_argument_in_arglist7953 = new BitSet(new long[]{0x0000000000020002L});
-	public static final BitSet FOLLOW_COMMA_in_arglist7959 = new BitSet(new long[]{0x0000000020000000L});
-	public static final BitSet FOLLOW_DOUBLESTAR_in_arglist7961 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
-	public static final BitSet FOLLOW_test_in_arglist7965 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_DOUBLESTAR_in_arglist7984 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
-	public static final BitSet FOLLOW_test_in_arglist7988 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_test_in_argument8027 = new BitSet(new long[]{0x0000010000000202L});
-	public static final BitSet FOLLOW_ASSIGN_in_argument8040 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
-	public static final BitSet FOLLOW_test_in_argument8044 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_comp_for_in_argument8072 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_list_for_in_list_iter8137 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_list_if_in_list_iter8146 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_FOR_in_list_for8172 = new BitSet(new long[]{0x583200A000080800L,0x0000000023000A01L});
-	public static final BitSet FOLLOW_exprlist_in_list_for8174 = new BitSet(new long[]{0x0000800000000000L});
-	public static final BitSet FOLLOW_IN_in_list_for8177 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
-	public static final BitSet FOLLOW_testlist_in_list_for8179 = new BitSet(new long[]{0x0000210000000002L});
-	public static final BitSet FOLLOW_list_iter_in_list_for8183 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_IF_in_list_if8213 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
-	public static final BitSet FOLLOW_test_in_list_if8215 = new BitSet(new long[]{0x0000210000000002L});
-	public static final BitSet FOLLOW_list_iter_in_list_if8219 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_comp_for_in_comp_iter8250 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_comp_if_in_comp_iter8259 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_FOR_in_comp_for8285 = new BitSet(new long[]{0x583200A000080800L,0x0000000023000A01L});
-	public static final BitSet FOLLOW_exprlist_in_comp_for8287 = new BitSet(new long[]{0x0000800000000000L});
-	public static final BitSet FOLLOW_IN_in_comp_for8290 = new BitSet(new long[]{0x583200A000080800L,0x0000000023000A05L});
-	public static final BitSet FOLLOW_or_test_in_comp_for8292 = new BitSet(new long[]{0x0000210000000002L});
-	public static final BitSet FOLLOW_comp_iter_in_comp_for8295 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_IF_in_comp_if8324 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
-	public static final BitSet FOLLOW_test_in_comp_if8326 = new BitSet(new long[]{0x0000210000000002L});
-	public static final BitSet FOLLOW_comp_iter_in_comp_if8329 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_YIELD_in_yield_expr8370 = new BitSet(new long[]{0x583A00A000080802L,0x0000000023000A05L});
-	public static final BitSet FOLLOW_testlist_in_yield_expr8372 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_LPAREN_in_synpred1_Truffle1326 = new BitSet(new long[]{0x4800000000000000L});
-	public static final BitSet FOLLOW_fpdef_in_synpred1_Truffle1328 = new BitSet(new long[]{0x0000000000020000L});
-	public static final BitSet FOLLOW_COMMA_in_synpred1_Truffle1331 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_testlist_in_synpred2_Truffle1782 = new BitSet(new long[]{0x2100000050004020L,0x0000000100A20500L});
-	public static final BitSet FOLLOW_augassign_in_synpred2_Truffle1785 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_testlist_in_synpred3_Truffle1901 = new BitSet(new long[]{0x0000000000000200L});
-	public static final BitSet FOLLOW_ASSIGN_in_synpred3_Truffle1904 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_test_in_synpred4_Truffle2416 = new BitSet(new long[]{0x0000000000020000L});
-	public static final BitSet FOLLOW_COMMA_in_synpred4_Truffle2419 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_test_in_synpred5_Truffle2515 = new BitSet(new long[]{0x0000000000020000L});
-	public static final BitSet FOLLOW_COMMA_in_synpred5_Truffle2518 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
-	public static final BitSet FOLLOW_test_in_synpred5_Truffle2520 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_decorators_in_synpred6_Truffle3609 = new BitSet(new long[]{0x0000000000800000L});
-	public static final BitSet FOLLOW_DEF_in_synpred6_Truffle3612 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_IF_in_synpred7_Truffle4369 = new BitSet(new long[]{0x583200A000080800L,0x0000000023000A05L});
-	public static final BitSet FOLLOW_or_test_in_synpred7_Truffle4371 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000020L});
-	public static final BitSet FOLLOW_ORELSE_in_synpred7_Truffle4374 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_test_in_synpred8_Truffle7024 = new BitSet(new long[]{0x0000000000010000L});
-	public static final BitSet FOLLOW_COLON_in_synpred8_Truffle7027 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_COLON_in_synpred9_Truffle7075 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_expr_in_synpred10_Truffle7220 = new BitSet(new long[]{0x0000000000020000L});
-	public static final BitSet FOLLOW_COMMA_in_synpred10_Truffle7223 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_test_in_synpred11_Truffle7371 = new BitSet(new long[]{0x0000000000020000L});
-	public static final BitSet FOLLOW_COMMA_in_synpred11_Truffle7374 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_NEWLINE_in_single_input118 = new BitSet(new long[]{0x8000000000000000L});
+	public static final BitSet FOLLOW_EOF_in_single_input121 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_simple_stmt_in_single_input137 = new BitSet(new long[]{0x8000000000000000L});
+	public static final BitSet FOLLOW_NEWLINE_in_single_input139 = new BitSet(new long[]{0x8000000000000000L});
+	public static final BitSet FOLLOW_EOF_in_single_input142 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_compound_stmt_in_single_input158 = new BitSet(new long[]{0x8000000000000000L});
+	public static final BitSet FOLLOW_NEWLINE_in_single_input160 = new BitSet(new long[]{0x8000000000000000L});
+	public static final BitSet FOLLOW_EOF_in_single_input163 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_NEWLINE_in_file_input215 = new BitSet(new long[]{0xD83A67A001989D00L,0x0000001663009A47L});
+	public static final BitSet FOLLOW_stmt_in_file_input225 = new BitSet(new long[]{0xD83A67A001989D00L,0x0000001663009A47L});
+	public static final BitSet FOLLOW_EOF_in_file_input244 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_LEADING_WS_in_eval_input298 = new BitSet(new long[]{0xD83A00A000080800L,0x0000000023000A05L});
+	public static final BitSet FOLLOW_NEWLINE_in_eval_input302 = new BitSet(new long[]{0xD83A00A000080800L,0x0000000023000A05L});
+	public static final BitSet FOLLOW_testlist_in_eval_input306 = new BitSet(new long[]{0x8000000000000000L});
+	public static final BitSet FOLLOW_NEWLINE_in_eval_input310 = new BitSet(new long[]{0x8000000000000000L});
+	public static final BitSet FOLLOW_EOF_in_eval_input314 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_NAME_in_dotted_attr366 = new BitSet(new long[]{0x0000000004000002L});
+	public static final BitSet FOLLOW_DOT_in_dotted_attr377 = new BitSet(new long[]{0x4000000000000000L});
+	public static final BitSet FOLLOW_NAME_in_dotted_attr381 = new BitSet(new long[]{0x0000000004000002L});
+	public static final BitSet FOLLOW_NAME_in_name_or_print446 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_PRINT_in_name_or_print460 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_AT_in_decorator791 = new BitSet(new long[]{0x4000000000000000L});
+	public static final BitSet FOLLOW_dotted_attr_in_decorator793 = new BitSet(new long[]{0x8800000000000000L});
+	public static final BitSet FOLLOW_LPAREN_in_decorator801 = new BitSet(new long[]{0x583A00A020080800L,0x0000000023440A05L});
+	public static final BitSet FOLLOW_arglist_in_decorator811 = new BitSet(new long[]{0x0000000000000000L,0x0000000000040000L});
+	public static final BitSet FOLLOW_RPAREN_in_decorator855 = new BitSet(new long[]{0x8000000000000000L});
+	public static final BitSet FOLLOW_NEWLINE_in_decorator877 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_decorator_in_decorators905 = new BitSet(new long[]{0x0000000000000402L});
+	public static final BitSet FOLLOW_decorators_in_funcdef943 = new BitSet(new long[]{0x0000000000800000L});
+	public static final BitSet FOLLOW_DEF_in_funcdef946 = new BitSet(new long[]{0x4000000000000000L,0x0000000000000800L});
+	public static final BitSet FOLLOW_name_or_print_in_funcdef948 = new BitSet(new long[]{0x0800000000000000L});
+	public static final BitSet FOLLOW_parameters_in_funcdef950 = new BitSet(new long[]{0x0000000000010000L});
+	public static final BitSet FOLLOW_COLON_in_funcdef952 = new BitSet(new long[]{0xD83A46A001181900L,0x0000001023009A47L});
+	public static final BitSet FOLLOW_suite_in_funcdef954 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_LPAREN_in_parameters987 = new BitSet(new long[]{0x4800000020000000L,0x0000000000440000L});
+	public static final BitSet FOLLOW_varargslist_in_parameters996 = new BitSet(new long[]{0x0000000000000000L,0x0000000000040000L});
+	public static final BitSet FOLLOW_RPAREN_in_parameters1040 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_fpdef_in_defparameter1073 = new BitSet(new long[]{0x0000000000000202L});
+	public static final BitSet FOLLOW_ASSIGN_in_defparameter1077 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
+	public static final BitSet FOLLOW_test_in_defparameter1079 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_defparameter_in_varargslist1125 = new BitSet(new long[]{0x0000000000020002L});
+	public static final BitSet FOLLOW_COMMA_in_varargslist1136 = new BitSet(new long[]{0x4800000000000000L});
+	public static final BitSet FOLLOW_defparameter_in_varargslist1140 = new BitSet(new long[]{0x0000000000020002L});
+	public static final BitSet FOLLOW_COMMA_in_varargslist1152 = new BitSet(new long[]{0x0000000020000002L,0x0000000000400000L});
+	public static final BitSet FOLLOW_STAR_in_varargslist1165 = new BitSet(new long[]{0x4000000000000000L});
+	public static final BitSet FOLLOW_NAME_in_varargslist1169 = new BitSet(new long[]{0x0000000000020002L});
+	public static final BitSet FOLLOW_COMMA_in_varargslist1172 = new BitSet(new long[]{0x0000000020000000L});
+	public static final BitSet FOLLOW_DOUBLESTAR_in_varargslist1174 = new BitSet(new long[]{0x4000000000000000L});
+	public static final BitSet FOLLOW_NAME_in_varargslist1178 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_DOUBLESTAR_in_varargslist1194 = new BitSet(new long[]{0x4000000000000000L});
+	public static final BitSet FOLLOW_NAME_in_varargslist1198 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_STAR_in_varargslist1236 = new BitSet(new long[]{0x4000000000000000L});
+	public static final BitSet FOLLOW_NAME_in_varargslist1240 = new BitSet(new long[]{0x0000000000020002L});
+	public static final BitSet FOLLOW_COMMA_in_varargslist1243 = new BitSet(new long[]{0x0000000020000000L});
+	public static final BitSet FOLLOW_DOUBLESTAR_in_varargslist1245 = new BitSet(new long[]{0x4000000000000000L});
+	public static final BitSet FOLLOW_NAME_in_varargslist1249 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_DOUBLESTAR_in_varargslist1267 = new BitSet(new long[]{0x4000000000000000L});
+	public static final BitSet FOLLOW_NAME_in_varargslist1271 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_NAME_in_fpdef1308 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_LPAREN_in_fpdef1335 = new BitSet(new long[]{0x4800000000000000L});
+	public static final BitSet FOLLOW_fplist_in_fpdef1337 = new BitSet(new long[]{0x0000000000000000L,0x0000000000040000L});
+	public static final BitSet FOLLOW_RPAREN_in_fpdef1339 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_LPAREN_in_fpdef1355 = new BitSet(new long[]{0x4800000000000000L});
+	public static final BitSet FOLLOW_fplist_in_fpdef1358 = new BitSet(new long[]{0x0000000000000000L,0x0000000000040000L});
+	public static final BitSet FOLLOW_RPAREN_in_fpdef1360 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_fpdef_in_fplist1389 = new BitSet(new long[]{0x0000000000020002L});
+	public static final BitSet FOLLOW_COMMA_in_fplist1406 = new BitSet(new long[]{0x4800000000000000L});
+	public static final BitSet FOLLOW_fpdef_in_fplist1410 = new BitSet(new long[]{0x0000000000020002L});
+	public static final BitSet FOLLOW_COMMA_in_fplist1416 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_simple_stmt_in_stmt1452 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_compound_stmt_in_stmt1468 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_small_stmt_in_simple_stmt1504 = new BitSet(new long[]{0x8000000000000000L,0x0000000000080000L});
+	public static final BitSet FOLLOW_SEMI_in_simple_stmt1514 = new BitSet(new long[]{0x583A46A001181900L,0x0000001023009A47L});
+	public static final BitSet FOLLOW_small_stmt_in_simple_stmt1518 = new BitSet(new long[]{0x8000000000000000L,0x0000000000080000L});
+	public static final BitSet FOLLOW_SEMI_in_simple_stmt1523 = new BitSet(new long[]{0x8000000000000000L});
+	public static final BitSet FOLLOW_NEWLINE_in_simple_stmt1527 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_expr_stmt_in_small_stmt1550 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_del_stmt_in_small_stmt1565 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_pass_stmt_in_small_stmt1580 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_flow_stmt_in_small_stmt1595 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_import_stmt_in_small_stmt1610 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_global_stmt_in_small_stmt1625 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_assert_stmt_in_small_stmt1652 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_print_stmt_in_small_stmt1671 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_nonlocal_stmt_in_small_stmt1686 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_NONLOCAL_in_nonlocal_stmt1721 = new BitSet(new long[]{0x4000000000000000L});
+	public static final BitSet FOLLOW_NAME_in_nonlocal_stmt1725 = new BitSet(new long[]{0x0000000000020002L});
+	public static final BitSet FOLLOW_COMMA_in_nonlocal_stmt1736 = new BitSet(new long[]{0x4000000000000000L});
+	public static final BitSet FOLLOW_NAME_in_nonlocal_stmt1740 = new BitSet(new long[]{0x0000000000020002L});
+	public static final BitSet FOLLOW_testlist_in_expr_stmt1791 = new BitSet(new long[]{0x2100000050004020L,0x0000000100A20500L});
+	public static final BitSet FOLLOW_augassign_in_expr_stmt1807 = new BitSet(new long[]{0x0000000000000000L,0x0000001000000000L});
+	public static final BitSet FOLLOW_yield_expr_in_expr_stmt1811 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_augassign_in_expr_stmt1851 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
+	public static final BitSet FOLLOW_testlist_in_expr_stmt1855 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_testlist_in_expr_stmt1910 = new BitSet(new long[]{0x0000000000000202L});
+	public static final BitSet FOLLOW_ASSIGN_in_expr_stmt1937 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
+	public static final BitSet FOLLOW_testlist_in_expr_stmt1941 = new BitSet(new long[]{0x0000000000000202L});
+	public static final BitSet FOLLOW_ASSIGN_in_expr_stmt1986 = new BitSet(new long[]{0x0000000000000000L,0x0000001000000000L});
+	public static final BitSet FOLLOW_yield_expr_in_expr_stmt1990 = new BitSet(new long[]{0x0000000000000202L});
+	public static final BitSet FOLLOW_testlist_in_expr_stmt2038 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_PLUSEQUAL_in_augassign2080 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_MINUSEQUAL_in_augassign2098 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_STAREQUAL_in_augassign2116 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_SLASHEQUAL_in_augassign2134 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_PERCENTEQUAL_in_augassign2152 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_AMPEREQUAL_in_augassign2170 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_VBAREQUAL_in_augassign2188 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_CIRCUMFLEXEQUAL_in_augassign2206 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_LEFTSHIFTEQUAL_in_augassign2224 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_RIGHTSHIFTEQUAL_in_augassign2242 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_DOUBLESTAREQUAL_in_augassign2260 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_DOUBLESLASHEQUAL_in_augassign2278 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_PRINT_in_print_stmt2318 = new BitSet(new long[]{0x583A00A000080802L,0x0000000023010A05L});
+	public static final BitSet FOLLOW_printlist_in_print_stmt2329 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_RIGHTSHIFT_in_print_stmt2348 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
+	public static final BitSet FOLLOW_printlist2_in_print_stmt2352 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_test_in_printlist2432 = new BitSet(new long[]{0x0000000000020002L});
+	public static final BitSet FOLLOW_COMMA_in_printlist2444 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
+	public static final BitSet FOLLOW_test_in_printlist2448 = new BitSet(new long[]{0x0000000000020002L});
+	public static final BitSet FOLLOW_COMMA_in_printlist2456 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_test_in_printlist2477 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_test_in_printlist22534 = new BitSet(new long[]{0x0000000000020002L});
+	public static final BitSet FOLLOW_COMMA_in_printlist22546 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
+	public static final BitSet FOLLOW_test_in_printlist22550 = new BitSet(new long[]{0x0000000000020002L});
+	public static final BitSet FOLLOW_COMMA_in_printlist22558 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_test_in_printlist22579 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_DELETE_in_del_stmt2616 = new BitSet(new long[]{0x583200A000080800L,0x0000000023000A01L});
+	public static final BitSet FOLLOW_del_list_in_del_stmt2618 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_PASS_in_pass_stmt2654 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_break_stmt_in_flow_stmt2680 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_continue_stmt_in_flow_stmt2688 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_return_stmt_in_flow_stmt2696 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_raise_stmt_in_flow_stmt2704 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_yield_stmt_in_flow_stmt2712 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_BREAK_in_break_stmt2740 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_CONTINUE_in_continue_stmt2776 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_RETURN_in_return_stmt2812 = new BitSet(new long[]{0x583A00A000080802L,0x0000000023000A05L});
+	public static final BitSet FOLLOW_testlist_in_return_stmt2821 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_yield_expr_in_yield_stmt2886 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_RAISE_in_raise_stmt2922 = new BitSet(new long[]{0x583A00A000080802L,0x0000000023000A05L});
+	public static final BitSet FOLLOW_test_in_raise_stmt2927 = new BitSet(new long[]{0x0000000000020002L});
+	public static final BitSet FOLLOW_COMMA_in_raise_stmt2931 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
+	public static final BitSet FOLLOW_test_in_raise_stmt2935 = new BitSet(new long[]{0x0000000000020002L});
+	public static final BitSet FOLLOW_COMMA_in_raise_stmt2947 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
+	public static final BitSet FOLLOW_test_in_raise_stmt2951 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_import_name_in_import_stmt2984 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_import_from_in_import_stmt2992 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_IMPORT_in_import_name3020 = new BitSet(new long[]{0x4000000000000000L});
+	public static final BitSet FOLLOW_dotted_as_names_in_import_name3022 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_FROM_in_import_from3059 = new BitSet(new long[]{0x4000000004000000L});
+	public static final BitSet FOLLOW_DOT_in_import_from3064 = new BitSet(new long[]{0x4000000004000000L});
+	public static final BitSet FOLLOW_dotted_name_in_import_from3067 = new BitSet(new long[]{0x0000400000000000L});
+	public static final BitSet FOLLOW_DOT_in_import_from3073 = new BitSet(new long[]{0x0000400004000000L});
+	public static final BitSet FOLLOW_IMPORT_in_import_from3077 = new BitSet(new long[]{0x4800000000000000L,0x0000000000400000L});
+	public static final BitSet FOLLOW_STAR_in_import_from3088 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_import_as_names_in_import_from3113 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_LPAREN_in_import_from3136 = new BitSet(new long[]{0x4000000000000000L});
+	public static final BitSet FOLLOW_import_as_names_in_import_from3140 = new BitSet(new long[]{0x0000000000020000L,0x0000000000040000L});
+	public static final BitSet FOLLOW_COMMA_in_import_from3142 = new BitSet(new long[]{0x0000000000000000L,0x0000000000040000L});
+	public static final BitSet FOLLOW_RPAREN_in_import_from3145 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_import_as_name_in_import_as_names3194 = new BitSet(new long[]{0x0000000000020002L});
+	public static final BitSet FOLLOW_COMMA_in_import_as_names3197 = new BitSet(new long[]{0x4000000000000000L});
+	public static final BitSet FOLLOW_import_as_name_in_import_as_names3202 = new BitSet(new long[]{0x0000000000020002L});
+	public static final BitSet FOLLOW_NAME_in_import_as_name3243 = new BitSet(new long[]{0x0000000000000082L});
+	public static final BitSet FOLLOW_AS_in_import_as_name3246 = new BitSet(new long[]{0x4000000000000000L});
+	public static final BitSet FOLLOW_NAME_in_import_as_name3250 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_dotted_name_in_dotted_as_name3290 = new BitSet(new long[]{0x0000000000000082L});
+	public static final BitSet FOLLOW_AS_in_dotted_as_name3293 = new BitSet(new long[]{0x4000000000000000L});
+	public static final BitSet FOLLOW_NAME_in_dotted_as_name3297 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_dotted_as_name_in_dotted_as_names3333 = new BitSet(new long[]{0x0000000000020002L});
+	public static final BitSet FOLLOW_COMMA_in_dotted_as_names3336 = new BitSet(new long[]{0x4000000000000000L});
+	public static final BitSet FOLLOW_dotted_as_name_in_dotted_as_names3341 = new BitSet(new long[]{0x0000000000020002L});
+	public static final BitSet FOLLOW_NAME_in_dotted_name3375 = new BitSet(new long[]{0x0000000004000002L});
+	public static final BitSet FOLLOW_DOT_in_dotted_name3378 = new BitSet(new long[]{0x400CE764819091C0L,0x0000001660009877L});
+	public static final BitSet FOLLOW_attr_in_dotted_name3382 = new BitSet(new long[]{0x0000000004000002L});
+	public static final BitSet FOLLOW_GLOBAL_in_global_stmt3418 = new BitSet(new long[]{0x4000000000000000L});
+	public static final BitSet FOLLOW_NAME_in_global_stmt3422 = new BitSet(new long[]{0x0000000000020002L});
+	public static final BitSet FOLLOW_COMMA_in_global_stmt3425 = new BitSet(new long[]{0x4000000000000000L});
+	public static final BitSet FOLLOW_NAME_in_global_stmt3429 = new BitSet(new long[]{0x0000000000020002L});
+	public static final BitSet FOLLOW_EXEC_in_exec_stmt3467 = new BitSet(new long[]{0x583200A000080800L,0x0000000023000A01L});
+	public static final BitSet FOLLOW_expr_in_exec_stmt3469 = new BitSet(new long[]{0x0000800000000002L});
+	public static final BitSet FOLLOW_IN_in_exec_stmt3473 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
+	public static final BitSet FOLLOW_test_in_exec_stmt3477 = new BitSet(new long[]{0x0000000000020002L});
+	public static final BitSet FOLLOW_COMMA_in_exec_stmt3481 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
+	public static final BitSet FOLLOW_test_in_exec_stmt3485 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_ASSERT_in_assert_stmt3526 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
+	public static final BitSet FOLLOW_test_in_assert_stmt3530 = new BitSet(new long[]{0x0000000000020002L});
+	public static final BitSet FOLLOW_COMMA_in_assert_stmt3534 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
+	public static final BitSet FOLLOW_test_in_assert_stmt3538 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_if_stmt_in_compound_stmt3567 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_while_stmt_in_compound_stmt3575 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_for_stmt_in_compound_stmt3583 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_try_stmt_in_compound_stmt3591 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_with_stmt_in_compound_stmt3599 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_funcdef_in_compound_stmt3616 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_classdef_in_compound_stmt3624 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_IF_in_if_stmt3652 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
+	public static final BitSet FOLLOW_test_in_if_stmt3654 = new BitSet(new long[]{0x0000000000010000L});
+	public static final BitSet FOLLOW_COLON_in_if_stmt3657 = new BitSet(new long[]{0xD83A46A001181900L,0x0000001023009A47L});
+	public static final BitSet FOLLOW_suite_in_if_stmt3661 = new BitSet(new long[]{0x0000000080000002L,0x0000000000000020L});
+	public static final BitSet FOLLOW_elif_clause_in_if_stmt3664 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_else_clause_in_elif_clause3709 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_ELIF_in_elif_clause3725 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
+	public static final BitSet FOLLOW_test_in_elif_clause3727 = new BitSet(new long[]{0x0000000000010000L});
+	public static final BitSet FOLLOW_COLON_in_elif_clause3730 = new BitSet(new long[]{0xD83A46A001181900L,0x0000001023009A47L});
+	public static final BitSet FOLLOW_suite_in_elif_clause3732 = new BitSet(new long[]{0x0000000080000002L,0x0000000000000020L});
+	public static final BitSet FOLLOW_elif_clause_in_elif_clause3744 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_ORELSE_in_else_clause3804 = new BitSet(new long[]{0x0000000000010000L});
+	public static final BitSet FOLLOW_COLON_in_else_clause3806 = new BitSet(new long[]{0xD83A46A001181900L,0x0000001023009A47L});
+	public static final BitSet FOLLOW_suite_in_else_clause3810 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_WHILE_in_while_stmt3847 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
+	public static final BitSet FOLLOW_test_in_while_stmt3849 = new BitSet(new long[]{0x0000000000010000L});
+	public static final BitSet FOLLOW_COLON_in_while_stmt3852 = new BitSet(new long[]{0xD83A46A001181900L,0x0000001023009A47L});
+	public static final BitSet FOLLOW_suite_in_while_stmt3856 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000020L});
+	public static final BitSet FOLLOW_ORELSE_in_while_stmt3860 = new BitSet(new long[]{0x0000000000010000L});
+	public static final BitSet FOLLOW_COLON_in_while_stmt3862 = new BitSet(new long[]{0xD83A46A001181900L,0x0000001023009A47L});
+	public static final BitSet FOLLOW_suite_in_while_stmt3866 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_FOR_in_for_stmt3905 = new BitSet(new long[]{0x583200A000080800L,0x0000000023000A01L});
+	public static final BitSet FOLLOW_exprlist_in_for_stmt3907 = new BitSet(new long[]{0x0000800000000000L});
+	public static final BitSet FOLLOW_IN_in_for_stmt3910 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
+	public static final BitSet FOLLOW_testlist_in_for_stmt3912 = new BitSet(new long[]{0x0000000000010000L});
+	public static final BitSet FOLLOW_COLON_in_for_stmt3915 = new BitSet(new long[]{0xD83A46A001181900L,0x0000001023009A47L});
+	public static final BitSet FOLLOW_suite_in_for_stmt3919 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000020L});
+	public static final BitSet FOLLOW_ORELSE_in_for_stmt3931 = new BitSet(new long[]{0x0000000000010000L});
+	public static final BitSet FOLLOW_COLON_in_for_stmt3933 = new BitSet(new long[]{0xD83A46A001181900L,0x0000001023009A47L});
+	public static final BitSet FOLLOW_suite_in_for_stmt3937 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_TRY_in_try_stmt3980 = new BitSet(new long[]{0x0000000000010000L});
+	public static final BitSet FOLLOW_COLON_in_try_stmt3982 = new BitSet(new long[]{0xD83A46A001181900L,0x0000001023009A47L});
+	public static final BitSet FOLLOW_suite_in_try_stmt3986 = new BitSet(new long[]{0x0000004400000000L});
+	public static final BitSet FOLLOW_except_clause_in_try_stmt3999 = new BitSet(new long[]{0x0000004400000002L,0x0000000000000020L});
+	public static final BitSet FOLLOW_ORELSE_in_try_stmt4003 = new BitSet(new long[]{0x0000000000010000L});
+	public static final BitSet FOLLOW_COLON_in_try_stmt4005 = new BitSet(new long[]{0xD83A46A001181900L,0x0000001023009A47L});
+	public static final BitSet FOLLOW_suite_in_try_stmt4009 = new BitSet(new long[]{0x0000004000000002L});
+	public static final BitSet FOLLOW_FINALLY_in_try_stmt4015 = new BitSet(new long[]{0x0000000000010000L});
+	public static final BitSet FOLLOW_COLON_in_try_stmt4017 = new BitSet(new long[]{0xD83A46A001181900L,0x0000001023009A47L});
+	public static final BitSet FOLLOW_suite_in_try_stmt4021 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_FINALLY_in_try_stmt4044 = new BitSet(new long[]{0x0000000000010000L});
+	public static final BitSet FOLLOW_COLON_in_try_stmt4046 = new BitSet(new long[]{0xD83A46A001181900L,0x0000001023009A47L});
+	public static final BitSet FOLLOW_suite_in_try_stmt4050 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_WITH_in_with_stmt4099 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
+	public static final BitSet FOLLOW_with_item_in_with_stmt4103 = new BitSet(new long[]{0x0000000000030000L});
+	public static final BitSet FOLLOW_COMMA_in_with_stmt4113 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
+	public static final BitSet FOLLOW_with_item_in_with_stmt4117 = new BitSet(new long[]{0x0000000000030000L});
+	public static final BitSet FOLLOW_COLON_in_with_stmt4121 = new BitSet(new long[]{0xD83A46A001181900L,0x0000001023009A47L});
+	public static final BitSet FOLLOW_suite_in_with_stmt4123 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_test_in_with_item4160 = new BitSet(new long[]{0x0000000000000082L});
+	public static final BitSet FOLLOW_AS_in_with_item4164 = new BitSet(new long[]{0x583200A000080800L,0x0000000023000A01L});
+	public static final BitSet FOLLOW_expr_in_with_item4166 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_EXCEPT_in_except_clause4205 = new BitSet(new long[]{0x583A00A000090800L,0x0000000023000A05L});
+	public static final BitSet FOLLOW_test_in_except_clause4210 = new BitSet(new long[]{0x0000000000030080L});
+	public static final BitSet FOLLOW_set_in_except_clause4214 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
+	public static final BitSet FOLLOW_test_in_except_clause4224 = new BitSet(new long[]{0x0000000000010000L});
+	public static final BitSet FOLLOW_COLON_in_except_clause4231 = new BitSet(new long[]{0xD83A46A001181900L,0x0000001023009A47L});
+	public static final BitSet FOLLOW_suite_in_except_clause4233 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_simple_stmt_in_suite4279 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_NEWLINE_in_suite4295 = new BitSet(new long[]{0x0001000000000000L});
+	public static final BitSet FOLLOW_INDENT_in_suite4297 = new BitSet(new long[]{0x583A67A001989D00L,0x0000001663009A47L});
+	public static final BitSet FOLLOW_stmt_in_suite4306 = new BitSet(new long[]{0x583A67A001D89D00L,0x0000001663009A47L});
+	public static final BitSet FOLLOW_DEDENT_in_suite4326 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_or_test_in_test4356 = new BitSet(new long[]{0x0000200000000002L});
+	public static final BitSet FOLLOW_IF_in_test4378 = new BitSet(new long[]{0x583200A000080800L,0x0000000023000A05L});
+	public static final BitSet FOLLOW_or_test_in_test4382 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000020L});
+	public static final BitSet FOLLOW_ORELSE_in_test4385 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
+	public static final BitSet FOLLOW_test_in_test4389 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_lambdef_in_test4434 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_and_test_in_or_test4469 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000010L});
+	public static final BitSet FOLLOW_OR_in_or_test4485 = new BitSet(new long[]{0x583200A000080800L,0x0000000023000A05L});
+	public static final BitSet FOLLOW_and_test_in_or_test4489 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000010L});
+	public static final BitSet FOLLOW_not_test_in_and_test4570 = new BitSet(new long[]{0x0000000000000042L});
+	public static final BitSet FOLLOW_AND_in_and_test4586 = new BitSet(new long[]{0x583200A000080800L,0x0000000023000A05L});
+	public static final BitSet FOLLOW_not_test_in_and_test4590 = new BitSet(new long[]{0x0000000000000042L});
+	public static final BitSet FOLLOW_NOT_in_not_test4674 = new BitSet(new long[]{0x583200A000080800L,0x0000000023000A05L});
+	public static final BitSet FOLLOW_not_test_in_not_test4678 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_comparison_in_not_test4695 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_expr_in_comparison4744 = new BitSet(new long[]{0x0604980100000002L,0x000000000000000CL});
+	public static final BitSet FOLLOW_comp_op_in_comparison4758 = new BitSet(new long[]{0x583200A000080800L,0x0000000023000A01L});
+	public static final BitSet FOLLOW_expr_in_comparison4762 = new BitSet(new long[]{0x0604980100000002L,0x000000000000000CL});
+	public static final BitSet FOLLOW_LESS_in_comp_op4843 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_GREATER_in_comp_op4859 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_EQUAL_in_comp_op4875 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_GREATEREQUAL_in_comp_op4891 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_LESSEQUAL_in_comp_op4907 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_NOTEQUAL_in_comp_op4943 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_IN_in_comp_op4959 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_NOT_in_comp_op4975 = new BitSet(new long[]{0x0000800000000000L});
+	public static final BitSet FOLLOW_IN_in_comp_op4977 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_IS_in_comp_op4993 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_IS_in_comp_op5009 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000004L});
+	public static final BitSet FOLLOW_NOT_in_comp_op5011 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_xor_expr_in_expr5063 = new BitSet(new long[]{0x0000000000000002L,0x0000000080000000L});
+	public static final BitSet FOLLOW_VBAR_in_expr5078 = new BitSet(new long[]{0x583200A000080800L,0x0000000023000A01L});
+	public static final BitSet FOLLOW_xor_expr_in_expr5082 = new BitSet(new long[]{0x0000000000000002L,0x0000000080000000L});
+	public static final BitSet FOLLOW_and_expr_in_xor_expr5161 = new BitSet(new long[]{0x0000000000002002L});
+	public static final BitSet FOLLOW_CIRCUMFLEX_in_xor_expr5176 = new BitSet(new long[]{0x583200A000080800L,0x0000000023000A01L});
+	public static final BitSet FOLLOW_and_expr_in_xor_expr5180 = new BitSet(new long[]{0x0000000000002002L});
+	public static final BitSet FOLLOW_shift_expr_in_and_expr5258 = new BitSet(new long[]{0x0000000000000012L});
+	public static final BitSet FOLLOW_AMPER_in_and_expr5273 = new BitSet(new long[]{0x583200A000080800L,0x0000000023000A01L});
+	public static final BitSet FOLLOW_shift_expr_in_and_expr5277 = new BitSet(new long[]{0x0000000000000012L});
+	public static final BitSet FOLLOW_arith_expr_in_shift_expr5360 = new BitSet(new long[]{0x0080000000000002L,0x0000000000010000L});
+	public static final BitSet FOLLOW_shift_op_in_shift_expr5374 = new BitSet(new long[]{0x583200A000080800L,0x0000000023000A01L});
+	public static final BitSet FOLLOW_arith_expr_in_shift_expr5378 = new BitSet(new long[]{0x0080000000000002L,0x0000000000010000L});
+	public static final BitSet FOLLOW_LEFTSHIFT_in_shift_op5462 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_RIGHTSHIFT_in_shift_op5478 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_term_in_arith_expr5524 = new BitSet(new long[]{0x1000000000000002L,0x0000000000000200L});
+	public static final BitSet FOLLOW_arith_op_in_arith_expr5537 = new BitSet(new long[]{0x583200A000080800L,0x0000000023000A01L});
+	public static final BitSet FOLLOW_term_in_arith_expr5541 = new BitSet(new long[]{0x1000000000000002L,0x0000000000000200L});
+	public static final BitSet FOLLOW_PLUS_in_arith_op5649 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_MINUS_in_arith_op5665 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_factor_in_term5711 = new BitSet(new long[]{0x0000000008000002L,0x0000000000500080L});
+	public static final BitSet FOLLOW_term_op_in_term5724 = new BitSet(new long[]{0x583200A000080800L,0x0000000023000A01L});
+	public static final BitSet FOLLOW_factor_in_term5728 = new BitSet(new long[]{0x0000000008000002L,0x0000000000500080L});
+	public static final BitSet FOLLOW_STAR_in_term_op5810 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_SLASH_in_term_op5826 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_PERCENT_in_term_op5842 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_DOUBLESLASH_in_term_op5858 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_PLUS_in_factor5897 = new BitSet(new long[]{0x583200A000080800L,0x0000000023000A01L});
+	public static final BitSet FOLLOW_factor_in_factor5901 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_MINUS_in_factor5917 = new BitSet(new long[]{0x583200A000080800L,0x0000000023000A01L});
+	public static final BitSet FOLLOW_factor_in_factor5921 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_TILDE_in_factor5937 = new BitSet(new long[]{0x583200A000080800L,0x0000000023000A01L});
+	public static final BitSet FOLLOW_factor_in_factor5941 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_power_in_factor5957 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_atom_in_power5996 = new BitSet(new long[]{0x0810000024000002L});
+	public static final BitSet FOLLOW_trailer_in_power6001 = new BitSet(new long[]{0x0810000024000002L});
+	public static final BitSet FOLLOW_DOUBLESTAR_in_power6016 = new BitSet(new long[]{0x583200A000080800L,0x0000000023000A01L});
+	public static final BitSet FOLLOW_factor_in_power6018 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_LPAREN_in_atom6068 = new BitSet(new long[]{0x583A00A000080800L,0x0000001023040A05L});
+	public static final BitSet FOLLOW_yield_expr_in_atom6086 = new BitSet(new long[]{0x0000000000000000L,0x0000000000040000L});
+	public static final BitSet FOLLOW_testlist_gexp_in_atom6106 = new BitSet(new long[]{0x0000000000000000L,0x0000000000040000L});
+	public static final BitSet FOLLOW_RPAREN_in_atom6149 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_LBRACK_in_atom6157 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023002A05L});
+	public static final BitSet FOLLOW_listmaker_in_atom6166 = new BitSet(new long[]{0x0000000000000000L,0x0000000000002000L});
+	public static final BitSet FOLLOW_RBRACK_in_atom6209 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_LCURLY_in_atom6217 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023004A05L});
+	public static final BitSet FOLLOW_dictorsetmaker_in_atom6226 = new BitSet(new long[]{0x0000000000000000L,0x0000000000004000L});
+	public static final BitSet FOLLOW_RCURLY_in_atom6270 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_BACKQUOTE_in_atom6281 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
+	public static final BitSet FOLLOW_testlist_in_atom6283 = new BitSet(new long[]{0x0000000000000800L});
+	public static final BitSet FOLLOW_BACKQUOTE_in_atom6288 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_name_or_print_in_atom6306 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_NONE_in_atom6324 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_TRUE_in_atom6343 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_FALSE_in_atom6362 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_INT_in_atom6381 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_FLOAT_in_atom6420 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_COMPLEX_in_atom6438 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_STRING_in_atom6459 = new BitSet(new long[]{0x0000000000000002L,0x0000000001000000L});
+	public static final BitSet FOLLOW_test_in_listmaker6502 = new BitSet(new long[]{0x0000010000020002L});
+	public static final BitSet FOLLOW_list_for_in_listmaker6514 = new BitSet(new long[]{0x0000000000020002L});
+	public static final BitSet FOLLOW_COMMA_in_listmaker6546 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
+	public static final BitSet FOLLOW_test_in_listmaker6550 = new BitSet(new long[]{0x0000000000020002L});
+	public static final BitSet FOLLOW_COMMA_in_listmaker6579 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_test_in_testlist_gexp6611 = new BitSet(new long[]{0x0000010000020002L});
+	public static final BitSet FOLLOW_COMMA_in_testlist_gexp6635 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
+	public static final BitSet FOLLOW_test_in_testlist_gexp6639 = new BitSet(new long[]{0x0000000000020002L});
+	public static final BitSet FOLLOW_COMMA_in_testlist_gexp6647 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_comp_for_in_testlist_gexp6703 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_LAMBDA_in_lambdef6767 = new BitSet(new long[]{0x4800000020010000L,0x0000000000400000L});
+	public static final BitSet FOLLOW_varargslist_in_lambdef6770 = new BitSet(new long[]{0x0000000000010000L});
+	public static final BitSet FOLLOW_COLON_in_lambdef6774 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
+	public static final BitSet FOLLOW_test_in_lambdef6776 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_LPAREN_in_trailer6815 = new BitSet(new long[]{0x583A00A020080800L,0x0000000023440A05L});
+	public static final BitSet FOLLOW_arglist_in_trailer6824 = new BitSet(new long[]{0x0000000000000000L,0x0000000000040000L});
+	public static final BitSet FOLLOW_RPAREN_in_trailer6866 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_LBRACK_in_trailer6874 = new BitSet(new long[]{0x583A00A004090800L,0x0000000023000A05L});
+	public static final BitSet FOLLOW_subscriptlist_in_trailer6876 = new BitSet(new long[]{0x0000000000000000L,0x0000000000002000L});
+	public static final BitSet FOLLOW_RBRACK_in_trailer6879 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_DOT_in_trailer6895 = new BitSet(new long[]{0x400CE764819091C0L,0x0000001660009877L});
+	public static final BitSet FOLLOW_attr_in_trailer6897 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_subscript_in_subscriptlist6936 = new BitSet(new long[]{0x0000000000020002L});
+	public static final BitSet FOLLOW_COMMA_in_subscriptlist6948 = new BitSet(new long[]{0x583A00A004090800L,0x0000000023000A05L});
+	public static final BitSet FOLLOW_subscript_in_subscriptlist6952 = new BitSet(new long[]{0x0000000000020002L});
+	public static final BitSet FOLLOW_COMMA_in_subscriptlist6959 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_DOT_in_subscript7002 = new BitSet(new long[]{0x0000000004000000L});
+	public static final BitSet FOLLOW_DOT_in_subscript7004 = new BitSet(new long[]{0x0000000004000000L});
+	public static final BitSet FOLLOW_DOT_in_subscript7006 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_test_in_subscript7036 = new BitSet(new long[]{0x0000000000010002L});
+	public static final BitSet FOLLOW_COLON_in_subscript7042 = new BitSet(new long[]{0x583A00A000090802L,0x0000000023000A05L});
+	public static final BitSet FOLLOW_test_in_subscript7047 = new BitSet(new long[]{0x0000000000010002L});
+	public static final BitSet FOLLOW_sliceop_in_subscript7053 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_COLON_in_subscript7084 = new BitSet(new long[]{0x583A00A000090802L,0x0000000023000A05L});
+	public static final BitSet FOLLOW_test_in_subscript7089 = new BitSet(new long[]{0x0000000000010002L});
+	public static final BitSet FOLLOW_sliceop_in_subscript7095 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_test_in_subscript7113 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_COLON_in_sliceop7150 = new BitSet(new long[]{0x583A00A000080802L,0x0000000023000A05L});
+	public static final BitSet FOLLOW_test_in_sliceop7158 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_expr_in_exprlist7229 = new BitSet(new long[]{0x0000000000020002L});
+	public static final BitSet FOLLOW_COMMA_in_exprlist7241 = new BitSet(new long[]{0x583200A000080800L,0x0000000023000A01L});
+	public static final BitSet FOLLOW_expr_in_exprlist7245 = new BitSet(new long[]{0x0000000000020002L});
+	public static final BitSet FOLLOW_COMMA_in_exprlist7251 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_expr_in_exprlist7270 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_expr_in_del_list7308 = new BitSet(new long[]{0x0000000000020002L});
+	public static final BitSet FOLLOW_COMMA_in_del_list7320 = new BitSet(new long[]{0x583200A000080800L,0x0000000023000A01L});
+	public static final BitSet FOLLOW_expr_in_del_list7324 = new BitSet(new long[]{0x0000000000020002L});
+	public static final BitSet FOLLOW_COMMA_in_del_list7330 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_test_in_testlist7383 = new BitSet(new long[]{0x0000000000020002L});
+	public static final BitSet FOLLOW_COMMA_in_testlist7395 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
+	public static final BitSet FOLLOW_test_in_testlist7399 = new BitSet(new long[]{0x0000000000020002L});
+	public static final BitSet FOLLOW_COMMA_in_testlist7405 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_test_in_testlist7423 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_test_in_dictorsetmaker7458 = new BitSet(new long[]{0x0000010000030002L});
+	public static final BitSet FOLLOW_COLON_in_dictorsetmaker7486 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
+	public static final BitSet FOLLOW_test_in_dictorsetmaker7490 = new BitSet(new long[]{0x0000010000020002L});
+	public static final BitSet FOLLOW_comp_for_in_dictorsetmaker7510 = new BitSet(new long[]{0x0000000000020002L});
+	public static final BitSet FOLLOW_COMMA_in_dictorsetmaker7557 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
+	public static final BitSet FOLLOW_test_in_dictorsetmaker7561 = new BitSet(new long[]{0x0000000000010000L});
+	public static final BitSet FOLLOW_COLON_in_dictorsetmaker7564 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
+	public static final BitSet FOLLOW_test_in_dictorsetmaker7568 = new BitSet(new long[]{0x0000000000020002L});
+	public static final BitSet FOLLOW_COMMA_in_dictorsetmaker7624 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
+	public static final BitSet FOLLOW_test_in_dictorsetmaker7628 = new BitSet(new long[]{0x0000000000020002L});
+	public static final BitSet FOLLOW_COMMA_in_dictorsetmaker7678 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_comp_for_in_dictorsetmaker7693 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_decorators_in_classdef7746 = new BitSet(new long[]{0x0000000000008000L});
+	public static final BitSet FOLLOW_CLASS_in_classdef7749 = new BitSet(new long[]{0x4000000000000000L});
+	public static final BitSet FOLLOW_NAME_in_classdef7751 = new BitSet(new long[]{0x0800000000010000L});
+	public static final BitSet FOLLOW_LPAREN_in_classdef7754 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023040A05L});
+	public static final BitSet FOLLOW_testlist_in_classdef7756 = new BitSet(new long[]{0x0000000000000000L,0x0000000000040000L});
+	public static final BitSet FOLLOW_RPAREN_in_classdef7760 = new BitSet(new long[]{0x0000000000010000L});
+	public static final BitSet FOLLOW_COLON_in_classdef7764 = new BitSet(new long[]{0xD83A46A001181900L,0x0000001023009A47L});
+	public static final BitSet FOLLOW_suite_in_classdef7766 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_argument_in_arglist7808 = new BitSet(new long[]{0x0000000000020002L});
+	public static final BitSet FOLLOW_COMMA_in_arglist7812 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
+	public static final BitSet FOLLOW_argument_in_arglist7814 = new BitSet(new long[]{0x0000000000020002L});
+	public static final BitSet FOLLOW_COMMA_in_arglist7830 = new BitSet(new long[]{0x0000000020000002L,0x0000000000400000L});
+	public static final BitSet FOLLOW_STAR_in_arglist7848 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
+	public static final BitSet FOLLOW_test_in_arglist7852 = new BitSet(new long[]{0x0000000000020002L});
+	public static final BitSet FOLLOW_COMMA_in_arglist7856 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
+	public static final BitSet FOLLOW_argument_in_arglist7858 = new BitSet(new long[]{0x0000000000020002L});
+	public static final BitSet FOLLOW_COMMA_in_arglist7864 = new BitSet(new long[]{0x0000000020000000L});
+	public static final BitSet FOLLOW_DOUBLESTAR_in_arglist7866 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
+	public static final BitSet FOLLOW_test_in_arglist7870 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_DOUBLESTAR_in_arglist7891 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
+	public static final BitSet FOLLOW_test_in_arglist7895 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_STAR_in_arglist7942 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
+	public static final BitSet FOLLOW_test_in_arglist7946 = new BitSet(new long[]{0x0000000000020002L});
+	public static final BitSet FOLLOW_COMMA_in_arglist7950 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
+	public static final BitSet FOLLOW_argument_in_arglist7952 = new BitSet(new long[]{0x0000000000020002L});
+	public static final BitSet FOLLOW_COMMA_in_arglist7958 = new BitSet(new long[]{0x0000000020000000L});
+	public static final BitSet FOLLOW_DOUBLESTAR_in_arglist7960 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
+	public static final BitSet FOLLOW_test_in_arglist7964 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_DOUBLESTAR_in_arglist7983 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
+	public static final BitSet FOLLOW_test_in_arglist7987 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_test_in_argument8026 = new BitSet(new long[]{0x0000010000000202L});
+	public static final BitSet FOLLOW_ASSIGN_in_argument8039 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
+	public static final BitSet FOLLOW_test_in_argument8043 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_comp_for_in_argument8071 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_list_for_in_list_iter8136 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_list_if_in_list_iter8145 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_FOR_in_list_for8171 = new BitSet(new long[]{0x583200A000080800L,0x0000000023000A01L});
+	public static final BitSet FOLLOW_exprlist_in_list_for8173 = new BitSet(new long[]{0x0000800000000000L});
+	public static final BitSet FOLLOW_IN_in_list_for8176 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
+	public static final BitSet FOLLOW_testlist_in_list_for8178 = new BitSet(new long[]{0x0000210000000002L});
+	public static final BitSet FOLLOW_list_iter_in_list_for8182 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_IF_in_list_if8212 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
+	public static final BitSet FOLLOW_test_in_list_if8214 = new BitSet(new long[]{0x0000210000000002L});
+	public static final BitSet FOLLOW_list_iter_in_list_if8218 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_comp_for_in_comp_iter8249 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_comp_if_in_comp_iter8258 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_FOR_in_comp_for8284 = new BitSet(new long[]{0x583200A000080800L,0x0000000023000A01L});
+	public static final BitSet FOLLOW_exprlist_in_comp_for8286 = new BitSet(new long[]{0x0000800000000000L});
+	public static final BitSet FOLLOW_IN_in_comp_for8289 = new BitSet(new long[]{0x583200A000080800L,0x0000000023000A05L});
+	public static final BitSet FOLLOW_or_test_in_comp_for8291 = new BitSet(new long[]{0x0000210000000002L});
+	public static final BitSet FOLLOW_comp_iter_in_comp_for8294 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_IF_in_comp_if8323 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
+	public static final BitSet FOLLOW_test_in_comp_if8325 = new BitSet(new long[]{0x0000210000000002L});
+	public static final BitSet FOLLOW_comp_iter_in_comp_if8328 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_YIELD_in_yield_expr8369 = new BitSet(new long[]{0x583A00A000080802L,0x0000000023000A05L});
+	public static final BitSet FOLLOW_testlist_in_yield_expr8371 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_LPAREN_in_synpred1_Truffle1325 = new BitSet(new long[]{0x4800000000000000L});
+	public static final BitSet FOLLOW_fpdef_in_synpred1_Truffle1327 = new BitSet(new long[]{0x0000000000020000L});
+	public static final BitSet FOLLOW_COMMA_in_synpred1_Truffle1330 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_testlist_in_synpred2_Truffle1781 = new BitSet(new long[]{0x2100000050004020L,0x0000000100A20500L});
+	public static final BitSet FOLLOW_augassign_in_synpred2_Truffle1784 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_testlist_in_synpred3_Truffle1900 = new BitSet(new long[]{0x0000000000000200L});
+	public static final BitSet FOLLOW_ASSIGN_in_synpred3_Truffle1903 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_test_in_synpred4_Truffle2415 = new BitSet(new long[]{0x0000000000020000L});
+	public static final BitSet FOLLOW_COMMA_in_synpred4_Truffle2418 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_test_in_synpred5_Truffle2514 = new BitSet(new long[]{0x0000000000020000L});
+	public static final BitSet FOLLOW_COMMA_in_synpred5_Truffle2517 = new BitSet(new long[]{0x583A00A000080800L,0x0000000023000A05L});
+	public static final BitSet FOLLOW_test_in_synpred5_Truffle2519 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_decorators_in_synpred6_Truffle3608 = new BitSet(new long[]{0x0000000000800000L});
+	public static final BitSet FOLLOW_DEF_in_synpred6_Truffle3611 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_IF_in_synpred7_Truffle4368 = new BitSet(new long[]{0x583200A000080800L,0x0000000023000A05L});
+	public static final BitSet FOLLOW_or_test_in_synpred7_Truffle4370 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000020L});
+	public static final BitSet FOLLOW_ORELSE_in_synpred7_Truffle4373 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_test_in_synpred8_Truffle7023 = new BitSet(new long[]{0x0000000000010000L});
+	public static final BitSet FOLLOW_COLON_in_synpred8_Truffle7026 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_COLON_in_synpred9_Truffle7074 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_expr_in_synpred10_Truffle7219 = new BitSet(new long[]{0x0000000000020000L});
+	public static final BitSet FOLLOW_COMMA_in_synpred10_Truffle7222 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_test_in_synpred11_Truffle7370 = new BitSet(new long[]{0x0000000000020000L});
+	public static final BitSet FOLLOW_COMMA_in_synpred11_Truffle7373 = new BitSet(new long[]{0x0000000000000002L});
 }
