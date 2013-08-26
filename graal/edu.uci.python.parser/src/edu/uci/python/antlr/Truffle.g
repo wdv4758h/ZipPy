@@ -78,7 +78,6 @@ tokens {
 
 @header {
 package edu.uci.python.antlr;
-//package org.python.ast;
 
 import org.antlr.runtime.CommonToken;
 
@@ -98,7 +97,6 @@ import edu.uci.python.datatypes.PAlias;
 import edu.uci.python.datatypes.PComprehension;
 import org.python.antlr.ast.boolopType;
 import org.python.antlr.ast.cmpopType;
-import org.python.antlr.ast.Context;
 import org.python.antlr.ast.expr_contextType;
 import org.python.antlr.ast.operatorType;
 import org.python.antlr.ast.unaryopType;
@@ -164,6 +162,7 @@ catch (RecognitionException re) {
 @lexer::header {
 package edu.uci.python.antlr;
 import edu.uci.python.*;
+import org.antlr.runtime.tree.*;
 
 //package org.python.ast;
 }
@@ -208,7 +207,7 @@ private ErrorHandlerMsg errorHandler;
                 if (implicitLineJoiningLevel > 0) {
                     eofWhileNested = true;
                 }
-                return Token.EOF_TOKEN;
+                return (new CommonTreeAdaptor()).createToken(Token.EOF,"End of file");
             }
             try {
                 mTokens();
@@ -269,7 +268,7 @@ single_input
         reportError(re);
         errorHandler.recover(this, input,re);
         PNode badNode = (PNode)adaptor.errorNode(input, retval.start, input.LT(-1), re);
-        retval.tree = errorHandler.errorMod(badNode);
+        retval.tree = errorHandler.errorMod(badNode.getToken());
     }
 
 //file_input: (NEWLINE | stmt)* ENDMARKER
@@ -309,7 +308,7 @@ file_input
         reportError(re);
         errorHandler.recover(this, input,re);
         PNode badNode = (PNode)adaptor.errorNode(input, retval.start, input.LT(-1), re);
-        retval.tree = errorHandler.errorMod(badNode);
+        retval.tree = errorHandler.errorMod(badNode.getToken());
     }
 
 //eval_input: testlist NEWLINE* ENDMARKER
@@ -330,7 +329,7 @@ eval_input
         reportError(re);
         errorHandler.recover(this, input,re);
         PNode badNode = (PNode)adaptor.errorNode(input, retval.start, input.LT(-1), re);
-        retval.tree = errorHandler.errorMod(badNode);
+        retval.tree = errorHandler.errorMod(badNode.getToken());
     }
 
 
@@ -834,7 +833,7 @@ continue_stmt
     : CONTINUE
       {
           if (!$suite.isEmpty() && $suite::continueIllegal) {
-              errorHandler.error("'continue' not supported inside 'finally' clause", new PNode($continue_stmt.start));
+              errorHandler.error("'continue' not supported inside 'finally' clause", $continue_stmt.start);
           }
           stype = actions.makeContinue($CONTINUE);
       }
@@ -1557,7 +1556,7 @@ arith_expr
     catch [RewriteCardinalityException rce] {
         PNode badNode = (PNode)adaptor.errorNode(input, retval.start, input.LT(-1), null);
         retval.tree = badNode;
-        errorHandler.error("Internal Parser Error", badNode);
+        errorHandler.error("Internal Parser Error", badNode.getToken());
     }
 
 arith_op
@@ -1812,9 +1811,9 @@ testlist_gexp
                Collections.reverse(gens);
                List<PComprehension> c = gens;
                PNode e = actions.castExpr($t.get(0));
-               if (e instanceof Context) {
-                   ((Context)e).setContext(expr_contextType.Load);
-               }
+//               if (e instanceof Context) {
+//                   ((Context)e).setContext(expr_contextType.Load);
+//               }
                etype = actions.makeGeneratorExp($testlist_gexp.start, e, c);
                actions.endScope();
            }
@@ -2019,9 +2018,9 @@ dictorsetmaker[Token lcurly]
                Collections.reverse(gens);
                List<PComprehension> c = gens;
                PNode e = actions.castExpr($k.get(0));
-               if (e instanceof Context) {
-                   ((Context)e).setContext(expr_contextType.Load);
-               }
+//               if (e instanceof Context) {
+//                   ((Context)e).setContext(expr_contextType.Load);
+//               }
                etype = actions.makeSetComp($lcurly, actions.castExpr($k.get(0)), c);
            }
          )
@@ -2067,7 +2066,7 @@ arglist
           )?
       {
           if (arguments.size() > 1 && gens.size() > 0) {
-              actions.errorGenExpNotSoleArg(new PNode($arglist.start));
+              actions.errorGenExpNotSoleArg($arglist.start);
           }
           $args=arguments;
           $keywords=kws;
@@ -2122,9 +2121,9 @@ argument
         |
           {
               if (kws.size() > 0) {
-                  errorHandler.error("non-keyword arg after keyword arg", $t1.tree);
+                  errorHandler.error("non-keyword arg after keyword arg", $t1.tree.getToken());
               } else if (afterStar) {
-                  errorHandler.error("only named arguments may follow *expression", $t1.tree);
+                  errorHandler.error("only named arguments may follow *expression", $t1.tree.getToken());
               }
               $arguments.add($t1.tree);
           }
