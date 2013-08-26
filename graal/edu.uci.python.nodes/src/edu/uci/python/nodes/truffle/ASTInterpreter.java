@@ -24,7 +24,6 @@
  */
 package edu.uci.python.nodes.truffle;
 
-
 import org.python.core.*;
 
 import com.oracle.truffle.api.*;
@@ -43,7 +42,7 @@ public class ASTInterpreter {
         ASTInterpreter.debug = debug;
     }
 
-    public static void interpret(RootNode rootNode, boolean log) {
+    public static void interpret(PNode rootNode, boolean log) {
         CallTarget module;
 
         ModuleNode root = (ModuleNode) rootNode;

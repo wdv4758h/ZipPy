@@ -39,11 +39,9 @@ import edu.uci.python.runtime.*;
 import edu.uci.python.runtime.datatypes.*;
 
 @TypeSystemReference(PythonTypes.class)
-public abstract class PNode extends Node implements Visualizable {
+public abstract class PNode extends RootNode implements Visualizable {
 
-    public Object execute(VirtualFrame frame) {
-        return new Exception("This node should not be executed here! Name: "/* + node.getText() */);
-    }
+// public abstract Object execute(VirtualFrame frame);
 
     public int executeInt(VirtualFrame frame) throws UnexpectedResultException {
         Object o = execute(frame);
@@ -154,7 +152,14 @@ public abstract class PNode extends Node implements Visualizable {
         return PythonTypesGen.PYTHONTYPES.expectPCallable(execute(frame));
     }
 
+    // CheckStyle: stop system..print check
     public void executeVoid(VirtualFrame frame) {
+
+        if (Options.debug) {
+            System.out.println("executeVoid:: Token: " + getToken());
+            System.out.println("executeVoid:: Slots: " + frame.getFrameDescriptor().getSlots());
+        }
+
         execute(frame);
     }
 
@@ -185,6 +190,25 @@ public abstract class PNode extends Node implements Visualizable {
         ASTInterpreter.trace(this);
     }
 
+    protected FrameSlot slot;
+
+    public void setSlot(FrameSlot slot) {
+        if (Options.debug) {
+            System.out.println(getToken() + ": setSlot: " + slot + "  was: " + this.slot);
+        }
+
+        this.slot = slot;
+    }
+
+    public FrameSlot getSlot() {
+        return this.slot;
+    }
+
+    // Truffle: see truffle.api.nodes.Node
+    public void setParent(PNode t) {
+        t.adoptChild(this);
+    }
+
     // // Dependencies for grammar
 
     private int charStartIndex = -1;
@@ -192,59 +216,40 @@ public abstract class PNode extends Node implements Visualizable {
     private CommonTree node;
 
     public PNode() {
-// if (Options.debug)
-// System.out.println("new PNode: ()");
         node = new CommonTree();
     }
 
     public PNode(Token t) {
-        if (Options.debug)
-            if (t != null)
+        if (Options.debug) {
+            if (t != null) {
                 System.out.println("new PNode: Token :" + t.toString());
+            }
+        }
         node = new CommonTree(t);
     }
 
     public void setToken(Token t) {
-        if (Options.debug)
+        if (Options.debug) {
             System.out.println("set Token: Token :" + ((t != null) ? t.toString() : "null"));
+        }
         node = new CommonTree(t);
     }
 
     public void setToken(PNode tree) {
-        if (Options.debug)
+        if (Options.debug) {
             System.out.println("new PNode: " + tree.toString());
-        node = new CommonTree(tree.getNode());
+        }
+        node = new CommonTree(tree.node);
         charStartIndex = tree.getCharStartIndex();
         charStopIndex = tree.getCharStopIndex();
-    }
-
-    public PNode(PNode tree) {
-        if (Options.debug)
-            System.out.println("new PNode: " + tree.toString());
-        node = new CommonTree(tree.getNode());
-        charStartIndex = tree.getCharStartIndex();
-        charStopIndex = tree.getCharStopIndex();
-    }
-
-    public CommonTree getNode() {
-        return node;
     }
 
     public Token getToken() {
         return node.getToken();
     }
 
-    // public PNode dupNode()
-    // {
-    // return new PNode(this);
-    // }
-
     public boolean isNil() {
         return node.isNil();
-    }
-
-    public int getAntlrType() {
-        return node.getType();
     }
 
     public String getText() {
@@ -276,10 +281,6 @@ public abstract class PNode extends Node implements Visualizable {
             return -1;
         }
         return token.getCharPositionInLine();
-    }
-
-    public int getTokenStartIndex() {
-        return node.getTokenStartIndex();
     }
 
     public void setTokenStartIndex(int index) {
@@ -325,148 +326,21 @@ public abstract class PNode extends Node implements Visualizable {
         charStopIndex = index;
     }
 
-    public int getChildIndex() {
-        return node.getChildIndex();
-    }
-
-    // Truffle: see truffle.api.nodes.Node
-    public void setParent(PNode t) {
-        t.adoptChild(this);
-    }
-
     public void setChildIndex(int index) {
         node.setChildIndex(index);
-    }
-
-    /**
-     * Converts a list of Name to a dotted-name string. Because leading dots are indexable
-     * identifiers (referring to parent directories in relative imports), a Name list may include
-     * leading dots, but not dots between names.
-     */
-
-// @Override
-// public String toString()
-// {
-// if (isNil())
-// {
-// return "None";
-// }
-// if (getAntlrType() == Token.INVALID_TOKEN_TYPE)
-// {
-// return "<errornode>";
-// }
-// if (node.getToken() == null)
-// {
-// return null;
-// }
-//
-// return super.toString()+" : "+node.getToken().getText() + "(" + this.getLine() + "," +
-// this.getCharPositionInLine() + ")";
-// }
-
-    public String toStringTree() {
-        if (children == null || children.size() == 0) {
-            return this.toString();// + "[" + this.info() + "]";
-        }
-        StringBuffer buf = new StringBuffer();
-        if (!isNil()) {
-            buf.append("(");
-            buf.append(this.toString());// + "[" + this.info() + "]");
-            buf.append(' ');
-        }
-        for (int i = 0; children != null && i < children.size(); i++) {
-            PNode t = children.get(i);
-            if (i > 0) {
-                buf.append(' ');
-            }
-            buf.append(t.toStringTree());
-        }
-        if (!isNil()) {
-            buf.append(")");
-        }
-        return buf.toString();
-    }
-
-    protected String dumpThis(String s) {
-        return s;
-    }
-
-    protected String dumpThis(Object o) {
-        if (o instanceof PNode) {
-            return ((PNode) o).toStringTree();
-        }
-        return String.valueOf(o);
-    }
-
-    protected String dumpThis(Object[] s) {
-        StringBuffer sb = new StringBuffer();
-        if (s == null) {
-            sb.append("null");
-        } else {
-            sb.append("(");
-            for (int i = 0; i < s.length; i++) {
-                if (i > 0)
-                    sb.append(", ");
-                sb.append(dumpThis(s[i]));
-            }
-            sb.append(")");
-        }
-
-        return sb.toString();
     }
 
     // XXX: From here down copied from org.antlr.runtime.tree.BaseTree
     protected List<PNode> children;
     protected Iterator<Node> childrenOfTruffle;
 
-    public Iterator<Node> getIterChildreofTruffle() {
-        return getChildren().iterator();
-    }
-
     public PNode getChild(int i) {
-        // if(Options.debug)
-        // System.out.println("getChild is not Truffle!!!! CHANGE it ... This is:"+this.toString());
         PNode retVal = null;
 
         if (children != null && i < children.size()) {
             retVal = children.get(i);
         }
         return retVal;
-    }
-
-    public Node getChildTruffle(int i) {
-        Node retVal = null;
-        Node current = null;
-        childrenOfTruffle = getChildren().iterator();
-        int count = 0;
-
-        while (childrenOfTruffle.hasNext() && count <= i) {
-            current = childrenOfTruffle.next();
-            count++;
-        }
-        if (i == count)
-            retVal = current;
-
-        return retVal;
-    }
-
-    /**
-     * Get the children internal List; note that if you directly mess with the list, do so at your
-     * own risk.
-     */
-    // Truffle see truffle.api.nodes.Node
-    // public List<PNode> getChildren() {
-    // return children;
-    // }
-
-    public PNode getFirstChildWithType(int type) {
-        for (int i = 0; children != null && i < children.size(); i++) {
-            PNode t = children.get(i);
-            if (t.getAntlrType() == type) {
-                return t;
-            }
-        }
-        return null;
     }
 
     public int getChildCount() {
@@ -481,9 +355,7 @@ public abstract class PNode extends Node implements Visualizable {
         if (t == null) {
             return; // do nothing upon addChild(null)
         }
-        // if(Options.debug)
-        // System. out.println("addChild is not Truffle!!!! CHANGE it ... This is:"+this.toString()
-        // + " Add Node:"+t.toString());
+
         PNode childTree = t;
         if (childTree.isNil()) { // t is an empty node possibly with children
             if (this.children != null && this.children == childTree.children) {
@@ -529,14 +401,6 @@ public abstract class PNode extends Node implements Visualizable {
         return killed;
     }
 
-    /** Add all elements of kids list as children of this node. */
-    public void addChildren(List<PNode> kids) {
-        for (int i = 0; i < kids.size(); i++) {
-            PNode t = kids.get(i);
-            addChild(t);
-        }
-    }
-
     public void setChild(int i, PNode t) {
         if (t == null) {
             return;
@@ -553,7 +417,7 @@ public abstract class PNode extends Node implements Visualizable {
     }
 
     protected List<PNode> createChildrenList() {
-        return new ArrayList<PNode>();
+        return new ArrayList<>();
     }
 
     /** Set the parent and child index values for all child of t. */
@@ -570,23 +434,4 @@ public abstract class PNode extends Node implements Visualizable {
         }
     }
 
-    public int getType() {
-        return node.getType();
-    }
-
-    protected FrameSlot slot;
-
-    public void setSlot(FrameSlot slot) {
-        if (Options.debug)
-            System.out.println("Before set slot: " + ((this.slot != null) ? this.slot.toString() : "null"));
-
-        this.slot = slot;
-
-        if (Options.debug)
-            System.out.println("After set slot: " + ((this.slot != null) ? this.slot.toString() : "null"));
-    }
-
-    public FrameSlot getSlot() {
-        return this.slot;
-    }
 }

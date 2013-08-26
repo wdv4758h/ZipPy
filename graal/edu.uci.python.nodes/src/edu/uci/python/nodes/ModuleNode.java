@@ -24,14 +24,13 @@
  */
 package edu.uci.python.nodes;
 
-
 import com.oracle.truffle.api.frame.*;
 import com.oracle.truffle.api.nodes.*;
 
 import edu.uci.python.nodes.statements.*;
 import edu.uci.python.nodes.truffle.*;
 
-public class ModuleNode extends RootNode implements Visualizable {
+public class ModuleNode extends PNode implements Visualizable {
 
     @Child BlockNode body;
 

@@ -53,7 +53,7 @@ import edu.uci.python.runtime.datatypes.*;
 
 public class NodeFactory {
 
-    public RootNode createModule(List<PNode> body, FrameDescriptor fd) {
+    public PNode createModule(List<PNode> body, FrameDescriptor fd) {
         BlockNode block = createBlock(body);
         return new ModuleNode(block, fd);
     }

@@ -37,7 +37,7 @@ import edu.uci.python.nodes.utils.*;
  * @author zwei
  * 
  */
-public class FunctionRootNode extends RootNode implements Visualizable {
+public class FunctionRootNode extends PNode implements Visualizable {
 
     @Child protected final ParametersNode parameters;
 
