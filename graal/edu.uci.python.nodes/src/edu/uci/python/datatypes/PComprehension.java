@@ -28,6 +28,8 @@ import java.util.*;
 
 import org.antlr.runtime.Token;
 
+import com.oracle.truffle.api.frame.*;
+
 import edu.uci.python.nodes.*;
 
 public class PComprehension extends PNode {
@@ -85,5 +87,11 @@ public class PComprehension extends PNode {
 
     public List<PNode> getInternalIfs() {
         return ifs;
+    }
+
+    @Override
+    public Object execute(VirtualFrame frame) {
+        // TODO Auto-generated method stub
+        return null;
     }
 }

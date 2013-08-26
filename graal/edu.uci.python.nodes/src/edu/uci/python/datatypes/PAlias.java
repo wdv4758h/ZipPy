@@ -28,6 +28,8 @@ import java.util.*;
 
 import org.antlr.runtime.*;
 
+import com.oracle.truffle.api.frame.*;
+
 import edu.uci.python.nodes.*;
 
 public class PAlias extends PNode {
@@ -62,5 +64,11 @@ public class PAlias extends PNode {
 
     public String getInternalAsname() {
         return asname;
+    }
+
+    @Override
+    public Object execute(VirtualFrame frame) {
+        // TODO Auto-generated method stub
+        return null;
     }
 }
