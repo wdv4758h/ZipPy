@@ -27,7 +27,6 @@ package edu.uci.python.antlr;
 
 import java.math.*;
 import java.util.*;
-import java.util.List;
 
 import org.antlr.runtime.*;
 import org.python.antlr.ast.boolopType;
@@ -253,7 +252,7 @@ public class GrammarActionsTruffle {
         boolean isInner = true;
 
         Amendable incomplete = (Amendable) fixWriteLocalSlot(node.getInternalTarget());
-        StatementNode target = incomplete.updateRhs(factory.createRuntimeValueNode());
+        PNode target = incomplete.updateRhs(factory.createRuntimeValueNode());
         target.setToken(node.getInternalTarget().getToken());
         PNode iterator = (node.getInternalIter());
 
@@ -1251,7 +1250,8 @@ public class GrammarActionsTruffle {
 
         for (int i = 0; i < rights.size(); i++) {
             PNode right = rights.get(i);
-            StatementNode tempWrite = ((Amendable) makeTemporaryWrite()).updateRhs(right);
+            PNode tempWrite = ((Amendable) makeTemporaryWrite()).updateRhs(right);
+
             if (Options.debug) {
                 System.out.println("makeTemporaryWrites:: tempWrite Rhs: " + ((WriteLocalNode) tempWrite).getRhs());
             }
@@ -1335,7 +1335,8 @@ public class GrammarActionsTruffle {
                     transformedRhs = ((WriteNode) tempWrite).makeReadNode();
                 }
 
-                StatementNode write = ((Amendable) nestedWrites.get(idx)).updateRhs(transformedRhs);
+                PNode write = ((Amendable) nestedWrites.get(idx)).updateRhs(transformedRhs);
+
                 if (Options.debug) {
                     System.out.println("processDecomposedTargetList:: lhs: " + write + "  rhs: " + transformedRhs);
                 }
@@ -1874,7 +1875,7 @@ public class GrammarActionsTruffle {
         return result;
     }
 
-    private StatementNode dirtySpecialization(StatementNode target, PNode iter, BlockNode bodyPart, BlockNode orelsePart) {
+    private StatementNode dirtySpecialization(PNode target, PNode iter, BlockNode bodyPart, BlockNode orelsePart) {
         StatementNode forNode;
         if (Options.OptimizeNode) {
             if (iter instanceof CallBuiltInWithOneArgNoKeywordNode && ((CallBuiltInWithOneArgNoKeywordNode) iter).getName().equals("range")) {
@@ -1924,7 +1925,7 @@ public class GrammarActionsTruffle {
 
         Amendable incomplete = (Amendable) targets.remove(0);
         PNode runtimeValue = factory.createRuntimeValueNode();
-        StatementNode iteratorWrite = incomplete.updateRhs(runtimeValue);
+        PNode iteratorWrite = incomplete.updateRhs(runtimeValue);
 
 // retVal.setFuncRootNode(getCurrentFuncRoot());
 
@@ -1941,31 +1942,14 @@ public class GrammarActionsTruffle {
         bodyPart = factory.createBlock(body);
         orelsePart = factory.createBlock(orelse);
 
-// currentLoopFixes.add(bodyPart);
-// currentLoopFixes.add(orelsePart);
-
-// bodyPart.setFuncRootNode(getCurrentFuncRoot());
-// orelsePart.setFuncRootNode(getCurrentFuncRoot());
-// retVal.setFuncRootNode(getCurrentFuncRoot());
-
-// if (retVal instanceof ForNode) {
-// ((ForNode) retVal).setInternal(bodyPart, orelsePart);
-// } else if (retVal instanceof ForRangeWithOneValueNode) {
-// ((ForRangeWithOneValueNode) retVal).setInternal(bodyPart, orelsePart);
-// } else {
-// ((ForRangeWithTwoValuesNode) retVal).setInternal(bodyPart, orelsePart);
-// }
-
-// fixLoopHeaders(retVal);
-
         retVal = dirtySpecialization(iteratorWrite, iter, bodyPart, orelsePart);
 
         retVal.setToken(t);
         return retVal;
     }
 
-    public StatementNode makeTryExcept(Token t, List<?> body, List<?> handlers, List<?> orelse, List<?> finBody) { // TODO:
-// No Translation!!
+    public StatementNode makeTryExcept(Token t, List<?> body, List<?> handlers, List<?> orelse, List<?> finBody) {
+        // TODO: No Translation!!
 
         if (Options.debug) {
             System.out.println("makeTryExcept");
@@ -1986,8 +1970,8 @@ public class GrammarActionsTruffle {
         return retVal;
     }
 
-    public StatementNode makeTryFinally(Token t, List<?> body, List<?> finBody) { // TODO: No
-// Translation!!
+    public StatementNode makeTryFinally(Token t, List<?> body, List<?> finBody) {
+        // TODO: No Translation!!
 
         if (Options.debug) {
             System.out.println("makeTryFinally");
@@ -2008,13 +1992,10 @@ public class GrammarActionsTruffle {
 
         StatementNode retVal = null;
         boolean isGenerator = false;
-        // beginScope();
         if (nameToken == null) {
             return errorHandler.errorStmt(t);
         }
         PNode n = cantBeNoneName(nameToken);
-        // n = makeName(nameToken, nameToken.getText(),
-        // expr_contextType.AugLoad);
         ParametersNode a = null;
         if (args != null) {
             a = args;
@@ -2031,8 +2012,6 @@ public class GrammarActionsTruffle {
 
         StatementNode body = factory.createBlock(s);
 
-        // cache
-// body.setFuncRootNode(getCurrentFuncRoot());
         PNode returnValue = factory.createReadLocal(getReturnSlot());
         FrameDescriptor fd = endScope();
         FrameSlot slot = def(n.getText());
@@ -2043,10 +2022,6 @@ public class GrammarActionsTruffle {
             CallTarget ct = Truffle.getRuntime().createCallTarget(genRoot, fd);
             retVal = factory.createFunctionDef(slot, n.getText(), args, ct, genRoot);
         } else {
-            // cache
-// FunctionRootNode fufncRoot = funcRoots.pop();
-// funcRoot.setBody(body);
-
             FunctionRootNode funcRoot = factory.createFunctionRoot(args, body, returnValue);
             CallTarget ct = Truffle.getRuntime().createCallTarget(funcRoot, fd);
             retVal = factory.createFunctionDef(slot, n.getText(), args, ct, funcRoot);
@@ -2088,8 +2063,8 @@ public class GrammarActionsTruffle {
             } else if (tree instanceof WriteLocalNode) {
                 retVal = writeLocalToRead(tree);
             } else if (tree instanceof SubscriptStoreNode) {
-                value = ((SubscriptStoreNode) tree).getFirst();
-                slice = ((SubscriptStoreNode) tree).getSecond();
+                value = ((SubscriptStoreNode) tree).getPrimary();
+                slice = ((SubscriptStoreNode) tree).getSlice();
                 retVal = factory.createSubscriptLoad(value, slice);
             } else if (tree instanceof ListComprehensionNode) {
                 retVal = fixGlobalReadToLocal(tree);
@@ -2520,14 +2495,12 @@ public class GrammarActionsTruffle {
         PCallable builtIn = null;
         PNode callee = func;
 
-        if (callee.getParent() instanceof AttributeRefNode) {
-            AttributeRefNode attr = (AttributeRefNode) callee.getParent();
-            if (Options.debug) {
-                System.out.println("makeCall:: attr: " + attr + "  callee: " + callee + "  attr.primary: " + attr.getOperand() + " attr.name: " + attr.getName());
-            }
-            retVal = factory.createAttributeCall(attr.getOperand(), argumentsArray, attr.getName());
-        } else if (argumentsArray.length == 1 && keywordsArray.length == 0) { // Specializing call
-// node.
+        if (callee.getParent() instanceof AttributeLoadNode) {
+            AttributeLoadNode attr = (AttributeLoadNode) callee.getParent();
+            retVal = factory.createAttributeCall(attr.getPrimary(), argumentsArray, attr.getName());
+
+        } else if (argumentsArray.length == 1 && keywordsArray.length == 0) {
+            // Specializing call node.
             if (Options.OptimizeNode) {
                 if (callee instanceof ReadGlobalNode && (builtIn = GlobalScope.getTruffleBuiltIns().lookupMethod(((ReadGlobalNode) callee).getName())) != null) {
                     retVal = factory.createCallBuiltInWithOneArgNoKeyword(builtIn, ((ReadGlobalNode) callee).getName(), argumentsArray[0]);
@@ -2864,7 +2837,7 @@ public class GrammarActionsTruffle {
             if (Options.debug) {
                 System.out.println("makePowerSpecific:: AttributeCallNode c: " + c + "  parent: " + parent);
             }
-            c = c.updatePrimary(((AttributeRefNode) parent).getOperand());
+            c = c.updatePrimary(((AttributeLoadNode) parent).getPrimary());
             newNode.setParent(c);
             c.setToken(((AttributeCallNode) o).getToken());
             ((AttributeCallNode) o).replace(c);
@@ -2880,13 +2853,13 @@ public class GrammarActionsTruffle {
             SubscriptStoreNode c = (SubscriptStoreNode) o;
             // c.setValue(retVal);
             retVal = c;
-        } else if (o instanceof AttributeRefNode) {
-            AttributeRefNode c = (AttributeRefNode) o;
+        } else if (o instanceof AttributeLoadNode) {
+            AttributeLoadNode c = (AttributeLoadNode) o;
 
-            c = (AttributeRefNode) factory.createAttributeRef(newNode, c.getName());
+            c = (AttributeLoadNode) factory.createAttributeRef(newNode, c.getName());
             newNode.setParent(c);
-            c.setToken(((AttributeRefNode) o).getToken());
-            ((AttributeRefNode) o).replace(c);
+            c.setToken(((AttributeLoadNode) o).getToken());
+            ((AttributeLoadNode) o).replace(c);
             retVal = c;
         } else {
             retVal = newNode;

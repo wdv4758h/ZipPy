@@ -57,4 +57,14 @@ public class ParametersNode extends PNode {
         return null;
     }
 
+    protected List<PNode> tupleAssignments;
+
+    public List<PNode> getTupleAssignment() {
+        return tupleAssignments;
+    }
+
+    public void setTupleAssignment(List<PNode> tupleAssignments) {
+        this.tupleAssignments = tupleAssignments;
+    }
+
 }
