@@ -39,7 +39,7 @@ import edu.uci.python.runtime.*;
 import edu.uci.python.runtime.datatypes.*;
 
 @TypeSystemReference(PythonTypes.class)
-public abstract class PNode extends RootNode implements Visualizable {
+public abstract class PNode extends RootNode {
 
 // public abstract Object execute(VirtualFrame frame);
 
@@ -180,15 +180,6 @@ public abstract class PNode extends RootNode implements Visualizable {
         }
 
     };
-
-    @Override
-    public void visualize(int level) {
-        for (int i = 0; i < level; i++) {
-            ASTInterpreter.trace("    ");
-        }
-
-        ASTInterpreter.trace(this);
-    }
 
     protected FrameSlot slot;
 
