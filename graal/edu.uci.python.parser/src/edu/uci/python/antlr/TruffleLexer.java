@@ -1,4 +1,4 @@
-// $ANTLR 3.5 Truffle.g 2013-08-26 02:57:24
+// $ANTLR 3.5 Truffle.g 2013-08-27 02:10:23
 
 package edu.uci.python.antlr;
 import edu.uci.python.*;
@@ -126,14 +126,6 @@ public class TruffleLexer extends Lexer {
 	public boolean partial = false;
 	public boolean single = false;
 
-	//If you want to use another error recovery mechanism change this
-	//and the same one in the parser.
-	private ErrorHandlerMsg errorHandler;
-
-	    public void setErrorHandler(ErrorHandlerMsg eh) {
-	        this.errorHandler = eh;
-	    }
-
 	    /**
 	     *  Taken directly from antlr's Lexer.java -- needs to be re-integrated every time
 	     *  we upgrade from Antlr (need to consider a Lexer subclass, though the issue would
@@ -165,13 +157,13 @@ public class TruffleLexer extends Lexer {
 	                return state.token;
 	            } catch (NoViableAltException nva) {
 	                reportError(nva);
-	                errorHandler.recover(this, nva); // throw out current char and try again
+	                ErrorHandler.recover(this, nva); // throw out current char and try again
 	            } catch (FailedPredicateException fp) {
 	                //XXX: added this for failed STRINGPART -- the FailedPredicateException
 	                //     hides a NoViableAltException.  This should be the only
 	                //     FailedPredicateException that gets thrown by the lexer.
 	                reportError(fp);
-	                errorHandler.recover(this, fp); // throw out current char and try again
+	                ErrorHandler.recover(this, fp); // throw out current char and try again
 	            } catch (RecognitionException re) {
 	                reportError(re);
 	                // match() routine has already called recover()
@@ -205,8 +197,8 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = AS;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2199:11: ( 'as' )
-			// Truffle.g:2199:13: 'as'
+			// Truffle.g:2185:11: ( 'as' )
+			// Truffle.g:2185:13: 'as'
 			{
 			match("as"); 
 
@@ -226,8 +218,8 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = ASSERT;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2200:11: ( 'assert' )
-			// Truffle.g:2200:13: 'assert'
+			// Truffle.g:2186:11: ( 'assert' )
+			// Truffle.g:2186:13: 'assert'
 			{
 			match("assert"); 
 
@@ -247,8 +239,8 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = BREAK;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2201:11: ( 'break' )
-			// Truffle.g:2201:13: 'break'
+			// Truffle.g:2187:11: ( 'break' )
+			// Truffle.g:2187:13: 'break'
 			{
 			match("break"); 
 
@@ -268,8 +260,8 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = CLASS;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2202:11: ( 'class' )
-			// Truffle.g:2202:13: 'class'
+			// Truffle.g:2188:11: ( 'class' )
+			// Truffle.g:2188:13: 'class'
 			{
 			match("class"); 
 
@@ -289,8 +281,8 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = CONTINUE;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2203:11: ( 'continue' )
-			// Truffle.g:2203:13: 'continue'
+			// Truffle.g:2189:11: ( 'continue' )
+			// Truffle.g:2189:13: 'continue'
 			{
 			match("continue"); 
 
@@ -310,8 +302,8 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = DEF;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2204:11: ( 'def' )
-			// Truffle.g:2204:13: 'def'
+			// Truffle.g:2190:11: ( 'def' )
+			// Truffle.g:2190:13: 'def'
 			{
 			match("def"); 
 
@@ -331,8 +323,8 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = DELETE;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2205:11: ( 'del' )
-			// Truffle.g:2205:13: 'del'
+			// Truffle.g:2191:11: ( 'del' )
+			// Truffle.g:2191:13: 'del'
 			{
 			match("del"); 
 
@@ -352,8 +344,8 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = ELIF;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2206:11: ( 'elif' )
-			// Truffle.g:2206:13: 'elif'
+			// Truffle.g:2192:11: ( 'elif' )
+			// Truffle.g:2192:13: 'elif'
 			{
 			match("elif"); 
 
@@ -373,8 +365,8 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = EXCEPT;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2207:11: ( 'except' )
-			// Truffle.g:2207:13: 'except'
+			// Truffle.g:2193:11: ( 'except' )
+			// Truffle.g:2193:13: 'except'
 			{
 			match("except"); 
 
@@ -394,8 +386,8 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = FINALLY;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2209:11: ( 'finally' )
-			// Truffle.g:2209:13: 'finally'
+			// Truffle.g:2195:11: ( 'finally' )
+			// Truffle.g:2195:13: 'finally'
 			{
 			match("finally"); 
 
@@ -415,8 +407,8 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = FROM;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2210:11: ( 'from' )
-			// Truffle.g:2210:13: 'from'
+			// Truffle.g:2196:11: ( 'from' )
+			// Truffle.g:2196:13: 'from'
 			{
 			match("from"); 
 
@@ -436,8 +428,8 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = FOR;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2211:11: ( 'for' )
-			// Truffle.g:2211:13: 'for'
+			// Truffle.g:2197:11: ( 'for' )
+			// Truffle.g:2197:13: 'for'
 			{
 			match("for"); 
 
@@ -457,8 +449,8 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = GLOBAL;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2212:11: ( 'global' )
-			// Truffle.g:2212:13: 'global'
+			// Truffle.g:2198:11: ( 'global' )
+			// Truffle.g:2198:13: 'global'
 			{
 			match("global"); 
 
@@ -478,8 +470,8 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = IF;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2213:11: ( 'if' )
-			// Truffle.g:2213:13: 'if'
+			// Truffle.g:2199:11: ( 'if' )
+			// Truffle.g:2199:13: 'if'
 			{
 			match("if"); 
 
@@ -499,8 +491,8 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = IMPORT;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2214:11: ( 'import' )
-			// Truffle.g:2214:13: 'import'
+			// Truffle.g:2200:11: ( 'import' )
+			// Truffle.g:2200:13: 'import'
 			{
 			match("import"); 
 
@@ -520,8 +512,8 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = IN;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2215:11: ( 'in' )
-			// Truffle.g:2215:13: 'in'
+			// Truffle.g:2201:11: ( 'in' )
+			// Truffle.g:2201:13: 'in'
 			{
 			match("in"); 
 
@@ -541,8 +533,8 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = IS;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2216:11: ( 'is' )
-			// Truffle.g:2216:13: 'is'
+			// Truffle.g:2202:11: ( 'is' )
+			// Truffle.g:2202:13: 'is'
 			{
 			match("is"); 
 
@@ -562,8 +554,8 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = LAMBDA;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2217:11: ( 'lambda' )
-			// Truffle.g:2217:13: 'lambda'
+			// Truffle.g:2203:11: ( 'lambda' )
+			// Truffle.g:2203:13: 'lambda'
 			{
 			match("lambda"); 
 
@@ -583,8 +575,8 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = ORELSE;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2218:11: ( 'else' )
-			// Truffle.g:2218:13: 'else'
+			// Truffle.g:2204:11: ( 'else' )
+			// Truffle.g:2204:13: 'else'
 			{
 			match("else"); 
 
@@ -604,8 +596,8 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = PASS;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2219:11: ( 'pass' )
-			// Truffle.g:2219:13: 'pass'
+			// Truffle.g:2205:11: ( 'pass' )
+			// Truffle.g:2205:13: 'pass'
 			{
 			match("pass"); 
 
@@ -625,8 +617,8 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = PRINT;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2220:11: ( 'print' )
-			// Truffle.g:2220:13: 'print'
+			// Truffle.g:2206:11: ( 'print' )
+			// Truffle.g:2206:13: 'print'
 			{
 			match("print"); 
 
@@ -646,8 +638,8 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = RAISE;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2221:11: ( 'raise' )
-			// Truffle.g:2221:13: 'raise'
+			// Truffle.g:2207:11: ( 'raise' )
+			// Truffle.g:2207:13: 'raise'
 			{
 			match("raise"); 
 
@@ -667,8 +659,8 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = RETURN;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2222:11: ( 'return' )
-			// Truffle.g:2222:13: 'return'
+			// Truffle.g:2208:11: ( 'return' )
+			// Truffle.g:2208:13: 'return'
 			{
 			match("return"); 
 
@@ -688,8 +680,8 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = TRY;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2223:11: ( 'try' )
-			// Truffle.g:2223:13: 'try'
+			// Truffle.g:2209:11: ( 'try' )
+			// Truffle.g:2209:13: 'try'
 			{
 			match("try"); 
 
@@ -709,8 +701,8 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = WHILE;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2224:11: ( 'while' )
-			// Truffle.g:2224:13: 'while'
+			// Truffle.g:2210:11: ( 'while' )
+			// Truffle.g:2210:13: 'while'
 			{
 			match("while"); 
 
@@ -730,8 +722,8 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = WITH;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2225:11: ( 'with' )
-			// Truffle.g:2225:13: 'with'
+			// Truffle.g:2211:11: ( 'with' )
+			// Truffle.g:2211:13: 'with'
 			{
 			match("with"); 
 
@@ -751,8 +743,8 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = YIELD;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2226:11: ( 'yield' )
-			// Truffle.g:2226:13: 'yield'
+			// Truffle.g:2212:11: ( 'yield' )
+			// Truffle.g:2212:13: 'yield'
 			{
 			match("yield"); 
 
@@ -772,8 +764,8 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = NONE;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2227:11: ( 'None' )
-			// Truffle.g:2227:13: 'None'
+			// Truffle.g:2213:11: ( 'None' )
+			// Truffle.g:2213:13: 'None'
 			{
 			match("None"); 
 
@@ -793,8 +785,8 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = TRUE;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2228:11: ( 'True' )
-			// Truffle.g:2228:13: 'True'
+			// Truffle.g:2214:11: ( 'True' )
+			// Truffle.g:2214:13: 'True'
 			{
 			match("True"); 
 
@@ -814,8 +806,8 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = FALSE;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2229:11: ( 'False' )
-			// Truffle.g:2229:13: 'False'
+			// Truffle.g:2215:11: ( 'False' )
+			// Truffle.g:2215:13: 'False'
 			{
 			match("False"); 
 
@@ -835,8 +827,8 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = NONLOCAL;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2230:11: ( 'nonlocal' )
-			// Truffle.g:2230:13: 'nonlocal'
+			// Truffle.g:2216:11: ( 'nonlocal' )
+			// Truffle.g:2216:13: 'nonlocal'
 			{
 			match("nonlocal"); 
 
@@ -856,8 +848,8 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = LPAREN;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2232:11: ( '(' )
-			// Truffle.g:2232:13: '('
+			// Truffle.g:2218:11: ( '(' )
+			// Truffle.g:2218:13: '('
 			{
 			match('('); 
 			implicitLineJoiningLevel++;
@@ -877,8 +869,8 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = RPAREN;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2234:11: ( ')' )
-			// Truffle.g:2234:13: ')'
+			// Truffle.g:2220:11: ( ')' )
+			// Truffle.g:2220:13: ')'
 			{
 			match(')'); 
 			implicitLineJoiningLevel--;
@@ -898,8 +890,8 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = LBRACK;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2236:11: ( '[' )
-			// Truffle.g:2236:13: '['
+			// Truffle.g:2222:11: ( '[' )
+			// Truffle.g:2222:13: '['
 			{
 			match('['); 
 			implicitLineJoiningLevel++;
@@ -919,8 +911,8 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = RBRACK;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2238:11: ( ']' )
-			// Truffle.g:2238:13: ']'
+			// Truffle.g:2224:11: ( ']' )
+			// Truffle.g:2224:13: ']'
 			{
 			match(']'); 
 			implicitLineJoiningLevel--;
@@ -940,8 +932,8 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = COLON;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2240:11: ( ':' )
-			// Truffle.g:2240:13: ':'
+			// Truffle.g:2226:11: ( ':' )
+			// Truffle.g:2226:13: ':'
 			{
 			match(':'); 
 			}
@@ -960,8 +952,8 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = COMMA;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2242:10: ( ',' )
-			// Truffle.g:2242:12: ','
+			// Truffle.g:2228:10: ( ',' )
+			// Truffle.g:2228:12: ','
 			{
 			match(','); 
 			}
@@ -980,8 +972,8 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = SEMI;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2244:9: ( ';' )
-			// Truffle.g:2244:11: ';'
+			// Truffle.g:2230:9: ( ';' )
+			// Truffle.g:2230:11: ';'
 			{
 			match(';'); 
 			}
@@ -1000,8 +992,8 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = PLUS;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2246:9: ( '+' )
-			// Truffle.g:2246:11: '+'
+			// Truffle.g:2232:9: ( '+' )
+			// Truffle.g:2232:11: '+'
 			{
 			match('+'); 
 			}
@@ -1020,8 +1012,8 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = MINUS;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2248:10: ( '-' )
-			// Truffle.g:2248:12: '-'
+			// Truffle.g:2234:10: ( '-' )
+			// Truffle.g:2234:12: '-'
 			{
 			match('-'); 
 			}
@@ -1040,8 +1032,8 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = STAR;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2250:9: ( '*' )
-			// Truffle.g:2250:11: '*'
+			// Truffle.g:2236:9: ( '*' )
+			// Truffle.g:2236:11: '*'
 			{
 			match('*'); 
 			}
@@ -1060,8 +1052,8 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = SLASH;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2252:10: ( '/' )
-			// Truffle.g:2252:12: '/'
+			// Truffle.g:2238:10: ( '/' )
+			// Truffle.g:2238:12: '/'
 			{
 			match('/'); 
 			}
@@ -1080,8 +1072,8 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = VBAR;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2254:9: ( '|' )
-			// Truffle.g:2254:11: '|'
+			// Truffle.g:2240:9: ( '|' )
+			// Truffle.g:2240:11: '|'
 			{
 			match('|'); 
 			}
@@ -1100,8 +1092,8 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = AMPER;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2256:10: ( '&' )
-			// Truffle.g:2256:12: '&'
+			// Truffle.g:2242:10: ( '&' )
+			// Truffle.g:2242:12: '&'
 			{
 			match('&'); 
 			}
@@ -1120,8 +1112,8 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = LESS;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2258:9: ( '<' )
-			// Truffle.g:2258:11: '<'
+			// Truffle.g:2244:9: ( '<' )
+			// Truffle.g:2244:11: '<'
 			{
 			match('<'); 
 			}
@@ -1140,8 +1132,8 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = GREATER;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2260:12: ( '>' )
-			// Truffle.g:2260:14: '>'
+			// Truffle.g:2246:12: ( '>' )
+			// Truffle.g:2246:14: '>'
 			{
 			match('>'); 
 			}
@@ -1160,8 +1152,8 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = ASSIGN;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2262:11: ( '=' )
-			// Truffle.g:2262:13: '='
+			// Truffle.g:2248:11: ( '=' )
+			// Truffle.g:2248:13: '='
 			{
 			match('='); 
 			}
@@ -1180,8 +1172,8 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = PERCENT;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2264:12: ( '%' )
-			// Truffle.g:2264:14: '%'
+			// Truffle.g:2250:12: ( '%' )
+			// Truffle.g:2250:14: '%'
 			{
 			match('%'); 
 			}
@@ -1200,8 +1192,8 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = BACKQUOTE;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2266:14: ( '`' )
-			// Truffle.g:2266:16: '`'
+			// Truffle.g:2252:14: ( '`' )
+			// Truffle.g:2252:16: '`'
 			{
 			match('`'); 
 			}
@@ -1220,8 +1212,8 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = LCURLY;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2268:11: ( '{' )
-			// Truffle.g:2268:13: '{'
+			// Truffle.g:2254:11: ( '{' )
+			// Truffle.g:2254:13: '{'
 			{
 			match('{'); 
 			implicitLineJoiningLevel++;
@@ -1241,8 +1233,8 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = RCURLY;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2270:11: ( '}' )
-			// Truffle.g:2270:13: '}'
+			// Truffle.g:2256:11: ( '}' )
+			// Truffle.g:2256:13: '}'
 			{
 			match('}'); 
 			implicitLineJoiningLevel--;
@@ -1262,8 +1254,8 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = CIRCUMFLEX;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2272:15: ( '^' )
-			// Truffle.g:2272:17: '^'
+			// Truffle.g:2258:15: ( '^' )
+			// Truffle.g:2258:17: '^'
 			{
 			match('^'); 
 			}
@@ -1282,8 +1274,8 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = TILDE;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2274:10: ( '~' )
-			// Truffle.g:2274:12: '~'
+			// Truffle.g:2260:10: ( '~' )
+			// Truffle.g:2260:12: '~'
 			{
 			match('~'); 
 			}
@@ -1302,8 +1294,8 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = EQUAL;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2276:10: ( '==' )
-			// Truffle.g:2276:12: '=='
+			// Truffle.g:2262:10: ( '==' )
+			// Truffle.g:2262:12: '=='
 			{
 			match("=="); 
 
@@ -1323,8 +1315,8 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = NOTEQUAL;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2278:13: ( '!=' )
-			// Truffle.g:2278:15: '!='
+			// Truffle.g:2264:13: ( '!=' )
+			// Truffle.g:2264:15: '!='
 			{
 			match("!="); 
 
@@ -1344,8 +1336,8 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = LESSEQUAL;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2282:14: ( '<=' )
-			// Truffle.g:2282:16: '<='
+			// Truffle.g:2268:14: ( '<=' )
+			// Truffle.g:2268:16: '<='
 			{
 			match("<="); 
 
@@ -1365,8 +1357,8 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = LEFTSHIFT;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2284:14: ( '<<' )
-			// Truffle.g:2284:16: '<<'
+			// Truffle.g:2270:14: ( '<<' )
+			// Truffle.g:2270:16: '<<'
 			{
 			match("<<"); 
 
@@ -1386,8 +1378,8 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = GREATEREQUAL;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2286:17: ( '>=' )
-			// Truffle.g:2286:19: '>='
+			// Truffle.g:2272:17: ( '>=' )
+			// Truffle.g:2272:19: '>='
 			{
 			match(">="); 
 
@@ -1407,8 +1399,8 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = RIGHTSHIFT;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2288:15: ( '>>' )
-			// Truffle.g:2288:17: '>>'
+			// Truffle.g:2274:15: ( '>>' )
+			// Truffle.g:2274:17: '>>'
 			{
 			match(">>"); 
 
@@ -1428,8 +1420,8 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = PLUSEQUAL;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2290:14: ( '+=' )
-			// Truffle.g:2290:16: '+='
+			// Truffle.g:2276:14: ( '+=' )
+			// Truffle.g:2276:16: '+='
 			{
 			match("+="); 
 
@@ -1449,8 +1441,8 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = MINUSEQUAL;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2292:15: ( '-=' )
-			// Truffle.g:2292:17: '-='
+			// Truffle.g:2278:15: ( '-=' )
+			// Truffle.g:2278:17: '-='
 			{
 			match("-="); 
 
@@ -1470,8 +1462,8 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = DOUBLESTAR;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2294:15: ( '**' )
-			// Truffle.g:2294:17: '**'
+			// Truffle.g:2280:15: ( '**' )
+			// Truffle.g:2280:17: '**'
 			{
 			match("**"); 
 
@@ -1491,8 +1483,8 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = STAREQUAL;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2296:14: ( '*=' )
-			// Truffle.g:2296:16: '*='
+			// Truffle.g:2282:14: ( '*=' )
+			// Truffle.g:2282:16: '*='
 			{
 			match("*="); 
 
@@ -1512,8 +1504,8 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = DOUBLESLASH;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2298:16: ( '//' )
-			// Truffle.g:2298:18: '//'
+			// Truffle.g:2284:16: ( '//' )
+			// Truffle.g:2284:18: '//'
 			{
 			match("//"); 
 
@@ -1533,8 +1525,8 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = SLASHEQUAL;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2300:15: ( '/=' )
-			// Truffle.g:2300:17: '/='
+			// Truffle.g:2286:15: ( '/=' )
+			// Truffle.g:2286:17: '/='
 			{
 			match("/="); 
 
@@ -1554,8 +1546,8 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = VBAREQUAL;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2302:14: ( '|=' )
-			// Truffle.g:2302:16: '|='
+			// Truffle.g:2288:14: ( '|=' )
+			// Truffle.g:2288:16: '|='
 			{
 			match("|="); 
 
@@ -1575,8 +1567,8 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = PERCENTEQUAL;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2304:17: ( '%=' )
-			// Truffle.g:2304:19: '%='
+			// Truffle.g:2290:17: ( '%=' )
+			// Truffle.g:2290:19: '%='
 			{
 			match("%="); 
 
@@ -1596,8 +1588,8 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = AMPEREQUAL;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2306:15: ( '&=' )
-			// Truffle.g:2306:17: '&='
+			// Truffle.g:2292:15: ( '&=' )
+			// Truffle.g:2292:17: '&='
 			{
 			match("&="); 
 
@@ -1617,8 +1609,8 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = CIRCUMFLEXEQUAL;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2308:20: ( '^=' )
-			// Truffle.g:2308:22: '^='
+			// Truffle.g:2294:20: ( '^=' )
+			// Truffle.g:2294:22: '^='
 			{
 			match("^="); 
 
@@ -1638,8 +1630,8 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = LEFTSHIFTEQUAL;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2310:19: ( '<<=' )
-			// Truffle.g:2310:21: '<<='
+			// Truffle.g:2296:19: ( '<<=' )
+			// Truffle.g:2296:21: '<<='
 			{
 			match("<<="); 
 
@@ -1659,8 +1651,8 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = RIGHTSHIFTEQUAL;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2312:20: ( '>>=' )
-			// Truffle.g:2312:22: '>>='
+			// Truffle.g:2298:20: ( '>>=' )
+			// Truffle.g:2298:22: '>>='
 			{
 			match(">>="); 
 
@@ -1680,8 +1672,8 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = DOUBLESTAREQUAL;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2314:20: ( '**=' )
-			// Truffle.g:2314:22: '**='
+			// Truffle.g:2300:20: ( '**=' )
+			// Truffle.g:2300:22: '**='
 			{
 			match("**="); 
 
@@ -1701,8 +1693,8 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = DOUBLESLASHEQUAL;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2316:21: ( '//=' )
-			// Truffle.g:2316:23: '//='
+			// Truffle.g:2302:21: ( '//=' )
+			// Truffle.g:2302:23: '//='
 			{
 			match("//="); 
 
@@ -1722,8 +1714,8 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = DOT;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2318:5: ( '.' )
-			// Truffle.g:2318:7: '.'
+			// Truffle.g:2304:5: ( '.' )
+			// Truffle.g:2304:7: '.'
 			{
 			match('.'); 
 			}
@@ -1742,8 +1734,8 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = AT;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2320:4: ( '@' )
-			// Truffle.g:2320:6: '@'
+			// Truffle.g:2306:4: ( '@' )
+			// Truffle.g:2306:6: '@'
 			{
 			match('@'); 
 			}
@@ -1762,8 +1754,8 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = AND;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2322:5: ( 'and' )
-			// Truffle.g:2322:7: 'and'
+			// Truffle.g:2308:5: ( 'and' )
+			// Truffle.g:2308:7: 'and'
 			{
 			match("and"); 
 
@@ -1783,8 +1775,8 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = OR;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2324:4: ( 'or' )
-			// Truffle.g:2324:6: 'or'
+			// Truffle.g:2310:4: ( 'or' )
+			// Truffle.g:2310:6: 'or'
 			{
 			match("or"); 
 
@@ -1804,8 +1796,8 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = NOT;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2326:5: ( 'not' )
-			// Truffle.g:2326:7: 'not'
+			// Truffle.g:2312:5: ( 'not' )
+			// Truffle.g:2312:7: 'not'
 			{
 			match("not"); 
 
@@ -1825,17 +1817,17 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = FLOAT;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2329:5: ( '.' DIGITS ( Exponent )? | DIGITS '.' Exponent | DIGITS ( '.' ( DIGITS ( Exponent )? )? | Exponent ) )
+			// Truffle.g:2315:5: ( '.' DIGITS ( Exponent )? | DIGITS '.' Exponent | DIGITS ( '.' ( DIGITS ( Exponent )? )? | Exponent ) )
 			int alt5=3;
 			alt5 = dfa5.predict(input);
 			switch (alt5) {
 				case 1 :
-					// Truffle.g:2329:9: '.' DIGITS ( Exponent )?
+					// Truffle.g:2315:9: '.' DIGITS ( Exponent )?
 					{
 					match('.'); 
 					mDIGITS(); 
 
-					// Truffle.g:2329:20: ( Exponent )?
+					// Truffle.g:2315:20: ( Exponent )?
 					int alt1=2;
 					int LA1_0 = input.LA(1);
 					if ( (LA1_0=='E'||LA1_0=='e') ) {
@@ -1843,7 +1835,7 @@ public class TruffleLexer extends Lexer {
 					}
 					switch (alt1) {
 						case 1 :
-							// Truffle.g:2329:21: Exponent
+							// Truffle.g:2315:21: Exponent
 							{
 							mExponent(); 
 
@@ -1855,7 +1847,7 @@ public class TruffleLexer extends Lexer {
 					}
 					break;
 				case 2 :
-					// Truffle.g:2330:9: DIGITS '.' Exponent
+					// Truffle.g:2316:9: DIGITS '.' Exponent
 					{
 					mDIGITS(); 
 
@@ -1865,11 +1857,11 @@ public class TruffleLexer extends Lexer {
 					}
 					break;
 				case 3 :
-					// Truffle.g:2331:9: DIGITS ( '.' ( DIGITS ( Exponent )? )? | Exponent )
+					// Truffle.g:2317:9: DIGITS ( '.' ( DIGITS ( Exponent )? )? | Exponent )
 					{
 					mDIGITS(); 
 
-					// Truffle.g:2331:16: ( '.' ( DIGITS ( Exponent )? )? | Exponent )
+					// Truffle.g:2317:16: ( '.' ( DIGITS ( Exponent )? )? | Exponent )
 					int alt4=2;
 					int LA4_0 = input.LA(1);
 					if ( (LA4_0=='.') ) {
@@ -1887,10 +1879,10 @@ public class TruffleLexer extends Lexer {
 
 					switch (alt4) {
 						case 1 :
-							// Truffle.g:2331:17: '.' ( DIGITS ( Exponent )? )?
+							// Truffle.g:2317:17: '.' ( DIGITS ( Exponent )? )?
 							{
 							match('.'); 
-							// Truffle.g:2331:21: ( DIGITS ( Exponent )? )?
+							// Truffle.g:2317:21: ( DIGITS ( Exponent )? )?
 							int alt3=2;
 							int LA3_0 = input.LA(1);
 							if ( ((LA3_0 >= '0' && LA3_0 <= '9')) ) {
@@ -1898,11 +1890,11 @@ public class TruffleLexer extends Lexer {
 							}
 							switch (alt3) {
 								case 1 :
-									// Truffle.g:2331:22: DIGITS ( Exponent )?
+									// Truffle.g:2317:22: DIGITS ( Exponent )?
 									{
 									mDIGITS(); 
 
-									// Truffle.g:2331:29: ( Exponent )?
+									// Truffle.g:2317:29: ( Exponent )?
 									int alt2=2;
 									int LA2_0 = input.LA(1);
 									if ( (LA2_0=='E'||LA2_0=='e') ) {
@@ -1910,7 +1902,7 @@ public class TruffleLexer extends Lexer {
 									}
 									switch (alt2) {
 										case 1 :
-											// Truffle.g:2331:30: Exponent
+											// Truffle.g:2317:30: Exponent
 											{
 											mExponent(); 
 
@@ -1927,7 +1919,7 @@ public class TruffleLexer extends Lexer {
 							}
 							break;
 						case 2 :
-							// Truffle.g:2331:45: Exponent
+							// Truffle.g:2317:45: Exponent
 							{
 							mExponent(); 
 
@@ -1952,8 +1944,8 @@ public class TruffleLexer extends Lexer {
 	// $ANTLR start "Exponent"
 	public final void mExponent() throws RecognitionException {
 		try {
-			// Truffle.g:2341:5: ( ( 'e' | 'E' ) ( '+' | '-' )? DIGITS )
-			// Truffle.g:2341:10: ( 'e' | 'E' ) ( '+' | '-' )? DIGITS
+			// Truffle.g:2327:5: ( ( 'e' | 'E' ) ( '+' | '-' )? DIGITS )
+			// Truffle.g:2327:10: ( 'e' | 'E' ) ( '+' | '-' )? DIGITS
 			{
 			if ( input.LA(1)=='E'||input.LA(1)=='e' ) {
 				input.consume();
@@ -1963,7 +1955,7 @@ public class TruffleLexer extends Lexer {
 				recover(mse);
 				throw mse;
 			}
-			// Truffle.g:2341:22: ( '+' | '-' )?
+			// Truffle.g:2327:22: ( '+' | '-' )?
 			int alt6=2;
 			int LA6_0 = input.LA(1);
 			if ( (LA6_0=='+'||LA6_0=='-') ) {
@@ -2002,7 +1994,7 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = INT;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2343:5: ( '0' ( 'x' | 'X' ) ( '0' .. '9' | 'a' .. 'f' | 'A' .. 'F' )+ | '0' ( 'o' | 'O' ) ( '0' .. '7' )* | '0' ( '0' .. '7' )* | '0' ( 'b' | 'B' ) ( '0' .. '1' )* | '1' .. '9' ( DIGITS )* )
+			// Truffle.g:2329:5: ( '0' ( 'x' | 'X' ) ( '0' .. '9' | 'a' .. 'f' | 'A' .. 'F' )+ | '0' ( 'o' | 'O' ) ( '0' .. '7' )* | '0' ( '0' .. '7' )* | '0' ( 'b' | 'B' ) ( '0' .. '1' )* | '1' .. '9' ( DIGITS )* )
 			int alt12=5;
 			int LA12_0 = input.LA(1);
 			if ( (LA12_0=='0') ) {
@@ -2041,7 +2033,7 @@ public class TruffleLexer extends Lexer {
 
 			switch (alt12) {
 				case 1 :
-					// Truffle.g:2344:9: '0' ( 'x' | 'X' ) ( '0' .. '9' | 'a' .. 'f' | 'A' .. 'F' )+
+					// Truffle.g:2330:9: '0' ( 'x' | 'X' ) ( '0' .. '9' | 'a' .. 'f' | 'A' .. 'F' )+
 					{
 					match('0'); 
 					if ( input.LA(1)=='X'||input.LA(1)=='x' ) {
@@ -2052,7 +2044,7 @@ public class TruffleLexer extends Lexer {
 						recover(mse);
 						throw mse;
 					}
-					// Truffle.g:2344:25: ( '0' .. '9' | 'a' .. 'f' | 'A' .. 'F' )+
+					// Truffle.g:2330:25: ( '0' .. '9' | 'a' .. 'f' | 'A' .. 'F' )+
 					int cnt7=0;
 					loop7:
 					while (true) {
@@ -2088,7 +2080,7 @@ public class TruffleLexer extends Lexer {
 					}
 					break;
 				case 2 :
-					// Truffle.g:2346:9: '0' ( 'o' | 'O' ) ( '0' .. '7' )*
+					// Truffle.g:2332:9: '0' ( 'o' | 'O' ) ( '0' .. '7' )*
 					{
 					match('0'); 
 					if ( input.LA(1)=='O'||input.LA(1)=='o' ) {
@@ -2099,7 +2091,7 @@ public class TruffleLexer extends Lexer {
 						recover(mse);
 						throw mse;
 					}
-					// Truffle.g:2346:25: ( '0' .. '7' )*
+					// Truffle.g:2332:25: ( '0' .. '7' )*
 					loop8:
 					while (true) {
 						int alt8=2;
@@ -2131,10 +2123,10 @@ public class TruffleLexer extends Lexer {
 					}
 					break;
 				case 3 :
-					// Truffle.g:2347:9: '0' ( '0' .. '7' )*
+					// Truffle.g:2333:9: '0' ( '0' .. '7' )*
 					{
 					match('0'); 
-					// Truffle.g:2347:14: ( '0' .. '7' )*
+					// Truffle.g:2333:14: ( '0' .. '7' )*
 					loop9:
 					while (true) {
 						int alt9=2;
@@ -2166,7 +2158,7 @@ public class TruffleLexer extends Lexer {
 					}
 					break;
 				case 4 :
-					// Truffle.g:2349:9: '0' ( 'b' | 'B' ) ( '0' .. '1' )*
+					// Truffle.g:2335:9: '0' ( 'b' | 'B' ) ( '0' .. '1' )*
 					{
 					match('0'); 
 					if ( input.LA(1)=='B'||input.LA(1)=='b' ) {
@@ -2177,7 +2169,7 @@ public class TruffleLexer extends Lexer {
 						recover(mse);
 						throw mse;
 					}
-					// Truffle.g:2349:25: ( '0' .. '1' )*
+					// Truffle.g:2335:25: ( '0' .. '1' )*
 					loop10:
 					while (true) {
 						int alt10=2;
@@ -2209,10 +2201,10 @@ public class TruffleLexer extends Lexer {
 					}
 					break;
 				case 5 :
-					// Truffle.g:2351:9: '1' .. '9' ( DIGITS )*
+					// Truffle.g:2337:9: '1' .. '9' ( DIGITS )*
 					{
 					matchRange('1','9'); 
-					// Truffle.g:2351:18: ( DIGITS )*
+					// Truffle.g:2337:18: ( DIGITS )*
 					loop11:
 					while (true) {
 						int alt11=2;
@@ -2223,7 +2215,7 @@ public class TruffleLexer extends Lexer {
 
 						switch (alt11) {
 						case 1 :
-							// Truffle.g:2351:18: DIGITS
+							// Truffle.g:2337:18: DIGITS
 							{
 							mDIGITS(); 
 
@@ -2253,14 +2245,14 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = COMPLEX;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2355:5: ( ( DIGITS )+ ( 'j' | 'J' ) | FLOAT ( 'j' | 'J' ) )
+			// Truffle.g:2341:5: ( ( DIGITS )+ ( 'j' | 'J' ) | FLOAT ( 'j' | 'J' ) )
 			int alt14=2;
 			alt14 = dfa14.predict(input);
 			switch (alt14) {
 				case 1 :
-					// Truffle.g:2355:9: ( DIGITS )+ ( 'j' | 'J' )
+					// Truffle.g:2341:9: ( DIGITS )+ ( 'j' | 'J' )
 					{
-					// Truffle.g:2355:9: ( DIGITS )+
+					// Truffle.g:2341:9: ( DIGITS )+
 					int cnt13=0;
 					loop13:
 					while (true) {
@@ -2272,7 +2264,7 @@ public class TruffleLexer extends Lexer {
 
 						switch (alt13) {
 						case 1 :
-							// Truffle.g:2355:9: DIGITS
+							// Truffle.g:2341:9: DIGITS
 							{
 							mDIGITS(); 
 
@@ -2298,7 +2290,7 @@ public class TruffleLexer extends Lexer {
 					}
 					break;
 				case 2 :
-					// Truffle.g:2356:9: FLOAT ( 'j' | 'J' )
+					// Truffle.g:2342:9: FLOAT ( 'j' | 'J' )
 					{
 					mFLOAT(); 
 
@@ -2326,10 +2318,10 @@ public class TruffleLexer extends Lexer {
 	// $ANTLR start "DIGITS"
 	public final void mDIGITS() throws RecognitionException {
 		try {
-			// Truffle.g:2361:8: ( ( '0' .. '9' )+ )
-			// Truffle.g:2361:10: ( '0' .. '9' )+
+			// Truffle.g:2347:8: ( ( '0' .. '9' )+ )
+			// Truffle.g:2347:10: ( '0' .. '9' )+
 			{
-			// Truffle.g:2361:10: ( '0' .. '9' )+
+			// Truffle.g:2347:10: ( '0' .. '9' )+
 			int cnt15=0;
 			loop15:
 			while (true) {
@@ -2376,8 +2368,8 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = NAME;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2362:5: ( ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )* )
-			// Truffle.g:2362:10: ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
+			// Truffle.g:2348:5: ( ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )* )
+			// Truffle.g:2348:10: ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
 			{
 			if ( (input.LA(1) >= 'A' && input.LA(1) <= 'Z')||input.LA(1)=='_'||(input.LA(1) >= 'a' && input.LA(1) <= 'z') ) {
 				input.consume();
@@ -2387,7 +2379,7 @@ public class TruffleLexer extends Lexer {
 				recover(mse);
 				throw mse;
 			}
-			// Truffle.g:2363:9: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
+			// Truffle.g:2349:9: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
 			loop16:
 			while (true) {
 				int alt16=2;
@@ -2432,10 +2424,10 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = STRING;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2373:5: ( ( 'r' | 'u' | 'b' | 'ur' | 'br' | 'R' | 'U' | 'B' | 'UR' | 'BR' | 'uR' | 'Ur' | 'Br' | 'bR' )? ( '\\'\\'\\'' ( options {greedy=false; } : TRIAPOS )* '\\'\\'\\'' | '\"\"\"' ( options {greedy=false; } : TRIQUOTE )* '\"\"\"' | '\"' ( ESC |~ ( '\\\\' | '\\n' | '\"' ) )* '\"' | '\\'' ( ESC |~ ( '\\\\' | '\\n' | '\\'' ) )* '\\'' ) )
-			// Truffle.g:2373:9: ( 'r' | 'u' | 'b' | 'ur' | 'br' | 'R' | 'U' | 'B' | 'UR' | 'BR' | 'uR' | 'Ur' | 'Br' | 'bR' )? ( '\\'\\'\\'' ( options {greedy=false; } : TRIAPOS )* '\\'\\'\\'' | '\"\"\"' ( options {greedy=false; } : TRIQUOTE )* '\"\"\"' | '\"' ( ESC |~ ( '\\\\' | '\\n' | '\"' ) )* '\"' | '\\'' ( ESC |~ ( '\\\\' | '\\n' | '\\'' ) )* '\\'' )
+			// Truffle.g:2359:5: ( ( 'r' | 'u' | 'b' | 'ur' | 'br' | 'R' | 'U' | 'B' | 'UR' | 'BR' | 'uR' | 'Ur' | 'Br' | 'bR' )? ( '\\'\\'\\'' ( options {greedy=false; } : TRIAPOS )* '\\'\\'\\'' | '\"\"\"' ( options {greedy=false; } : TRIQUOTE )* '\"\"\"' | '\"' ( ESC |~ ( '\\\\' | '\\n' | '\"' ) )* '\"' | '\\'' ( ESC |~ ( '\\\\' | '\\n' | '\\'' ) )* '\\'' ) )
+			// Truffle.g:2359:9: ( 'r' | 'u' | 'b' | 'ur' | 'br' | 'R' | 'U' | 'B' | 'UR' | 'BR' | 'uR' | 'Ur' | 'Br' | 'bR' )? ( '\\'\\'\\'' ( options {greedy=false; } : TRIAPOS )* '\\'\\'\\'' | '\"\"\"' ( options {greedy=false; } : TRIQUOTE )* '\"\"\"' | '\"' ( ESC |~ ( '\\\\' | '\\n' | '\"' ) )* '\"' | '\\'' ( ESC |~ ( '\\\\' | '\\n' | '\\'' ) )* '\\'' )
 			{
-			// Truffle.g:2373:9: ( 'r' | 'u' | 'b' | 'ur' | 'br' | 'R' | 'U' | 'B' | 'UR' | 'BR' | 'uR' | 'Ur' | 'Br' | 'bR' )?
+			// Truffle.g:2359:9: ( 'r' | 'u' | 'b' | 'ur' | 'br' | 'R' | 'U' | 'B' | 'UR' | 'BR' | 'uR' | 'Ur' | 'Br' | 'bR' )?
 			int alt17=15;
 			switch ( input.LA(1) ) {
 				case 'r':
@@ -2539,92 +2531,92 @@ public class TruffleLexer extends Lexer {
 			}
 			switch (alt17) {
 				case 1 :
-					// Truffle.g:2373:10: 'r'
+					// Truffle.g:2359:10: 'r'
 					{
 					match('r'); 
 					}
 					break;
 				case 2 :
-					// Truffle.g:2373:14: 'u'
+					// Truffle.g:2359:14: 'u'
 					{
 					match('u'); 
 					}
 					break;
 				case 3 :
-					// Truffle.g:2373:18: 'b'
+					// Truffle.g:2359:18: 'b'
 					{
 					match('b'); 
 					}
 					break;
 				case 4 :
-					// Truffle.g:2373:22: 'ur'
+					// Truffle.g:2359:22: 'ur'
 					{
 					match("ur"); 
 
 					}
 					break;
 				case 5 :
-					// Truffle.g:2373:27: 'br'
+					// Truffle.g:2359:27: 'br'
 					{
 					match("br"); 
 
 					}
 					break;
 				case 6 :
-					// Truffle.g:2373:32: 'R'
+					// Truffle.g:2359:32: 'R'
 					{
 					match('R'); 
 					}
 					break;
 				case 7 :
-					// Truffle.g:2373:36: 'U'
+					// Truffle.g:2359:36: 'U'
 					{
 					match('U'); 
 					}
 					break;
 				case 8 :
-					// Truffle.g:2373:40: 'B'
+					// Truffle.g:2359:40: 'B'
 					{
 					match('B'); 
 					}
 					break;
 				case 9 :
-					// Truffle.g:2373:44: 'UR'
+					// Truffle.g:2359:44: 'UR'
 					{
 					match("UR"); 
 
 					}
 					break;
 				case 10 :
-					// Truffle.g:2373:49: 'BR'
+					// Truffle.g:2359:49: 'BR'
 					{
 					match("BR"); 
 
 					}
 					break;
 				case 11 :
-					// Truffle.g:2373:54: 'uR'
+					// Truffle.g:2359:54: 'uR'
 					{
 					match("uR"); 
 
 					}
 					break;
 				case 12 :
-					// Truffle.g:2373:59: 'Ur'
+					// Truffle.g:2359:59: 'Ur'
 					{
 					match("Ur"); 
 
 					}
 					break;
 				case 13 :
-					// Truffle.g:2373:64: 'Br'
+					// Truffle.g:2359:64: 'Br'
 					{
 					match("Br"); 
 
 					}
 					break;
 				case 14 :
-					// Truffle.g:2373:69: 'bR'
+					// Truffle.g:2359:69: 'bR'
 					{
 					match("bR"); 
 
@@ -2633,7 +2625,7 @@ public class TruffleLexer extends Lexer {
 
 			}
 
-			// Truffle.g:2374:9: ( '\\'\\'\\'' ( options {greedy=false; } : TRIAPOS )* '\\'\\'\\'' | '\"\"\"' ( options {greedy=false; } : TRIQUOTE )* '\"\"\"' | '\"' ( ESC |~ ( '\\\\' | '\\n' | '\"' ) )* '\"' | '\\'' ( ESC |~ ( '\\\\' | '\\n' | '\\'' ) )* '\\'' )
+			// Truffle.g:2360:9: ( '\\'\\'\\'' ( options {greedy=false; } : TRIAPOS )* '\\'\\'\\'' | '\"\"\"' ( options {greedy=false; } : TRIQUOTE )* '\"\"\"' | '\"' ( ESC |~ ( '\\\\' | '\\n' | '\"' ) )* '\"' | '\\'' ( ESC |~ ( '\\\\' | '\\n' | '\\'' ) )* '\\'' )
 			int alt22=4;
 			int LA22_0 = input.LA(1);
 			if ( (LA22_0=='\'') ) {
@@ -2705,11 +2697,11 @@ public class TruffleLexer extends Lexer {
 
 			switch (alt22) {
 				case 1 :
-					// Truffle.g:2374:13: '\\'\\'\\'' ( options {greedy=false; } : TRIAPOS )* '\\'\\'\\''
+					// Truffle.g:2360:13: '\\'\\'\\'' ( options {greedy=false; } : TRIAPOS )* '\\'\\'\\''
 					{
 					match("'''"); 
 
-					// Truffle.g:2374:22: ( options {greedy=false; } : TRIAPOS )*
+					// Truffle.g:2360:22: ( options {greedy=false; } : TRIAPOS )*
 					loop18:
 					while (true) {
 						int alt18=2;
@@ -2737,7 +2729,7 @@ public class TruffleLexer extends Lexer {
 
 						switch (alt18) {
 						case 1 :
-							// Truffle.g:2374:47: TRIAPOS
+							// Truffle.g:2360:47: TRIAPOS
 							{
 							mTRIAPOS(); 
 
@@ -2754,11 +2746,11 @@ public class TruffleLexer extends Lexer {
 					}
 					break;
 				case 2 :
-					// Truffle.g:2375:13: '\"\"\"' ( options {greedy=false; } : TRIQUOTE )* '\"\"\"'
+					// Truffle.g:2361:13: '\"\"\"' ( options {greedy=false; } : TRIQUOTE )* '\"\"\"'
 					{
 					match("\"\"\""); 
 
-					// Truffle.g:2375:19: ( options {greedy=false; } : TRIQUOTE )*
+					// Truffle.g:2361:19: ( options {greedy=false; } : TRIQUOTE )*
 					loop19:
 					while (true) {
 						int alt19=2;
@@ -2786,7 +2778,7 @@ public class TruffleLexer extends Lexer {
 
 						switch (alt19) {
 						case 1 :
-							// Truffle.g:2375:44: TRIQUOTE
+							// Truffle.g:2361:44: TRIQUOTE
 							{
 							mTRIQUOTE(); 
 
@@ -2803,10 +2795,10 @@ public class TruffleLexer extends Lexer {
 					}
 					break;
 				case 3 :
-					// Truffle.g:2376:13: '\"' ( ESC |~ ( '\\\\' | '\\n' | '\"' ) )* '\"'
+					// Truffle.g:2362:13: '\"' ( ESC |~ ( '\\\\' | '\\n' | '\"' ) )* '\"'
 					{
 					match('\"'); 
-					// Truffle.g:2376:17: ( ESC |~ ( '\\\\' | '\\n' | '\"' ) )*
+					// Truffle.g:2362:17: ( ESC |~ ( '\\\\' | '\\n' | '\"' ) )*
 					loop20:
 					while (true) {
 						int alt20=3;
@@ -2820,14 +2812,14 @@ public class TruffleLexer extends Lexer {
 
 						switch (alt20) {
 						case 1 :
-							// Truffle.g:2376:18: ESC
+							// Truffle.g:2362:18: ESC
 							{
 							mESC(); 
 
 							}
 							break;
 						case 2 :
-							// Truffle.g:2376:22: ~ ( '\\\\' | '\\n' | '\"' )
+							// Truffle.g:2362:22: ~ ( '\\\\' | '\\n' | '\"' )
 							{
 							if ( (input.LA(1) >= '\u0000' && input.LA(1) <= '\t')||(input.LA(1) >= '\u000B' && input.LA(1) <= '!')||(input.LA(1) >= '#' && input.LA(1) <= '[')||(input.LA(1) >= ']' && input.LA(1) <= '\uFFFF') ) {
 								input.consume();
@@ -2849,10 +2841,10 @@ public class TruffleLexer extends Lexer {
 					}
 					break;
 				case 4 :
-					// Truffle.g:2377:13: '\\'' ( ESC |~ ( '\\\\' | '\\n' | '\\'' ) )* '\\''
+					// Truffle.g:2363:13: '\\'' ( ESC |~ ( '\\\\' | '\\n' | '\\'' ) )* '\\''
 					{
 					match('\''); 
-					// Truffle.g:2377:18: ( ESC |~ ( '\\\\' | '\\n' | '\\'' ) )*
+					// Truffle.g:2363:18: ( ESC |~ ( '\\\\' | '\\n' | '\\'' ) )*
 					loop21:
 					while (true) {
 						int alt21=3;
@@ -2866,14 +2858,14 @@ public class TruffleLexer extends Lexer {
 
 						switch (alt21) {
 						case 1 :
-							// Truffle.g:2377:19: ESC
+							// Truffle.g:2363:19: ESC
 							{
 							mESC(); 
 
 							}
 							break;
 						case 2 :
-							// Truffle.g:2377:23: ~ ( '\\\\' | '\\n' | '\\'' )
+							// Truffle.g:2363:23: ~ ( '\\\\' | '\\n' | '\\'' )
 							{
 							if ( (input.LA(1) >= '\u0000' && input.LA(1) <= '\t')||(input.LA(1) >= '\u000B' && input.LA(1) <= '&')||(input.LA(1) >= '(' && input.LA(1) <= '[')||(input.LA(1) >= ']' && input.LA(1) <= '\uFFFF') ) {
 								input.consume();
@@ -2917,10 +2909,10 @@ public class TruffleLexer extends Lexer {
 	// $ANTLR start "TRIQUOTE"
 	public final void mTRIQUOTE() throws RecognitionException {
 		try {
-			// Truffle.g:2388:5: ( ( '\"' )? ( '\"' )? ( ESC |~ ( '\\\\' | '\"' ) )+ )
-			// Truffle.g:2388:7: ( '\"' )? ( '\"' )? ( ESC |~ ( '\\\\' | '\"' ) )+
+			// Truffle.g:2374:5: ( ( '\"' )? ( '\"' )? ( ESC |~ ( '\\\\' | '\"' ) )+ )
+			// Truffle.g:2374:7: ( '\"' )? ( '\"' )? ( ESC |~ ( '\\\\' | '\"' ) )+
 			{
-			// Truffle.g:2388:7: ( '\"' )?
+			// Truffle.g:2374:7: ( '\"' )?
 			int alt23=2;
 			int LA23_0 = input.LA(1);
 			if ( (LA23_0=='\"') ) {
@@ -2928,7 +2920,7 @@ public class TruffleLexer extends Lexer {
 			}
 			switch (alt23) {
 				case 1 :
-					// Truffle.g:2388:7: '\"'
+					// Truffle.g:2374:7: '\"'
 					{
 					match('\"'); 
 					}
@@ -2936,7 +2928,7 @@ public class TruffleLexer extends Lexer {
 
 			}
 
-			// Truffle.g:2388:12: ( '\"' )?
+			// Truffle.g:2374:12: ( '\"' )?
 			int alt24=2;
 			int LA24_0 = input.LA(1);
 			if ( (LA24_0=='\"') ) {
@@ -2944,7 +2936,7 @@ public class TruffleLexer extends Lexer {
 			}
 			switch (alt24) {
 				case 1 :
-					// Truffle.g:2388:12: '\"'
+					// Truffle.g:2374:12: '\"'
 					{
 					match('\"'); 
 					}
@@ -2952,7 +2944,7 @@ public class TruffleLexer extends Lexer {
 
 			}
 
-			// Truffle.g:2388:17: ( ESC |~ ( '\\\\' | '\"' ) )+
+			// Truffle.g:2374:17: ( ESC |~ ( '\\\\' | '\"' ) )+
 			int cnt25=0;
 			loop25:
 			while (true) {
@@ -2967,14 +2959,14 @@ public class TruffleLexer extends Lexer {
 
 				switch (alt25) {
 				case 1 :
-					// Truffle.g:2388:18: ESC
+					// Truffle.g:2374:18: ESC
 					{
 					mESC(); 
 
 					}
 					break;
 				case 2 :
-					// Truffle.g:2388:22: ~ ( '\\\\' | '\"' )
+					// Truffle.g:2374:22: ~ ( '\\\\' | '\"' )
 					{
 					if ( (input.LA(1) >= '\u0000' && input.LA(1) <= '!')||(input.LA(1) >= '#' && input.LA(1) <= '[')||(input.LA(1) >= ']' && input.LA(1) <= '\uFFFF') ) {
 						input.consume();
@@ -3007,10 +2999,10 @@ public class TruffleLexer extends Lexer {
 	// $ANTLR start "TRIAPOS"
 	public final void mTRIAPOS() throws RecognitionException {
 		try {
-			// Truffle.g:2394:5: ( ( '\\'' )? ( '\\'' )? ( ESC |~ ( '\\\\' | '\\'' ) )+ )
-			// Truffle.g:2394:7: ( '\\'' )? ( '\\'' )? ( ESC |~ ( '\\\\' | '\\'' ) )+
+			// Truffle.g:2380:5: ( ( '\\'' )? ( '\\'' )? ( ESC |~ ( '\\\\' | '\\'' ) )+ )
+			// Truffle.g:2380:7: ( '\\'' )? ( '\\'' )? ( ESC |~ ( '\\\\' | '\\'' ) )+
 			{
-			// Truffle.g:2394:7: ( '\\'' )?
+			// Truffle.g:2380:7: ( '\\'' )?
 			int alt26=2;
 			int LA26_0 = input.LA(1);
 			if ( (LA26_0=='\'') ) {
@@ -3018,7 +3010,7 @@ public class TruffleLexer extends Lexer {
 			}
 			switch (alt26) {
 				case 1 :
-					// Truffle.g:2394:7: '\\''
+					// Truffle.g:2380:7: '\\''
 					{
 					match('\''); 
 					}
@@ -3026,7 +3018,7 @@ public class TruffleLexer extends Lexer {
 
 			}
 
-			// Truffle.g:2394:13: ( '\\'' )?
+			// Truffle.g:2380:13: ( '\\'' )?
 			int alt27=2;
 			int LA27_0 = input.LA(1);
 			if ( (LA27_0=='\'') ) {
@@ -3034,7 +3026,7 @@ public class TruffleLexer extends Lexer {
 			}
 			switch (alt27) {
 				case 1 :
-					// Truffle.g:2394:13: '\\''
+					// Truffle.g:2380:13: '\\''
 					{
 					match('\''); 
 					}
@@ -3042,7 +3034,7 @@ public class TruffleLexer extends Lexer {
 
 			}
 
-			// Truffle.g:2394:19: ( ESC |~ ( '\\\\' | '\\'' ) )+
+			// Truffle.g:2380:19: ( ESC |~ ( '\\\\' | '\\'' ) )+
 			int cnt28=0;
 			loop28:
 			while (true) {
@@ -3057,14 +3049,14 @@ public class TruffleLexer extends Lexer {
 
 				switch (alt28) {
 				case 1 :
-					// Truffle.g:2394:20: ESC
+					// Truffle.g:2380:20: ESC
 					{
 					mESC(); 
 
 					}
 					break;
 				case 2 :
-					// Truffle.g:2394:24: ~ ( '\\\\' | '\\'' )
+					// Truffle.g:2380:24: ~ ( '\\\\' | '\\'' )
 					{
 					if ( (input.LA(1) >= '\u0000' && input.LA(1) <= '&')||(input.LA(1) >= '(' && input.LA(1) <= '[')||(input.LA(1) >= ']' && input.LA(1) <= '\uFFFF') ) {
 						input.consume();
@@ -3097,8 +3089,8 @@ public class TruffleLexer extends Lexer {
 	// $ANTLR start "ESC"
 	public final void mESC() throws RecognitionException {
 		try {
-			// Truffle.g:2398:5: ( '\\\\' . )
-			// Truffle.g:2398:10: '\\\\' .
+			// Truffle.g:2384:5: ( '\\\\' . )
+			// Truffle.g:2384:10: '\\\\' .
 			{
 			match('\\'); 
 			matchAny(); 
@@ -3118,11 +3110,11 @@ public class TruffleLexer extends Lexer {
 			int _channel = DEFAULT_TOKEN_CHANNEL;
 			CommonToken nl=null;
 
-			// Truffle.g:2409:5: ( '\\\\' ( '\\r' )? '\\n' ( ' ' | '\\t' )* ( COMMENT |nl= NEWLINE |) )
-			// Truffle.g:2409:10: '\\\\' ( '\\r' )? '\\n' ( ' ' | '\\t' )* ( COMMENT |nl= NEWLINE |)
+			// Truffle.g:2395:5: ( '\\\\' ( '\\r' )? '\\n' ( ' ' | '\\t' )* ( COMMENT |nl= NEWLINE |) )
+			// Truffle.g:2395:10: '\\\\' ( '\\r' )? '\\n' ( ' ' | '\\t' )* ( COMMENT |nl= NEWLINE |)
 			{
 			match('\\'); 
-			// Truffle.g:2409:15: ( '\\r' )?
+			// Truffle.g:2395:15: ( '\\r' )?
 			int alt29=2;
 			int LA29_0 = input.LA(1);
 			if ( (LA29_0=='\r') ) {
@@ -3130,7 +3122,7 @@ public class TruffleLexer extends Lexer {
 			}
 			switch (alt29) {
 				case 1 :
-					// Truffle.g:2409:16: '\\r'
+					// Truffle.g:2395:16: '\\r'
 					{
 					match('\r'); 
 					}
@@ -3139,7 +3131,7 @@ public class TruffleLexer extends Lexer {
 			}
 
 			match('\n'); 
-			// Truffle.g:2409:28: ( ' ' | '\\t' )*
+			// Truffle.g:2395:28: ( ' ' | '\\t' )*
 			loop30:
 			while (true) {
 				int alt30=2;
@@ -3169,7 +3161,7 @@ public class TruffleLexer extends Lexer {
 			}
 
 			 _channel=HIDDEN; 
-			// Truffle.g:2410:10: ( COMMENT |nl= NEWLINE |)
+			// Truffle.g:2396:10: ( COMMENT |nl= NEWLINE |)
 			int alt31=3;
 			int LA31_0 = input.LA(1);
 			if ( (LA31_0=='\t'||LA31_0==' ') && ((startPos==0))) {
@@ -3188,14 +3180,14 @@ public class TruffleLexer extends Lexer {
 
 			switch (alt31) {
 				case 1 :
-					// Truffle.g:2410:12: COMMENT
+					// Truffle.g:2396:12: COMMENT
 					{
 					mCOMMENT(); 
 
 					}
 					break;
 				case 2 :
-					// Truffle.g:2411:12: nl= NEWLINE
+					// Truffle.g:2397:12: nl= NEWLINE
 					{
 					int nlStart1660 = getCharIndex();
 					int nlStartLine1660 = getLine();
@@ -3211,7 +3203,7 @@ public class TruffleLexer extends Lexer {
 					}
 					break;
 				case 3 :
-					// Truffle.g:2416:10: 
+					// Truffle.g:2402:10: 
 					{
 					}
 					break;
@@ -3242,10 +3234,10 @@ public class TruffleLexer extends Lexer {
 
 			    int newlines = 0;
 
-			// Truffle.g:2435:5: ( ( ( '\\u000C' )? ( '\\r' )? '\\n' )+ )
-			// Truffle.g:2435:9: ( ( '\\u000C' )? ( '\\r' )? '\\n' )+
+			// Truffle.g:2421:5: ( ( ( '\\u000C' )? ( '\\r' )? '\\n' )+ )
+			// Truffle.g:2421:9: ( ( '\\u000C' )? ( '\\r' )? '\\n' )+
 			{
-			// Truffle.g:2435:9: ( ( '\\u000C' )? ( '\\r' )? '\\n' )+
+			// Truffle.g:2421:9: ( ( '\\u000C' )? ( '\\r' )? '\\n' )+
 			int cnt34=0;
 			loop34:
 			while (true) {
@@ -3257,9 +3249,9 @@ public class TruffleLexer extends Lexer {
 
 				switch (alt34) {
 				case 1 :
-					// Truffle.g:2435:10: ( '\\u000C' )? ( '\\r' )? '\\n'
+					// Truffle.g:2421:10: ( '\\u000C' )? ( '\\r' )? '\\n'
 					{
-					// Truffle.g:2435:10: ( '\\u000C' )?
+					// Truffle.g:2421:10: ( '\\u000C' )?
 					int alt32=2;
 					int LA32_0 = input.LA(1);
 					if ( (LA32_0=='\f') ) {
@@ -3267,7 +3259,7 @@ public class TruffleLexer extends Lexer {
 					}
 					switch (alt32) {
 						case 1 :
-							// Truffle.g:2435:11: '\\u000C'
+							// Truffle.g:2421:11: '\\u000C'
 							{
 							match('\f'); 
 							}
@@ -3275,7 +3267,7 @@ public class TruffleLexer extends Lexer {
 
 					}
 
-					// Truffle.g:2435:21: ( '\\r' )?
+					// Truffle.g:2421:21: ( '\\r' )?
 					int alt33=2;
 					int LA33_0 = input.LA(1);
 					if ( (LA33_0=='\r') ) {
@@ -3283,7 +3275,7 @@ public class TruffleLexer extends Lexer {
 					}
 					switch (alt33) {
 						case 1 :
-							// Truffle.g:2435:22: '\\r'
+							// Truffle.g:2421:22: '\\r'
 							{
 							match('\r'); 
 							}
@@ -3324,13 +3316,13 @@ public class TruffleLexer extends Lexer {
 		try {
 			int _type = WS;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Truffle.g:2435:5: ({...}? => ( ' ' | '\\t' | '\\u000C' )+ )
-			// Truffle.g:2435:10: {...}? => ( ' ' | '\\t' | '\\u000C' )+
+			// Truffle.g:2421:5: ({...}? => ( ' ' | '\\t' | '\\u000C' )+ )
+			// Truffle.g:2421:10: {...}? => ( ' ' | '\\t' | '\\u000C' )+
 			{
 			if ( !((startPos>0)) ) {
 				throw new FailedPredicateException(input, "WS", "startPos>0");
 			}
-			// Truffle.g:2435:26: ( ' ' | '\\t' | '\\u000C' )+
+			// Truffle.g:2421:26: ( ' ' | '\\t' | '\\u000C' )+
 			int cnt35=0;
 			loop35:
 			while (true) {
@@ -3384,13 +3376,13 @@ public class TruffleLexer extends Lexer {
 			    int spaces = 0;
 			    int newlines = 0;
 
-			// Truffle.g:2455:5: ({...}? => ({...}? ( ' ' | '\\t' )+ | ( ' ' | '\\t' )+ ( ( '\\r' )? '\\n' )* ) )
-			// Truffle.g:2455:9: {...}? => ({...}? ( ' ' | '\\t' )+ | ( ' ' | '\\t' )+ ( ( '\\r' )? '\\n' )* )
+			// Truffle.g:2441:5: ({...}? => ({...}? ( ' ' | '\\t' )+ | ( ' ' | '\\t' )+ ( ( '\\r' )? '\\n' )* ) )
+			// Truffle.g:2441:9: {...}? => ({...}? ( ' ' | '\\t' )+ | ( ' ' | '\\t' )+ ( ( '\\r' )? '\\n' )* )
 			{
 			if ( !((startPos==0)) ) {
 				throw new FailedPredicateException(input, "LEADING_WS", "startPos==0");
 			}
-			// Truffle.g:2456:9: ({...}? ( ' ' | '\\t' )+ | ( ' ' | '\\t' )+ ( ( '\\r' )? '\\n' )* )
+			// Truffle.g:2442:9: ({...}? ( ' ' | '\\t' )+ | ( ' ' | '\\t' )+ ( ( '\\r' )? '\\n' )* )
 			int alt40=2;
 			int LA40_0 = input.LA(1);
 			if ( (LA40_0==' ') ) {
@@ -3422,12 +3414,12 @@ public class TruffleLexer extends Lexer {
 
 			switch (alt40) {
 				case 1 :
-					// Truffle.g:2456:13: {...}? ( ' ' | '\\t' )+
+					// Truffle.g:2442:13: {...}? ( ' ' | '\\t' )+
 					{
 					if ( !((implicitLineJoiningLevel>0)) ) {
 						throw new FailedPredicateException(input, "LEADING_WS", "implicitLineJoiningLevel>0");
 					}
-					// Truffle.g:2456:43: ( ' ' | '\\t' )+
+					// Truffle.g:2442:43: ( ' ' | '\\t' )+
 					int cnt36=0;
 					loop36:
 					while (true) {
@@ -3464,9 +3456,9 @@ public class TruffleLexer extends Lexer {
 					}
 					break;
 				case 2 :
-					// Truffle.g:2457:14: ( ' ' | '\\t' )+ ( ( '\\r' )? '\\n' )*
+					// Truffle.g:2443:14: ( ' ' | '\\t' )+ ( ( '\\r' )? '\\n' )*
 					{
-					// Truffle.g:2457:14: ( ' ' | '\\t' )+
+					// Truffle.g:2443:14: ( ' ' | '\\t' )+
 					int cnt37=0;
 					loop37:
 					while (true) {
@@ -3481,14 +3473,14 @@ public class TruffleLexer extends Lexer {
 
 						switch (alt37) {
 						case 1 :
-							// Truffle.g:2457:20: ' '
+							// Truffle.g:2443:20: ' '
 							{
 							match(' '); 
 							 spaces++; 
 							}
 							break;
 						case 2 :
-							// Truffle.g:2458:19: '\\t'
+							// Truffle.g:2444:19: '\\t'
 							{
 							match('\t'); 
 							 spaces += 8; spaces -= (spaces % 8); 
@@ -3503,7 +3495,7 @@ public class TruffleLexer extends Lexer {
 						cnt37++;
 					}
 
-					// Truffle.g:2460:14: ( ( '\\r' )? '\\n' )*
+					// Truffle.g:2446:14: ( ( '\\r' )? '\\n' )*
 					loop39:
 					while (true) {
 						int alt39=2;
@@ -3514,9 +3506,9 @@ public class TruffleLexer extends Lexer {
 
 						switch (alt39) {
 						case 1 :
-							// Truffle.g:2460:16: ( '\\r' )? '\\n'
+							// Truffle.g:2446:16: ( '\\r' )? '\\n'
 							{
-							// Truffle.g:2460:16: ( '\\r' )?
+							// Truffle.g:2446:16: ( '\\r' )?
 							int alt38=2;
 							int LA38_0 = input.LA(1);
 							if ( (LA38_0=='\r') ) {
@@ -3524,7 +3516,7 @@ public class TruffleLexer extends Lexer {
 							}
 							switch (alt38) {
 								case 1 :
-									// Truffle.g:2460:17: '\\r'
+									// Truffle.g:2446:17: '\\r'
 									{
 									match('\r'); 
 									}
@@ -3612,17 +3604,17 @@ public class TruffleLexer extends Lexer {
 
 			    _channel=HIDDEN;
 
-			// Truffle.g:2542:5: ({...}? => ( ' ' | '\\t' )* '#' (~ '\\n' )* ( '\\n' )+ | '#' (~ '\\n' )* )
+			// Truffle.g:2528:5: ({...}? => ( ' ' | '\\t' )* '#' (~ '\\n' )* ( '\\n' )+ | '#' (~ '\\n' )* )
 			int alt45=2;
 			alt45 = dfa45.predict(input);
 			switch (alt45) {
 				case 1 :
-					// Truffle.g:2542:10: {...}? => ( ' ' | '\\t' )* '#' (~ '\\n' )* ( '\\n' )+
+					// Truffle.g:2528:10: {...}? => ( ' ' | '\\t' )* '#' (~ '\\n' )* ( '\\n' )+
 					{
 					if ( !((startPos==0)) ) {
 						throw new FailedPredicateException(input, "COMMENT", "startPos==0");
 					}
-					// Truffle.g:2542:27: ( ' ' | '\\t' )*
+					// Truffle.g:2528:27: ( ' ' | '\\t' )*
 					loop41:
 					while (true) {
 						int alt41=2;
@@ -3652,7 +3644,7 @@ public class TruffleLexer extends Lexer {
 					}
 
 					match('#'); 
-					// Truffle.g:2542:43: (~ '\\n' )*
+					// Truffle.g:2528:43: (~ '\\n' )*
 					loop42:
 					while (true) {
 						int alt42=2;
@@ -3681,7 +3673,7 @@ public class TruffleLexer extends Lexer {
 						}
 					}
 
-					// Truffle.g:2542:52: ( '\\n' )+
+					// Truffle.g:2528:52: ( '\\n' )+
 					int cnt43=0;
 					loop43:
 					while (true) {
@@ -3693,7 +3685,7 @@ public class TruffleLexer extends Lexer {
 
 						switch (alt43) {
 						case 1 :
-							// Truffle.g:2542:52: '\\n'
+							// Truffle.g:2528:52: '\\n'
 							{
 							match('\n'); 
 							}
@@ -3710,10 +3702,10 @@ public class TruffleLexer extends Lexer {
 					}
 					break;
 				case 2 :
-					// Truffle.g:2543:10: '#' (~ '\\n' )*
+					// Truffle.g:2529:10: '#' (~ '\\n' )*
 					{
 					match('#'); 
-					// Truffle.g:2543:14: (~ '\\n' )*
+					// Truffle.g:2529:14: (~ '\\n' )*
 					loop44:
 					while (true) {
 						int alt44=2;
@@ -4438,7 +4430,7 @@ public class TruffleLexer extends Lexer {
 		}
 		@Override
 		public String getDescription() {
-			return "2328:1: FLOAT : ( '.' DIGITS ( Exponent )? | DIGITS '.' Exponent | DIGITS ( '.' ( DIGITS ( Exponent )? )? | Exponent ) );";
+			return "2314:1: FLOAT : ( '.' DIGITS ( Exponent )? | DIGITS '.' Exponent | DIGITS ( '.' ( DIGITS ( Exponent )? )? | Exponent ) );";
 		}
 	}
 
@@ -4492,7 +4484,7 @@ public class TruffleLexer extends Lexer {
 		}
 		@Override
 		public String getDescription() {
-			return "2354:1: COMPLEX : ( ( DIGITS )+ ( 'j' | 'J' ) | FLOAT ( 'j' | 'J' ) );";
+			return "2340:1: COMPLEX : ( ( DIGITS )+ ( 'j' | 'J' ) | FLOAT ( 'j' | 'J' ) );";
 		}
 	}
 
@@ -4547,7 +4539,7 @@ public class TruffleLexer extends Lexer {
 		}
 		@Override
 		public String getDescription() {
-			return "2538:1: COMMENT : ({...}? => ( ' ' | '\\t' )* '#' (~ '\\n' )* ( '\\n' )+ | '#' (~ '\\n' )* );";
+			return "2524:1: COMMENT : ({...}? => ( ' ' | '\\t' )* '#' (~ '\\n' )* ( '\\n' )+ | '#' (~ '\\n' )* );";
 		}
 		@Override
 		public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {

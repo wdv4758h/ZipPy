@@ -29,49 +29,49 @@ import org.antlr.runtime.*;
 import edu.uci.python.nodes.*;
 import edu.uci.python.nodes.statements.*;
 
-public class ErrorHandlerMsg {
+public class ErrorHandler {
 
-    public PNode errorExpr(Token t) {
+    public static PNode errorExpr(Token t) {
         throw new ParseException("Bad Expr Node", t.getLine(), t.getCharPositionInLine());
     }
 
-    public PNode errorMod(Token t) {
+    public static PNode errorMod(Token t) {
         throw new ParseException("Bad Mod Node", t.getLine(), t.getCharPositionInLine());
     }
 
-    public PNode errorSlice(Token t) {
+    public static PNode errorSlice(Token t) {
         throw new ParseException("Bad Slice Node", t.getLine(), t.getCharPositionInLine());
     }
 
-    public StatementNode errorStmt(Token t) {
+    public static StatementNode errorStmt(Token t) {
         throw new ParseException("Bad Stmt Node", t.getLine(), t.getCharPositionInLine());
     }
 
-    public void error(String message, Token t) {
+    public static void error(String message, Token t) {
         throw new ParseException(message, t.getLine(), t.getCharPositionInLine());
     }
 
-    public void recover(BaseRecognizer br, IntStream input, RecognitionException re) {
+    public static void recover(BaseRecognizer br, IntStream input, RecognitionException re) {
         throw new ParseException(message(br, re));
     }
 
-    public void reportError(BaseRecognizer br, RecognitionException re) {
+    public static void reportError(BaseRecognizer br, RecognitionException re) {
         throw new ParseException(message(br, re));
     }
 
-    public void recover(Lexer lex, RecognitionException re) {
+    public static void recover(Lexer lex, RecognitionException re) {
         throw new ParseException(message(lex, re));
     }
 
-    private String message(BaseRecognizer br, RecognitionException re) {
+    private static String message(BaseRecognizer br, RecognitionException re) {
         return br.getErrorMessage(re, br.getTokenNames());
     }
 
-    public Object recoverFromMismatchedToken(BaseRecognizer br, IntStream input, int ttype, BitSet follow) throws RecognitionException {
+    public static Object recoverFromMismatchedToken(BaseRecognizer br, IntStream input, int ttype, BitSet follow) throws RecognitionException {
         throw new MismatchedTokenException(ttype, input);
     }
 
-    public boolean mismatch(BaseRecognizer br, IntStream input, int ttype, BitSet follow) throws RecognitionException {
+    public static boolean mismatch(BaseRecognizer br, IntStream input, int ttype, BitSet follow) throws RecognitionException {
         throw new MismatchedTokenException(ttype, input);
     }
 

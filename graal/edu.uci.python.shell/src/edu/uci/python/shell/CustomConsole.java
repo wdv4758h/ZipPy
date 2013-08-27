@@ -210,14 +210,11 @@ public class CustomConsole extends JLineConsole {
 
     protected static TruffleParser setupTruffleParser(CharStream charStream, String filename, String encoding, boolean single) {
         TruffleLexer lexer = new TruffleLexer(charStream);
-        ErrorHandlerMsg errorHandlerMsg = new ErrorHandlerMsg();
-        lexer.setErrorHandler(errorHandlerMsg);
         lexer.single = single;
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         TruffleTokenSource indentedSource = new TruffleTokenSource(tokens, filename, single);
         tokens = new CommonTokenStream(indentedSource);
         TruffleParser parser = new TruffleParser(tokens, encoding);
-        parser.setErrorHandler(errorHandlerMsg);
         parser.setTreeAdaptor(new TrufflePNodeAdaptor());
         return parser;
     }
