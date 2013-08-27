@@ -32,7 +32,7 @@ import com.oracle.truffle.api.frame.FrameSlotKind;
 import com.oracle.truffle.api.frame.FrameSlotTypeException;
 import com.oracle.truffle.api.frame.FrameUtil;
 
-import edu.uci.python.nodes.statements.*;
+import edu.uci.python.nodes.*;
 import edu.uci.python.runtime.datatypes.*;
 
 /**
@@ -41,7 +41,7 @@ import edu.uci.python.runtime.datatypes.*;
  * @author zwei
  * 
  */
-public abstract class FrameSlotNode extends StatementNode {
+public abstract class FrameSlotNode extends PNode {
 
     protected final FrameSlot slot;
 

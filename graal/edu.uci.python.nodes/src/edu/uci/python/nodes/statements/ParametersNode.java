@@ -30,13 +30,11 @@ import com.oracle.truffle.api.frame.*;
 
 import edu.uci.python.nodes.*;
 
-public class ParametersNode extends StatementNode {
+public class ParametersNode extends PNode {
 
     public static final ParametersNode EMPTY_PARAMS = new ParametersNode(null);
 
     protected List<String> parameterNames;
-
-    protected List<PNode> tupleAssignments;
 
     public ParametersNode(List<String> paramNames) {
         this.parameterNames = paramNames;
@@ -48,14 +46,6 @@ public class ParametersNode extends StatementNode {
 
     public int size() {
         return parameterNames.size();
-    }
-
-    public List<PNode> getTupleAssignment() {
-        return tupleAssignments;
-    }
-
-    public void setTupleAssignment(List<PNode> tupleAssignments) {
-        this.tupleAssignments = tupleAssignments;
     }
 
     public void evaluateDefaults(VirtualFrame frame) {
