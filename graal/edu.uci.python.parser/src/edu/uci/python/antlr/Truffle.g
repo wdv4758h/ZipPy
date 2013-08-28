@@ -907,7 +907,7 @@ import_from
     : FROM (d+=DOT* dotted_name | d+=DOT+) IMPORT
         (STAR
          {
-             stype = actions.makeImportFrom($FROM, actions.makeFromText($d, $dotted_name.names),
+             stype = actions.makeImportFrom($FROM, GrammarUtilities.makeFromText($d, $dotted_name.names),
                  actions.makeModuleNameNode($d, $dotted_name.names),
                  actions.makeStarAlias($STAR), actions.makeLevel($d));
          }
@@ -926,7 +926,7 @@ import_from
                      }
                  }
              }
-             stype = actions.makeImportFrom($FROM, actions.makeFromText($d, $dotted_name.names),
+             stype = actions.makeImportFrom($FROM, GrammarUtilities.makeFromText($d, $dotted_name.names),
                  actions.makeModuleNameNode($d, $dotted_name.names),
                  actions.makeAliases($i1.atypes), actions.makeLevel($d));
          }
@@ -947,7 +947,7 @@ import_from
                      }
                  }
              }
-             stype = actions.makeImportFrom($FROM, actions.makeFromText($d, $dotted_name.names),
+             stype = actions.makeImportFrom($FROM, GrammarUtilities.makeFromText($d, $dotted_name.names),
                  actions.makeModuleNameNode($d, $dotted_name.names),
                  actions.makeAliases($i2.atypes), actions.makeLevel($d));
          }

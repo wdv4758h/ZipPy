@@ -41,8 +41,6 @@ import edu.uci.python.runtime.datatypes.*;
 @TypeSystemReference(PythonTypes.class)
 public abstract class PNode extends RootNode {
 
-// public abstract Object execute(VirtualFrame frame);
-
     public int executeInt(VirtualFrame frame) throws UnexpectedResultException {
         Object o = execute(frame);
         if (o instanceof Integer) {
@@ -200,7 +198,7 @@ public abstract class PNode extends RootNode {
         t.adoptChild(this);
     }
 
-    // // Dependencies for grammar
+    // // Dependencies for grammar copied from PythonTree.class
 
     private int charStartIndex = -1;
     private int charStopIndex = -1;
@@ -211,25 +209,14 @@ public abstract class PNode extends RootNode {
     }
 
     public PNode(Token t) {
-        if (Options.debug) {
-            if (t != null) {
-                System.out.println("new PNode: Token :" + t.toString());
-            }
-        }
         node = new CommonTree(t);
     }
 
     public void setToken(Token t) {
-        if (Options.debug) {
-            System.out.println("set Token: Token :" + ((t != null) ? t.toString() : "null"));
-        }
         node = new CommonTree(t);
     }
 
     public void setToken(PNode tree) {
-        if (Options.debug) {
-            System.out.println("new PNode: " + tree.toString());
-        }
         node = new CommonTree(tree.node);
         charStartIndex = tree.getCharStartIndex();
         charStopIndex = tree.getCharStopIndex();
@@ -323,7 +310,6 @@ public abstract class PNode extends RootNode {
 
     // XXX: From here down copied from org.antlr.runtime.tree.BaseTree
     protected List<PNode> children;
-    protected Iterator<Node> childrenOfTruffle;
 
     public PNode getChild(int i) {
         PNode retVal = null;
@@ -368,52 +354,17 @@ public abstract class PNode extends RootNode {
                     // no children for this but t has children; just set pointer
                     // call general freshener routine
                     this.children = childTree.children;
-                    this.freshenParentAndChildIndexes();
+                    this.freshenParentAndChildIndexes(0);
                 }
             }
         } else { // child is not nil (don't care about children)
             if (children == null) {
-                children = createChildrenList(); // create children list on
-                                                 // demand
+                children = new ArrayList<>();
             }
             children.add(t);
             childTree.setParent(this);
             childTree.setChildIndex(children.size() - 1);
         }
-    }
-
-    public Object deleteChild(int i) {
-        if (children == null) {
-            return null;
-        }
-        PNode killed = children.remove(i);
-        // walk rest and decrement their child indexes
-        this.freshenParentAndChildIndexes(i);
-        return killed;
-    }
-
-    public void setChild(int i, PNode t) {
-        if (t == null) {
-            return;
-        }
-        if (t.isNil()) {
-            throw new IllegalArgumentException("Can't set single child to a list");
-        }
-        if (children == null) {
-            children = createChildrenList();
-        }
-        children.set(i, t);
-        t.setParent(this);
-        t.setChildIndex(i);
-    }
-
-    protected List<PNode> createChildrenList() {
-        return new ArrayList<>();
-    }
-
-    /** Set the parent and child index values for all child of t. */
-    public void freshenParentAndChildIndexes() {
-        freshenParentAndChildIndexes(0);
     }
 
     public void freshenParentAndChildIndexes(int offset) {

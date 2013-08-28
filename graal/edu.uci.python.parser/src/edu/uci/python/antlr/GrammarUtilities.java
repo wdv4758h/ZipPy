@@ -38,6 +38,12 @@ public class GrammarUtilities {
 
     public StringBuilder output = null;
 
+    public static String makeFromText(List<?> dots, List<PNode> names) {
+        StringBuilder d = new StringBuilder();
+        d.append(GrammarUtilities.dottedNameListToString(names));
+        return d.toString();
+    }
+
     public static String dottedNameListToString(List<PNode> names) {
         if (names == null) {
             return "";

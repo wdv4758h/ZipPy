@@ -30,7 +30,6 @@ import java.util.*;
 import com.oracle.truffle.api.frame.*;
 import com.oracle.truffle.api.impl.*;
 
-import edu.uci.python.nodes.*;
 import edu.uci.python.nodes.truffle.*;
 import edu.uci.python.runtime.*;
 

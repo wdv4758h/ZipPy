@@ -1,4 +1,4 @@
-// $ANTLR 3.5 Truffle.g 2013-08-27 02:10:21
+// $ANTLR 3.5 Truffle.g 2013-08-27 23:24:54
 
 package edu.uci.python.antlr;
 
@@ -6048,7 +6048,7 @@ public class TruffleParser extends Parser {
 					}
 
 					if ( state.backtracking==0 ) {
-					             stype = actions.makeImportFrom(FROM110, actions.makeFromText(list_d, (dotted_name111!=null?((TruffleParser.dotted_name_return)dotted_name111).names:null)),
+					             stype = actions.makeImportFrom(FROM110, GrammarUtilities.makeFromText(list_d, (dotted_name111!=null?((TruffleParser.dotted_name_return)dotted_name111).names:null)),
 					                 actions.makeModuleNameNode(list_d, (dotted_name111!=null?((TruffleParser.dotted_name_return)dotted_name111).names:null)),
 					                 actions.makeStarAlias(STAR113), actions.makeLevel(list_d));
 					         }
@@ -6077,7 +6077,7 @@ public class TruffleParser extends Parser {
 					                     }
 					                 }
 					             }
-					             stype = actions.makeImportFrom(FROM110, actions.makeFromText(list_d, (dotted_name111!=null?((TruffleParser.dotted_name_return)dotted_name111).names:null)),
+					             stype = actions.makeImportFrom(FROM110, GrammarUtilities.makeFromText(list_d, (dotted_name111!=null?((TruffleParser.dotted_name_return)dotted_name111).names:null)),
 					                 actions.makeModuleNameNode(list_d, (dotted_name111!=null?((TruffleParser.dotted_name_return)dotted_name111).names:null)),
 					                 actions.makeAliases((i1!=null?((TruffleParser.import_as_names_return)i1).atypes:null)), actions.makeLevel(list_d));
 					         }
@@ -6141,7 +6141,7 @@ public class TruffleParser extends Parser {
 					                     }
 					                 }
 					             }
-					             stype = actions.makeImportFrom(FROM110, actions.makeFromText(list_d, (dotted_name111!=null?((TruffleParser.dotted_name_return)dotted_name111).names:null)),
+					             stype = actions.makeImportFrom(FROM110, GrammarUtilities.makeFromText(list_d, (dotted_name111!=null?((TruffleParser.dotted_name_return)dotted_name111).names:null)),
 					                 actions.makeModuleNameNode(list_d, (dotted_name111!=null?((TruffleParser.dotted_name_return)dotted_name111).names:null)),
 					                 actions.makeAliases((i2!=null?((TruffleParser.import_as_names_return)i2).atypes:null)), actions.makeLevel(list_d));
 					         }
