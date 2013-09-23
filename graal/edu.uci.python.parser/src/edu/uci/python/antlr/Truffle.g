@@ -81,25 +81,10 @@ package edu.uci.python.antlr;
 
 import org.antlr.runtime.CommonToken;
 
-import edu.uci.python.nodes.PNode;
-import edu.uci.python.*;
-import edu.uci.python.nodes.statements.StatementNode;
-import edu.uci.python.nodes.statements.ParametersNode;
-import edu.uci.python.nodes.CallBuiltInNode;
-import edu.uci.python.nodes.CallBuiltInWithOneArgNoKeywordNode;
-import edu.uci.python.nodes.CallBuiltInWithTwoArgsNoKeywordNode;
-import edu.uci.python.nodes.CallNode;
-import edu.uci.python.nodes.CallWithOneArgumentNoKeywordNode;
-import edu.uci.python.nodes.CallWithTwoArgumentsNoKeywordNode;
-import edu.uci.python.nodes.expressions.SubscriptLoadNode;
-import edu.uci.python.datatypes.PAlias;
-import edu.uci.python.datatypes.PComprehension;
-import org.python.antlr.ast.boolopType;
-import org.python.antlr.ast.cmpopType;
-import org.python.antlr.ast.expr_contextType;
-import org.python.antlr.ast.operatorType;
-import org.python.antlr.ast.unaryopType;
-
+import edu.uci.python.datatypes.*;
+import edu.uci.python.nodes.*;
+import edu.uci.python.nodes.statements.*;
+import edu.uci.python.types.*;
 
 import java.math.BigInteger;
 import java.util.Collections;
@@ -109,7 +94,7 @@ import java.util.ListIterator;
 
 @members {
 
-    private GrammarActionsTruffle actions = new GrammarActionsTruffle();
+    private GrammarActions actions = new GrammarActions();
     private UnCovered uncovered = new UnCovered();
 
     private String encoding;
@@ -305,7 +290,7 @@ eval_input
 @after {
     $eval_input.tree = mtype;
 }
-    : LEADING_WS? (NEWLINE)* testlist[expr_contextType.Load] (NEWLINE)* EOF
+    : LEADING_WS? (NEWLINE)* testlist[ContextType.Load] (NEWLINE)* EOF
       {
         mtype = uncovered.makeExpression($eval_input.start, GrammarUtilities.castExpr($testlist.tree));
       }
@@ -466,7 +451,7 @@ defparameter
 @after {
    $defparameter.tree = $etype;
 }
-    : fpdef[expr_contextType.Param] (ASSIGN test[expr_contextType.Load])?
+    : fpdef[ContextType.Param] (ASSIGN test[ContextType.Load])?
       {
           $etype = GrammarUtilities.castExpr($fpdef.tree);
           if ($ASSIGN != null) {
@@ -505,7 +490,7 @@ varargslist
     ;
 
 //fpdef: NAME | '(' fplist ')'
-fpdef[expr_contextType ctype]
+fpdef[ContextType ctype]
 @init {
     PNode etype = null;
 }
@@ -521,7 +506,7 @@ fpdef[expr_contextType ctype]
       }
     | (LPAREN fpdef[null] COMMA) => LPAREN fplist RPAREN
       {
-          etype = actions.makeTuple($fplist.start, GrammarUtilities.castExprs($fplist.etypes), expr_contextType.Store);
+          etype = actions.makeTuple($fplist.start, GrammarUtilities.castExprs($fplist.etypes), ContextType.Store);
       }
     | LPAREN! fplist RPAREN!
     ;
@@ -529,8 +514,8 @@ fpdef[expr_contextType ctype]
 //fplist: fpdef (',' fpdef)* [',']
 fplist
     returns [List etypes]
-    : f+=fpdef[expr_contextType.Store]
-      (options {greedy=true;}:COMMA f+=fpdef[expr_contextType.Store])* (COMMA)?
+    : f+=fpdef[ContextType.Store]
+      (options {greedy=true;}:COMMA f+=fpdef[ContextType.Store])* (COMMA)?
       {
           $etypes = $f;
       }
@@ -598,23 +583,23 @@ expr_stmt
         $expr_stmt.tree = stype;
     }
 }
-    : ((testlist[null] augassign) => lhs=testlist[expr_contextType.AugStore]
+    : ((testlist[null] augassign) => lhs=testlist[ContextType.AugStore]
         ( (aay=augassign y1=yield_expr
            {
                GrammarUtilities.checkAugAssign(GrammarUtilities.castExpr($lhs.tree));
                stype = actions.makeAugAssign($lhs.tree, GrammarUtilities.castExpr($lhs.tree), $aay.op, GrammarUtilities.castExpr($y1.etype));
            }
           )
-        | (aat=augassign rhs=testlist[expr_contextType.Load]
+        | (aat=augassign rhs=testlist[ContextType.Load]
            {
                GrammarUtilities.checkAugAssign(GrammarUtilities.castExpr($lhs.tree));
                stype = actions.makeAugAssign($lhs.tree, GrammarUtilities.castExpr($lhs.tree), $aat.op, GrammarUtilities.castExpr($rhs.tree));
            }
           )
         )
-    | (testlist[null] ASSIGN) => lhs=testlist[expr_contextType.Store]
+    | (testlist[null] ASSIGN) => lhs=testlist[ContextType.Store]
         (
-        | ((at=ASSIGN t+=testlist[expr_contextType.Load])+
+        | ((at=ASSIGN t+=testlist[ContextType.Load])+
             {
 
                 List<PNode> targetslist = actions.makeAssignTargets(GrammarUtilities.castExpr($lhs.tree), $t);
@@ -630,7 +615,7 @@ expr_stmt
             }
           )
         )
-    | lhs=testlist[expr_contextType.Load]
+    | lhs=testlist[ContextType.Load]
       {
           stype = actions.makeExpr($lhs.start, GrammarUtilities.castExpr($lhs.tree));
       }
@@ -640,54 +625,54 @@ expr_stmt
 //augassign: ('+=' | '-=' | '*=' | '/=' | '%=' | '&=' | '|=' | '^=' |
 //            '<<=' | '>>=' | '**=' | '//=')
 augassign
-    returns [operatorType op]
+    returns [OperationType op]
     : PLUSEQUAL
         {
-            $op = operatorType.Add;
+            $op = OperationType.Add;
         }
     | MINUSEQUAL
         {
-            $op = operatorType.Sub;
+            $op = OperationType.Sub;
         }
     | STAREQUAL
         {
-            $op = operatorType.Mult;
+            $op = OperationType.Mult;
         }
     | SLASHEQUAL
         {
-            $op = operatorType.Div;
+            $op = OperationType.Div;
         }
     | PERCENTEQUAL
         {
-            $op = operatorType.Mod;
+            $op = OperationType.Mod;
         }
     | AMPEREQUAL
         {
-            $op = operatorType.BitAnd;
+            $op = OperationType.BitAnd;
         }
     | VBAREQUAL
         {
-            $op = operatorType.BitOr;
+            $op = OperationType.BitOr;
         }
     | CIRCUMFLEXEQUAL
         {
-            $op = operatorType.BitXor;
+            $op = OperationType.BitXor;
         }
     | LEFTSHIFTEQUAL
         {
-            $op = operatorType.LShift;
+            $op = OperationType.LShift;
         }
     | RIGHTSHIFTEQUAL
         {
-            $op = operatorType.RShift;
+            $op = OperationType.RShift;
         }
     | DOUBLESTAREQUAL
         {
-            $op = operatorType.Pow;
+            $op = OperationType.Pow;
         }
     | DOUBLESLASHEQUAL
         {
-            $op = operatorType.FloorDiv;
+            $op = OperationType.FloorDiv;
         }
     ;
 
@@ -721,7 +706,7 @@ print_stmt
 printlist
     returns [boolean newline, List elts]
     : (test[null] COMMA) =>
-       t+=test[expr_contextType.Load] (options {k=2;}: COMMA t+=test[expr_contextType.Load])* (trailcomma=COMMA)?
+       t+=test[ContextType.Load] (options {k=2;}: COMMA t+=test[ContextType.Load])* (trailcomma=COMMA)?
        {
            $elts=$t;
            if ($trailcomma == null) {
@@ -730,7 +715,7 @@ printlist
                $newline = false;
            }
        }
-    | t+=test[expr_contextType.Load]
+    | t+=test[ContextType.Load]
       {
           $elts=$t;
           $newline = true;
@@ -742,7 +727,7 @@ printlist
 printlist2
     returns [boolean newline, List elts]
     : (test[null] COMMA test[null]) =>
-       t+=test[expr_contextType.Load] (options {k=2;}: COMMA t+=test[expr_contextType.Load])* (trailcomma=COMMA)?
+       t+=test[ContextType.Load] (options {k=2;}: COMMA t+=test[ContextType.Load])* (trailcomma=COMMA)?
        { $elts=$t;
            if ($trailcomma == null) {
                $newline = true;
@@ -750,7 +735,7 @@ printlist2
                $newline = false;
            }
        }
-    | t+=test[expr_contextType.Load]
+    | t+=test[ContextType.Load]
       {
           $elts=$t;
           $newline = true;
@@ -834,7 +819,7 @@ return_stmt
    $return_stmt.tree = stype;
 }
     : RETURN
-      (testlist[expr_contextType.Load]
+      (testlist[ContextType.Load]
        {
            stype = actions.makeReturn($RETURN, GrammarUtilities.castExpr($testlist.tree));
        }
@@ -867,8 +852,8 @@ raise_stmt
 @after {
    $raise_stmt.tree = stype;
 }
-    : RAISE (t1=test[expr_contextType.Load] (COMMA t2=test[expr_contextType.Load]
-        (COMMA t3=test[expr_contextType.Load])?)?)?
+    : RAISE (t1=test[ContextType.Load] (COMMA t2=test[ContextType.Load]
+        (COMMA t3=test[ContextType.Load])?)?)?
       {
           stype = uncovered.makeRaise($RAISE, GrammarUtilities.castExpr($t1.tree), GrammarUtilities.castExpr($t2.tree), GrammarUtilities.castExpr($t3.tree));
       }
@@ -1028,7 +1013,7 @@ exec_stmt
 @after {
    $exec_stmt.tree = stype;
 }
-    : EXEC expr[expr_contextType.Load] (IN t1=test[expr_contextType.Load] (COMMA t2=test[expr_contextType.Load])?)?
+    : EXEC expr[ContextType.Load] (IN t1=test[ContextType.Load] (COMMA t2=test[ContextType.Load])?)?
       {
          stype = uncovered.makeExec($EXEC, GrammarUtilities.castExpr($expr.tree), GrammarUtilities.castExpr($t1.tree), GrammarUtilities.castExpr($t2.tree));
       }
@@ -1042,7 +1027,7 @@ assert_stmt
 @after {
    $assert_stmt.tree = stype;
 }
-    : ASSERT t1=test[expr_contextType.Load] (COMMA t2=test[expr_contextType.Load])?
+    : ASSERT t1=test[ContextType.Load] (COMMA t2=test[ContextType.Load])?
       {
           stype = uncovered.makeAssert($ASSERT, GrammarUtilities.castExpr($t1.tree), GrammarUtilities.castExpr($t2.tree));
       }
@@ -1067,7 +1052,7 @@ if_stmt
 @after {
    $if_stmt.tree = stype;
 }
-    : IF test[expr_contextType.Load] COLON ifsuite=suite[false] elif_clause?
+    : IF test[ContextType.Load] COLON ifsuite=suite[false] elif_clause?
       {
           stype = actions.makeIf($IF, GrammarUtilities.castExpr($test.tree), GrammarUtilities.castStmts($ifsuite.stypes),
               actions.makeElse($elif_clause.stypes, $elif_clause.tree));
@@ -1089,7 +1074,7 @@ elif_clause
       {
           $stypes = $else_clause.stypes;
       }
-    | ELIF test[expr_contextType.Load] COLON suite[false]
+    | ELIF test[ContextType.Load] COLON suite[false]
       (e2=elif_clause
        {
            stype = actions.makeIf($test.start, GrammarUtilities.castExpr($test.tree), GrammarUtilities.castStmts($suite.stypes), actions.makeElse($e2.stypes, $e2.tree));
@@ -1119,7 +1104,7 @@ while_stmt
 @after {
    $while_stmt.tree = stype;
 }
-    : WHILE test[expr_contextType.Load] COLON s1=suite[false] (ORELSE COLON s2=suite[false])?
+    : WHILE test[ContextType.Load] COLON s1=suite[false] (ORELSE COLON s2=suite[false])?
       {
           stype = actions.makeWhile($WHILE, GrammarUtilities.castExpr($test.tree), $s1.stypes, $s2.stypes);
       }
@@ -1134,7 +1119,7 @@ for_stmt
 @after {
    $for_stmt.tree = stype;
 }
-    : FOR exprlist[expr_contextType.Store] IN testlist[expr_contextType.Load] COLON s1=suite[false]
+    : FOR exprlist[ContextType.Store] IN testlist[ContextType.Load] COLON s1=suite[false]
         (ORELSE COLON s2=suite[false])?
       {
           stype = actions.makeFor($FOR, $exprlist.etype, GrammarUtilities.castExpr($testlist.tree), $s1.stypes, $s2.stypes);
@@ -1187,7 +1172,7 @@ with_item
 @after {
    $with_item.tree = stype;
 }
-    : test[expr_contextType.Load] (AS expr[expr_contextType.Store])?
+    : test[ContextType.Load] (AS expr[ContextType.Store])?
       {
           PNode item = GrammarUtilities.castExpr($test.tree);
           PNode var = null;
@@ -1207,7 +1192,7 @@ except_clause
 @after {
    $except_clause.tree = extype;
 }
-    : EXCEPT (t1=test[expr_contextType.Load] ((COMMA | AS) t2=test[expr_contextType.Store])?)? COLON suite[!$suite.isEmpty() && $suite::continueIllegal]
+    : EXCEPT (t1=test[ContextType.Load] ((COMMA | AS) t2=test[ContextType.Store])?)? COLON suite[!$suite.isEmpty() && $suite::continueIllegal]
       {
           extype = actions.makeExceptHandler($EXCEPT, GrammarUtilities.castExpr($t1.tree), GrammarUtilities.castExpr($t2.tree),
               GrammarUtilities.castStmts($suite.stypes));
@@ -1243,7 +1228,7 @@ scope {
     ;
 
 //test: or_test ['if' or_test 'else' test] | lambdef
-test[expr_contextType ctype]
+test[ContextType ctype]
 @init {
     PNode etype = null;
 }
@@ -1253,7 +1238,7 @@ test[expr_contextType ctype]
    }
 }
     :o1=or_test[ctype]
-      ( (IF or_test[null] ORELSE) => IF o2=or_test[ctype] ORELSE e=test[expr_contextType.Load]
+      ( (IF or_test[null] ORELSE) => IF o2=or_test[ctype] ORELSE e=test[ContextType.Load]
          {
              etype = actions.makeIfExp($o1.start, GrammarUtilities.castExpr($o2.tree), GrammarUtilities.castExpr($o1.tree), GrammarUtilities.castExpr($e.tree));
          }
@@ -1265,14 +1250,14 @@ test[expr_contextType ctype]
 
 //or_test: and_test ('or' and_test)*
 or_test
-    [expr_contextType ctype] returns [Token leftTok]
+    [ContextType ctype] returns [Token leftTok]
 @after {
     if ($or != null) {
         Token tok = $left.start;
         if ($left.leftTok != null) {
             tok = $left.leftTok;
         }
-        $or_test.tree = actions.makeBoolOp(tok, $left.tree, boolopType.Or, $right);
+        $or_test.tree = actions.makeBoolOp(tok, $left.tree, BoolOpType.Or, $right);
     }
 }
     : left=and_test[ctype]
@@ -1285,14 +1270,14 @@ or_test
 
 //and_test: not_test ('and' not_test)*
 and_test
-    [expr_contextType ctype] returns [Token leftTok]
+    [ContextType ctype] returns [Token leftTok]
 @after {
     if ($and != null) {
         Token tok = $left.start;
         if ($left.leftTok != null) {
             tok = $left.leftTok;
         }
-        $and_test.tree = actions.makeBoolOp(tok, $left.tree, boolopType.And, $right);
+        $and_test.tree = actions.makeBoolOp(tok, $left.tree, BoolOpType.And, $right);
     }
 }
     : left=not_test[ctype]
@@ -1305,7 +1290,7 @@ and_test
 
 //not_test: 'not' not_test | comparison
 not_test
-    [expr_contextType ctype] returns [Token leftTok]
+    [ContextType ctype] returns [Token leftTok]
 @init {
     PNode etype = null;
 }
@@ -1316,7 +1301,7 @@ not_test
 }
     : NOT nt=not_test[ctype]
       {
-          etype = actions.makeUnaryOp($NOT, unaryopType.Not, GrammarUtilities.castExpr($nt.tree));
+          etype = actions.makeUnaryOp($NOT, UnaryOpType.Not, GrammarUtilities.castExpr($nt.tree));
       }
     | comparison[ctype]
       {
@@ -1326,7 +1311,7 @@ not_test
 
 //comparison: expr (comp_op expr)*
 comparison
-    [expr_contextType ctype] returns [Token leftTok]
+    [ContextType ctype] returns [Token leftTok]
 @init {
     List cmps = new ArrayList();
 }
@@ -1350,58 +1335,58 @@ comparison
 
 //comp_op: '<'|'>'|'=='|'>='|'<='|'<>'|'!='|'in'|'not' 'in'|'is'|'is' 'not'
 comp_op
-    returns [cmpopType op]
+    returns [CmpOpType op]
     : LESS
       {
-          $op = cmpopType.Lt;
+          $op = CmpOpType.Lt;
       }
     | GREATER
       {
-          $op = cmpopType.Gt;
+          $op = CmpOpType.Gt;
       }
     | EQUAL
       {
-          $op = cmpopType.Eq;
+          $op = CmpOpType.Eq;
       }
     | GREATEREQUAL
       {
-          $op = cmpopType.GtE;
+          $op = CmpOpType.GtE;
       }
     | LESSEQUAL
       {
-          $op = cmpopType.LtE;
+          $op = CmpOpType.LtE;
       }
     //| ALT_NOTEQUAL
     //  {
-    //      $op = cmpopType.NotEq;
+    //      $op = CmpOpType.NotEq;
     //  }
     | NOTEQUAL
       {
-          $op = cmpopType.NotEq;
+          $op = CmpOpType.NotEq;
       }
     | IN
       {
-          $op = cmpopType.In;
+          $op = CmpOpType.In;
       }
     | NOT IN
       {
-          $op = cmpopType.NotIn;
+          $op = CmpOpType.NotIn;
       }
     | IS
       {
-          $op = cmpopType.Is;
+          $op = CmpOpType.Is;
       }
     | IS NOT
       {
-          $op = cmpopType.IsNot;
+          $op = CmpOpType.IsNot;
       }
     ;
 
 //expr: xor_expr ('|' xor_expr)*
 expr
-    [expr_contextType ect] returns [Token leftTok]
+    [ContextType ect] returns [Token leftTok]
 scope {
-    expr_contextType ctype;
+    ContextType ctype;
 }
 @init {
     $expr::ctype = ect;
@@ -1413,7 +1398,7 @@ scope {
         if ($left.lparen != null) {
             tok = $left.lparen;
         }
-        $expr.tree = actions.makeBinOp(tok, $left.tree, operatorType.BitOr, $right);
+        $expr.tree = actions.makeBinOp(tok, $left.tree, OperationType.BitOr, $right);
     }
 }
     : left=xor_expr
@@ -1434,7 +1419,7 @@ xor_expr
         if ($left.lparen != null) {
             tok = $left.lparen;
         }
-        $xor_expr.tree = actions.makeBinOp(tok, $left.tree, operatorType.BitXor, $right);
+        $xor_expr.tree = actions.makeBinOp(tok, $left.tree, OperationType.BitXor, $right);
     }
     $lparen = $left.lparen;
 }
@@ -1455,7 +1440,7 @@ and_expr
         if ($left.lparen != null) {
             tok = $left.lparen;
         }
-        $and_expr.tree = actions.makeBinOp(tok, $left.tree, operatorType.BitAnd, $right);
+        $and_expr.tree = actions.makeBinOp(tok, $left.tree, OperationType.BitAnd, $right);
     }
     $lparen = $left.lparen;
 }
@@ -1497,14 +1482,14 @@ shift_expr
     ;
 
 shift_op
-    returns [operatorType op]
+    returns [OperationType op]
     : LEFTSHIFT
       {
-          $op = operatorType.LShift;
+          $op = OperationType.LShift;
       }
     | RIGHTSHIFT
       {
-          $op = operatorType.RShift;
+          $op = OperationType.RShift;
       }
     ;
 
@@ -1546,14 +1531,14 @@ arith_expr
     }
 
 arith_op
-    returns [operatorType op]
+    returns [OperationType op]
     : PLUS
       {
-          $op = operatorType.Add;
+          $op = OperationType.Add;
       }
     | MINUS
       {
-          $op = operatorType.Sub;
+          $op = OperationType.Sub;
       }
     ;
 
@@ -1587,22 +1572,22 @@ term
     ;
 
 term_op
-    returns [operatorType op]
+    returns [OperationType op]
     : STAR
       {
-          $op = operatorType.Mult;
+          $op = OperationType.Mult;
       }
     | SLASH
       {
-          $op = operatorType.Div;
+          $op = OperationType.Div;
       }
     | PERCENT
       {
-          $op = operatorType.Mod;
+          $op = OperationType.Mod;
       }
     | DOUBLESLASH
       {
-          $op = operatorType.FloorDiv;
+          $op = OperationType.FloorDiv;
       }
     ;
 
@@ -1614,7 +1599,7 @@ factor
 }
     : PLUS p=factor
       {
-            $etype = actions.makeUnaryOp($PLUS, unaryopType.UAdd, $p.etype);
+            $etype = actions.makeUnaryOp($PLUS, UnaryOpType.UAdd, $p.etype);
       }
     | MINUS m=factor
       {
@@ -1622,7 +1607,7 @@ factor
       }
     | TILDE t=factor
       {
-	          $etype = actions.makeUnaryOp($TILDE, unaryopType.Invert, $t.etype);
+	          $etype = actions.makeUnaryOp($TILDE, UnaryOpType.Invert, $t.etype);
       }
     | power
       {
@@ -1650,7 +1635,7 @@ power
           if ($d != null) {
               List right = new ArrayList();
               right.add($factor.tree);
-              $etype = actions.makeBinOp($atom.start, $etype, operatorType.Pow, right);
+              $etype = actions.makeBinOp($atom.start, $etype, OperationType.Pow, right);
           }
       }
     ;
@@ -1704,7 +1689,7 @@ atom
        }
       )
        RCURLY
-     | lb=BACKQUOTE testlist[expr_contextType.Load] rb=BACKQUOTE
+     | lb=BACKQUOTE testlist[ContextType.Load] rb=BACKQUOTE
        {
            etype = uncovered.makeRepr($lb, GrammarUtilities.castExpr($testlist.tree));
        }
@@ -1798,7 +1783,7 @@ testlist_gexp
                List<PComprehension> c = gens;
                PNode e = GrammarUtilities.castExpr($t.get(0));
 //               if (e instanceof Context) {
-//                   ((Context)e).setContext(expr_contextType.Load);
+//                   ((Context)e).setContext(ContextType.Load);
 //               }
                etype = actions.makeGeneratorExp($testlist_gexp.start, e, c);
                ParserEnvironment.endScope();
@@ -1815,7 +1800,7 @@ lambdef
 @after {
     $lambdef.tree = etype;
 }
-    : LAMBDA (varargslist)? COLON test[expr_contextType.Load]
+    : LAMBDA (varargslist)? COLON test[ContextType.Load]
       {
 //          arguments a = $varargslist.args;
 //          if (a == null) {
@@ -1856,7 +1841,7 @@ trailer [Token begin, PNode ptree]
       }
     | DOT attr
       {
-          PNode name = actions.makeName($attr.tree, $attr.text, expr_contextType.Load);
+          PNode name = actions.makeName($attr.tree, $attr.text, ContextType.Load);
           etype = actions.makeAttribute($begin, GrammarUtilities.castExpr($ptree), name, $expr::ctype);
           $ptree = etype;
       }
@@ -1887,16 +1872,16 @@ subscript
           $sltype = uncovered.makeEllipsis($d1);
       }
     | (test[null] COLON)
-   => lower=test[expr_contextType.Load] (c1=COLON (upper1=test[expr_contextType.Load])? (sliceop)?)?
+   => lower=test[ContextType.Load] (c1=COLON (upper1=test[ContextType.Load])? (sliceop)?)?
       {
           $sltype = actions.makeSubscript($lower.tree, $c1, $upper1.tree, $sliceop.tree);
       }
     | (COLON)
-   => c2=COLON (upper2=test[expr_contextType.Load])? (sliceop)?
+   => c2=COLON (upper2=test[ContextType.Load])? (sliceop)?
       {
           $sltype = actions.makeSubscript(null, $c2, $upper2.tree, $sliceop.tree);
       }
-    | test[expr_contextType.Load]
+    | test[ContextType.Load]
       {
           $sltype = actions.makeIndex($test.start, GrammarUtilities.castExpr($test.tree));
       }
@@ -1913,18 +1898,18 @@ sliceop
     }
 }
     : COLON
-     (test[expr_contextType.Load]
+     (test[ContextType.Load]
     -> test
      |
        {
-           etype = actions.makeName($COLON, "None", expr_contextType.Load);
+           etype = actions.makeName($COLON, "None", ContextType.Load);
        }
      )
     ;
 
 //exprlist: expr (',' expr)* [',']
 exprlist
-    [expr_contextType ctype] returns [PNode etype]
+    [ContextType ctype] returns [PNode etype]
     : (expr[null] COMMA) => e+=expr[ctype] (options {k=2;}: COMMA e+=expr[ctype])* (COMMA)?
        {
            $etype = actions.makeTuple($exprlist.start, GrammarUtilities.castExprs($e), ctype);
@@ -1941,14 +1926,14 @@ exprlist
 //Needed as an exprlist that does not produce tuples for del_stmt.
 del_list
     returns [List<PNode> etypes]
-    : e+=expr[expr_contextType.Del] (options {k=2;}: COMMA e+=expr[expr_contextType.Del])* (COMMA)?
+    : e+=expr[ContextType.Del] (options {k=2;}: COMMA e+=expr[ContextType.Del])* (COMMA)?
       {
           $etypes = uncovered.makeDeleteList($e);
       }
     ;
 
 //testlist: test (',' test)* [',']
-testlist[expr_contextType ctype]
+testlist[ContextType ctype]
 @init {
     PNode etype = null;
 }
@@ -1979,21 +1964,21 @@ dictorsetmaker[Token lcurly]
         $dictorsetmaker.tree = etype;
     }
 }
-    : k+=test[expr_contextType.Load]
+    : k+=test[ContextType.Load]
          (
-             (COLON v+=test[expr_contextType.Load]
+             (COLON v+=test[ContextType.Load]
                ( comp_for[gens]
                  {
                      Collections.reverse(gens);
                      List<PComprehension> c = gens;
                      etype = actions.makeDictComp($dictorsetmaker.start, GrammarUtilities.castExpr($k.get(0)), GrammarUtilities.castExpr($v.get(0)), c);
                  }
-               | (options {k=2;}:COMMA k+=test[expr_contextType.Load] COLON v+=test[expr_contextType.Load])*
+               | (options {k=2;}:COMMA k+=test[ContextType.Load] COLON v+=test[ContextType.Load])*
                  {
                      etype = actions.makeDict($lcurly, GrammarUtilities.castExprs($k), GrammarUtilities.castExprs($v));
                  }
                )
-             |(COMMA k+=test[expr_contextType.Load])*
+             |(COMMA k+=test[ContextType.Load])*
               {
                   etype = uncovered.makeSet($lcurly, GrammarUtilities.castExprs($k));
               }
@@ -2005,7 +1990,7 @@ dictorsetmaker[Token lcurly]
                List<PComprehension> c = gens;
                PNode e = GrammarUtilities.castExpr($k.get(0));
 //               if (e instanceof Context) {
-//                   ((Context)e).setContext(expr_contextType.Load);
+//                   ((Context)e).setContext(ContextType.Load);
 //               }
                etype = actions.makeSetComp($lcurly, GrammarUtilities.castExpr($k.get(0)), c);
            }
@@ -2020,7 +2005,7 @@ classdef
 @after {
    $classdef.tree = stype;
 }
-    : decorators? CLASS NAME (LPAREN testlist[expr_contextType.Load]? RPAREN)? COLON suite[false]
+    : decorators? CLASS NAME (LPAREN testlist[ContextType.Load]? RPAREN)? COLON suite[false]
       {
           Token t = $CLASS;
           if ($decorators.start != null) {
@@ -2046,8 +2031,8 @@ arglist
 }
     : argument[arguments, kws, gens, true, false] (COMMA argument[arguments, kws, gens, false, false])*
           (COMMA
-              ( STAR s=test[expr_contextType.Load] (COMMA argument[arguments, kws, gens, false, true])* (COMMA DOUBLESTAR k=test[expr_contextType.Load])?
-              | DOUBLESTAR k=test[expr_contextType.Load]
+              ( STAR s=test[ContextType.Load] (COMMA argument[arguments, kws, gens, false, true])* (COMMA DOUBLESTAR k=test[ContextType.Load])?
+              | DOUBLESTAR k=test[ContextType.Load]
               )?
           )?
       {
@@ -2059,13 +2044,13 @@ arglist
           $starargs=GrammarUtilities.castExpr($s.tree);
           $kwargs=GrammarUtilities.castExpr($k.tree);
       }
-    | STAR s=test[expr_contextType.Load] (COMMA argument[arguments, kws, gens, false, true])* (COMMA DOUBLESTAR k=test[expr_contextType.Load])?
+    | STAR s=test[ContextType.Load] (COMMA argument[arguments, kws, gens, false, true])* (COMMA DOUBLESTAR k=test[ContextType.Load])?
       {
           $starargs=GrammarUtilities.castExpr($s.tree);
           $keywords=kws;
           $kwargs=GrammarUtilities.castExpr($k.tree);
       }
-    | DOUBLESTAR k=test[expr_contextType.Load]
+    | DOUBLESTAR k=test[ContextType.Load]
       {
           $kwargs=GrammarUtilities.castExpr($k.tree);
       }
@@ -2074,8 +2059,8 @@ arglist
 //argument: test [comp_for] | test '=' test  # Really [keyword '='] test
 argument
     [List arguments, List kws, List gens, boolean first, boolean afterStar] returns [boolean genarg]
-    : t1=test[expr_contextType.Load]
-        ((ASSIGN t2=test[expr_contextType.Load])
+    : t1=test[ContextType.Load]
+        ((ASSIGN t2=test[ContextType.Load])
           {
               PNode newkey = GrammarUtilities.castExpr($t1.tree);
               //Loop through all current keys and fail on duplicate.
@@ -2127,7 +2112,7 @@ list_for [List gens]
 @init {
     List ifs = new ArrayList();
 }
-    : FOR exprlist[expr_contextType.Store] IN testlist[expr_contextType.Load] (list_iter[gens, ifs])?
+    : FOR exprlist[ContextType.Store] IN testlist[ContextType.Load] (list_iter[gens, ifs])?
       {
           Collections.reverse(ifs);
           gens.add(actions.makeComprehension($FOR, $exprlist.etype, GrammarUtilities.castExpr($testlist.tree), ifs));
@@ -2136,7 +2121,7 @@ list_for [List gens]
 
 //list_if: 'if' test [list_iter]
 list_if[List gens, List ifs]
-    : IF test[expr_contextType.Load] (list_iter[gens, ifs])?
+    : IF test[ContextType.Load] (list_iter[gens, ifs])?
       {
         ifs.add(GrammarUtilities.castExpr($test.tree));
       }
@@ -2153,7 +2138,7 @@ comp_for [List gens]
 @init {
     List ifs = new ArrayList();
 }
-    : FOR exprlist[expr_contextType.Store] IN or_test[expr_contextType.Load] comp_iter[gens, ifs]?
+    : FOR exprlist[ContextType.Store] IN or_test[ContextType.Load] comp_iter[gens, ifs]?
       {
           Collections.reverse(ifs);
           gens.add(actions.makeComprehension($FOR, $exprlist.etype, GrammarUtilities.castExpr($or_test.tree), ifs));
@@ -2162,7 +2147,7 @@ comp_for [List gens]
 
 //comp_if: 'if' old_test [comp_iter]
 comp_if[List gens, List ifs]
-    : IF test[expr_contextType.Load] comp_iter[gens, ifs]?
+    : IF test[ContextType.Load] comp_iter[gens, ifs]?
       {
         ifs.add(GrammarUtilities.castExpr($test.tree));
       }
@@ -2175,7 +2160,7 @@ yield_expr
     //needed for y2+=yield_expr
     $yield_expr.tree = $etype;
 }
-    : YIELD testlist[expr_contextType.Load]?
+    : YIELD testlist[ContextType.Load]?
       {
           $etype = actions.makeYield($YIELD, GrammarUtilities.castExpr($testlist.tree));
       }

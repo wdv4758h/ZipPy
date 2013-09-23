@@ -22,8 +22,8 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package edu.uci.python.antlr;
+package edu.uci.python.types;
 
-public enum UnaryOpType {
-    UNDEFINED, Invert, Not, UAdd, USub;
+public enum ContextType {
+    UNDEFINED, Load, Store, Del, AugLoad, AugStore, Param;
 }

@@ -188,7 +188,7 @@ public class GrammarUtilities {
         }
     }
 
-    public static PyString extractStrings(List<?> s, String encoding, boolean unicodeLiterals) {
+    public static String extractStrings(List<?> s, String encoding, boolean unicodeLiterals) {
         boolean ustring = false;
         Token last = null;
         StringBuffer sb = new StringBuffer();
@@ -201,10 +201,10 @@ public class GrammarUtilities {
             }
             sb.append(sp.getString());
         }
-        if (ustring) {
-            return new PyUnicode(sb.toString());
-        }
-        return new PyString(sb.toString());
+// if (ustring) {
+// return new PyUnicode(sb.toString());
+// }
+        return sb.toString();
     }
 
     public static StringPair extractString(Token t, String encoding, boolean unicodeLiterals) {

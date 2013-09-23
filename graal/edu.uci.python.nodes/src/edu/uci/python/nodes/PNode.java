@@ -30,12 +30,12 @@ import java.util.*;
 import org.antlr.runtime.*;
 import org.antlr.runtime.tree.*;
 
+import com.oracle.truffle.api.*;
 import com.oracle.truffle.api.dsl.*;
 import com.oracle.truffle.api.frame.*;
 import com.oracle.truffle.api.nodes.*;
 
 import edu.uci.python.nodes.truffle.*;
-import edu.uci.python.runtime.*;
 import edu.uci.python.runtime.datatypes.*;
 
 @TypeSystemReference(PythonTypes.class)
@@ -150,14 +150,7 @@ public abstract class PNode extends RootNode {
         return PythonTypesGen.PYTHONTYPES.expectPCallable(execute(frame));
     }
 
-    // CheckStyle: stop system..print check
     public void executeVoid(VirtualFrame frame) {
-
-        if (Options.debug) {
-            System.out.println("executeVoid:: Token: " + getToken());
-            System.out.println("executeVoid:: Slots: " + frame.getFrameDescriptor().getSlots());
-        }
-
         execute(frame);
     }
 
@@ -167,7 +160,6 @@ public abstract class PNode extends RootNode {
         public Object execute(VirtualFrame frame) {
             throw new RuntimeException("This is a dummy node");
         }
-
     };
 
     public static final PNode EMPTY_NODE = new PNode() {
@@ -182,10 +174,6 @@ public abstract class PNode extends RootNode {
     protected FrameSlot slot;
 
     public void setSlot(FrameSlot slot) {
-        if (Options.debug) {
-            System.out.println(getToken() + ": setSlot: " + slot + "  was: " + this.slot);
-        }
-
         this.slot = slot;
     }
 
@@ -208,18 +196,32 @@ public abstract class PNode extends RootNode {
         node = new CommonTree();
     }
 
-    public PNode(Token t) {
-        node = new CommonTree(t);
+    public PNode(Token token) {
+        node = new CommonTree(token);
+        if (token != null) {
+            CommonToken t = (CommonToken) token;
+
+            Source src = null; // TODO: fix it.. need to implement Source interface.
+            int length = t.getStopIndex() - t.getStartIndex();
+            SourceSection srcSection = new SourceSection(src, t.getText(), t.getLine(), t.getCharPositionInLine(), t.getTokenIndex(), length);
+            assignSourceSection(srcSection);
+        }
     }
 
-    public void setToken(Token t) {
-        node = new CommonTree(t);
-    }
+    public void setToken(Token token) {
+        node = new CommonTree(token);
 
-    public void setToken(PNode tree) {
-        node = new CommonTree(tree.node);
-        charStartIndex = tree.getCharStartIndex();
-        charStopIndex = tree.getCharStopIndex();
+        SourceSection srcSection = this.getSourceSection();
+        if (token != null) {
+            if (srcSection == null && this.node != null) {
+                Source src = null; // TODO: fix it.. need to implement Source interface.
+
+                CommonToken t = (CommonToken) token;
+                int length = t.getStopIndex() - t.getStartIndex();
+                srcSection = new SourceSection(src, t.getText(), t.getLine(), t.getCharPositionInLine(), t.getTokenIndex(), length);
+                assignSourceSection(srcSection);
+            }
+        }
     }
 
     public Token getToken() {

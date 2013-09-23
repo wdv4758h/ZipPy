@@ -22,8 +22,8 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package edu.uci.python.antlr;
+package edu.uci.python.types;
 
-public enum CmpOpType {
-    UNDEFINED, Eq, NotEq, Lt, LtE, Gt, GtE, Is, IsNot, In, NotIn;
+public enum UnaryOpType {
+    UNDEFINED, Invert, Not, UAdd, USub;
 }

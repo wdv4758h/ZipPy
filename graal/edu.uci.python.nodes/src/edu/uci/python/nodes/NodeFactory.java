@@ -28,28 +28,50 @@ import java.math.*;
 import java.util.*;
 import java.util.List;
 
-import org.python.antlr.PythonTree;
+import org.python.antlr.*;
 import org.python.antlr.ast.*;
 import org.python.antlr.base.*;
-import edu.uci.python.nodes.literals.*;
-import edu.uci.python.nodes.statements.*;
-
 import org.python.core.*;
 
 import com.oracle.truffle.api.*;
-import com.oracle.truffle.api.frame.FrameDescriptor;
-import com.oracle.truffle.api.frame.FrameSlot;
+import com.oracle.truffle.api.frame.*;
 import com.oracle.truffle.api.nodes.*;
 
 import edu.uci.python.nodes.expressions.*;
-import edu.uci.python.nodes.expressions.BinaryBooleanNodeFactory.*;
-import edu.uci.python.nodes.expressions.BinaryComparisonNodeFactory.*;
-import edu.uci.python.nodes.expressions.BinaryBitwiseNodeFactory.*;
-import edu.uci.python.nodes.expressions.BinaryArithmeticNodeFactory.*;
-import edu.uci.python.nodes.expressions.ComprehensionNodeFactory.*;
-import edu.uci.python.nodes.expressions.BooleanCastNodeFactory.*;
-import edu.uci.python.nodes.expressions.UnaryArithmeticNodeFactory.*;
+import edu.uci.python.nodes.expressions.BinaryArithmeticNodeFactory.AddNodeFactory;
+import edu.uci.python.nodes.expressions.BinaryArithmeticNodeFactory.DivNodeFactory;
+import edu.uci.python.nodes.expressions.BinaryArithmeticNodeFactory.FloorDivNodeFactory;
+import edu.uci.python.nodes.expressions.BinaryArithmeticNodeFactory.ModuloNodeFactory;
+import edu.uci.python.nodes.expressions.BinaryArithmeticNodeFactory.MulNodeFactory;
+import edu.uci.python.nodes.expressions.BinaryArithmeticNodeFactory.PowerNodeFactory;
+import edu.uci.python.nodes.expressions.BinaryArithmeticNodeFactory.SubNodeFactory;
+import edu.uci.python.nodes.expressions.BinaryBitwiseNodeFactory.BitAndNodeFactory;
+import edu.uci.python.nodes.expressions.BinaryBitwiseNodeFactory.BitOrNodeFactory;
+import edu.uci.python.nodes.expressions.BinaryBitwiseNodeFactory.BitXorNodeFactory;
+import edu.uci.python.nodes.expressions.BinaryBitwiseNodeFactory.LeftShiftNodeFactory;
+import edu.uci.python.nodes.expressions.BinaryBitwiseNodeFactory.RightShiftNodeFactory;
+import edu.uci.python.nodes.expressions.BinaryBooleanNodeFactory.AndNodeFactory;
+import edu.uci.python.nodes.expressions.BinaryBooleanNodeFactory.OrNodeFactory;
+import edu.uci.python.nodes.expressions.BinaryComparisonNodeFactory.EqualNodeFactory;
+import edu.uci.python.nodes.expressions.BinaryComparisonNodeFactory.GreaterThanEqualNodeFactory;
+import edu.uci.python.nodes.expressions.BinaryComparisonNodeFactory.GreaterThanNodeFactory;
+import edu.uci.python.nodes.expressions.BinaryComparisonNodeFactory.InNodeFactory;
+import edu.uci.python.nodes.expressions.BinaryComparisonNodeFactory.IsNodeFactory;
+import edu.uci.python.nodes.expressions.BinaryComparisonNodeFactory.IsNotNodeFactory;
+import edu.uci.python.nodes.expressions.BinaryComparisonNodeFactory.LessThanEqualNodeFactory;
+import edu.uci.python.nodes.expressions.BinaryComparisonNodeFactory.LessThanNodeFactory;
+import edu.uci.python.nodes.expressions.BinaryComparisonNodeFactory.NotEqualNodeFactory;
+import edu.uci.python.nodes.expressions.BooleanCastNodeFactory.NotNodeFactory;
+import edu.uci.python.nodes.expressions.BooleanCastNodeFactory.YesNodeFactory;
+import edu.uci.python.nodes.expressions.ComprehensionNodeFactory.InnerComprehensionNodeFactory;
+import edu.uci.python.nodes.expressions.ComprehensionNodeFactory.OuterComprehensionNodeFactory;
+import edu.uci.python.nodes.expressions.UnaryArithmeticNodeFactory.InvertNodeFactory;
+import edu.uci.python.nodes.expressions.UnaryArithmeticNodeFactory.MinusNodeFactory;
+import edu.uci.python.nodes.expressions.UnaryArithmeticNodeFactory.PlusNodeFactory;
+import edu.uci.python.nodes.literals.*;
+import edu.uci.python.nodes.statements.*;
 import edu.uci.python.runtime.datatypes.*;
+import edu.uci.python.types.*;
 
 public class NodeFactory {
 
@@ -182,6 +204,10 @@ public class NodeFactory {
         return StringLiteralNodeFactory.create(value.getString());
     }
 
+    public PNode createStringLiteral(String value) {
+        return StringLiteralNodeFactory.create(value);
+    }
+
     public PNode createDictLiteral(List<PNode> keys, List<PNode> values) {
         PNode[] convertedKeys = keys.toArray(new PNode[keys.size()]);
         PNode[] convertedValues = values.toArray(new PNode[values.size()]);
@@ -235,7 +261,55 @@ public class NodeFactory {
         }
     }
 
+    public PNode createUnaryOperation(UnaryOpType operator, PNode operand) {
+        PNode typedNodeOperand = operand;
+
+        switch (operator) {
+            case UAdd:
+                return PlusNodeFactory.create(typedNodeOperand);
+            case USub:
+                return MinusNodeFactory.create(typedNodeOperand);
+            case Invert:
+                return InvertNodeFactory.create(typedNodeOperand);
+            case Not:
+                return NotNodeFactory.create(typedNodeOperand);
+            default:
+                throw new RuntimeException("unexpected operation: " + operator);
+        }
+    }
+
     public PNode createBinaryOperation(operatorType operator, PNode left, PNode right) {
+        switch (operator) {
+            case Add:
+                return AddNodeFactory.create(left, right);
+            case Sub:
+                return SubNodeFactory.create(left, right);
+            case Mult:
+                return MulNodeFactory.create(left, right);
+            case Div:
+                return DivNodeFactory.create(left, right);
+            case FloorDiv:
+                return FloorDivNodeFactory.create(left, right);
+            case Mod:
+                return ModuloNodeFactory.create(left, right);
+            case Pow:
+                return PowerNodeFactory.create(left, right);
+            case LShift:
+                return LeftShiftNodeFactory.create(left, right);
+            case RShift:
+                return RightShiftNodeFactory.create(left, right);
+            case BitAnd:
+                return BitAndNodeFactory.create(left, right);
+            case BitOr:
+                return BitOrNodeFactory.create(left, right);
+            case BitXor:
+                return BitXorNodeFactory.create(left, right);
+            default:
+                throw new RuntimeException("unexpected operation: " + operator);
+        }
+    }
+
+    public PNode createBinaryOperation(OperationType operator, PNode left, PNode right) {
         switch (operator) {
             case Add:
                 return AddNodeFactory.create(left, right);
@@ -317,6 +391,42 @@ public class NodeFactory {
         return current;
     }
 
+    public PNode createComparisonOp(CmpOpType operator, PNode left, PNode right) {
+        switch (operator) {
+            case Eq:
+                return EqualNodeFactory.create(left, right);
+            case NotEq:
+                return NotEqualNodeFactory.create(left, right);
+            case Lt:
+                return LessThanNodeFactory.create(left, right);
+            case LtE:
+                return LessThanEqualNodeFactory.create(left, right);
+            case Gt:
+                return GreaterThanNodeFactory.create(left, right);
+            case GtE:
+                return GreaterThanEqualNodeFactory.create(left, right);
+            case Is:
+                return IsNodeFactory.create(left, right);
+            case IsNot:
+                return IsNotNodeFactory.create(left, right);
+            case In:
+                return InNodeFactory.create(left, right);
+            default:
+                throw new RuntimeException("unexpected operation: " + operator);
+        }
+    }
+
+    public PNode createComparisonOps(PNode left, List<CmpOpType> ops, List<PNode> rights) {
+        PNode current = createComparisonOp(ops.get(0), left, rights.get(0));
+
+        for (int i = 1; i < rights.size(); i++) {
+            PNode right = rights.get(i);
+            current = createComparisonOp(ops.get(i), current, right);
+        }
+
+        return current;
+    }
+
     PNode createBooleanOperation(boolopType operator, PNode left, PNode right) {
         switch (operator) {
             case And:
@@ -329,6 +439,28 @@ public class NodeFactory {
     }
 
     public PNode createBooleanOperations(PNode left, boolopType operator, List<PNode> rights) {
+        PNode current = createBooleanOperation(operator, left, rights.get(0));
+
+        for (int i = 1; i < rights.size(); i++) {
+            PNode right = rights.get(i);
+            current = createBooleanOperation(operator, current, right);
+        }
+
+        return current;
+    }
+
+    PNode createBooleanOperation(BoolOpType operator, PNode left, PNode right) {
+        switch (operator) {
+            case And:
+                return AndNodeFactory.create(left, right);
+            case Or:
+                return OrNodeFactory.create(left, right);
+            default:
+                throw new RuntimeException("unexpected operation: " + operator);
+        }
+    }
+
+    public PNode createBooleanOperations(PNode left, BoolOpType operator, List<PNode> rights) {
         PNode current = createBooleanOperation(operator, left, rights.get(0));
 
         for (int i = 1; i < rights.size(); i++) {

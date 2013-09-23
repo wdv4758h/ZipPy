@@ -26,11 +26,8 @@ package edu.uci.python.antlr;
 
 import java.math.*;
 import java.util.*;
-import java.util.List;
 
 import org.antlr.runtime.*;
-import org.python.antlr.ast.*;
-import org.python.core.*;
 import org.python.google.common.collect.*;
 
 import com.oracle.truffle.api.*;
@@ -46,12 +43,13 @@ import edu.uci.python.nodes.translation.*;
 import edu.uci.python.nodes.truffle.*;
 import edu.uci.python.runtime.Options;
 import edu.uci.python.runtime.datatypes.*;
+import edu.uci.python.types.*;
 
-public class GrammarActionsTruffle {
+public class GrammarActions {
 
     public final NodeFactory factory = new NodeFactory();
 
-    public GrammarActionsTruffle() {
+    public GrammarActions() {
         ParserEnvironment.beginScope();
     }
 
@@ -66,12 +64,28 @@ public class GrammarActionsTruffle {
         return node;
     }
 
+    private static PNode replace(Node thisNode, Node withThisNode) {
+        PNode newNode = (PNode) withThisNode;
+        if (newNode != null && thisNode != newNode) {
+            if (thisNode.getSourceSection() != null) {
+                newNode.clearSourceSection();
+            }
+            thisNode.replace(newNode);
+
+            if (newNode.getToken() == null) {
+                newNode.setToken(((PNode) thisNode).getToken());
+            }
+        }
+
+        return newNode;
+    }
+
     public StatementNode makeYield(Token t, PNode node) {
         return (StatementNode) make(t, factory.createYield(node));
     }
 
-    public PNode makeTuple(Token t, List<PNode> elts, expr_contextType ctx) {
-        assert ctx == expr_contextType.Load : "Left hand side node should not reach here!";
+    public PNode makeTuple(Token t, List<PNode> elts, ContextType ctx) {
+        assert ctx == ContextType.Load : "Left hand side node should not reach here!";
         PNode retVal = make(t, factory.createTupleLiteral(elts));
         ((TupleLiteralNode) retVal).setElts(elts);
         return retVal;
@@ -80,8 +94,7 @@ public class GrammarActionsTruffle {
     public PNode makeDictComp(Token t, PNode key, PNode paramValue, List<PComprehension> generators) {
         String tmp = "_{" + t.getLine() + "_" + t.getCharPositionInLine() + "}";
         ParserEnvironment.def(tmp);
-        PNode value = fixGlobalReadToLocal(paramValue);
-// processPComprehension(generators, value);
+        fixGlobalReadToLocal(paramValue);
         return make(t, PNode.EMPTY_NODE);
     }
 
@@ -134,9 +147,7 @@ public class GrammarActionsTruffle {
                 if (n != null) {
                     if (((PNode) n).getToken() != null) {
                         newNode = recuFixWriteLocalSlots((PNode) n, level + 1);
-                        if (newNode != n) {
-                            n.replace(newNode);
-                        }
+                        replace(n, newNode);
                     }
                 }
             }
@@ -153,21 +164,20 @@ public class GrammarActionsTruffle {
         return make(node.getToken(), factory.createIndex(value));
     }
 
-    public PNode makeCompare(Token t, PNode left, java.util.List<cmpopType> ops, List<PNode> comparators) {
-        return make(t, factory.createComparisonOperations(left, ops, comparators));
+    public PNode makeCompare(Token t, PNode left, java.util.List<CmpOpType> ops, List<PNode> comparators) {
+        return make(t, factory.createComparisonOps(left, ops, comparators));
     }
 
     public PNode makeSetComp(Token t, PNode paramElt, List<PComprehension> generators) {
         String tmp = "_{" + t.getLine() + "_" + t.getCharPositionInLine() + "}";
         ParserEnvironment.def(tmp);
-        PNode elt = fixGlobalReadToLocal(paramElt);
-// processPComprehension(generators, elt);
+        fixGlobalReadToLocal(paramElt);
         return make(t, PNode.EMPTY_NODE);
     }
 
-    public PNode makeAttribute(Token t, PNode value, PNode attr, expr_contextType ctx) {
+    public PNode makeAttribute(Token t, PNode value, PNode attr, ContextType ctx) {
         PNode retVal = null;
-        if (ctx != expr_contextType.Load) {
+        if (ctx != ContextType.Load) {
             retVal = make(t, factory.createAttributeUpdate(value, attr.getText(), PNode.DUMMY_NODE));
         } else {
             retVal = make(t, factory.createAttributeRef(value, attr.getText()));
@@ -185,7 +195,7 @@ public class GrammarActionsTruffle {
         return make(t, slot, factory.createListComprehension(comprehension));
     }
 
-    public PNode makeList(Token t, List<PNode> elts, expr_contextType ctx) {
+    public PNode makeList(Token t, List<PNode> elts, ContextType ctx) {
         ListLiteralNode retVal = (ListLiteralNode) make(t, factory.createListLiteral(elts));
         retVal.setElts(elts);
         return retVal;
@@ -196,7 +206,7 @@ public class GrammarActionsTruffle {
     }
 
     public PNode makeStr(Token t, Object s) {
-        return make(t, factory.createStringLiteral((PyString) s));
+        return make(t, factory.createStringLiteral((String) s));
     }
 
     public PNode makeFalse(Token t) {
@@ -211,7 +221,7 @@ public class GrammarActionsTruffle {
         return make(t, factory.createNoneLiteral());
     }
 
-    public PNode makeUnaryOp(Token t, unaryopType op, PNode operand) {
+    public PNode makeUnaryOp(Token t, UnaryOpType op, PNode operand) {
         return make(t, factory.createUnaryOperation(op, operand));
     }
 
@@ -327,7 +337,7 @@ public class GrammarActionsTruffle {
         return (StatementNode) make(t, retVal);
     }
 
-    public PNode makeAugAssign(PNode t, PNode target, operatorType op, PNode value) {
+    public PNode makeAugAssign(PNode t, PNode target, OperationType op, PNode value) {
         PNode retVal = null;
         FrameSlot slot = null;
         PNode readfs = null;
@@ -358,7 +368,7 @@ public class GrammarActionsTruffle {
         return make(t.getToken(), slot, retVal);
     }
 
-    public PNode makeName(PNode tree, String id, expr_contextType ctx) {
+    public PNode makeName(PNode tree, String id, ContextType ctx) {
         return make(tree.getToken(), makeName(tree.getToken(), id, ctx));
     }
 
@@ -396,11 +406,11 @@ public class GrammarActionsTruffle {
         return retVal;
     }
 
-    public PNode makeName(Token t, String id, expr_contextType ctx) {
+    public PNode makeName(Token t, String id, ContextType ctx) {
         PNode retVal = null;
         FrameSlot slot = null;
 
-        if (ctx == expr_contextType.Param) {
+        if (ctx == ContextType.Param) {
             if (ParserEnvironment.scopeLevel == 1) {
                 // Module global scope
                 /**
@@ -417,7 +427,7 @@ public class GrammarActionsTruffle {
 
             ReadArgumentNode right = new ReadArgumentNode(slot.getIndex());
             retVal = factory.createWriteLocal(right, slot);
-        } else if (ctx != expr_contextType.Load) {
+        } else if (ctx != ContextType.Load) {
             retVal = makeNameWrite(t, PNode.DUMMY_NODE);
         } else {
             retVal = makeNameRead(t);
@@ -447,9 +457,7 @@ public class GrammarActionsTruffle {
             PNode newNode = null;
             for (Node n : list) {
                 newNode = reAssignElt((PNode) n);
-                if (newNode != n) {
-                    n.replace(newNode);
-                }
+                replace(n, newNode);
             }
         }
         return retVal;
@@ -482,9 +490,8 @@ public class GrammarActionsTruffle {
     public PNode makeAssignValue(List<?> rhs) {
         PNode retVal = null;
         PNode value = GrammarUtilities.castExpr(rhs.get(rhs.size() - 1));
-        retVal = recurseSetContext(value, expr_contextType.Load);
-        value.replace(retVal);
-        return retVal;
+        retVal = recurseSetContext(value, ContextType.Load);
+        return replace(value, retVal);
     }
 
     private List<PNode> makeTemporaryWrites(List<PNode> rights) {
@@ -537,9 +544,7 @@ public class GrammarActionsTruffle {
 
         for (int i = 0; i < targets.size(); i++) {
             read = ((WriteNode) tempWrites.get(i)).makeReadNode();
-
-            processSingleWrite = fixWriteLocalSlot(targets.get(i));
-            targets.get(i).replace(processSingleWrite);
+            processSingleWrite = replace(targets.get(i), fixWriteLocalSlot(targets.get(i)));
             processSingleWrite = ((Amendable) processSingleWrite).updateRhs(read);
             tempWrites.add(processSingleWrite);
         }
@@ -718,7 +723,7 @@ public class GrammarActionsTruffle {
         if (dots != null) {
             for (Object o : dots) {
                 Token tok = (Token) o;
-                result.add(makeName(tok, tok.getText(), expr_contextType.Load));
+                result.add(makeName(tok, tok.getText(), ContextType.Load));
             }
         }
         if (null != names) {
@@ -730,11 +735,11 @@ public class GrammarActionsTruffle {
     public List<PNode> makeDottedName(Token top, List<?> paramAttrs) {
         List<PNode> attrs = GrammarUtilities.castExprs(paramAttrs);
         List<PNode> result = new ArrayList<>();
-        result.add(makeName(top, top.getText(), expr_contextType.Load));
+        result.add(makeName(top, top.getText(), ContextType.Load));
         if (attrs != null) {
             for (PNode attr : attrs) {
                 Token token = attr.getToken();
-                result.add(makeName(token, token.getText(), expr_contextType.Load));
+                result.add(makeName(token, token.getText(), ContextType.Load));
             }
         }
         return result;
@@ -783,7 +788,7 @@ public class GrammarActionsTruffle {
         if (t == null) {
             return null;
         }
-        return makeName(t, t.getText(), expr_contextType.Load);
+        return makeName(t, t.getText(), ContextType.Load);
     }
 
     public List<PNode> makeNameNodes(List<?> names) {
@@ -795,10 +800,10 @@ public class GrammarActionsTruffle {
     }
 
     public PNode makeDottedAttr(Token nameToken, List<?> attrs) {
-        PNode current = makeName(nameToken, nameToken.getText(), expr_contextType.Load);
+        PNode current = makeName(nameToken, nameToken.getText(), ContextType.Load);
         for (Object o : attrs) {
             Token t = (Token) o;
-            current = makeAttribute(t, current, cantBeNoneName(t), expr_contextType.Load);
+            current = makeAttribute(t, current, cantBeNoneName(t), ContextType.Load);
         }
         return current;
     }
@@ -910,7 +915,7 @@ public class GrammarActionsTruffle {
         return (StatementNode) make(t, slot, retVal);
     }
 
-    public PNode recurseSetContext(PNode tree, expr_contextType context) {
+    public PNode recurseSetContext(PNode tree, ContextType context) {
         Iterable<Node> list = null;
         PNode retVal = tree;
         PNode newNode = null;
@@ -918,7 +923,7 @@ public class GrammarActionsTruffle {
         PNode slice = null;
         FrameSlot slot = null;
 
-        if (context == expr_contextType.Load) {
+        if (context == ContextType.Load) {
             if (tree instanceof WriteGlobalNode) {
                 if (GlobalScope.getInstance().isGlobalOrBuiltin(((WriteGlobalNode) tree).getName())) {
                     retVal = make(tree.getToken(), factory.createReadGlobal(((WriteGlobalNode) tree).getName()));
@@ -961,9 +966,7 @@ public class GrammarActionsTruffle {
 
             for (Node n : list) {
                 newNode = recurseSetContext((PNode) n, context);
-                if (newNode != n) {
-                    n.replace(newNode);
-                }
+                replace(n, newNode);
             }
 
         }
@@ -984,9 +987,7 @@ public class GrammarActionsTruffle {
             for (Node n : list) {
                 if (!(n instanceof ListComprehensionNode) && !(n instanceof GeneratorNode)) {
                     newNode = fixGlobalReadToLocal((PNode) n);
-                    if (newNode != n) {
-                        n.replace(newNode);
-                    }
+                    replace(n, newNode);
                 }
             }
         }
@@ -1017,9 +1018,7 @@ public class GrammarActionsTruffle {
 
             for (Node n : list) {
                 newNode = readLocalToGlobal((PNode) n);
-                if (newNode != n) {
-                    n.replace(newNode);
-                }
+                replace(n, newNode);
             }
         }
         return retVal;
@@ -1046,7 +1045,7 @@ public class GrammarActionsTruffle {
             if (arg instanceof TupleLiteralNode) {
                 targets = new ArrayList<>();
                 targets.add(arg);
-                tupleAssign = makeAssign(arg, targets, makeName(arg, arg.getText(), expr_contextType.Load));
+                tupleAssign = makeAssign(arg, targets, makeName(arg, arg.getText(), ContextType.Load));
                 tupleAssignments.add(tupleAssign);
             }
         }
@@ -1077,7 +1076,7 @@ public class GrammarActionsTruffle {
         if (t == null || t.getText().equals("None")) {
             ErrorHandler.error("can't be None", t);
         }
-        return makeName(t, t.getText(), expr_contextType.Load);
+        return makeName(t, t.getText(), ContextType.Load);
     }
 
     public void cantBeNone(PNode e) {
@@ -1125,8 +1124,7 @@ public class GrammarActionsTruffle {
     public PNode makeComplex(Token t) {
         String s = t.getText();
         s = s.substring(0, s.length() - 1);
-        PyComplex pyComplex = Py.newImaginary(Double.valueOf(s));
-        PComplex complex = new PComplex(pyComplex.real, pyComplex.imag);
+        PComplex complex = new PComplex(0.0, Double.valueOf(s));
         return make(t, factory.createComplexLiteral(complex));
     }
 
@@ -1232,16 +1230,16 @@ public class GrammarActionsTruffle {
     }
 
     public PNode negate(Token t, PNode o) {
-        return make(t, makeUnaryOp(t, unaryopType.USub, o));
+        return make(t, makeUnaryOp(t, UnaryOpType.USub, o));
     }
 
-    public PNode makeSubscript(Token t, PNode pPrimary, PNode paramSlice, expr_contextType ctx) {
+    public PNode makeSubscript(Token t, PNode pPrimary, PNode paramSlice, ContextType ctx) {
         PNode retVal = null;
         PNode slice = paramSlice;
         PNode primary = pPrimary;
-        if (ctx == expr_contextType.Load) {
+        if (ctx == ContextType.Load) {
             retVal = factory.createSubscriptLoad(primary, slice);
-        } else if (ctx == expr_contextType.Store) {
+        } else if (ctx == ContextType.Store) {
             primary = makeNameRead(primary.getToken());
             retVal = factory.createSubscriptStore(primary, slice, PNode.DUMMY_NODE);
         } else {
@@ -1277,69 +1275,51 @@ public class GrammarActionsTruffle {
         return make(tok, retVal);
     }
 
-    public PNode makePowerSpecific(PNode parent, Object o) {
-        PNode retVal = parent;
-        PNode newNode = recurseSetContext(parent, expr_contextType.Load);
-
-        if (newNode != parent) {
-            parent.replace(newNode);
-            retVal = newNode;
+    public PNode makePowerSpecific(PNode parent, Object object) {
+        PNode newNode = recurseSetContext(parent, ContextType.Load);
+        PNode retVal = replace(parent, newNode);
+        PNode o = null;
+        if (object instanceof PNode) {
+            o = (PNode) object;
         }
 
-        if (o instanceof CallBuiltInNode) {
-            retVal = (PNode) o;
-        } else if (o instanceof CallBuiltInWithOneArgNoKeywordNode) {
-            retVal = (PNode) o;
-        } else if (o instanceof CallBuiltInWithTwoArgsNoKeywordNode) {
-            retVal = (PNode) o;
-        } else if (o instanceof CallNode) {
-            retVal = (PNode) o;
-        } else if (o instanceof CallWithOneArgumentNoKeywordNode) {
-            retVal = (PNode) o;
-        } else if (o instanceof CallWithTwoArgumentsNoKeywordNode) {
-            retVal = (PNode) o;
+        if (o instanceof CallBuiltInNode || o instanceof CallBuiltInWithOneArgNoKeywordNode || o instanceof CallBuiltInWithTwoArgsNoKeywordNode || o instanceof CallNode ||
+                        o instanceof CallWithOneArgumentNoKeywordNode || o instanceof CallWithTwoArgumentsNoKeywordNode || o instanceof SubscriptStoreNode) {
+            retVal = o;
         } else if (o instanceof AttributeCallNode) {
             AttributeCallNode c = (AttributeCallNode) o;
             c = c.updatePrimary(((AttributeLoadNode) parent).getPrimary());
             newNode.setParent(c);
-            c.setToken(((AttributeCallNode) o).getToken());
-            ((AttributeCallNode) o).replace(c);
-            retVal = c;
+            retVal = replace(o, c);
         } else if (o instanceof SubscriptLoadNode) {
             SubscriptLoadNode c = (SubscriptLoadNode) o;
             c = (SubscriptLoadNode) factory.createSubscriptLoad(newNode, c.getSlice());
             newNode.setParent(c);
-            c.setToken(((SubscriptLoadNode) o).getToken());
-            ((SubscriptLoadNode) o).replace(c);
-            retVal = c;
-        } else if (o instanceof SubscriptStoreNode) {
-            retVal = (PNode) o;
+            retVal = replace(o, c);
         } else if (o instanceof AttributeLoadNode) {
             AttributeLoadNode c = (AttributeLoadNode) o;
             c = (AttributeLoadNode) factory.createAttributeRef(newNode, c.getName());
             newNode.setParent(c);
-            c.setToken(((AttributeLoadNode) o).getToken());
-            ((AttributeLoadNode) o).replace(c);
-            retVal = c;
+            retVal = replace(o, c);
         }
         return retVal;
     }
 
-    public List<cmpopType> makeCmpOps(List<?> cmps) {
-        List<cmpopType> result = new ArrayList<>();
+    public List<CmpOpType> makeCmpOps(List<?> cmps) {
+        List<CmpOpType> result = new ArrayList<>();
         if (cmps != null) {
             for (Object o : cmps) {
-                result.add((cmpopType) o);
+                result.add((CmpOpType) o);
             }
         }
         return result;
     }
 
-    public PNode makeBoolOp(Token t, PNode left, boolopType op, List<?> right) {
+    public PNode makeBoolOp(Token t, PNode left, BoolOpType op, List<?> right) {
         return make(t, factory.createBooleanOperations(GrammarUtilities.castExpr(left), op, GrammarUtilities.castExprs(right)));
     }
 
-    public PNode makeBinOp(Token t, PNode pleft, operatorType op, List<?> rights) {
+    public PNode makeBinOp(Token t, PNode pleft, OperationType op, List<?> rights) {
         PNode right = GrammarUtilities.castExpr(rights.get(0));
         PNode left = GrammarUtilities.castExpr(pleft);
         PNode current = make(t, factory.createBinaryOperation(op, left, right));
@@ -1353,11 +1333,11 @@ public class GrammarActionsTruffle {
     public PNode makeBinOp(Token t, PNode pleft, List<?> ops, List<?> rights, List<?> toks) {
         PNode left = GrammarUtilities.castExpr(pleft);
         PNode right = GrammarUtilities.castExpr(rights.get(0));
-        operatorType op = (operatorType) ops.get(0);
+        OperationType op = (OperationType) ops.get(0);
         PNode current = make(t, factory.createBinaryOperation(op, left, right));
         for (int i = 1; i < rights.size(); i++) {
             right = GrammarUtilities.castExpr(rights.get(i));
-            op = (operatorType) ops.get(i);
+            op = (OperationType) ops.get(i);
             current = make(t, factory.createBinaryOperation(op, current, right));
         }
         return current;
@@ -1383,7 +1363,7 @@ public class GrammarActionsTruffle {
                 }
             }
             if (!extslice) {
-                PNode t = makeTuple(begin, etypes, expr_contextType.Load);
+                PNode t = makeTuple(begin, etypes, ContextType.Load);
                 s = makeIndex(begin, t);
             }
         } else if (sltypes.size() == 1) {
