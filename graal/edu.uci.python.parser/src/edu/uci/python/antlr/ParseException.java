@@ -22,37 +22,26 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package edu.uci.python.nodes;
+package edu.uci.python.antlr;
 
-import com.oracle.truffle.api.frame.*;
+@SuppressWarnings("serial")
+public class ParseException extends RuntimeException {
 
-import edu.uci.python.nodes.statements.*;
-import edu.uci.python.nodes.truffle.*;
+    public int line;
+    public int charPositionInLine;
 
-public class ModuleNode extends PNode {
-
-    @Child BlockNode body;
-
-    private final FrameDescriptor descriptor;
-
-    public ModuleNode(BlockNode body, FrameDescriptor descriptor) {
-        this.body = adoptChild(body);
-        this.descriptor = descriptor;
+    public ParseException() {
+        super();
     }
 
-    public FrameDescriptor getFrameDescriptor() {
-        return descriptor;
+    public ParseException(String message, int lin, int charPos) {
+        super(message);
+        this.line = lin;
+        this.charPositionInLine = charPos;
     }
 
-    @Override
-    public Object execute(VirtualFrame frame) {
-        GlobalScope.getInstance(frame.materialize());
-        return body.execute(frame);
-    }
-
-    @Override
-    public String toString() {
-        return getClass().getSimpleName();
+    public ParseException(String message) {
+        this(message, 0, 0);
     }
 
 }

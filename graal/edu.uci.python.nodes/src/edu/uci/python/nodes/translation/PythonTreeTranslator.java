@@ -63,9 +63,9 @@ public class PythonTreeTranslator extends Visitor {
         this.environment = environment.resetScopeLevel();
     }
 
-    public RootNode translate(PythonTree root) {
+    public PNode translate(PythonTree root) {
         try {
-            return (RootNode) visit(root);
+            return (PNode) visit(root);
         } catch (Throwable t) {
             throw new RuntimeException("Failed in " + this + " with error " + t);
         }
@@ -80,7 +80,7 @@ public class PythonTreeTranslator extends Visitor {
         environment.beginScope(node);
 
         List<PNode> body = visitStatements(node.getInternalBody());
-        RootNode newNode = new NodeFactory().createModule(body, getFrameDescriptor(node));
+        PNode newNode = new NodeFactory().createModule(body, getFrameDescriptor(node));
         environment.endScope();
         return newNode;
     }

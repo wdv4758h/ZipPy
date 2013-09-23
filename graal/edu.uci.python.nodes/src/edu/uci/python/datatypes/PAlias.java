@@ -22,37 +22,53 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package edu.uci.python.nodes;
+package edu.uci.python.datatypes;
+
+import java.util.*;
+
+import org.antlr.runtime.*;
 
 import com.oracle.truffle.api.frame.*;
 
-import edu.uci.python.nodes.statements.*;
-import edu.uci.python.nodes.truffle.*;
+import edu.uci.python.nodes.*;
 
-public class ModuleNode extends PNode {
+public class PAlias extends PNode {
 
-    @Child BlockNode body;
+    private String name;
+    private String asname;
 
-    private final FrameDescriptor descriptor;
-
-    public ModuleNode(BlockNode body, FrameDescriptor descriptor) {
-        this.body = adoptChild(body);
-        this.descriptor = descriptor;
+    public PAlias(Token token, String name, String asname) {
+        super(token);
+        this.name = name;
+        this.asname = asname;
     }
 
-    public FrameDescriptor getFrameDescriptor() {
-        return descriptor;
+    public PAlias(PNode name, PNode asname) {
+        super();
+        this.name = name.getText();
+        if (asname != null) {
+            this.asname = asname.getText();
+        }
+    }
+
+    public PAlias(List<PNode> nameNodes, String snameNodes, PNode asname) {
+        this.name = snameNodes;
+        if (asname != null) {
+            this.asname = asname.getText();
+        }
+    }
+
+    public String getInternalName() {
+        return name;
+    }
+
+    public String getInternalAsname() {
+        return asname;
     }
 
     @Override
     public Object execute(VirtualFrame frame) {
-        GlobalScope.getInstance(frame.materialize());
-        return body.execute(frame);
+        // TODO Auto-generated method stub
+        return null;
     }
-
-    @Override
-    public String toString() {
-        return getClass().getSimpleName();
-    }
-
 }

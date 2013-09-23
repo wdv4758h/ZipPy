@@ -35,12 +35,22 @@ public class ListLiteralNode extends LiteralNode {
 
     @Children protected final PNode[] values;
 
+    private List<PNode> elts;
+
     public ListLiteralNode(PNode[] values) {
         this.values = adoptChildren(values);
     }
 
     protected ListLiteralNode(ListLiteralNode node) {
         this(node.values);
+    }
+
+    public List<PNode> getElts() {
+        return elts;
+    }
+
+    public void setElts(List<PNode> elts) {
+        this.elts = elts;
     }
 
     @Override
