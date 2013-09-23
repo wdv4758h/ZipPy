@@ -24,19 +24,22 @@
  */
 package edu.uci.python.nodes;
 
-import java.math.BigInteger;
+import java.math.*;
+import java.util.*;
 
-import com.oracle.truffle.api.dsl.TypeSystemReference;
-import com.oracle.truffle.api.frame.VirtualFrame;
+import org.antlr.runtime.*;
+import org.antlr.runtime.tree.*;
+
+import com.oracle.truffle.api.*;
+import com.oracle.truffle.api.dsl.*;
+import com.oracle.truffle.api.frame.*;
 import com.oracle.truffle.api.nodes.*;
 
 import edu.uci.python.nodes.truffle.*;
 import edu.uci.python.runtime.datatypes.*;
 
 @TypeSystemReference(PythonTypes.class)
-public abstract class PNode extends Node {
-
-    public abstract Object execute(VirtualFrame frame);
+public abstract class PNode extends RootNode {
 
     public int executeInt(VirtualFrame frame) throws UnexpectedResultException {
         Object o = execute(frame);
@@ -157,7 +160,222 @@ public abstract class PNode extends Node {
         public Object execute(VirtualFrame frame) {
             throw new RuntimeException("This is a dummy node");
         }
+    };
+
+    public static final PNode EMPTY_NODE = new PNode() {
+
+        @Override
+        public Object execute(VirtualFrame frame) {
+            return null;
+        }
 
     };
+
+    protected FrameSlot slot;
+
+    public void setSlot(FrameSlot slot) {
+        this.slot = slot;
+    }
+
+    public FrameSlot getSlot() {
+        return this.slot;
+    }
+
+    // Truffle: see truffle.api.nodes.Node
+    public void setParent(PNode t) {
+        t.adoptChild(this);
+    }
+
+    // // Dependencies for grammar copied from PythonTree.class
+
+    private int charStartIndex = -1;
+    private int charStopIndex = -1;
+    private CommonTree node;
+
+    public PNode() {
+        node = new CommonTree();
+    }
+
+    public PNode(Token token) {
+        node = new CommonTree(token);
+        if (token != null) {
+            CommonToken t = (CommonToken) token;
+
+            Source src = null; // TODO: fix it.. need to implement Source interface.
+            int length = t.getStopIndex() - t.getStartIndex();
+            SourceSection srcSection = new SourceSection(src, t.getText(), t.getLine(), t.getCharPositionInLine(), t.getTokenIndex(), length);
+            assignSourceSection(srcSection);
+        }
+    }
+
+    public void setToken(Token token) {
+        node = new CommonTree(token);
+
+        SourceSection srcSection = this.getSourceSection();
+        if (token != null) {
+            if (srcSection == null && this.node != null) {
+                Source src = null; // TODO: fix it.. need to implement Source interface.
+
+                CommonToken t = (CommonToken) token;
+                int length = t.getStopIndex() - t.getStartIndex();
+                srcSection = new SourceSection(src, t.getText(), t.getLine(), t.getCharPositionInLine(), t.getTokenIndex(), length);
+                assignSourceSection(srcSection);
+            }
+        }
+    }
+
+    public Token getToken() {
+        return node.getToken();
+    }
+
+    public boolean isNil() {
+        return node.isNil();
+    }
+
+    public String getText() {
+        return node.getText();
+    }
+
+    public int getLine() {
+        if (node.getToken() == null || node.getToken().getLine() == 0) {
+            if (getChildCount() > 0) {
+                return getChild(0).getLine();
+            }
+            return 1;
+        }
+        return node.getToken().getLine();
+    }
+
+    public int getCharPositionInLine() {
+        Token token = node.getToken();
+        if (token == null || token.getCharPositionInLine() == -1) {
+            if (getChildCount() > 0) {
+                return getChild(0).getCharPositionInLine();
+            }
+            return 0;
+        } else if (token != null && token.getCharPositionInLine() == -2) {
+            // XXX: yucky fix because CPython's ast uses -1 as a real value
+            // for char pos in certain circumstances (for example, the
+            // char pos of multi-line strings. I would just use -1,
+            // but ANTLR is using -1 in special ways also.
+            return -1;
+        }
+        return token.getCharPositionInLine();
+    }
+
+    public void setTokenStartIndex(int index) {
+        node.setTokenStartIndex(index);
+    }
+
+    public int getTokenStopIndex() {
+        return node.getTokenStopIndex();
+    }
+
+    public void setTokenStopIndex(int index) {
+        node.setTokenStopIndex(index);
+    }
+
+    public int getCharStartIndex() {
+        if (charStartIndex == -1 && node.getToken() != null) {
+            return ((CommonToken) node.getToken()).getStartIndex();
+        }
+        return charStartIndex;
+    }
+
+    public void setCharStartIndex(int index) {
+        charStartIndex = index;
+    }
+
+    /*
+     * Adding one to stopIndex from Tokens. ANTLR defines the char position as being the array index
+     * of the actual characters. Most tools these days define document offsets as the positions
+     * between the characters. If you imagine drawing little boxes around each character and think
+     * of the numbers as pointing to either the left or right side of a character's box, then 0 is
+     * before the first character - and in a Document of 10 characters, position 10 is after the
+     * last character.
+     */
+    public int getCharStopIndex() {
+
+        if (charStopIndex == -1 && node.getToken() != null) {
+            return ((CommonToken) node.getToken()).getStopIndex() + 1;
+        }
+        return charStopIndex;
+    }
+
+    public void setCharStopIndex(int index) {
+        charStopIndex = index;
+    }
+
+    public void setChildIndex(int index) {
+        node.setChildIndex(index);
+    }
+
+    // XXX: From here down copied from org.antlr.runtime.tree.BaseTree
+    protected List<PNode> children;
+
+    public PNode getChild(int i) {
+        PNode retVal = null;
+
+        if (children != null && i < children.size()) {
+            retVal = children.get(i);
+        }
+        return retVal;
+    }
+
+    public int getChildCount() {
+        if (children == null) {
+            return 0;
+        }
+        return children.size();
+    }
+
+    public void addChild(PNode t) {
+
+        if (t == null) {
+            return; // do nothing upon addChild(null)
+        }
+
+        PNode childTree = t;
+        if (childTree.isNil()) { // t is an empty node possibly with children
+            if (this.children != null && this.children == childTree.children) {
+                throw new RuntimeException("attempt to add child list to itself");
+            }
+            // just add all of childTree's children to this
+            if (childTree.children != null) {
+                if (this.children != null) { // must copy, this has children
+                                             // already
+                    int n = childTree.children.size();
+                    for (int i = 0; i < n; i++) {
+                        PNode c = childTree.children.get(i);
+                        this.children.add(c);
+                        // handle double-link stuff for each child of nil root
+                        c.setParent(this);
+                        c.setChildIndex(children.size() - 1);
+                    }
+                } else {
+                    // no children for this but t has children; just set pointer
+                    // call general freshener routine
+                    this.children = childTree.children;
+                    this.freshenParentAndChildIndexes(0);
+                }
+            }
+        } else { // child is not nil (don't care about children)
+            if (children == null) {
+                children = new ArrayList<>();
+            }
+            children.add(t);
+            childTree.setParent(this);
+            childTree.setChildIndex(children.size() - 1);
+        }
+    }
+
+    public void freshenParentAndChildIndexes(int offset) {
+        int n = getChildCount();
+        for (int c = offset; c < n; c++) {
+            PNode child = getChild(c);
+            child.setChildIndex(c);
+            child.setParent(this);
+        }
+    }
 
 }

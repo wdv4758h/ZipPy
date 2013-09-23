@@ -22,37 +22,43 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package edu.uci.python.nodes;
+package edu.uci.python.antlr;
+
+import org.antlr.runtime.*;
+import org.antlr.runtime.tree.*;
 
 import com.oracle.truffle.api.frame.*;
 
-import edu.uci.python.nodes.statements.*;
-import edu.uci.python.nodes.truffle.*;
+import edu.uci.python.nodes.*;
 
-public class ModuleNode extends PNode {
+/**
+ * A node representing erroneous token range in token stream.
+ */
+public class TruffleErrorNode extends PNode {
 
-    @Child BlockNode body;
+    private CommonErrorNode errorNode;
 
-    private final FrameDescriptor descriptor;
-
-    public ModuleNode(BlockNode body, FrameDescriptor descriptor) {
-        this.body = adoptChild(body);
-        this.descriptor = descriptor;
-    }
-
-    public FrameDescriptor getFrameDescriptor() {
-        return descriptor;
+    public TruffleErrorNode(TokenStream input, Token start, Token stop, RecognitionException e) {
+        this.errorNode = new CommonErrorNode(input, start, stop, e);
     }
 
     @Override
-    public Object execute(VirtualFrame frame) {
-        GlobalScope.getInstance(frame.materialize());
-        return body.execute(frame);
+    public boolean isNil() {
+        return errorNode.isNil();
+    }
+
+    @Override
+    public String getText() {
+        return errorNode.getText();
     }
 
     @Override
     public String toString() {
-        return getClass().getSimpleName();
+        return errorNode.toString();
     }
 
+    @Override
+    public Object execute(VirtualFrame frame) {
+        return new Exception("Error: " + getToken());
+    }
 }
