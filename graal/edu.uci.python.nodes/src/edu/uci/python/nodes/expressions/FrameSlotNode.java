@@ -49,6 +49,7 @@ public abstract class FrameSlotNode extends PNode {
         this.slot = slot;
     }
 
+    @Override
     public final FrameSlot getSlot() {
         return slot;
     }

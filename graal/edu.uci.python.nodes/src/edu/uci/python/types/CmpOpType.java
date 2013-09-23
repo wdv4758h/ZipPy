@@ -22,37 +22,8 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package edu.uci.python.nodes;
+package edu.uci.python.types;
 
-import com.oracle.truffle.api.frame.*;
-
-import edu.uci.python.nodes.statements.*;
-import edu.uci.python.nodes.truffle.*;
-
-public class ModuleNode extends PNode {
-
-    @Child BlockNode body;
-
-    private final FrameDescriptor descriptor;
-
-    public ModuleNode(BlockNode body, FrameDescriptor descriptor) {
-        this.body = adoptChild(body);
-        this.descriptor = descriptor;
-    }
-
-    public FrameDescriptor getFrameDescriptor() {
-        return descriptor;
-    }
-
-    @Override
-    public Object execute(VirtualFrame frame) {
-        GlobalScope.getInstance(frame.materialize());
-        return body.execute(frame);
-    }
-
-    @Override
-    public String toString() {
-        return getClass().getSimpleName();
-    }
-
+public enum CmpOpType {
+    UNDEFINED, Eq, NotEq, Lt, LtE, Gt, GtE, Is, IsNot, In, NotIn;
 }

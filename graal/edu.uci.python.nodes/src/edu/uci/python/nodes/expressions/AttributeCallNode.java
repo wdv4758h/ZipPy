@@ -55,6 +55,10 @@ public abstract class AttributeCallNode extends PNode {
         this(node.arguments, node.name);
     }
 
+    public AttributeCallNode updatePrimary(PNode primary) {
+        return AttributeCallNodeFactory.create(this.arguments, this.name, primary);
+    }
+
     @Override
     public String toString() {
         return getClass().getSimpleName() + "(callee=" + getPrimary() + "," + name + ")";
