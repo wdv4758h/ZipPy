@@ -214,7 +214,8 @@ public class CustomConsole extends JLineConsole {
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         TruffleTokenSource indentedSource = new TruffleTokenSource(tokens, filename, single);
         tokens = new CommonTokenStream(indentedSource);
-        TruffleParser parser = new TruffleParser(tokens, encoding);
+        NodeFactory factory = new NodeFactory();
+        TruffleParser parser = new TruffleParser(tokens, encoding, factory);
         parser.setTreeAdaptor(new TrufflePNodeAdaptor());
         return parser;
     }

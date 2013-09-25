@@ -198,30 +198,32 @@ public abstract class PNode extends RootNode {
 
     public PNode(Token token) {
         node = new CommonTree(token);
-        if (token != null) {
-            CommonToken t = (CommonToken) token;
-
-            Source src = null; // TODO: fix it.. need to implement Source interface.
-            int length = t.getStopIndex() - t.getStartIndex();
-            SourceSection srcSection = new SourceSection(src, t.getText(), t.getLine(), t.getCharPositionInLine(), t.getTokenIndex(), length);
-            assignSourceSection(srcSection);
-        }
+// if (token != null) {
+// CommonToken t = (CommonToken) token;
+//
+// Source src = null; // TODO: fix it.. need to implement Source interface.
+// int length = t.getStopIndex() - t.getStartIndex();
+// SourceSection srcSection = new SourceSection(src, t.getText(), t.getLine(),
+// t.getCharPositionInLine(), t.getTokenIndex(), length);
+// assignSourceSection(srcSection);
+// }
     }
 
     public void setToken(Token token) {
         node = new CommonTree(token);
 
-        SourceSection srcSection = this.getSourceSection();
-        if (token != null) {
-            if (srcSection == null && this.node != null) {
-                Source src = null; // TODO: fix it.. need to implement Source interface.
-
-                CommonToken t = (CommonToken) token;
-                int length = t.getStopIndex() - t.getStartIndex();
-                srcSection = new SourceSection(src, t.getText(), t.getLine(), t.getCharPositionInLine(), t.getTokenIndex(), length);
-                assignSourceSection(srcSection);
-            }
-        }
+// SourceSection srcSection = this.getSourceSection();
+// if (token != null) {
+// if (srcSection == null && this.node != null) {
+// Source src = null; // TODO: fix it.. need to implement Source interface.
+//
+// CommonToken t = (CommonToken) token;
+// int length = t.getStopIndex() - t.getStartIndex();
+// srcSection = new SourceSection(src, t.getText(), t.getLine(), t.getCharPositionInLine(),
+// t.getTokenIndex(), length);
+// assignSourceSection(srcSection);
+// }
+// }
     }
 
     public Token getToken() {

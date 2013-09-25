@@ -81,6 +81,7 @@ package edu.uci.python.antlr;
 
 import org.antlr.runtime.CommonToken;
 
+import edu.uci.python.antlr.actions.*;
 import edu.uci.python.datatypes.*;
 import edu.uci.python.nodes.*;
 import edu.uci.python.nodes.statements.*;
@@ -94,8 +95,12 @@ import java.util.ListIterator;
 
 @members {
 
-    private GrammarActions actions = new GrammarActions();
-    private UnCovered uncovered = new UnCovered();
+    private Actions actions = null;
+    private Variables var = null;
+    private Loops loop = null;
+    private Assignments ass = null;
+    private Functions fun = null;
+    private UnCovered uncovered = null;
 
     private String encoding;
 
@@ -112,9 +117,17 @@ import java.util.ListIterator;
         return super.recoverFromMismatchedToken(input, ttype, follow);
     }
 
-    public TruffleParser(TokenStream input, String encoding) {
+    public TruffleParser(TokenStream input, String encoding, NodeFactory factory) {
         this(input);
         this.encoding = encoding;
+        
+        ParserEnvironment.beginScope();
+		    this.actions = new Actions(factory);
+		    this.var = new Variables(factory);
+		    this.loop = new Loops(factory);
+		    this.ass = new Assignments(factory);
+		    this.fun = new Functions(factory);
+		    this.uncovered = new UnCovered();
     }
 
     @Override
@@ -227,11 +240,11 @@ single_input
       }
     | simple_stmt NEWLINE* EOF
       {
-        mtype = uncovered.makeInteractive($single_input.start, GrammarUtilities.castStmts($simple_stmt.stypes));
+        mtype = uncovered.makeInteractive($single_input.start, GrammarUtil.castStmts($simple_stmt.stypes));
       }
     | compound_stmt NEWLINE+ EOF
       {
-        mtype = uncovered.makeInteractive($single_input.start, GrammarUtilities.castStmts($compound_stmt.tree));
+        mtype = uncovered.makeInteractive($single_input.start, GrammarUtil.castStmts($compound_stmt.tree));
       }
     ;
     //XXX: this block is duplicated in three places, how to extract?
@@ -270,7 +283,7 @@ file_input
       }
       )* EOF
          {
-//             mtype = new Module($file_input.start, GrammarUtilities.castStmts(stypes));
+//             mtype = new Module($file_input.start, GrammarUtil.castStmts(stypes));
              mtype = actions.makeModule($file_input.start,stypes);
          }
     ;
@@ -292,7 +305,7 @@ eval_input
 }
     : LEADING_WS? (NEWLINE)* testlist[ContextType.Load] (NEWLINE)* EOF
       {
-        mtype = uncovered.makeExpression($eval_input.start, GrammarUtilities.castExpr($testlist.tree));
+        mtype = uncovered.makeExpression($eval_input.start, GrammarUtil.castExpr($testlist.tree));
       }
     ;
     //XXX: this block is duplicated in three places, how to extract?
@@ -310,11 +323,11 @@ dotted_attr
     : n1=NAME
       ( (DOT n2+=NAME)+
         {
-            $etype = actions.makeDottedAttr($n1, $n2);
+            $etype = fun.makeDottedAttr($n1, $n2);
         }
       |
         {
-            $etype = actions.makeNameNode($n1);
+            $etype = var.makeNameNode($n1);
         }
       )
     ;
@@ -384,11 +397,11 @@ decorator
     ( LPAREN
       ( arglist
         {
-            $etype = actions.makeCall($LPAREN, $dotted_attr.etype, $arglist.args, $arglist.keywords, $arglist.starargs, $arglist.kwargs);
+            $etype = fun.makeCall($LPAREN, $dotted_attr.etype, $arglist.args, $arglist.keywords, $arglist.starargs, $arglist.kwargs);
         }
       |
         {
-            $etype = actions.makeCall($LPAREN, $dotted_attr.etype);
+            $etype = fun.makeCall($LPAREN, $dotted_attr.etype);
         }
       )
       RPAREN
@@ -424,7 +437,7 @@ funcdef
         if ($decorators.start != null) {
             t = $decorators.start;
         }
-        stype = actions.makeFuncdef(t, $name_or_print.start, $parameters.args, $suite.stypes, $decorators.etypes);
+        stype = fun.makeFuncdef(t, $name_or_print.start, $parameters.args, $suite.stypes, $decorators.etypes);
     }
     ;
 
@@ -438,7 +451,7 @@ parameters
         }
       |
         {
-            $args = actions.makeArguments($parameters.start, null, null, null, null);
+            $args = fun.makeArguments($parameters.start, null, null, null, null);
 //            $args = new arguments($parameters.start, new ArrayList<PNode>(), null, null, new ArrayList<PNode>());
         }
       )
@@ -453,7 +466,7 @@ defparameter
 }
     : fpdef[ContextType.Param] (ASSIGN test[ContextType.Load])?
       {
-          $etype = GrammarUtilities.castExpr($fpdef.tree);
+          $etype = GrammarUtil.castExpr($fpdef.tree);
           if ($ASSIGN != null) {
               defaults.add($test.tree);
           } else if (!defaults.isEmpty()) {
@@ -477,15 +490,15 @@ varargslist
           )?
       )?
       {
-          $args = actions.makeArgumentsType($varargslist.start, $d, $starargs, $kwargs, defaults);
+          $args = fun.makeArgumentsType($varargslist.start, $d, $starargs, $kwargs, defaults);
       }
     | STAR starargs=NAME (COMMA DOUBLESTAR kwargs=NAME)?
       {
-          $args = actions.makeArgumentsType($varargslist.start, $d, $starargs, $kwargs, defaults);
+          $args = fun.makeArgumentsType($varargslist.start, $d, $starargs, $kwargs, defaults);
       }
     | DOUBLESTAR kwargs=NAME
       {
-          $args = actions.makeArgumentsType($varargslist.start, $d, null, $kwargs, defaults);
+          $args = fun.makeArgumentsType($varargslist.start, $d, null, $kwargs, defaults);
       }
     ;
 
@@ -498,15 +511,15 @@ fpdef[ContextType ctype]
     if (etype != null) {
         $fpdef.tree = etype;
     }
-    GrammarUtilities.checkAssign(GrammarUtilities.castExpr($fpdef.tree));
+    GrammarUtil.checkAssign(GrammarUtil.castExpr($fpdef.tree));
 }
     : NAME
       {
-          etype = actions.makeName($NAME, $NAME.text, ctype);
+          etype = var.makeName($NAME, $NAME.text, ctype);
       }
     | (LPAREN fpdef[null] COMMA) => LPAREN fplist RPAREN
       {
-          etype = actions.makeTuple($fplist.start, GrammarUtilities.castExprs($fplist.etypes), ContextType.Store);
+          etype = var.makeTuple($fplist.start, GrammarUtil.castExprs($fplist.etypes), ContextType.Store);
       }
     | LPAREN! fplist RPAREN!
     ;
@@ -586,14 +599,14 @@ expr_stmt
     : ((testlist[null] augassign) => lhs=testlist[ContextType.AugStore]
         ( (aay=augassign y1=yield_expr
            {
-               GrammarUtilities.checkAugAssign(GrammarUtilities.castExpr($lhs.tree));
-               stype = actions.makeAugAssign($lhs.tree, GrammarUtilities.castExpr($lhs.tree), $aay.op, GrammarUtilities.castExpr($y1.etype));
+               GrammarUtil.checkAugAssign(GrammarUtil.castExpr($lhs.tree));
+               stype = ass.makeAugAssign($lhs.tree, GrammarUtil.castExpr($lhs.tree), $aay.op, GrammarUtil.castExpr($y1.etype));
            }
           )
         | (aat=augassign rhs=testlist[ContextType.Load]
            {
-               GrammarUtilities.checkAugAssign(GrammarUtilities.castExpr($lhs.tree));
-               stype = actions.makeAugAssign($lhs.tree, GrammarUtilities.castExpr($lhs.tree), $aat.op, GrammarUtilities.castExpr($rhs.tree));
+               GrammarUtil.checkAugAssign(GrammarUtil.castExpr($lhs.tree));
+               stype = ass.makeAugAssign($lhs.tree, GrammarUtil.castExpr($lhs.tree), $aat.op, GrammarUtil.castExpr($rhs.tree));
            }
           )
         )
@@ -602,22 +615,22 @@ expr_stmt
         | ((at=ASSIGN t+=testlist[ContextType.Load])+
             {
 
-                List<PNode> targetslist = actions.makeAssignTargets(GrammarUtilities.castExpr($lhs.tree), $t);
-                PNode valueTN = actions.makeAssignValue($t);
+                List<PNode> targetslist = ass.makeAssignTargets(GrammarUtil.castExpr($lhs.tree), $t);
+                PNode valueTN = ass.makeAssignValue($t);
                 
-                stype = actions.makeAssign($lhs.tree, targetslist, valueTN);
+                stype = ass.makeAssign($lhs.tree, targetslist, valueTN);
             }
           )
         | ((ay=ASSIGN y2+=yield_expr)+
             {
-//                stype = new Assign($lhs.start, actions.makeAssignTargets(GrammarUtilities.castExpr($lhs.tree), $y2), actions.makeAssignValue($y2));
-                stype = actions.makeAssign($lhs.start, actions.makeAssignTargets(GrammarUtilities.castExpr($lhs.tree), $y2), actions.makeAssignValue($y2));
+//                stype = new Assign($lhs.start, ass.makeAssignTargets(GrammarUtil.castExpr($lhs.tree), $y2), ass.makeAssignValue($y2));
+                stype = ass.makeAssign($lhs.start, ass.makeAssignTargets(GrammarUtil.castExpr($lhs.tree), $y2), ass.makeAssignValue($y2));
             }
           )
         )
     | lhs=testlist[ContextType.Load]
       {
-          stype = actions.makeExpr($lhs.start, GrammarUtilities.castExpr($lhs.tree));
+          stype = actions.makeExpr($lhs.start, GrammarUtil.castExpr($lhs.tree));
       }
     )
     ;
@@ -689,15 +702,15 @@ print_stmt
     : PRINT
       (t1=printlist
        {
-           stype = actions.makePrint($PRINT, null, GrammarUtilities.castExprs($t1.elts), $t1.newline);
+           stype = fun.makePrint($PRINT, null, GrammarUtil.castExprs($t1.elts), $t1.newline);
        }
       | RIGHTSHIFT t2=printlist2
        {
-           stype = actions.makePrint($PRINT, GrammarUtilities.castExpr($t2.elts.get(0)), GrammarUtilities.castExprs($t2.elts, 1), $t2.newline);
+           stype = fun.makePrint($PRINT, GrammarUtil.castExpr($t2.elts.get(0)), GrammarUtil.castExprs($t2.elts, 1), $t2.newline);
        }
       |
        {
-           stype = actions.makePrint($PRINT, null, new ArrayList<PNode>(), true);
+           stype = fun.makePrint($PRINT, null, new ArrayList<PNode>(), true);
        }
       )
       ;
@@ -789,7 +802,7 @@ break_stmt
 }
     : BREAK
       {
-          stype = actions.makeBreak($BREAK);
+          stype = loop.makeBreak($BREAK);
       }
     ;
 
@@ -821,11 +834,11 @@ return_stmt
     : RETURN
       (testlist[ContextType.Load]
        {
-           stype = actions.makeReturn($RETURN, GrammarUtilities.castExpr($testlist.tree));
+           stype = fun.makeReturn($RETURN, GrammarUtil.castExpr($testlist.tree));
        }
       |
        {
-           stype = actions.makeReturn($RETURN, null);
+           stype = fun.makeReturn($RETURN, null);
        }
       )
       ;
@@ -840,7 +853,7 @@ yield_stmt
 }
     : yield_expr
       {
-        stype = actions.makeExpr($yield_expr.start, GrammarUtilities.castExpr($yield_expr.etype));
+        stype = actions.makeExpr($yield_expr.start, GrammarUtil.castExpr($yield_expr.etype));
       }
     ;
 
@@ -855,7 +868,7 @@ raise_stmt
     : RAISE (t1=test[ContextType.Load] (COMMA t2=test[ContextType.Load]
         (COMMA t3=test[ContextType.Load])?)?)?
       {
-          stype = uncovered.makeRaise($RAISE, GrammarUtilities.castExpr($t1.tree), GrammarUtilities.castExpr($t2.tree), GrammarUtilities.castExpr($t3.tree));
+          stype = uncovered.makeRaise($RAISE, GrammarUtil.castExpr($t1.tree), GrammarUtil.castExpr($t2.tree), GrammarUtil.castExpr($t3.tree));
       }
     ;
 
@@ -892,8 +905,8 @@ import_from
     : FROM (d+=DOT* dotted_name | d+=DOT+) IMPORT
         (STAR
          {
-             stype = actions.makeImportFrom($FROM, GrammarUtilities.makeFromText($d, $dotted_name.names),
-                 actions.makeModuleNameNode($d, $dotted_name.names),
+             stype = actions.makeImportFrom($FROM, GrammarUtil.makeFromText($d, $dotted_name.names),
+                 var.makeModuleNameNode($d, $dotted_name.names),
                  actions.makeStarAlias($STAR), actions.makeLevel($d));
          }
         | i1=import_as_names
@@ -911,8 +924,8 @@ import_from
                      }
                  }
              }
-             stype = actions.makeImportFrom($FROM, GrammarUtilities.makeFromText($d, $dotted_name.names),
-                 actions.makeModuleNameNode($d, $dotted_name.names),
+             stype = actions.makeImportFrom($FROM, GrammarUtil.makeFromText($d, $dotted_name.names),
+                 var.makeModuleNameNode($d, $dotted_name.names),
                  actions.makeAliases($i1.atypes), actions.makeLevel($d));
          }
         | LPAREN i2=import_as_names COMMA? RPAREN
@@ -932,8 +945,8 @@ import_from
                      }
                  }
              }
-             stype = actions.makeImportFrom($FROM, GrammarUtilities.makeFromText($d, $dotted_name.names),
-                 actions.makeModuleNameNode($d, $dotted_name.names),
+             stype = actions.makeImportFrom($FROM, GrammarUtil.makeFromText($d, $dotted_name.names),
+                 var.makeModuleNameNode($d, $dotted_name.names),
                  actions.makeAliases($i2.atypes), actions.makeLevel($d));
          }
         )
@@ -987,7 +1000,7 @@ dotted_name
     returns [List<PNode> names]
     : NAME (DOT dn+=attr)*
     {
-        $names = actions.makeDottedName($NAME, $dn);
+        $names = var.makeDottedName($NAME, $dn);
     }
     ;
 
@@ -1001,7 +1014,7 @@ global_stmt
 }
     : GLOBAL n+=NAME (COMMA n+=NAME)*
       {
-          stype = actions.makeGlobal($GLOBAL, actions.makeNames($n), actions.makeNameNodes($n));
+          stype = actions.makeGlobal($GLOBAL, var.makeNames($n), var.makeNameNodes($n));
       }
     ;
 
@@ -1015,7 +1028,7 @@ exec_stmt
 }
     : EXEC expr[ContextType.Load] (IN t1=test[ContextType.Load] (COMMA t2=test[ContextType.Load])?)?
       {
-         stype = uncovered.makeExec($EXEC, GrammarUtilities.castExpr($expr.tree), GrammarUtilities.castExpr($t1.tree), GrammarUtilities.castExpr($t2.tree));
+         stype = uncovered.makeExec($EXEC, GrammarUtil.castExpr($expr.tree), GrammarUtil.castExpr($t1.tree), GrammarUtil.castExpr($t2.tree));
       }
     ;
 
@@ -1029,7 +1042,7 @@ assert_stmt
 }
     : ASSERT t1=test[ContextType.Load] (COMMA t2=test[ContextType.Load])?
       {
-          stype = uncovered.makeAssert($ASSERT, GrammarUtilities.castExpr($t1.tree), GrammarUtilities.castExpr($t2.tree));
+          stype = uncovered.makeAssert($ASSERT, GrammarUtil.castExpr($t1.tree), GrammarUtil.castExpr($t2.tree));
       }
     ;
 
@@ -1054,7 +1067,7 @@ if_stmt
 }
     : IF test[ContextType.Load] COLON ifsuite=suite[false] elif_clause?
       {
-          stype = actions.makeIf($IF, GrammarUtilities.castExpr($test.tree), GrammarUtilities.castStmts($ifsuite.stypes),
+          stype = actions.makeIf($IF, GrammarUtil.castExpr($test.tree), GrammarUtil.castStmts($ifsuite.stypes),
               actions.makeElse($elif_clause.stypes, $elif_clause.tree));
       }
     ;
@@ -1077,11 +1090,11 @@ elif_clause
     | ELIF test[ContextType.Load] COLON suite[false]
       (e2=elif_clause
        {
-           stype = actions.makeIf($test.start, GrammarUtilities.castExpr($test.tree), GrammarUtilities.castStmts($suite.stypes), actions.makeElse($e2.stypes, $e2.tree));
+           stype = actions.makeIf($test.start, GrammarUtil.castExpr($test.tree), GrammarUtil.castStmts($suite.stypes), actions.makeElse($e2.stypes, $e2.tree));
        }
       |
        {
-           stype = actions.makeIf($test.start, GrammarUtilities.castExpr($test.tree), GrammarUtilities.castStmts($suite.stypes), new ArrayList<PNode>());
+           stype = actions.makeIf($test.start, GrammarUtil.castExpr($test.tree), GrammarUtil.castStmts($suite.stypes), new ArrayList<PNode>());
        }
       )
     ;
@@ -1106,7 +1119,7 @@ while_stmt
 }
     : WHILE test[ContextType.Load] COLON s1=suite[false] (ORELSE COLON s2=suite[false])?
       {
-          stype = actions.makeWhile($WHILE, GrammarUtilities.castExpr($test.tree), $s1.stypes, $s2.stypes);
+          stype = loop.makeWhile($WHILE, GrammarUtil.castExpr($test.tree), $s1.stypes, $s2.stypes);
       }
     ;
 
@@ -1122,7 +1135,7 @@ for_stmt
     : FOR exprlist[ContextType.Store] IN testlist[ContextType.Load] COLON s1=suite[false]
         (ORELSE COLON s2=suite[false])?
       {
-          stype = actions.makeFor($FOR, $exprlist.etype, GrammarUtilities.castExpr($testlist.tree), $s1.stypes, $s2.stypes);
+          stype = loop.makeFor($FOR, $exprlist.etype, GrammarUtil.castExpr($testlist.tree), $s1.stypes, $s2.stypes);
       }
     ;
 
@@ -1174,11 +1187,11 @@ with_item
 }
     : test[ContextType.Load] (AS expr[ContextType.Store])?
       {
-          PNode item = GrammarUtilities.castExpr($test.tree);
+          PNode item = GrammarUtil.castExpr($test.tree);
           PNode var = null;
           if ($expr.start != null) {
-              var = GrammarUtilities.castExpr($expr.tree);
-              GrammarUtilities.checkAssign(var);
+              var = GrammarUtil.castExpr($expr.tree);
+              GrammarUtil.checkAssign(var);
           }
           stype = uncovered.makeWith($test.start, item, var, null);
       }
@@ -1194,8 +1207,8 @@ except_clause
 }
     : EXCEPT (t1=test[ContextType.Load] ((COMMA | AS) t2=test[ContextType.Store])?)? COLON suite[!$suite.isEmpty() && $suite::continueIllegal]
       {
-          extype = actions.makeExceptHandler($EXCEPT, GrammarUtilities.castExpr($t1.tree), GrammarUtilities.castExpr($t2.tree),
-              GrammarUtilities.castStmts($suite.stypes));
+          extype = actions.makeExceptHandler($EXCEPT, GrammarUtil.castExpr($t1.tree), GrammarUtil.castExpr($t2.tree),
+              GrammarUtil.castStmts($suite.stypes));
       }
     ;
 
@@ -1240,7 +1253,7 @@ test[ContextType ctype]
     :o1=or_test[ctype]
       ( (IF or_test[null] ORELSE) => IF o2=or_test[ctype] ORELSE e=test[ContextType.Load]
          {
-             etype = actions.makeIfExp($o1.start, GrammarUtilities.castExpr($o2.tree), GrammarUtilities.castExpr($o1.tree), GrammarUtilities.castExpr($e.tree));
+             etype = actions.makeIfExp($o1.start, GrammarUtil.castExpr($o2.tree), GrammarUtil.castExpr($o1.tree), GrammarUtil.castExpr($e.tree));
          }
       |
      -> or_test
@@ -1301,7 +1314,7 @@ not_test
 }
     : NOT nt=not_test[ctype]
       {
-          etype = actions.makeUnaryOp($NOT, UnaryOpType.Not, GrammarUtilities.castExpr($nt.tree));
+          etype = actions.makeUnaryOp($NOT, UnaryOpType.Not, GrammarUtil.castExpr($nt.tree));
       }
     | comparison[ctype]
       {
@@ -1318,8 +1331,8 @@ comparison
 @after {
     $leftTok = $left.leftTok;
     if (!cmps.isEmpty()) {
-        $comparison.tree = actions.makeCompare($left.start, GrammarUtilities.castExpr($left.tree), actions.makeCmpOps(cmps),
-            GrammarUtilities.castExprs($right));
+        $comparison.tree = actions.makeCompare($left.start, GrammarUtil.castExpr($left.tree), actions.makeCmpOps(cmps),
+            GrammarUtil.castExprs($right));
     }
 }
     : left=expr[ctype]
@@ -1611,7 +1624,7 @@ factor
       }
     | power
       {
-          $etype = GrammarUtilities.castExpr($power.tree);
+          $etype = GrammarUtil.castExpr($power.tree);
           $lparen = $power.lparen;
       }
     ;
@@ -1626,7 +1639,7 @@ power
       {
           $lparen = $atom.lparen;
           //XXX: This could be better.
-          $etype = GrammarUtilities.castExpr($atom.tree);
+          $etype = GrammarUtil.castExpr($atom.tree);
           if ($t != null) {
               for(Object o : $t) {
                   $etype = actions.makePowerSpecific($etype, o);
@@ -1667,7 +1680,7 @@ atom
      -> testlist_gexp
       |
         {
-            etype = actions.makeTuple($LPAREN, new ArrayList<PNode>(), $expr::ctype);
+            etype = var.makeTuple($LPAREN, new ArrayList<PNode>(), $expr::ctype);
         }
       )
       RPAREN
@@ -1676,7 +1689,7 @@ atom
      -> listmaker
       |
        {
-           etype = actions.makeList($LBRACK, new ArrayList<PNode>(), $expr::ctype);
+           etype = var.makeList($LBRACK, new ArrayList<PNode>(), $expr::ctype);
        }
       )
       RBRACK
@@ -1685,17 +1698,17 @@ atom
      -> dictorsetmaker
       |
        {
-           etype = actions.makeDict($LCURLY, new ArrayList<PNode>(), new ArrayList<PNode>());
+           etype = var.makeDict($LCURLY, new ArrayList<PNode>(), new ArrayList<PNode>());
        }
       )
        RCURLY
      | lb=BACKQUOTE testlist[ContextType.Load] rb=BACKQUOTE
        {
-           etype = uncovered.makeRepr($lb, GrammarUtilities.castExpr($testlist.tree));
+           etype = uncovered.makeRepr($lb, GrammarUtil.castExpr($testlist.tree));
        }
      | name_or_print
        {
-           etype = actions.makeName($name_or_print.start, $name_or_print.text, $expr::ctype);
+           etype = var.makeName($name_or_print.start, $name_or_print.text, $expr::ctype);
      }
      | NONE 
        {
@@ -1731,7 +1744,7 @@ atom
        }
      | (S+=STRING)+
        {
-           etype = actions.makeStr(GrammarUtilities.extractStringToken($S), GrammarUtilities.extractStrings($S, encoding, unicodeLiterals));
+           etype = var.makeStr(GrammarUtil.extractStringToken($S), GrammarUtil.extractStrings($S, encoding, unicodeLiterals));
        }
      ;
 
@@ -1749,11 +1762,11 @@ listmaker[Token lbrack]
          {
              Collections.reverse(gens);
              List<PComprehension> c = gens;
-             etype = actions.makeListComp($listmaker.start, GrammarUtilities.castExpr($t.get(0)), c);
+             etype = var.makeListComp($listmaker.start, GrammarUtil.castExpr($t.get(0)), c);
          }
         | (options {greedy=true;}:COMMA t+=test[$expr::ctype])*
            {
-               etype = actions.makeList($lbrack, GrammarUtilities.castExprs($t), $expr::ctype);
+               etype = var.makeList($lbrack, GrammarUtil.castExprs($t), $expr::ctype);
            }
         ) (COMMA)?
     ;
@@ -1774,18 +1787,18 @@ testlist_gexp
         ( (options {k=2;}: c1=COMMA t+=test[$expr::ctype])* (c2=COMMA)?
          { $c1 != null || $c2 != null }? 
            {
-               etype = actions.makeTuple($testlist_gexp.start, GrammarUtilities.castExprs($t), $expr::ctype);
+               etype = var.makeTuple($testlist_gexp.start, GrammarUtil.castExprs($t), $expr::ctype);
            }
         | -> test
         | ({ParserEnvironment.beginScope();} comp_for[gens]
            {
                Collections.reverse(gens);
                List<PComprehension> c = gens;
-               PNode e = GrammarUtilities.castExpr($t.get(0));
+               PNode e = GrammarUtil.castExpr($t.get(0));
 //               if (e instanceof Context) {
 //                   ((Context)e).setContext(ContextType.Load);
 //               }
-               etype = actions.makeGeneratorExp($testlist_gexp.start, e, c);
+               etype = loop.makeGeneratorExp($testlist_gexp.start, e, c);
                ParserEnvironment.endScope();
            }
           )
@@ -1806,7 +1819,7 @@ lambdef
 //          if (a == null) {
 //              a = new arguments($LAMBDA, new ArrayList<PNode>(), null, null, new ArrayList<PNode>());
 //          }
-          etype = uncovered.makeLambda($LAMBDA, $varargslist.args, GrammarUtilities.castExpr($test.tree));
+          etype = uncovered.makeLambda($LAMBDA, $varargslist.args, GrammarUtil.castExpr($test.tree));
       }
     ;
 
@@ -1823,26 +1836,26 @@ trailer [Token begin, PNode ptree]
     : LPAREN
       (arglist
        {
-//           etype = new Call($begin, GrammarUtilities.castExpr($ptree), GrammarUtilities.castExprs($arglist.args), actions.makeKeywords($arglist.keywords), $arglist.starargs, $arglist.kwargs);
-           PNode func = GrammarUtilities.castExpr($ptree);
-           etype = actions.makeCall($begin, func, $arglist.args, $arglist.keywords, $arglist.starargs, $arglist.kwargs);
+//           etype = new Call($begin, GrammarUtil.castExpr($ptree), GrammarUtil.castExprs($arglist.args), actions.makeKeywords($arglist.keywords), $arglist.starargs, $arglist.kwargs);
+           PNode func = GrammarUtil.castExpr($ptree);
+           etype = fun.makeCall($begin, func, $arglist.args, $arglist.keywords, $arglist.starargs, $arglist.kwargs);
            
        }
       |
        {
-//           etype = new Call($begin, GrammarUtilities.castExpr($ptree), new ArrayList<PNode>(), new ArrayList<keyword>(), null, null);
-           etype = actions.makeCall($begin, GrammarUtilities.castExpr($ptree),  null, null,  null, null);
+//           etype = new Call($begin, GrammarUtil.castExpr($ptree), new ArrayList<PNode>(), new ArrayList<keyword>(), null, null);
+           etype = fun.makeCall($begin, GrammarUtil.castExpr($ptree),  null, null,  null, null);
        }
       )
       RPAREN
     | LBRACK subscriptlist[$begin] RBRACK
       {
-          etype = actions.makeSubscript($begin, GrammarUtilities.castExpr($ptree), GrammarUtilities.castSlice($subscriptlist.tree), $expr::ctype);
+          etype = var.makeSubscript($begin, GrammarUtil.castExpr($ptree), GrammarUtil.castSlice($subscriptlist.tree), $expr::ctype);
       }
     | DOT attr
       {
-          PNode name = actions.makeName($attr.tree, $attr.text, ContextType.Load);
-          etype = actions.makeAttribute($begin, GrammarUtilities.castExpr($ptree), name, $expr::ctype);
+          PNode name = var.makeName($attr.tree, $attr.text, ContextType.Load);
+          etype = fun.makeAttribute($begin, GrammarUtil.castExpr($ptree), name, $expr::ctype);
           $ptree = etype;
       }
     ;
@@ -1857,7 +1870,7 @@ subscriptlist[Token begin]
 }
     : sub+=subscript (options {greedy=true;}:c1=COMMA sub+=subscript)* (c2=COMMA)?
       {
-          sltype = actions.makeSliceType($begin, $c1, $c2, $sub);
+          sltype = var.makeSliceType($begin, $c1, $c2, $sub);
       }
     ;
 
@@ -1874,16 +1887,16 @@ subscript
     | (test[null] COLON)
    => lower=test[ContextType.Load] (c1=COLON (upper1=test[ContextType.Load])? (sliceop)?)?
       {
-          $sltype = actions.makeSubscript($lower.tree, $c1, $upper1.tree, $sliceop.tree);
+          $sltype = var.makeSubscript($lower.tree, $c1, $upper1.tree, $sliceop.tree);
       }
     | (COLON)
    => c2=COLON (upper2=test[ContextType.Load])? (sliceop)?
       {
-          $sltype = actions.makeSubscript(null, $c2, $upper2.tree, $sliceop.tree);
+          $sltype = var.makeSubscript(null, $c2, $upper2.tree, $sliceop.tree);
       }
     | test[ContextType.Load]
       {
-          $sltype = actions.makeIndex($test.start, GrammarUtilities.castExpr($test.tree));
+          $sltype = var.makeIndex($test.start, GrammarUtil.castExpr($test.tree));
       }
     ;
 
@@ -1902,7 +1915,7 @@ sliceop
     -> test
      |
        {
-           etype = actions.makeName($COLON, "None", ContextType.Load);
+           etype = var.makeName($COLON, "None", ContextType.Load);
        }
      )
     ;
@@ -1912,13 +1925,13 @@ exprlist
     [ContextType ctype] returns [PNode etype]
     : (expr[null] COMMA) => e+=expr[ctype] (options {k=2;}: COMMA e+=expr[ctype])* (COMMA)?
        {
-           $etype = actions.makeTuple($exprlist.start, GrammarUtilities.castExprs($e), ctype);
-           $etype = actions.recuFixWriteLocalSlots($etype,0);
+           $etype = var.makeTuple($exprlist.start, GrammarUtil.castExprs($e), ctype);
+           $etype = ass.recuFixWriteLocalSlots($etype,0);
        }
     | expr[ctype]
       {
-        $etype = GrammarUtilities.castExpr($expr.tree);
-        $etype = actions.recuFixWriteLocalSlots($etype,0);
+        $etype = GrammarUtil.castExpr($expr.tree);
+        $etype = ass.recuFixWriteLocalSlots($etype,0);
       }
     ;
 
@@ -1928,7 +1941,7 @@ del_list
     returns [List<PNode> etypes]
     : e+=expr[ContextType.Del] (options {k=2;}: COMMA e+=expr[ContextType.Del])* (COMMA)?
       {
-          $etypes = uncovered.makeDeleteList($e);
+          $etypes = actions.makeDeleteList($e);
       }
     ;
 
@@ -1945,7 +1958,7 @@ testlist[ContextType ctype]
     : (test[null] COMMA)
    => t+=test[ctype] (options {k=2;}: COMMA t+=test[ctype])* (COMMA)?
       {
-          etype = actions.makeTuple($testlist.start, GrammarUtilities.castExprs($t), ctype);
+          etype = var.makeTuple($testlist.start, GrammarUtil.castExprs($t), ctype);
       }
     | test[ctype]
     ;
@@ -1971,16 +1984,16 @@ dictorsetmaker[Token lcurly]
                  {
                      Collections.reverse(gens);
                      List<PComprehension> c = gens;
-                     etype = actions.makeDictComp($dictorsetmaker.start, GrammarUtilities.castExpr($k.get(0)), GrammarUtilities.castExpr($v.get(0)), c);
+                     etype = var.makeDictComp($dictorsetmaker.start, GrammarUtil.castExpr($k.get(0)), GrammarUtil.castExpr($v.get(0)), c);
                  }
                | (options {k=2;}:COMMA k+=test[ContextType.Load] COLON v+=test[ContextType.Load])*
                  {
-                     etype = actions.makeDict($lcurly, GrammarUtilities.castExprs($k), GrammarUtilities.castExprs($v));
+                     etype = var.makeDict($lcurly, GrammarUtil.castExprs($k), GrammarUtil.castExprs($v));
                  }
                )
              |(COMMA k+=test[ContextType.Load])*
               {
-                  etype = uncovered.makeSet($lcurly, GrammarUtilities.castExprs($k));
+                  etype = uncovered.makeSet($lcurly, GrammarUtil.castExprs($k));
               }
              )
              (COMMA)?
@@ -1988,11 +2001,11 @@ dictorsetmaker[Token lcurly]
            {
                Collections.reverse(gens);
                List<PComprehension> c = gens;
-               PNode e = GrammarUtilities.castExpr($k.get(0));
+               PNode e = GrammarUtil.castExpr($k.get(0));
 //               if (e instanceof Context) {
 //                   ((Context)e).setContext(ContextType.Load);
 //               }
-               etype = actions.makeSetComp($lcurly, GrammarUtilities.castExpr($k.get(0)), c);
+               etype = var.makeSetComp($lcurly, GrammarUtil.castExpr($k.get(0)), c);
            }
          )
     ;
@@ -2012,9 +2025,9 @@ classdef
               t = $decorators.start;
           }
 //          stype = new ClassDef(t, actions.cantBeNoneName($NAME),
-//              actions.makeBases(GrammarUtilities.castExpr($testlist.tree)),
-//              GrammarUtilities.castStmts($suite.stypes),
-//              GrammarUtilities.castExprs($decorators.etypes));
+//              actions.makeBases(GrammarUtil.castExpr($testlist.tree)),
+//              GrammarUtil.castStmts($suite.stypes),
+//              GrammarUtil.castExprs($decorators.etypes));
             stype = uncovered.makeClassDef(t,$NAME,$testlist.tree,$suite.stypes,$decorators.etypes);
       }
     ;
@@ -2037,22 +2050,22 @@ arglist
           )?
       {
           if (arguments.size() > 1 && gens.size() > 0) {
-              GrammarUtilities.errorGenExpNotSoleArg($arglist.start);
+              GrammarUtil.errorGenExpNotSoleArg($arglist.start);
           }
           $args=arguments;
           $keywords=kws;
-          $starargs=GrammarUtilities.castExpr($s.tree);
-          $kwargs=GrammarUtilities.castExpr($k.tree);
+          $starargs=GrammarUtil.castExpr($s.tree);
+          $kwargs=GrammarUtil.castExpr($k.tree);
       }
     | STAR s=test[ContextType.Load] (COMMA argument[arguments, kws, gens, false, true])* (COMMA DOUBLESTAR k=test[ContextType.Load])?
       {
-          $starargs=GrammarUtilities.castExpr($s.tree);
+          $starargs=GrammarUtil.castExpr($s.tree);
           $keywords=kws;
-          $kwargs=GrammarUtilities.castExpr($k.tree);
+          $kwargs=GrammarUtil.castExpr($k.tree);
       }
     | DOUBLESTAR k=test[ContextType.Load]
       {
-          $kwargs=GrammarUtilities.castExpr($k.tree);
+          $kwargs=GrammarUtil.castExpr($k.tree);
       }
     ;
 
@@ -2062,7 +2075,7 @@ argument
     : t1=test[ContextType.Load]
         ((ASSIGN t2=test[ContextType.Load])
           {
-              PNode newkey = GrammarUtilities.castExpr($t1.tree);
+              PNode newkey = GrammarUtil.castExpr($t1.tree);
               //Loop through all current keys and fail on duplicate.
               for(Object o: $kws) {
                   List list = (List)o;
@@ -2075,18 +2088,18 @@ argument
               }
               List<PNode> exprs = new ArrayList<PNode>();
               exprs.add(newkey);
-              exprs.add(GrammarUtilities.castExpr($t2.tree));
+              exprs.add(GrammarUtil.castExpr($t2.tree));
               $kws.add(exprs);
           }
         | {ParserEnvironment.beginScope();} comp_for[$gens]
           {
               if (!first) {
-                  GrammarUtilities.errorGenExpNotSoleArg($comp_for.tree);
+                  GrammarUtil.errorGenExpNotSoleArg($comp_for.tree);
               }
               $genarg = true;
               Collections.reverse($gens);
               List<PComprehension> c = $gens;
-              arguments.add(actions.makeGeneratorExp($t1.start, GrammarUtilities.castExpr($t1.tree), c));
+              arguments.add(loop.makeGeneratorExp($t1.start, GrammarUtil.castExpr($t1.tree), c));
               ParserEnvironment.endScope();
           }
         |
@@ -2115,7 +2128,7 @@ list_for [List gens]
     : FOR exprlist[ContextType.Store] IN testlist[ContextType.Load] (list_iter[gens, ifs])?
       {
           Collections.reverse(ifs);
-          gens.add(actions.makeComprehension($FOR, $exprlist.etype, GrammarUtilities.castExpr($testlist.tree), ifs));
+          gens.add(var.makeComprehension($FOR, $exprlist.etype, GrammarUtil.castExpr($testlist.tree), ifs));
       }
     ;
 
@@ -2123,7 +2136,7 @@ list_for [List gens]
 list_if[List gens, List ifs]
     : IF test[ContextType.Load] (list_iter[gens, ifs])?
       {
-        ifs.add(GrammarUtilities.castExpr($test.tree));
+        ifs.add(GrammarUtil.castExpr($test.tree));
       }
     ;
 
@@ -2141,7 +2154,7 @@ comp_for [List gens]
     : FOR exprlist[ContextType.Store] IN or_test[ContextType.Load] comp_iter[gens, ifs]?
       {
           Collections.reverse(ifs);
-          gens.add(actions.makeComprehension($FOR, $exprlist.etype, GrammarUtilities.castExpr($or_test.tree), ifs));
+          gens.add(var.makeComprehension($FOR, $exprlist.etype, GrammarUtil.castExpr($or_test.tree), ifs));
       }
     ;
 
@@ -2149,7 +2162,7 @@ comp_for [List gens]
 comp_if[List gens, List ifs]
     : IF test[ContextType.Load] comp_iter[gens, ifs]?
       {
-        ifs.add(GrammarUtilities.castExpr($test.tree));
+        ifs.add(GrammarUtil.castExpr($test.tree));
       }
     ;
 
@@ -2162,7 +2175,7 @@ yield_expr
 }
     : YIELD testlist[ContextType.Load]?
       {
-          $etype = actions.makeYield($YIELD, GrammarUtilities.castExpr($testlist.tree));
+          $etype = fun.makeYield($YIELD, GrammarUtil.castExpr($testlist.tree));
       }
     ;
 

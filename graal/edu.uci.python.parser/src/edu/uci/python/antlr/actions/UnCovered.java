@@ -23,12 +23,13 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 // CheckStyle: stop system..print check
-package edu.uci.python.antlr;
+package edu.uci.python.antlr.actions;
 
 import java.util.*;
 
 import org.antlr.runtime.*;
 
+import edu.uci.python.antlr.*;
 import edu.uci.python.nodes.*;
 import edu.uci.python.nodes.literals.*;
 import edu.uci.python.nodes.statements.*;
@@ -45,7 +46,7 @@ public class UnCovered {
 
         // retVal = new Ellipsis(t);
 
-        // retVal.setToken(t);
+        uncoveredException("Ellipsis");
         return retVal;
     }
 
@@ -58,7 +59,7 @@ public class UnCovered {
 
         // retVal = new Set(t, elts);
 
-        // retVal.setToken(t);
+        uncoveredException("Ellipsis");
         return retVal;
     }
 
@@ -72,7 +73,7 @@ public class UnCovered {
 
         // retVal = new Repr(t, value);
 
-        // retVal.setToken(t);
+        uncoveredException("Ellipsis");
         return retVal;
     }
 
@@ -87,7 +88,7 @@ public class UnCovered {
 
         // retVal = new Exec(t, body, globals, locals);
 
-        // retVal.setToken(t);
+        uncoveredException("Ellipsis");
         return retVal;
     }
 
@@ -101,7 +102,7 @@ public class UnCovered {
 
         // retVal = new Assert(t, test, msg);
 
-        // retVal.setToken(t);
+        uncoveredException("Ellipsis");
         return retVal;
     }
 
@@ -115,7 +116,7 @@ public class UnCovered {
 
         // retVal = new Raise(t, type, inst, tback);
 
-        // retVal.setToken(t);
+        uncoveredException("Ellipsis");
         return retVal;
     }
 
@@ -128,7 +129,7 @@ public class UnCovered {
 
         // retVal = new Continue(t);
 
-        // retVal.setToken(t);
+        uncoveredException("Ellipsis");
         return retVal;
     }
 
@@ -141,7 +142,7 @@ public class UnCovered {
 
         // retVal = new Pass(t);
 
-        // retVal.setToken(t);
+        uncoveredException("Ellipsis");
         return retVal;
     }
 
@@ -155,7 +156,7 @@ public class UnCovered {
 
         // retVal = new Delete(t, targets);
 
-        // retVal.setToken(t);
+        uncoveredException("Ellipsis");
         return retVal;
     }
 
@@ -170,7 +171,7 @@ public class UnCovered {
 // List<PNode> nameNodes = makeNameNodes(paramNameNodes);
         // retVal = new Nonlocal(t, names, nameNodes, 0);
 
-        // retVal.setToken(t);
+        uncoveredException("Ellipsis");
         return retVal;
     }
 
@@ -183,7 +184,7 @@ public class UnCovered {
 
         // retVal = new Interactive(t, body);
 
-        // retVal.setToken(t);
+        uncoveredException("Ellipsis");
         return retVal;
     }
 
@@ -196,7 +197,7 @@ public class UnCovered {
 
         // retVal = new Expression(t, body);
 
-        // retVal.setToken(t);
+        uncoveredException("Ellipsis");
         return retVal;
     }
 
@@ -220,7 +221,7 @@ public class UnCovered {
 
         // ParserEnvironment.endScope();
 
-        // retVal.setToken(t);
+        uncoveredException("Ellipsis");
         return retVal;
     }
 
@@ -242,7 +243,7 @@ public class UnCovered {
         ParserEnvironment.endScope();
         ParserEnvironment.def(name.getText());
 
-        // retVal.setToken(t);
+        uncoveredException("Ellipsis");
         return retVal;
     }
 
@@ -256,6 +257,7 @@ public class UnCovered {
 
         // retVal = new With(t, context_PNode, optional_vars, body);
 
+        uncoveredException("Ellipsis");
         return retVal;
     }
 
@@ -276,6 +278,8 @@ public class UnCovered {
             // current.getInternalContext_PNode(),
             // current.getInternalOptional_vars(), body);
         }
+
+        uncoveredException("Ellipsis");
         return result;
     }
 
@@ -286,18 +290,18 @@ public class UnCovered {
             System.out.println("makeTryExcept");
         }
         StatementNode retVal = null;
-        List<PNode> b = GrammarUtilities.castStmts(body);
+        List<PNode> b = GrammarUtil.castStmts(body);
         // List<excepthandler> e = handlers;
-        List<PNode> o = GrammarUtilities.castStmts(orelse);
+        List<PNode> o = GrammarUtil.castStmts(orelse);
         // StatementNode te = new TryExcept(t, b, e, o);
         if (finBody == null) {
             // return te;
         }
-        List<PNode> f = GrammarUtilities.castStmts(finBody);
+        List<PNode> f = GrammarUtil.castStmts(finBody);
         List<PNode> mainBody = new ArrayList<>();
         // mainBody.add(te);
         // return new TryFinally(t, mainBody, f);
-        // retVal.setToken(t);
+        uncoveredException("Ellipsis");
         return retVal;
     }
 
@@ -308,55 +312,15 @@ public class UnCovered {
             System.out.println("makeTryFinally");
         }
         StatementNode retVal = null;
-        List<PNode> b = GrammarUtilities.castStmts(body);
-        List<PNode> f = GrammarUtilities.castStmts(finBody);
+        List<PNode> b = GrammarUtil.castStmts(body);
+        List<PNode> f = GrammarUtil.castStmts(finBody);
         // return new TryFinally(t, b, f);
 
-        // retVal.setToken(t);
+        UnCovered.uncoveredException("Ellipsis");
         return retVal;
     }
 
-    public void checkDelete(PNode e) { // TODO: Not done yet!!
-
-        if (Options.debug) {
-            System.out.println("checkDelete.. Not done yet!!");
-        }
-
-        // else if (e instanceof Num)
-        // {
-        // ErrorHandler.error("can't delete number", e);
-        // }
-        // else if (e instanceof Str)
-        // {
-        // ErrorHandler.error("can't delete string", e);
-        // }
-
-        if (e instanceof CallNode) {
-            ErrorHandler.error("can't delete function call", e.getToken());
-        } else if (e instanceof TupleLiteralNode) {
-            // XXX: performance problem? Any way to do this better?
-            List<PNode> elts = ((TupleLiteralNode) e).getElts();
-            if (elts.size() == 0) {
-                ErrorHandler.error("can't delete ()", e.getToken());
-            }
-            for (int i = 0; i < elts.size(); i++) {
-                checkDelete(elts.get(i));
-            }
-        } else if (e instanceof ListLiteralNode) {
-            // XXX: performance problem? Any way to do this better?
-            List<PNode> elts = ((ListLiteralNode) e).getElts();
-            for (int i = 0; i < elts.size(); i++) {
-                checkDelete(elts.get(i));
-            }
-        }
+    public static void uncoveredException(String msg) {
+        throw new RuntimeException(msg + ": is not covered!");
     }
-
-    public List<PNode> makeDeleteList(List<?> deletes) {
-        List<PNode> exprs = GrammarUtilities.castExprs(deletes);
-        for (PNode e : exprs) {
-            checkDelete(e);
-        }
-        return exprs;
-    }
-
 }

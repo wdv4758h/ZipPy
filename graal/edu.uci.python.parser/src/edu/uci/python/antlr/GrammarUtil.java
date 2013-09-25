@@ -29,18 +29,48 @@ import java.util.*;
 import org.antlr.runtime.*;
 import org.python.core.*;
 
+import com.oracle.truffle.api.frame.*;
+import com.oracle.truffle.api.nodes.*;
+
 import edu.uci.python.nodes.*;
 import edu.uci.python.nodes.expressions.*;
 import edu.uci.python.nodes.literals.*;
 import edu.uci.python.nodes.statements.*;
 
-public class GrammarUtilities {
+public class GrammarUtil {
+
+    public static PNode make(Token t, PNode node) {
+        node.setToken(t);
+        return node;
+    }
+
+    public static PNode make(Token t, FrameSlot slot, PNode node) {
+        node.setToken(t);
+        node.setSlot(slot);
+        return node;
+    }
+
+    public static PNode replace(Node thisNode, Node withThisNode) {
+        PNode newNode = (PNode) withThisNode;
+        if (newNode != null && thisNode != newNode) {
+            if (thisNode.getSourceSection() != null) {
+                newNode.clearSourceSection();
+            }
+            thisNode.replace(newNode);
+
+            if (newNode.getToken() == null) {
+                newNode.setToken(((PNode) thisNode).getToken());
+            }
+        }
+
+        return newNode;
+    }
 
     public StringBuilder output = null;
 
     public static String makeFromText(List<?> dots, List<PNode> names) {
         StringBuilder d = new StringBuilder();
-        d.append(GrammarUtilities.dottedNameListToString(names));
+        d.append(GrammarUtil.dottedNameListToString(names));
         return d.toString();
     }
 
