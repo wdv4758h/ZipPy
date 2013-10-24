@@ -193,8 +193,16 @@ public abstract class BinaryArithmeticNode extends BinaryOpNode {
 
     public abstract static class DivNode extends BinaryArithmeticNode {
 
+        /*
+         * double division by zero in Java doesn't throw an exception, instead it yield Infinity
+         * (NaN).
+         */
         @Specialization(rewriteOn = ArithmeticException.class, order = 0)
         double doInteger(int left, int right) {
+            if (right == 0) {
+                throw new ArithmeticException("divide by zero");
+            }
+
             return (double) left / right;
         }
 
@@ -229,6 +237,11 @@ public abstract class BinaryArithmeticNode extends BinaryOpNode {
         PComplex doComplex(PComplex left, PComplex right) {
             return left.div(right);
         }
+
+        @Generic
+        Object doGeneric(Object left, Object right) {
+            throw Py.TypeError("Unsupported operand type for /: " + left + " and " + right);
+        }
     }
 
     public abstract static class FloorDivNode extends BinaryArithmeticNode {
@@ -246,6 +259,11 @@ public abstract class BinaryArithmeticNode extends BinaryOpNode {
         @Specialization
         double doDouble(double left, double right) {
             return Math.floor(left / right);
+        }
+
+        @Generic
+        Object doGeneric(Object left, Object right) {
+            throw Py.TypeError("Unsupported operand type for //: " + left + " and " + right);
         }
     }
 
