@@ -52,7 +52,8 @@ public class PythonCore {
         typeClass.unsafeSetSuperClass(objectClass);
         moduleClass = new PythonClass(context, objectClass, "module");
 
-        builtinsModule = new BuiltinsModule(moduleClass, "__builtins__");
+        builtinsModule = new BuiltinsModule(moduleClass, "__builtins__", context.getBuiltins());
+	   //builtinsModule = new BuiltinsModule(moduleClass, "__builtins__");
         builtinsModule.setAttribute("object", objectClass);
 
         mainModule = new MainModule(moduleClass, "__main__");

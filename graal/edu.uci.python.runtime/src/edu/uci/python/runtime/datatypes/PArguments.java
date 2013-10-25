@@ -28,6 +28,7 @@ import com.oracle.truffle.api.Arguments;
 
 public class PArguments extends Arguments {
 
+    public static final Object[] EMPTY_ARGUMENTS_ARRAY = new Object[0];
     private final Object self;
     private final Object[] arguments;
     private final PKeyword[] keywards;
@@ -64,6 +65,10 @@ public class PArguments extends Arguments {
 
     public PKeyword[] getKeywords() {
         return keywards;
+    }
+
+    public int getLength() {
+        return arguments.length;
     }
 
 }
