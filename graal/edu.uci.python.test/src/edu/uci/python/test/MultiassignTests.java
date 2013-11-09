@@ -22,37 +22,42 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package edu.uci.python.nodes.objects;
+package edu.uci.python.test;
 
-import com.oracle.truffle.api.frame.*;
-import com.oracle.truffle.api.nodes.*;
+import static edu.uci.python.test.PythonTests.*;
 
-import edu.uci.python.nodes.*;
-import edu.uci.python.nodes.calls.*;
-import edu.uci.python.runtime.datatypes.*;
-import edu.uci.python.runtime.standardtypes.*;
+import java.nio.file.*;
 
-@NodeInfo(shortName = "add-method")
-public class AddMethodNode extends PNode {
+import org.junit.*;
 
-    @Child protected FunctionDefinitionNode methodDef;
+public class MultiassignTests {
 
-    public AddMethodNode(FunctionDefinitionNode methodDef) {
-        this.methodDef = adoptChild(methodDef);
+    @Test
+    public void forTest() {
+        Path script = Paths.get("multiassign_test.py");
+        assertPrints("4 3\n1 2\n7 8\n1 2 3 4\n", script);
     }
 
-    public void addMethod(VirtualFrame frame) {
-        PArguments args = frame.getArguments(PArguments.class);
-        Object arg = args.getArgument(0);
-        assert arg != null && arg instanceof PythonClass : "AddMethodNode expects the first argument of the class definition method call to be the defining class";
-        PythonClass pclass = (PythonClass) arg;
-        PFunction method = (PFunction) methodDef.execute(frame);
-        pclass.addMethod(method);
+    @Test
+    public void multiAssign() {
+        String source = "a, b = [3, 4]\n" + //
+                        "a, b = b, a\n" + //
+                        "print(a, b)\n";
+        assertPrints("4 3\n", source);
     }
 
-    @Override
-    public Object execute(VirtualFrame frame) {
-        addMethod(frame);
-        return PNone.NONE;
+    @Test
+    public void explicitTupleAssignment() {
+        String source = "(a, b) = [1, 2]\n" + //
+                        "print(a, b)\n";
+        assertPrints("1 2\n", source);
+    }
+
+    @Test
+    public void explicitListAssignment() {
+        String source = "list_l = [7, 8]\n" + //
+                        "[a, b] = list_l\n" + //
+                        "print(a, b)\n";
+        assertPrints("7 8\n", source);
     }
 }
