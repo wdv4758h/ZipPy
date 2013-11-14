@@ -22,46 +22,31 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package edu.uci.python.runtime;
+package edu.uci.python.nodes;
 
-import java.io.*;
+import com.oracle.truffle.api.frame.*;
 
-public class PythonOptions {
+import edu.uci.python.runtime.datatypes.*;
 
-    // Debug flags
-    public static boolean PrintAST = false;
+/**
+ * @author Gulfem
+ */
 
-    public static boolean VisualizedAST = false;
+public class ReadVarKeywordsNode extends ReadArgumentNode {
 
-    // Translation flags
-    public static final boolean ReturnValueInFrame = true;
-
-    public static final boolean OptimizeNode = true;
-
-    // Runtime flags
-    public static final boolean UseUnsafe = true;
-
-    public static final boolean InlineFunctionCalls = true;
-
-    public static final boolean UseSpecializedBuiltins = false;
-
-    private PrintStream standardOut = System.out;
-
-    private PrintStream standardErr = System.err;
-
-    public void setStandardOut(PrintStream stdout) {
-        standardOut = stdout;
+    public ReadVarKeywordsNode(int paramIndex) {
+        super(paramIndex);
     }
 
-    public PrintStream getStandardOut() {
-        return standardOut;
+    @Override
+    public final Object[] execute(VirtualFrame frame) {
+        return executeObjectArray(frame);
     }
 
-    public void setStandardErr(PrintStream stderr) {
-        standardErr = stderr;
-    }
-
-    public PrintStream getStandardErr() {
-        return standardErr;
+    @Override
+    public final Object[] executeObjectArray(VirtualFrame frame) {
+        PArguments arguments = frame.getArguments(PArguments.class);
+        PKeyword[] keywords = arguments.getKeywords();
+        return keywords;
     }
 }
