@@ -701,7 +701,6 @@ public final class PythonDefaultBuiltins extends PythonBuiltins {
 
                     context.getStandardOut().print(sb.toString() + sep + end);
 
-                    // System.out.print(sb.toString() + sep + end);
                 }
                 // CheckStyle: resume system..print check
                 return null;
