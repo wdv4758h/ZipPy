@@ -30,11 +30,11 @@ import java.nio.file.*;
 
 import org.junit.*;
 
-public class GeneratorExpTest {
+public class DictComprehensionTests {
     @Test
     public void simple() {
-        Path script = Paths.get("generatorexp_test.py");
-        assertPrints("[(0, 0), (0, 1), (0, 2), (0, 3), (1, 0), (1, 1), (1, 2), (1, 3), (2, 0), (2, 1), (2, 2), (2, 3)]\n", script);
+        Path script = Paths.get("dictcomp_test.py");
+        assertPrints("{a : 123, b : 49324324242949949} {}\n", script);
     }
 
 }
