@@ -37,6 +37,7 @@ public class SourceImpl implements Source {
 
     private String code;
 
+    @SuppressWarnings("unused")
     public SourceImpl(InputStream reader) {
         this.name = "Python3";
 
@@ -53,6 +54,7 @@ public class SourceImpl implements Source {
         return code;
     }
 
+    @SuppressWarnings("unused")
     private static String readSource(InputStream reader) throws IOException {
         StringBuilder sourceCode = new StringBuilder();
         byte[] buf = new byte[1024];
