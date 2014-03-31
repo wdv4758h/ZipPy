@@ -81,7 +81,7 @@ public abstract class DispatchNode extends Node {
             declarationFrame = callee.getDeclarationFrame();
             // TODO: replace holder for now.
             cachedCallTargetStable = AlwaysValidAssumption.INSTANCE;
-            callNode = adoptChild(CallNode.create(cachedCallTarget));
+            callNode = adoptChild(Truffle.getRuntime().createCallNode(cachedCallTarget));
             nextNode = adoptChild(next);
         }
 
@@ -125,7 +125,7 @@ public abstract class DispatchNode extends Node {
             declarationFrame = callee.__func__().getDeclarationFrame();
             // TODO: replace holder for now.
             cachedCallTargetStable = AlwaysValidAssumption.INSTANCE;
-            callNode = adoptChild(CallNode.create(cachedCallTarget));
+            callNode = adoptChild(Truffle.getRuntime().createCallNode(cachedCallTarget));
             nextNode = adoptChild(next);
         }
 
@@ -167,7 +167,7 @@ public abstract class DispatchNode extends Node {
             cachedCallTarget = split(callee.getCallTarget());
             // TODO: replace holder for now.
             cachedCallTargetStable = AlwaysValidAssumption.INSTANCE;
-            callNode = adoptChild(CallNode.create(cachedCallTarget));
+            callNode = adoptChild(Truffle.getRuntime().createCallNode(cachedCallTarget));
             nextNode = adoptChild(next);
         }
 
@@ -204,7 +204,7 @@ public abstract class DispatchNode extends Node {
             // TODO: PythonBuiltinClass should return always valid assumption.
             cachedCallTargetStable = callee.getUnmodifiedAssumption();
 
-            callNode = adoptChild(CallNode.create(cachedCallTarget));
+            callNode = adoptChild(Truffle.getRuntime().createCallNode(cachedCallTarget));
             nextNode = adoptChild(next);
         }
 
@@ -240,7 +240,7 @@ public abstract class DispatchNode extends Node {
             // TODO: Is is necessary?
             cachedCallTargetStable = AlwaysValidAssumption.INSTANCE;
 
-            callNode = adoptChild(CallNode.create(cachedCallTarget));
+            callNode = adoptChild(Truffle.getRuntime().createCallNode(cachedCallTarget));
             nextNode = adoptChild(next);
         }
 

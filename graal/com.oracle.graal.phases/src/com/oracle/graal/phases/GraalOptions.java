@@ -232,6 +232,9 @@ public final class GraalOptions {
     @Option(help = "Try to avoid emitting code where patching is required")
     public static final OptionValue<Boolean> ImmutableCode = new OptionValue<>(false);
 
+    @Option(help = "")
+    public static final OptionValue<Boolean> CallArrayCopy = new OptionValue<>(true);
+
     // Runtime settings
     @Option(help = "")
     public static final OptionValue<Boolean> SupportJsrBytecodes = new OptionValue<>(true);
@@ -250,8 +253,6 @@ public final class GraalOptions {
     public static final OptionValue<Boolean> OptScheduleOutOfLoops = new OptionValue<>(true);
     @Option(help = "")
     public static final OptionValue<Boolean> OptEliminateGuards = new OptionValue<>(true);
-    @Option(help = "")
-    public static final OptionValue<Boolean> OptEliminateSafepoints = new OptionValue<>(true);
     @Option(help = "")
     public static final OptionValue<Boolean> OptImplicitNullChecks = new OptionValue<>(true);
     @Option(help = "")
