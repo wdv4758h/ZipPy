@@ -93,7 +93,34 @@ public class PythonTypes {
      * Python bool to Python int (BigInteger); <br>
      * Python int to int (Integer to BigInteger).
      */
-    @ImplicitCast
+    @TypeCheck
+    public boolean isBigInteger(Object value) {
+        return value instanceof BigInteger || value instanceof Integer || value instanceof Boolean;
+    }
+
+    @TypeCast
+    public BigInteger asBigInteger(boolean value) {
+        return value ? BigInteger.valueOf(1) : BigInteger.valueOf(0);
+    }
+
+    @TypeCast
+    public BigInteger asBigInteger(int value) {
+        return BigInteger.valueOf(value);
+    }
+
+    @TypeCast
+    public BigInteger asBigInteger(Object value) {
+        if (value instanceof Integer) {
+            return BigInteger.valueOf((int) value);
+        } else if (value instanceof Boolean) {
+            int intValue = (boolean) value ? 1 : 0;
+            return BigInteger.valueOf(intValue);
+        }
+
+        return (BigInteger) value;
+    }
+
+    // @ImplicitCast
     public BigInteger intToBigInteger(int value) {
         return BigInteger.valueOf(value);
     }
@@ -133,6 +160,21 @@ public class PythonTypes {
         return (double) value;
     }
 
+    // @ImplicitCast
+    public double booleanToDouble(boolean value) {
+        return value ? 1.0D : 0.0D;
+    }
+
+    // @ImplicitCast
+    public double intToDouble(int value) {
+        return value;
+    }
+
+    // @ImplicitCast
+    public double bigIntegerToDouble(BigInteger value) {
+        return value.doubleValue();
+    }
+
     /**
      * Type coercion: <br>
      * Python bool to Python complex; <br>
@@ -161,6 +203,21 @@ public class PythonTypes {
         }
 
         return (PComplex) value;
+    }
+
+    // @ImplicitCast
+    public PComplex intToPComplex(int value) {
+        return new PComplex(value, 0);
+    }
+
+    // @ImplicitCast
+    public PComplex bigIntegerToPComplex(BigInteger value) {
+        return new PComplex(value.doubleValue(), 0);
+    }
+
+    // @ImplicitCast
+    public PComplex doubleToPComplex(double value) {
+        return new PComplex(value, 0);
     }
 
     @ImplicitCast
