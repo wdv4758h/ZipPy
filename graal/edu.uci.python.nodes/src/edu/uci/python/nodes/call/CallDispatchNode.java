@@ -30,12 +30,10 @@ import com.oracle.truffle.api.nodes.*;
 import com.oracle.truffle.api.utilities.*;
 
 import edu.uci.python.nodes.*;
-import edu.uci.python.nodes.truffle.*;
 import edu.uci.python.runtime.*;
 import edu.uci.python.runtime.builtin.*;
 import edu.uci.python.runtime.datatype.*;
 import edu.uci.python.runtime.function.*;
-import edu.uci.python.runtime.object.*;
 
 /**
  * @author zwei
@@ -54,7 +52,7 @@ public abstract class CallDispatchNode extends Node {
         }
 
         if (callee instanceof PFunction) {
-            return new CallDispatchBoxedNode.DispatchFunctionNode((PFunction) callee, next);
+            return new DispatchFunctionNode((PFunction) callee, next);
         } else if (callee instanceof PBuiltinFunction) {
             return new DispatchBuiltinFunctionNode((PBuiltinFunction) callee, next);
         } else if (callee instanceof PMethod) {
@@ -73,6 +71,74 @@ public abstract class CallDispatchNode extends Node {
     }
 
     protected abstract Object executeCall(VirtualFrame frame, Object primaryObj, Object... arguments);
+
+    public static final class DispatchFunctionNode extends CallDispatchNode {
+
+        protected final CallTarget cachedCallTarget;
+        protected final Assumption cachedCallTargetStable;
+        private final MaterializedFrame declarationFrame;
+
+        @Child protected CallNode callNode;
+        @Child protected CallDispatchNode nextNode;
+
+        public DispatchFunctionNode(PFunction callee, CallDispatchNode next) {
+            super(callee.getName());
+            cachedCallTarget = callee.getCallTarget();
+            declarationFrame = callee.getDeclarationFrame();
+            // TODO: replace holder for now.
+            cachedCallTargetStable = AlwaysValidAssumption.INSTANCE;
+            callNode = Truffle.getRuntime().createCallNode(cachedCallTarget);
+            nextNode = next;
+        }
+
+        @Override
+        protected Object executeCall(VirtualFrame frame, Object primaryObj, Object... arguments) {
+            try {
+                cachedCallTargetStable.check();
+
+                PArguments arg = new PArguments(null, declarationFrame, arguments);
+                return callNode.call(frame.pack(), arg);
+            } catch (InvalidAssumptionException ex) {
+                replace(nextNode);
+                return nextNode.executeCall(frame, primaryObj, arguments);
+            }
+        }
+    }
+
+    public static final class DispatchMethodNode extends CallDispatchNode {
+
+        protected final PMethod cachedCallee;
+        protected final CallTarget cachedCallTarget;
+        protected final Assumption cachedCallTargetStable;
+        private final MaterializedFrame declarationFrame;
+
+        @Child protected CallNode callNode;
+        @Child protected CallDispatchNode nextNode;
+
+        public DispatchMethodNode(PMethod callee, CallDispatchNode next) {
+            super(callee.getName());
+            cachedCallee = callee;
+            cachedCallTarget = callee.getCallTarget();
+            declarationFrame = callee.__func__().getDeclarationFrame();
+            // TODO: replace holder for now.
+            cachedCallTargetStable = AlwaysValidAssumption.INSTANCE;
+            callNode = Truffle.getRuntime().createCallNode(cachedCallTarget);
+            nextNode = next;
+        }
+
+        @Override
+        protected Object executeCall(VirtualFrame frame, Object primaryObj, Object... arguments) {
+            try {
+                cachedCallTargetStable.check();
+
+                PArguments arg = new PArguments(cachedCallee.__self__(), declarationFrame, arguments);
+                return callNode.call(frame.pack(), arg);
+            } catch (InvalidAssumptionException ex) {
+                replace(nextNode);
+                return nextNode.executeCall(frame, primaryObj, arguments);
+            }
+        }
+    }
 
     public static final class DispatchBuiltinFunctionNode extends CallDispatchNode {
 
@@ -190,32 +256,6 @@ public abstract class CallDispatchNode extends Node {
             PythonCallable callee;
             try {
                 callee = calleeNode.executePythonCallable(frame);
-            } catch (UnexpectedResultException e) {
-                throw new IllegalStateException("Call to " + e.getMessage() + " not supported.");
-            }
-
-            return callee.call(frame.pack(), arguments);
-        }
-    }
-
-    public static final class GenericDispatchBoxedNode extends CallDispatchNode {
-
-        public GenericDispatchBoxedNode(String calleeName) {
-            super(calleeName);
-        }
-
-        @Override
-        protected Object executeCall(VirtualFrame frame, Object primaryObj, Object... arguments) {
-            PythonBasicObject primaryBoxedObject;
-            try {
-                primaryBoxedObject = PythonTypesGen.PYTHONTYPES.expectPythonBasicObject(primaryObj);
-            } catch (UnexpectedResultException e) {
-                throw new IllegalStateException();
-            }
-
-            PythonCallable callee;
-            try {
-                callee = PythonTypesGen.PYTHONTYPES.expectPythonCallable(primaryBoxedObject.getAttribute(calleeName));
             } catch (UnexpectedResultException e) {
                 throw new IllegalStateException("Call to " + e.getMessage() + " not supported.");
             }

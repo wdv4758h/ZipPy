@@ -29,6 +29,7 @@ import com.oracle.truffle.api.frame.*;
 import com.oracle.truffle.api.nodes.*;
 import com.oracle.truffle.api.utilities.*;
 
+import edu.uci.python.nodes.truffle.*;
 import edu.uci.python.runtime.function.*;
 import edu.uci.python.runtime.object.*;
 
@@ -38,18 +39,23 @@ public abstract class CallDispatchBoxedNode extends CallDispatchNode {
         super(calleeName);
     }
 
+    @Override
+    protected Object executeCall(VirtualFrame frame, Object primaryObj, Object... arguments) {
+        throw new UnsupportedOperationException();
+    }
+
     protected abstract Object executeCall(VirtualFrame frame, PythonBasicObject primaryObj, Object... arguments);
 
-    public static final class DispatchFunctionNode extends CallDispatchNode {
+    public static final class DispatchFunctionNode extends CallDispatchBoxedNode {
 
         protected final CallTarget cachedCallTarget;
         protected final Assumption cachedCallTargetStable;
         private final MaterializedFrame declarationFrame;
 
         @Child protected CallNode callNode;
-        @Child protected CallDispatchNode nextNode;
+        @Child protected CallDispatchBoxedNode nextNode;
 
-        public DispatchFunctionNode(PFunction callee, CallDispatchNode next) {
+        public DispatchFunctionNode(PFunction callee, CallDispatchBoxedNode next) {
             super(callee.getName());
             cachedCallTarget = callee.getCallTarget();
             declarationFrame = callee.getDeclarationFrame();
@@ -60,7 +66,7 @@ public abstract class CallDispatchBoxedNode extends CallDispatchNode {
         }
 
         @Override
-        protected Object executeCall(VirtualFrame frame, Object primaryObj, Object... arguments) {
+        protected Object executeCall(VirtualFrame frame, PythonBasicObject primaryObj, Object... arguments) {
             try {
                 cachedCallTargetStable.check();
 
@@ -73,17 +79,17 @@ public abstract class CallDispatchBoxedNode extends CallDispatchNode {
         }
     }
 
-    public static final class DispatchMethodNode extends CallDispatchNode {
-    
+    public static final class DispatchMethodNode extends CallDispatchBoxedNode {
+
         protected final PMethod cachedCallee;
         protected final CallTarget cachedCallTarget;
         protected final Assumption cachedCallTargetStable;
         private final MaterializedFrame declarationFrame;
-    
+
         @Child protected CallNode callNode;
-        @Child protected CallDispatchNode nextNode;
-    
-        public DispatchMethodNode(PMethod callee, CallDispatchNode next) {
+        @Child protected CallDispatchBoxedNode nextNode;
+
+        public DispatchMethodNode(PMethod callee, CallDispatchBoxedNode next) {
             super(callee.getName());
             cachedCallee = callee;
             cachedCallTarget = callee.getCallTarget();
@@ -93,18 +99,44 @@ public abstract class CallDispatchBoxedNode extends CallDispatchNode {
             callNode = Truffle.getRuntime().createCallNode(cachedCallTarget);
             nextNode = next;
         }
-    
+
         @Override
-        protected Object executeCall(VirtualFrame frame, Object primaryObj, Object... arguments) {
+        protected Object executeCall(VirtualFrame frame, PythonBasicObject primaryObj, Object... arguments) {
             try {
                 cachedCallTargetStable.check();
-    
+
                 PArguments arg = new PArguments(cachedCallee.__self__(), declarationFrame, arguments);
                 return callNode.call(frame.pack(), arg);
             } catch (InvalidAssumptionException ex) {
                 replace(nextNode);
                 return nextNode.executeCall(frame, primaryObj, arguments);
             }
+        }
+    }
+
+    public static final class GenericDispatchBoxedNode extends CallDispatchBoxedNode {
+
+        public GenericDispatchBoxedNode(String calleeName) {
+            super(calleeName);
+        }
+
+        @Override
+        protected Object executeCall(VirtualFrame frame, PythonBasicObject primaryObj, Object... arguments) {
+            PythonBasicObject primaryBoxedObject;
+            try {
+                primaryBoxedObject = PythonTypesGen.PYTHONTYPES.expectPythonBasicObject(primaryObj);
+            } catch (UnexpectedResultException e) {
+                throw new IllegalStateException();
+            }
+
+            PythonCallable callee;
+            try {
+                callee = PythonTypesGen.PYTHONTYPES.expectPythonCallable(primaryBoxedObject.getAttribute(calleeName));
+            } catch (UnexpectedResultException e) {
+                throw new IllegalStateException("Call to " + e.getMessage() + " not supported.");
+            }
+
+            return callee.call(frame.pack(), arguments);
         }
     }
 
