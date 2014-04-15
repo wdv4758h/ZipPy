@@ -45,8 +45,8 @@ public abstract class CallDispatchBoxedNode extends CallDispatchNode {
 
     protected abstract Object executeCall(VirtualFrame frame, PythonBasicObject primaryObj, Object... arguments);
 
-    protected static CallDispatchBoxedNode create(PythonCallable callee, PNode calleeNode) {
-        UninitializedDispatchBoxedNode next = new UninitializedDispatchBoxedNode(callee.getName(), calleeNode);
+    protected static CallDispatchBoxedNode create(PythonContext context, PythonBasicObject primary, PythonCallable callee, PNode calleeNode) {
+        UninitializedDispatchBoxedNode next = new UninitializedDispatchBoxedNode(context, callee.getName(), calleeNode);
         /**
          * Treat generator as slow path for now.
          */
@@ -55,7 +55,7 @@ public abstract class CallDispatchBoxedNode extends CallDispatchNode {
         }
 
         if (callee instanceof PFunction) {
-            return new DispatchGlobalFunctionNode((PFunction) callee, next);
+            return new DispatchGlobalFunctionNode(primary, (PFunction) callee, next);
         } else if (callee instanceof PBuiltinFunction) {
             return new DispatchBuiltinFunctionNode((PBuiltinFunction) callee, next);
         } else if (callee instanceof PMethod) {
@@ -73,21 +73,18 @@ public abstract class CallDispatchBoxedNode extends CallDispatchNode {
      */
     public static final class DispatchGlobalFunctionNode extends CallDispatchBoxedNode {
 
-        protected final CallTarget cachedCallTarget;
-        protected final Assumption cachedCallTargetStable;
-        private final MaterializedFrame declarationFrame;
-
         @Child protected CallNode callNode;
         @Child protected CallDispatchBoxedNode nextNode;
 
-        public DispatchGlobalFunctionNode(PFunction callee, CallDispatchBoxedNode next) {
+        private final Assumption cachedCallTargetStable;
+        private final MaterializedFrame declarationFrame;
+
+        public DispatchGlobalFunctionNode(PythonBasicObject primary, PFunction callee, CallDispatchBoxedNode next) {
             super(callee.getName());
-            cachedCallTarget = callee.getCallTarget();
-            declarationFrame = callee.getDeclarationFrame();
-            // TODO: replace holder for now.
-            cachedCallTargetStable = AlwaysValidAssumption.INSTANCE;
-            callNode = Truffle.getRuntime().createCallNode(cachedCallTarget);
+            callNode = Truffle.getRuntime().createCallNode(callee.getCallTarget());
             nextNode = next;
+            cachedCallTargetStable = primary.getStableAssumption();
+            declarationFrame = callee.getDeclarationFrame();
         }
 
         @Override
@@ -111,7 +108,6 @@ public abstract class CallDispatchBoxedNode extends CallDispatchNode {
     public static final class DispatchBuiltinFunctionNode extends CallDispatchBoxedNode {
 
         protected final PBuiltinFunction cachedCallee;
-        protected final CallTarget cachedCallTarget;
         protected final Assumption cachedCallTargetStable;
 
         @Child protected CallNode callNode;
@@ -120,10 +116,9 @@ public abstract class CallDispatchBoxedNode extends CallDispatchNode {
         public DispatchBuiltinFunctionNode(PBuiltinFunction callee, CallDispatchBoxedNode next) {
             super(callee.getName());
             cachedCallee = callee;
-            cachedCallTarget = split(callee.getCallTarget());
             // TODO: replace holder for now.
             cachedCallTargetStable = AlwaysValidAssumption.INSTANCE;
-            callNode = Truffle.getRuntime().createCallNode(cachedCallTarget);
+            callNode = Truffle.getRuntime().createCallNode(callee.getCallTarget());
             nextNode = next;
         }
 
@@ -148,7 +143,6 @@ public abstract class CallDispatchBoxedNode extends CallDispatchNode {
     public static final class DispatchMethodBoxedNode extends CallDispatchBoxedNode {
 
         protected final PMethod cachedCallee;
-        protected final CallTarget cachedCallTarget;
         protected final Assumption cachedCallTargetStable;
         private final MaterializedFrame declarationFrame;
 
@@ -158,11 +152,10 @@ public abstract class CallDispatchBoxedNode extends CallDispatchNode {
         public DispatchMethodBoxedNode(PMethod callee, CallDispatchBoxedNode next) {
             super(callee.getName());
             cachedCallee = callee;
-            cachedCallTarget = callee.getCallTarget();
             declarationFrame = callee.__func__().getDeclarationFrame();
             // TODO: replace holder for now.
             cachedCallTargetStable = AlwaysValidAssumption.INSTANCE;
-            callNode = Truffle.getRuntime().createCallNode(cachedCallTarget);
+            callNode = Truffle.getRuntime().createCallNode(callee.getCallTarget());
             nextNode = next;
         }
 
@@ -183,7 +176,6 @@ public abstract class CallDispatchBoxedNode extends CallDispatchNode {
     public static final class DispatchConstructorBoxedNode extends CallDispatchBoxedNode {
 
         protected final PythonBuiltinClass cachedCallee;
-        protected final CallTarget cachedCallTarget;
         protected final Assumption cachedCallTargetStable;
 
         @Child protected CallNode callNode;
@@ -193,11 +185,10 @@ public abstract class CallDispatchBoxedNode extends CallDispatchNode {
             super(callee.getName());
             cachedCallee = callee;
             PythonCallable constructor = callee.lookUpMethod("__init__");
-            cachedCallTarget = split(constructor.getCallTarget());
             // TODO: PythonBuiltinClass should return always valid assumption.
             cachedCallTargetStable = callee.getStableAssumption();
 
-            callNode = Truffle.getRuntime().createCallNode(cachedCallTarget);
+            callNode = Truffle.getRuntime().createCallNode(split(constructor.getCallTarget()));
             nextNode = next;
         }
 
@@ -218,9 +209,11 @@ public abstract class CallDispatchBoxedNode extends CallDispatchNode {
     public static final class UninitializedDispatchBoxedNode extends CallDispatchBoxedNode {
 
         @Child protected PNode calleeNode;
+        private final PythonContext context;
 
-        public UninitializedDispatchBoxedNode(String calleeName, PNode calleeNode) {
+        public UninitializedDispatchBoxedNode(PythonContext context, String calleeName, PNode calleeNode) {
             super(calleeName);
+            this.context = context;
             this.calleeNode = calleeNode;
         }
 
@@ -244,12 +237,11 @@ public abstract class CallDispatchBoxedNode extends CallDispatchNode {
                     throw new IllegalStateException("Call to " + e.getMessage() + " not supported.");
                 }
 
-                CallDispatchBoxedNode direct = create(callee, calleeNode);
+                CallDispatchBoxedNode direct = create(context, primaryObj, callee, calleeNode);
                 specialized = replace(direct);
             } else {
                 CallDispatchBoxedNode generic = new GenericDispatchBoxedNode(calleeName, calleeNode);
-                // TODO: should replace the dispatch node of the parent call node.
-                specialized = replace(generic);
+                specialized = current.replace(generic);
             }
 
             return specialized.executeCall(frame, primaryObj, arguments);

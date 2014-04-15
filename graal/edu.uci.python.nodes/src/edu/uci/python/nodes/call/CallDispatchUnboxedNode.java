@@ -45,8 +45,16 @@ public abstract class CallDispatchUnboxedNode extends CallDispatchNode {
 
     protected static CallDispatchUnboxedNode create(PythonCallable callee, PNode calleeNode) {
         UninitializedDispatchUnboxedNode next = new UninitializedDispatchUnboxedNode(callee.getName(), calleeNode);
+        /**
+         * Treat generator as slow path for now.
+         */
+        if (callee instanceof PGeneratorFunction) {
+            return new GenericDispatchUnboxedNode(callee.getName(), calleeNode);
+        }
 
-        if (callee instanceof PBuiltinMethod) {
+        if (callee instanceof PFunction) {
+            return new DispatchVariableFunctionNode((PFunction) callee, next);
+        } else if (callee instanceof PBuiltinMethod) {
             return new GenericDispatchUnboxedNode(callee.getName(), calleeNode);
         } else if (callee instanceof PythonBuiltinClass) {
             return new DispatchBuiltinTypeNode((PythonBuiltinClass) callee, next);
@@ -218,8 +226,7 @@ public abstract class CallDispatchUnboxedNode extends CallDispatchNode {
                 specialized = replace(direct);
             } else {
                 CallDispatchUnboxedNode generic = new GenericDispatchUnboxedNode(calleeName, calleeNode);
-                // TODO: should replace the dispatch node of the parent call node.
-                specialized = replace(generic);
+                specialized = current.replace(generic);
             }
 
             return specialized.executeCall(frame, primaryObj, arguments);
