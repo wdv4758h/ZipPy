@@ -129,9 +129,4 @@ public final class PMethod extends PythonBuiltinObject implements PythonCallable
         return "<method " + function.getName() + " at " + hashCode() + ">";
     }
 
-    @Override
-    public String getCallableName() {
-        return function.getCallableName();
-    }
-
 }

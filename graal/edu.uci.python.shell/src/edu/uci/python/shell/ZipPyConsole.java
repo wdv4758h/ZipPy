@@ -30,7 +30,6 @@ import org.python.util.*;
 import com.oracle.truffle.api.*;
 
 import edu.uci.python.builtins.*;
-import edu.uci.python.nodes.profiler.*;
 import edu.uci.python.parser.*;
 import edu.uci.python.runtime.*;
 import edu.uci.python.runtime.standardtype.*;
@@ -78,16 +77,6 @@ public class ZipPyConsole extends InteractiveConsole {
 
         if (PythonOptions.ProfileGeneratorCalls) {
             context.printGeneratorProfilingInfo();
-        }
-
-        if (PythonOptions.ProfileCalls) {
-            printBanner("Call Profiling Results");
-            ProfilerResultPrinter.printFunctionInvocationProfilerResults();
-        }
-
-        if (PythonOptions.AddProfilingInstrumentation) {
-            printBanner("Node Profiling Results");
-            ProfilerResultPrinter.printProfilerInstrumenterResults();
         }
 
         Py.flushLine();

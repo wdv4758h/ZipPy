@@ -78,13 +78,6 @@ public class PythonOptions {
         }
     }
 
-    // Profiling
-    public static boolean ProfileCalls = false;
-
-    public static boolean AddProfilingInstrumentation = false;
-
-    public static boolean SortProfilerResults = false;
-
     public static final boolean CatchZippyExceptionForUnitTesting = false;
 
     private PrintStream standardOut = System.out;

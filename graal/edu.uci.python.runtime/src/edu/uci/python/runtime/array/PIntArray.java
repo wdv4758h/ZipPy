@@ -26,9 +26,7 @@ package edu.uci.python.runtime.array;
 
 import java.util.*;
 
-import edu.uci.python.runtime.*;
 import edu.uci.python.runtime.datatype.*;
-import edu.uci.python.runtime.iterator.*;
 import edu.uci.python.runtime.object.*;
 import edu.uci.python.runtime.sequence.*;
 
@@ -66,15 +64,6 @@ public final class PIntArray extends PArray {
 
     public int[] getSequence() {
         return array;
-    }
-
-    @Override
-    public PIterator __iter__() {
-        if (PythonOptions.UnboxSequenceIteration) {
-            return new PIntArrayIterator(this);
-        } else {
-            return new PSequenceIterator(this);
-        }
     }
 
     @Override

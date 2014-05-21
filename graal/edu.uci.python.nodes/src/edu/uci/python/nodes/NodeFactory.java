@@ -184,8 +184,7 @@ public class NodeFactory {
 
     public PNode createTupleLiteral(List<PNode> values) {
         PNode[] convertedValues = values.toArray(new PNode[values.size()]);
-        // return new TupleLiteralNode(convertedValues);
-        return new TupleLiteralNode.UninitializedTupleLiteralNode(convertedValues);
+        return new TupleLiteralNode(convertedValues);
     }
 
     public PNode createListLiteral(List<PNode> values) {
