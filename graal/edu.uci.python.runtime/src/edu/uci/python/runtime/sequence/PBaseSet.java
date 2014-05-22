@@ -39,9 +39,8 @@ public abstract class PBaseSet extends PythonBuiltinObject implements PIterable 
         this.set = new TreeSet<>();
     }
 
-    public PBaseSet(Set<Object> elements) {
-        this.set = new TreeSet<>();
-        this.set.addAll(elements);
+    public PBaseSet(TreeSet<Object> elements) {
+        this.set = elements;
     }
 
     public PBaseSet(PIterator iter) {

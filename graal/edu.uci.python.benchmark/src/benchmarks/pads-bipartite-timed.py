@@ -7,6 +7,8 @@
 #
 # 02/24/14 Modified by Wei Zhang
 
+import sys, time
+
 ##############################
 # DFS
 ##############################
@@ -79,9 +81,25 @@ def isBipartite(G):
 def create_cycle_graph(n):
     return {i:[(i-1)%n,(i+1)%n] for i in range(n)}
 
-def main():
-	graph = create_cycle_graph(100)
-	result = isBipartite(graph)
-	print(result)
+def main(n):
+    graph = create_cycle_graph(n)
 
-main()
+    for i in range(20):
+        result = isBipartite(graph)
+    return result
+
+def measure():
+    input = int(sys.argv[1]) #100000
+
+    print("Start timing...")
+    start = time.time()
+    result = main(input)
+    print(result)
+    duration = "%.3f\n" % (time.time() - start)
+    print("pads-bipartite: " + duration)
+
+# warm up
+for i in range(100):
+    main(2000)
+
+measure()

@@ -87,7 +87,6 @@ def randomFasta(table, n):
         for i in range(n % width):
             rgs = rlut[rgs]
             #la(lut[rgs])
-            #print("element2", lut[rgs])
             line_buffer.append(lut[rgs])
         #print(''.join(line_buffer))
     

@@ -221,11 +221,6 @@ public class PythonClass extends FixedPythonObjectStorage implements PythonCalla
     }
 
     @Override
-    public String getCallableName() {
-        return getName();
-    }
-
-    @Override
     public String toString() {
         return "<class \'" + className + "\'>";
     }

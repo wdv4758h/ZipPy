@@ -50,7 +50,7 @@ import static edu.uci.python.nodes.optimize.PeeledGeneratorLoopNode.*;
  *
  * @author zwei
  */
-public final class FunctionRootNode extends RootNode {
+public final class FunctionRootNode extends RootNode implements GuestRootNode {
 
     private final PythonContext context;
     private final String functionName;
@@ -77,6 +77,10 @@ public final class FunctionRootNode extends RootNode {
 
     public PythonContext getContext() {
         return context;
+    }
+
+    public boolean isGenerator() {
+        return isGenerator;
     }
 
     public String getFunctionName() {
@@ -107,7 +111,7 @@ public final class FunctionRootNode extends RootNode {
     @Override
     public Object execute(VirtualFrame frame) {
         if (CompilerDirectives.inInterpreter()) {
-            optimizeGeneratorCalls();
+            optimizeHelper();
         }
         if (PythonOptions.ProfileCalls) {
             profiler.execute(frame);
@@ -115,7 +119,12 @@ public final class FunctionRootNode extends RootNode {
         return body.execute(frame);
     }
 
-    protected void optimizeGeneratorCalls() {
+    @Override
+    public void doAfterInliningPerformed() {
+        optimizeHelper();
+    }
+
+    private void optimizeHelper() {
         CompilerAsserts.neverPartOfCompilation();
 
         if (CompilerDirectives.inCompiledCode() || !PythonOptions.InlineGeneratorCalls || isGenerator) {

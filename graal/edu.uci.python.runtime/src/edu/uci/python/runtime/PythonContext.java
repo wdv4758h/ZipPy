@@ -51,7 +51,6 @@ public class PythonContext extends AbstractExecutionContext {
     private final PythonBuiltinClass objectClass;
     private final PythonBuiltinClass moduleClass;
 
-    // private final SourceManager sourceManager;
     private final PythonParser parser;
     private final ImportManager importManager;
 
@@ -75,7 +74,6 @@ public class PythonContext extends AbstractExecutionContext {
         assert objectClass.usePrivateLayout() && objectClass.getObjectLayout().isEmpty();
         assert moduleClass.usePrivateLayout() && moduleClass.getObjectLayout().isEmpty();
 
-        // this.sourceManager = new SourceManager();
         this.parser = parser;
         this.importManager = new ImportManager(this);
 
@@ -207,20 +205,17 @@ public class PythonContext extends AbstractExecutionContext {
     }
 
     public void addNodeProber(ASTNodeProber nodeProber) throws IllegalStateException, IllegalArgumentException {
-        // TODO Auto-generated method stub
-
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public void setASTProber(ASTProber astProber) {
-        // TODO Auto-generated method stub
-
+        throw new UnsupportedOperationException();
     }
 
     @Override
     protected void setSourceCallback(SourceCallback sourceCallback) {
-        // TODO Auto-generated method stub
-
+        throw new UnsupportedOperationException();
     }
 
 }
