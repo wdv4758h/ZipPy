@@ -105,7 +105,9 @@ public abstract class SubscriptLoadIndexNode extends SubscriptLoadNode {
      */
     @Specialization(order = 11)
     public Object doPDict(PDict primary, Object key) {
-        return primary.getItem(key);
+        final Object result = primary.getItem(key);
+        assert result != null;
+        return result;
     }
 
     /**

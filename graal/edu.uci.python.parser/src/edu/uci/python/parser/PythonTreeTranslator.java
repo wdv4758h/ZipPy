@@ -100,9 +100,6 @@ public class PythonTreeTranslator extends Visitor {
         int startColumn = node.getCharPositionInLine() + 1;
         int charIndex = node.getTokenStartIndex();
         int charLength = node.getText().length();
-
-        // System.out.println("ASSIGN SOURCE SECTION line " + startLine + " startColumn " +
-// startColumn + " for " + truffleNode);
         SourceSection sourceSection = source.createSection(identifier, startLine, startColumn, charIndex, charLength);
         truffleNode.assignSourceSection(sourceSection);
         return truffleNode;
@@ -723,6 +720,16 @@ public class PythonTreeTranslator extends Visitor {
         return assignSource(node, factory.createListComprehension(slot, comp));
     }
 
+    @Override
+    public Object visitDictComp(DictComp node) throws Exception {
+        FrameSlot slot = environment.nextListComprehensionSlot();
+        PNode key = (PNode) visit(node.getInternalKey());
+        PNode value = (PNode) visit(node.getInternalValue());
+        PNode body = factory.createMapPut(environment.getListComprehensionSlot(), key, value);
+        PNode comp = visitComprehensions(node.getInternalGenerators(), body);
+        return factory.createDictComprehension(slot, comp);
+    }
+
     private PNode visitComprehensions(List<comprehension> comprehensions, PNode body) throws Exception {
         assert body != null;
         PNode current = body;
@@ -952,6 +959,23 @@ public class PythonTreeTranslator extends Visitor {
 
         List<excepthandler> excepts = node.getInternalHandlers();
         ExceptNode[] exceptNodes = new ExceptNode[excepts.size()];
+
+        /**
+         * Specialize except StopIteration to StopIterationTargetNode.
+         */
+        if (excepts.size() == 1 && EmptyNode.isEmpty(orelse)) {
+            ExceptHandler handler = (ExceptHandler) excepts.get(0);
+
+            if (handler.getInternalType() instanceof Name) {
+                Name name = (Name) handler.getInternalType();
+
+                if (name != null && name.getInternalId().equals("StopIteration")) {
+                    List<PNode> exceptbody = visitStatements(handler.getInternalBody());
+                    PNode exceptBody = factory.createBlock(exceptbody);
+                    return new StopIterationTargetNode(body, exceptBody);
+                }
+            }
+        }
 
         for (int i = 0; i < excepts.size(); i++) {
             ExceptHandler except = (ExceptHandler) excepts.get(i);

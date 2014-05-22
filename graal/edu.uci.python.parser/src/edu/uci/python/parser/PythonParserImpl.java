@@ -86,7 +86,8 @@ public class PythonParserImpl implements PythonParser {
         ScopeTranslator ptp = new ScopeTranslator(environment);
         node = ptp.process(node);
 
-        PythonTreeTranslator ptt = new PythonTreeTranslator(context, environment, module, null);
+        Source source = context.getSourceManager().get("(test)", expression);
+        PythonTreeTranslator ptt = new PythonTreeTranslator(context, environment, module, source);
         return ptt.translate(node);
     }
 

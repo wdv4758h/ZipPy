@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, Regents of the University of California
+ * Copyright (c) 2014, Regents of the University of California
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -22,25 +22,35 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package edu.uci.python.runtime.function;
+package edu.uci.python.nodes.control;
 
-import com.oracle.truffle.api.*;
 import com.oracle.truffle.api.frame.*;
+import com.oracle.truffle.api.utilities.*;
 
-public interface PythonCallable {
+import edu.uci.python.nodes.*;
+import edu.uci.python.nodes.statement.*;
+import edu.uci.python.runtime.exception.*;
 
-    String getName();
+public final class StopIterationTargetNode extends StatementNode {
 
-    Object call(Object[] arguments);
+    @Child protected PNode tryPart;
+    @Child protected PNode catchPart;
 
-    Object call(Object[] arguments, PKeyword[] keywords);
+    private final BranchProfile breakProfile = new BranchProfile();
 
-    Arity getArity();
+    public StopIterationTargetNode(PNode tryPart, PNode catchPart) {
+        this.tryPart = tryPart;
+        this.catchPart = catchPart;
+    }
 
-    void arityCheck(int numOfArgs, int numOfKeywords, String[] keywords);
-
-    RootCallTarget getCallTarget();
-
-    FrameDescriptor getFrameDescriptor();
+    @Override
+    public Object execute(VirtualFrame frame) {
+        try {
+            return tryPart.execute(frame);
+        } catch (StopIterationException ex) {
+            breakProfile.enter();
+            return catchPart.execute(frame);
+        }
+    }
 
 }

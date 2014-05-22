@@ -29,8 +29,7 @@ import java.io.*;
 import com.oracle.truffle.api.nodes.*;
 
 /**
- * Access to AST-based debugging support, which is could be language implementation specific in the
- * details chosen to be presented.
+ * Language-agnostic access to AST-based debugging support.
  * <p>
  * <strong>WARNING:</strong> this interface is under development and will change substantially.
  */
@@ -38,7 +37,7 @@ public interface ASTPrinter {
 
     /**
      * Prints a textual AST display, one line per node, with nesting.
-     *
+     * 
      * @param p
      * @param node the root node of the display.
      * @param maxDepth the maximum number of levels to print below the root
@@ -48,7 +47,7 @@ public interface ASTPrinter {
 
     /**
      * Creates a textual AST display, one line per node, with nesting.
-     *
+     * 
      * @param node the root node of the display.
      * @param maxDepth the maximum number of levels to print below the root
      * @param markNode a node to mark with a textual arrow prefix, if present.
@@ -57,7 +56,7 @@ public interface ASTPrinter {
 
     /**
      * Creates a textual AST display, one line per node, with nesting.
-     *
+     * 
      * @param node the root node of the display.
      * @param maxDepth the maximum number of levels to print below the root
      */

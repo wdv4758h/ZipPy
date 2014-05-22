@@ -37,6 +37,7 @@ import edu.uci.python.nodes.literal.*;
 import edu.uci.python.nodes.frame.*;
 import edu.uci.python.nodes.function.*;
 import edu.uci.python.nodes.generator.*;
+import edu.uci.python.nodes.generator.ComprehensionNodeFactory.MapPutNodeFactory;
 import edu.uci.python.nodes.object.*;
 import edu.uci.python.nodes.statement.*;
 import edu.uci.python.nodes.subscript.*;
@@ -149,7 +150,7 @@ public class NodeFactory {
     }
 
     public StatementNode createYield(PNode right, FrameSlot returnSlot) {
-        return new YieldNode(this.createWriteLocal(right, returnSlot));
+        return new YieldNode(createWriteLocal(right, returnSlot));
     }
 
     public StatementNode createPrint(List<PNode> values, boolean nl, PythonContext context) {
@@ -184,7 +185,6 @@ public class NodeFactory {
 
     public PNode createTupleLiteral(List<PNode> values) {
         PNode[] convertedValues = values.toArray(new PNode[values.size()]);
-        // return new TupleLiteralNode(convertedValues);
         return new TupleLiteralNode.UninitializedTupleLiteralNode(convertedValues);
     }
 
@@ -204,6 +204,14 @@ public class NodeFactory {
 
     public PNode createListAppend(FrameSlot frameSlot, PNode right) {
         return ListAppendNodeFactory.create(frameSlot, right);
+    }
+
+    public PNode createDictComprehension(FrameSlot frameSlot, PNode comprehension) {
+        return new ComprehensionNode.DictComprehensionNode(frameSlot, comprehension);
+    }
+
+    public PNode createMapPut(FrameSlot frameSlot, PNode key, PNode value) {
+        return MapPutNodeFactory.create(frameSlot, key, value);
     }
 
     public PNode createUnaryOperation(unaryopType operator, PNode operand) {

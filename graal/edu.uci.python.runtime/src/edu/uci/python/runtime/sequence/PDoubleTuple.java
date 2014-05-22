@@ -26,7 +26,9 @@ package edu.uci.python.runtime.sequence;
 
 import java.util.*;
 
+import edu.uci.python.runtime.*;
 import edu.uci.python.runtime.datatype.*;
+import edu.uci.python.runtime.iterator.*;
 
 public final class PDoubleTuple extends PTuple {
 
@@ -66,15 +68,15 @@ public final class PDoubleTuple extends PTuple {
         return array[checkedIdx];
     }
 
-// @Override
-// public PIterator __iter__() {
-// if (PythonOptions.UnboxSequenceIteration) {
-// return new PDoubleTupleIterator(this);
-// } else {
-// return new PSequenceIterator(this);
-//
-// }
-// }
+    @Override
+    public PIterator __iter__() {
+        if (PythonOptions.UnboxSequenceIteration) {
+            return new PDoubleTupleIterator(this);
+        } else {
+            return new PSequenceIterator(this);
+
+        }
+    }
 
     @Override
     public int len() {

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, Regents of the University of California
+ * Copyright (c) 2014, Regents of the University of California
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -22,25 +22,16 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package edu.uci.python.runtime.function;
+package com.oracle.truffle.api.nodes;
 
-import com.oracle.truffle.api.*;
-import com.oracle.truffle.api.frame.*;
+/**
+ * An interface hook that enables notification from the Truffle runtime to the guest languages on
+ * inlining events.
+ *
+ * @author zwei
+ */
+public interface GuestRootNode {
 
-public interface PythonCallable {
-
-    String getName();
-
-    Object call(Object[] arguments);
-
-    Object call(Object[] arguments, PKeyword[] keywords);
-
-    Arity getArity();
-
-    void arityCheck(int numOfArgs, int numOfKeywords, String[] keywords);
-
-    RootCallTarget getCallTarget();
-
-    FrameDescriptor getFrameDescriptor();
+    void doAfterInliningPerformed();
 
 }
