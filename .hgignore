@@ -13,7 +13,6 @@
 ^build-nograal/
 ^dist/
 ^java/
-^lib/
 ^jdk1.(7|8).0
 ^java64/
 ^work/
