@@ -1,0 +1,1 @@
+{"unused_options":["--without-readline","--without-xz","--without-sqlite","--universal","--without-gdbm","--with-brewed-tk","--quicktest"],"poured_from_bottle":false,"time":1395864044,"HEAD":"b7063f5d52cff5f3d748f8255992cceb05330d0c","used_options":[],"built_as_bottle":false,"compiler":"clang","stdlib":null,"tapped_from":"Homebrew/homebrew"}
