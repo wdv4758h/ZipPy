@@ -1518,11 +1518,11 @@ def bench(args):
     if 'python-nopeeling' in args:
         benchmarks += sanitycheck.getPythonBenchmarksNoPeeling(vm)
 
-    if 'cpython2' in args:
+    if 'cpython' in args:
         benchmarks += sanitycheck.getPython2Benchmarks(vm)
         vm = 'cpython2'
 
-    if 'cpython' in args:
+    if 'cpython3' in args:
         benchmarks += sanitycheck.getPythonBenchmarks(vm)
         vm = 'cpython'
 
@@ -1565,6 +1565,10 @@ def bench(args):
 
     if 'cpython-generator' in args:
         benchmarks += sanitycheck.getPython2GeneratorBenchmarks(vm)
+        vm = 'cpython'
+
+    if 'cpython3-generator' in args:
+        benchmarks += sanitycheck.getPythonGeneratorBenchmarks(vm)
         vm = 'cpython'
 
     if 'jython-generator' in args:
