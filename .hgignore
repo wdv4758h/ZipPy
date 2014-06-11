@@ -13,7 +13,7 @@
 ^build-nograal/
 ^dist/
 ^java/
-^jdk1.(7|8).0
+#^jdk1.(7|8).0
 ^java64/
 ^work/
 \.checkstyle$
