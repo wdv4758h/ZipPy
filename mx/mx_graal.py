@@ -1512,6 +1512,9 @@ def bench(args):
     if 'python' in args:
         benchmarks += sanitycheck.getPythonBenchmarks(vm)
 
+    if 'zippy' in args:
+        benchmarks += sanitycheck.getPythonBenchmarks(vm)
+
     if 'python-nopeeling' in args:
         benchmarks += sanitycheck.getPythonBenchmarksNoPeeling(vm)
 
@@ -1552,6 +1555,28 @@ def bench(args):
 
     if 'pypy3-micro' in args:
         benchmarks += sanitycheck.getPython2MicroBenchmarks(vm)
+        vm = 'pypy3'
+
+    if 'zippy-generator' in args:
+        benchmarks += sanitycheck.getPythonGeneratorBenchmarks(vm)
+
+    if 'zippy-generator-noopt' in args:
+        benchmarks += sanitycheck.getPythonBenchmarksNoPeeling(vm)
+
+    if 'cpython-generator' in args:
+        benchmarks += sanitycheck.getPython2GeneratorBenchmarks(vm)
+        vm = 'cpython'
+
+    if 'jython-generator' in args:
+        benchmarks += sanitycheck.getPython2GeneratorBenchmarks(vm)
+        vm = 'jython'
+
+    if 'pypy-generator' in args:
+        benchmarks += sanitycheck.getPython2GeneratorBenchmarks(vm)
+        vm = 'pypy'
+
+    if 'pypy3-generator' in args:
+        benchmarks += sanitycheck.getPythonGeneratorBenchmarks(vm)
         vm = 'pypy3'
 
     for test in benchmarks:

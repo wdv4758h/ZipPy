@@ -168,18 +168,18 @@ pythonBenchmarks = {
     'nbody3t'         : '5000000',
     'spectralnorm3t'  : '5500',
     'pidigits-timed'  : '0',
-    'euler31-timed'   : '200',
-    'euler11-timed'   : '10000',
-    'ai-nqueen-timed' : '10',
-    'pads-eratosthenes-timed' : '100000',
-    'pads-integerpartitions' : '700',
-    'pads-lyndon'     : '100000000',
+    # 'euler31-timed'   : '200',
+    # 'euler11-timed'   : '10000',
+    # 'ai-nqueen-timed' : '10',
+    # 'pads-eratosthenes-timed' : '100000',
+    # 'pads-integerpartitions' : '700',
+    # 'pads-lyndon'     : '100000000',
     'richards3-timed' : '200',
     'bm-float-timed'  : '1000',
     'pypy-chaos-timed': '1000',
     'pypy-go'         : '2',
-    'python-graph-bench': '200',
-    'simplejson-bench': '10000',
+    # 'python-graph-bench': '200',
+    # 'simplejson-bench': '10000',
 }
 
 python2Benchmarks = {
@@ -191,16 +191,40 @@ python2Benchmarks = {
     'nbody2t'         : '5000000',
     'spectralnorm2t'  : '5500',
     'pidigits-timed'  : '0',
+    # 'euler31-timed'   : '200',
+    # 'euler11-timed'   : '10000',
+    # 'ai-nqueen-timed' : '10',
+    # 'pads-eratosthenes-timed' : '100000',
+    # 'pads-integerpartitions' : '700',
+    # 'pads-lyndon'     : '100000000',
+    'richards3-timed' : '200',
+    'bm-float-timed'  : '1000',
+    'pypy-chaos-timed': '1000',
+    'pypy-go'         : '2',
+    # 'python-graph-bench': '200',
+    # 'simplejson-bench': '10000',
+}
+
+pythonGeneratorBenchmarks = {
+    'generator'       : '0',
     'euler31-timed'   : '200',
     'euler11-timed'   : '10000',
     'ai-nqueen-timed' : '10',
     'pads-eratosthenes-timed' : '100000',
     'pads-integerpartitions' : '700',
     'pads-lyndon'     : '100000000',
-    'richards3-timed' : '200',
-    'bm-float-timed'  : '1000',
-    'pypy-chaos-timed': '1000',
-    'pypy-go'         : '2',
+    'python-graph-bench': '200',
+    'simplejson-bench': '10000',
+}
+
+python2GeneratorBenchmarks = {
+    'generator'       : '0',
+    'euler31-timed'   : '200',
+    'euler11-timed'   : '10000',
+    'ai-nqueen-timed' : '10',
+    'pads-eratosthenes-timed' : '100000',
+    'pads-integerpartitions' : '700',
+    'pads-lyndon'     : '100000000',
     'python-graph-bench': '200',
     'simplejson-bench': '10000',
 }
@@ -419,9 +443,33 @@ def getPythonBenchmarks(vm):
     
     return tests
 
+def getPythonGeneratorBenchmarks(vm):
+    success, error, matcher = getSuccessErrorMatcher()
+    benchmarks = pythonGeneratorBenchmarks
+    tests = []
+    for benchmark, arg in benchmarks.iteritems():
+        script = "graal/edu.uci.python.benchmark/src/benchmarks/" + benchmark + ".py"
+        cmd = ['-cp', mx.classpath("edu.uci.python.shell"), "edu.uci.python.shell.Shell", script, arg]
+        vmOpts = ['-Xms2g', '-Xmx2g']
+        tests.append(Test("Python-" + benchmark, cmd, successREs=[success], failureREs=[error], scoreMatchers=[matcher], vmOpts=vmOpts))
+
+    return tests
+
+def getPython2GeneratorBenchmarks(vm):
+    success, error, matcher = getSuccessErrorMatcher()
+    benchmarks = python2GeneratorBenchmarks
+    tests = []
+    for benchmark, arg in benchmarks.iteritems():
+        script = "graal/edu.uci.python.benchmark/src/benchmarks/" + benchmark + ".py"
+        cmd = ['-cp', mx.classpath("edu.uci.python.shell"), "edu.uci.python.shell.Shell", script, arg]
+        vmOpts = ['-Xms2g', '-Xmx2g']
+        tests.append(Test("Python-" + benchmark, cmd, successREs=[success], failureREs=[error], scoreMatchers=[matcher], vmOpts=vmOpts))
+
+    return tests
+
 def getPythonBenchmarksNoPeeling(vm):
     success, error, matcher = getSuccessErrorMatcher()
-    benchmarks = pythonBenchmarks
+    benchmarks = pythonGeneratorBenchmarks
     tests = []
     for benchmark, arg in benchmarks.iteritems():
         script = "graal/edu.uci.python.benchmark/src/benchmarks/" + benchmark + ".py"
@@ -603,15 +651,15 @@ class Test:
             # zippy
             result = -1
             if vm == 'cpython2':
-                result = mx.run(['python'] + self.cmd[-2:], out=tee.eat)
+                result = mx.run(['./lib/python'] + self.cmd[-2:], out=tee.eat)
             elif vm == 'cpython':
-                result = mx.run(['python3'] + self.cmd[-2:], out=tee.eat)
+                result = mx.run(['./lib/python3'] + self.cmd[-2:], out=tee.eat)
             elif vm == 'jython':
                 result = mx_graal.vm(self.vmOpts + ['-jar', mx.library('JYTHON').path] + self.cmd[-2:], vm = 'original', out=tee.eat)
             elif vm == 'pypy':
-                result = mx.run(['pypy'] + self.cmd[-2:], out=tee.eat)
+                result = mx.run(['./lib/pypy'] + self.cmd[-2:], out=tee.eat)
             elif vm == 'pypy3':
-                result = mx.run(['pypy3'] + self.cmd[-2:], out=tee.eat)
+                result = mx.run(['./lib/pypy3'] + self.cmd[-2:], out=tee.eat)
             else:
                 result = mx_graal.vm(self.vmOpts + _noneAsEmptyList(extraVmOpts) + self.cmd, vm, nonZeroIsFatal=False, out=tee.eat, err=subprocess.STDOUT, cwd=cwd, vmbuild=vmbuild)
 
