@@ -22,11 +22,15 @@
  */
 package com.oracle.graal.graph;
 
+import static com.oracle.graal.graph.Edges.Type.*;
 import static com.oracle.graal.graph.Graph.*;
 
 import java.lang.annotation.*;
 import java.util.*;
 
+import sun.misc.*;
+
+import com.oracle.graal.compiler.common.*;
 import com.oracle.graal.graph.Graph.NodeEventListener;
 import com.oracle.graal.graph.iterators.*;
 import com.oracle.graal.graph.spi.*;
@@ -55,7 +59,13 @@ import com.oracle.graal.nodeinfo.*;
 @NodeInfo
 public abstract class Node implements Cloneable, Formattable {
 
-    public final static boolean USE_GENERATED_NODES = Boolean.parseBoolean(System.getProperty("graal.useGeneratedNodes", "true"));
+    public final static boolean USE_GENERATED_VALUE_NUMBER = Boolean.parseBoolean(System.getProperty("graal.node.useGeneratedValueNumber", "false"));
+
+    public final static boolean USE_GENERATED_VALUE_EQUALS = Boolean.parseBoolean(System.getProperty("graal.node.useGeneratedValueEquals", "true"));
+
+    public final static boolean USE_UNSAFE_TO_CLONE = Boolean.parseBoolean(System.getProperty("graal.node.useUnsafeToClone", "true"));
+
+    public final static boolean USE_GENERATED_NODES = USE_GENERATED_VALUE_NUMBER || USE_GENERATED_VALUE_EQUALS;
 
     static final int DELETED_ID_START = -1000000000;
     static final int INITIAL_ID = -1;
@@ -141,6 +151,14 @@ public abstract class Node implements Cloneable, Formattable {
         boolean setStampFromReturnType() default false;
     }
 
+    /**
+     * Marker for a node that can be replaced by another node via global value numbering. A
+     * {@linkplain NodeClass#isLeafNode() leaf} node can be replaced by another node of the same
+     * type that has exactly the same {@linkplain NodeClass#getData() data} values. A non-leaf node
+     * can be replaced by another node of the same type that has exactly the same data values as
+     * well as the same {@linkplain Node#inputs() inputs} and {@linkplain Node#successors()
+     * successors}.
+     */
     public interface ValueNumberable {
     }
 
@@ -168,8 +186,7 @@ public abstract class Node implements Cloneable, Formattable {
     public static final int NOT_ITERABLE = -1;
 
     public Node() {
-        assert USE_GENERATED_NODES == (getClass().getAnnotation(GeneratedNode.class) != null) : getClass() + " is not a generated Node class - forgot @" + NodeInfo.class.getSimpleName() +
-                        " on class declaration?";
+        assert USE_GENERATED_NODES == this instanceof GeneratedNode : getClass() + " is not a generated Node class - forgot @" + NodeInfo.class.getSimpleName() + " on class declaration?";
         init();
     }
 
@@ -189,8 +206,6 @@ public abstract class Node implements Cloneable, Formattable {
         return graph;
     }
 
-    private static final boolean USE_GENERATED_NODE_ITERATORS = Boolean.getBoolean("graal.useGeneratedNodeIterators");
-
     /**
      * Returns an {@link NodeClassIterable iterable} which can be used to traverse all non-null
      * input edges of this node.
@@ -198,13 +213,7 @@ public abstract class Node implements Cloneable, Formattable {
      * @return an {@link NodeClassIterable iterable} for all non-null input edges.
      */
     public NodeClassIterable inputs() {
-        if (USE_GENERATED_NODES) {
-            if (!USE_GENERATED_NODE_ITERATORS) {
-                return new NodeRefIterable(this, true);
-            }
-            return inputsV2();
-        }
-        return getNodeClass().getInputIterable(this);
+        return getNodeClass().getEdges(Inputs).getIterable(this);
     }
 
     /**
@@ -214,13 +223,7 @@ public abstract class Node implements Cloneable, Formattable {
      * @return an {@link NodeClassIterable iterable} for all non-null successor edges.
      */
     public NodeClassIterable successors() {
-        if (USE_GENERATED_NODES) {
-            if (!USE_GENERATED_NODE_ITERATORS) {
-                return new NodeRefIterable(this, false);
-            }
-            return successorsV2();
-        }
-        return getNodeClass().getSuccessorIterable(this);
+        return getNodeClass().getEdges(Successors).getIterable(this);
     }
 
     /**
@@ -484,8 +487,9 @@ public abstract class Node implements Cloneable, Formattable {
     }
 
     /**
-     * Updates the usages sets of the given nodes after an input slot is changed from oldInput to
-     * newInput: removes this node from oldInput's usages and adds this node to newInput's usages.
+     * Updates the usages sets of the given nodes after an input slot is changed from
+     * {@code oldInput} to {@code newInput} by removing this node from {@code oldInput}'s usages and
+     * adds this node to {@code newInput}'s usages.
      */
     protected void updateUsages(Node oldInput, Node newInput) {
         assert isAlive() && (newInput == null || newInput.isAlive()) : "adding " + newInput + " to " + this + " instead of " + oldInput;
@@ -518,7 +522,7 @@ public abstract class Node implements Cloneable, Formattable {
         assert graph == null || !graph.isFrozen();
         if (oldSuccessor != newSuccessor) {
             if (oldSuccessor != null) {
-                assert assertTrue(oldSuccessor.predecessor == this, "wrong predecessor in old successor (%s): %s", oldSuccessor, oldSuccessor.predecessor);
+                assert assertTrue(oldSuccessor.predecessor == this, "wrong predecessor in old successor (%s): %s, should be %s", oldSuccessor, oldSuccessor.predecessor, this);
                 oldSuccessor.predecessor = null;
             }
             if (newSuccessor != null) {
@@ -559,7 +563,7 @@ public abstract class Node implements Cloneable, Formattable {
     public void replaceAtUsages(Node other) {
         assert checkReplaceWith(other);
         for (Node usage : usages()) {
-            boolean result = usage.getNodeClass().replaceFirstInput(usage, this, other);
+            boolean result = usage.getNodeClass().getEdges(Inputs).replaceFirst(usage, this, other);
             assert assertTrue(result, "not found in inputs, usage: %s", usage);
             if (other != null) {
                 maybeNotifyInputChanged(usage);
@@ -579,7 +583,7 @@ public abstract class Node implements Cloneable, Formattable {
                 if (removeStart < 0) {
                     removeStart = it.index - 1;
                 }
-                boolean result = usage.getNodeClass().replaceFirstInput(usage, this, other);
+                boolean result = usage.getNodeClass().getEdges(Inputs).replaceFirst(usage, this, other);
                 assert assertTrue(result, "not found in inputs, usage: %s", usage);
                 if (other != null) {
                     maybeNotifyInputChanged(usage);
@@ -607,7 +611,7 @@ public abstract class Node implements Cloneable, Formattable {
             NodePosIterator iter = usage.inputs().iterator();
             while (iter.hasNext()) {
                 Position pos = iter.nextPosition();
-                if (pos.getInputType(usage) == type && pos.get(usage) == this) {
+                if (pos.getInputType() == type && pos.get(usage) == this) {
                     pos.set(usage, other);
                 }
             }
@@ -637,7 +641,7 @@ public abstract class Node implements Cloneable, Formattable {
     public void replaceAtPredecessor(Node other) {
         assert checkReplaceWith(other);
         if (predecessor != null) {
-            boolean result = predecessor.getNodeClass().replaceFirstSuccessor(predecessor, this, other);
+            boolean result = predecessor.getNodeClass().getEdges(Successors).replaceFirst(predecessor, this, other);
             assert assertTrue(result, "not found in successors, predecessor: %s", predecessor);
             predecessor.updatePredecessor(this, other);
         }
@@ -654,13 +658,13 @@ public abstract class Node implements Cloneable, Formattable {
     }
 
     public void replaceFirstSuccessor(Node oldSuccessor, Node newSuccessor) {
-        if (getNodeClass().replaceFirstSuccessor(this, oldSuccessor, newSuccessor)) {
+        if (getNodeClass().getEdges(Successors).replaceFirst(this, oldSuccessor, newSuccessor)) {
             updatePredecessor(oldSuccessor, newSuccessor);
         }
     }
 
     public void replaceFirstInput(Node oldInput, Node newInput) {
-        if (getNodeClass().replaceFirstInput(this, oldInput, newInput)) {
+        if (getNodeClass().getEdges(Inputs).replaceFirst(this, oldInput, newInput)) {
             updateUsages(oldInput, newInput);
         }
     }
@@ -678,7 +682,7 @@ public abstract class Node implements Cloneable, Formattable {
         assert assertFalse(isDeleted(), "cannot clear inputs of deleted node");
 
         unregisterInputs();
-        getNodeClass().clearInputs(this);
+        getNodeClass().getEdges(Inputs).clear(this);
     }
 
     private boolean removeThisFromUsages(Node n) {
@@ -696,7 +700,7 @@ public abstract class Node implements Cloneable, Formattable {
         assert assertFalse(isDeleted(), "cannot clear successors of deleted node");
 
         unregisterSuccessors();
-        getNodeClass().clearSuccessors(this);
+        getNodeClass().getEdges(Successors).clear(this);
     }
 
     private boolean checkDeletion() {
@@ -722,20 +726,14 @@ public abstract class Node implements Cloneable, Formattable {
         return copyWithInputs(true);
     }
 
-    public final Node copyWithInputs(boolean addToGraph) {
-        Node newNode = clone(addToGraph ? graph : null);
-        NodeClass clazz = getNodeClass();
-        clazz.copyInputs(this, newNode);
-        if (addToGraph) {
+    public final Node copyWithInputs(boolean insertIntoGraph) {
+        Node newNode = clone(insertIntoGraph ? graph : null, WithOnlyInputEdges);
+        if (insertIntoGraph) {
             for (Node input : inputs()) {
                 input.addUsage(newNode);
             }
         }
         return newNode;
-    }
-
-    public final Node clone(Graph into) {
-        return clone(into, true);
     }
 
     /**
@@ -749,48 +747,85 @@ public abstract class Node implements Cloneable, Formattable {
         throw new UnsupportedOperationException();
     }
 
-    final Node clone(Graph into, boolean clearInputsAndSuccessors) {
+    /**
+     * @param newNode the result of cloning this node or {@link Unsafe#allocateInstance(Class) raw
+     *            allocating} a copy of this node
+     * @param type the type of edges to process
+     * @param edgesToCopy if {@code type} is in this set, the edges are copied otherwise they are
+     *            cleared
+     */
+    private void copyOrClearEdgesForClone(NodeClass nodeClass, Node newNode, Edges.Type type, EnumSet<Edges.Type> edgesToCopy) {
+        if (edgesToCopy.contains(type)) {
+            nodeClass.getEdges(type).copy(this, newNode);
+        } else {
+            if (USE_UNSAFE_TO_CLONE) {
+                // The direct edges are already null
+                nodeClass.getEdges(type).initializeLists(newNode, this);
+            } else {
+                nodeClass.getEdges(type).clear(newNode);
+            }
+        }
+    }
+
+    public static final EnumSet<Edges.Type> WithNoEdges = EnumSet.noneOf(Edges.Type.class);
+    public static final EnumSet<Edges.Type> WithAllEdges = EnumSet.allOf(Edges.Type.class);
+    public static final EnumSet<Edges.Type> WithOnlyInputEdges = EnumSet.of(Inputs);
+    public static final EnumSet<Edges.Type> WithOnlySucessorEdges = EnumSet.of(Successors);
+
+    /**
+     * Makes a copy of this node in(to) a given graph.
+     *
+     * @param into the graph in which the copy will be registered (which may be this node's graph)
+     *            or null if the copy should not be registered in a graph
+     * @param edgesToCopy specifies the edges to be copied. The edges not specified in this set are
+     *            initialized to their default value (i.e., {@code null} for a direct edge, an empty
+     *            list for an edge list)
+     * @return the copy of this node
+     */
+    final Node clone(Graph into, EnumSet<Edges.Type> edgesToCopy) {
         NodeClass nodeClass = getNodeClass();
-        if (into != null && nodeClass.valueNumberable() && isLeafNode()) {
-            Node otherNode = into.findNodeInCache(this);
-            if (otherNode != null) {
-                return otherNode;
+        boolean useIntoLeafNodeCache = false;
+        if (into != null) {
+            if (nodeClass.valueNumberable() && nodeClass.isLeafNode()) {
+                useIntoLeafNodeCache = true;
+                Node otherNode = into.findNodeInCache(this);
+                if (otherNode != null) {
+                    return otherNode;
+                }
             }
         }
 
         Node newNode = null;
         try {
-            newNode = (Node) this.clone();
-        } catch (CloneNotSupportedException e) {
+            if (USE_UNSAFE_TO_CLONE) {
+                newNode = (Node) UnsafeAccess.unsafe.allocateInstance(getClass());
+                nodeClass.getData().copy(this, newNode);
+                copyOrClearEdgesForClone(nodeClass, newNode, Inputs, edgesToCopy);
+                copyOrClearEdgesForClone(nodeClass, newNode, Successors, edgesToCopy);
+            } else {
+                newNode = (Node) this.clone();
+                newNode.typeCacheNext = null;
+                newNode.usage0 = null;
+                newNode.usage1 = null;
+                newNode.predecessor = null;
+                copyOrClearEdgesForClone(nodeClass, newNode, Inputs, edgesToCopy);
+                copyOrClearEdgesForClone(nodeClass, newNode, Successors, edgesToCopy);
+            }
+        } catch (Exception e) {
             throw new GraalGraphInternalError(e).addContext(this);
         }
-        if (clearInputsAndSuccessors) {
-            nodeClass.clearInputs(newNode);
-            nodeClass.clearSuccessors(newNode);
-        }
         newNode.graph = into;
-        newNode.typeCacheNext = null;
         newNode.id = INITIAL_ID;
         if (into != null) {
             into.register(newNode);
         }
-        newNode.usage0 = null;
-        newNode.usage1 = null;
         newNode.extraUsages = NO_NODES;
-        newNode.predecessor = null;
 
-        if (into != null && nodeClass.valueNumberable() && isLeafNode()) {
+        if (into != null && useIntoLeafNodeCache) {
             into.putNodeIntoCache(newNode);
         }
         newNode.afterClone(this);
         return newNode;
-    }
-
-    /**
-     * @returns true if this node has no inputs and no successors
-     */
-    public boolean isLeafNode() {
-        return USE_GENERATED_NODES || getNodeClass().isLeafNode();
     }
 
     protected void afterClone(@SuppressWarnings("unused") Node other) {
@@ -812,15 +847,15 @@ public abstract class Node implements Cloneable, Formattable {
             NodePosIterator iterator = usage.inputs().iterator();
             while (iterator.hasNext()) {
                 Position pos = iterator.nextPosition();
-                if (pos.get(usage) == this && pos.getInputType(usage) != InputType.Unchecked) {
-                    assert isAllowedUsageType(pos.getInputType(usage)) : "invalid input of type " + pos.getInputType(usage) + " from " + usage + " to " + this + " (" + pos.getInputName(usage) + ")";
+                if (pos.get(usage) == this && pos.getInputType() != InputType.Unchecked) {
+                    assert isAllowedUsageType(pos.getInputType()) : "invalid input of type " + pos.getInputType() + " from " + usage + " to " + this + " (" + pos.getName() + ")";
                 }
             }
         }
         NodePosIterator iterator = inputs().withNullIterator();
         while (iterator.hasNext()) {
             Position pos = iterator.nextPosition();
-            assert pos.isInputOptional(this) || pos.get(this) != null : "non-optional input " + pos.getInputName(this) + " cannot be null in " + this + " (fix nullness or use @OptionalInput)";
+            assert pos.isInputOptional() || pos.get(this) != null : "non-optional input " + pos.getName() + " cannot be null in " + this + " (fix nullness or use @OptionalInput)";
         }
         if (predecessor != null) {
             assertFalse(predecessor.isDeleted(), "predecessor %s must never be deleted", predecessor);
@@ -896,9 +931,9 @@ public abstract class Node implements Cloneable, Formattable {
      */
     public Map<Object, Object> getDebugProperties(Map<Object, Object> map) {
         NodeClass nodeClass = getNodeClass();
-        for (Integer pos : nodeClass.getPropertyPositions()) {
-            map.put(nodeClass.getPropertyName(pos), nodeClass.getProperty(this, pos));
-
+        Fields properties = nodeClass.getData();
+        for (int i = 0; i < properties.getCount(); i++) {
+            map.put(properties.getName(i), properties.get(this, i));
         }
         return map;
     }
@@ -957,7 +992,6 @@ public abstract class Node implements Cloneable, Formattable {
 
         boolean neighborsAlternate = ((flags & FormattableFlags.LEFT_JUSTIFY) == FormattableFlags.LEFT_JUSTIFY);
         int neighborsFlags = (neighborsAlternate ? FormattableFlags.ALTERNATE | FormattableFlags.LEFT_JUSTIFY : 0);
-        NodeClass nodeClass = getNodeClass();
         if (width > 0) {
             if (this.predecessor != null) {
                 formatter.format(" pred={");
@@ -968,10 +1002,10 @@ public abstract class Node implements Cloneable, Formattable {
             NodePosIterator inputIter = inputs().iterator();
             while (inputIter.hasNext()) {
                 Position position = inputIter.nextPosition();
-                Node input = nodeClass.get(this, position);
+                Node input = position.get(this);
                 if (input != null) {
                     formatter.format(" ");
-                    formatter.format(nodeClass.getName(position));
+                    formatter.format(position.getName());
                     formatter.format("={");
                     input.formatTo(formatter, neighborsFlags, width - 1, 0);
                     formatter.format("}");
@@ -996,10 +1030,10 @@ public abstract class Node implements Cloneable, Formattable {
             NodePosIterator succIter = successors().iterator();
             while (succIter.hasNext()) {
                 Position position = succIter.nextPosition();
-                Node successor = nodeClass.get(this, position);
+                Node successor = position.get(this);
                 if (successor != null) {
                     formatter.format(" ");
-                    formatter.format(nodeClass.getName(position));
+                    formatter.format(position.getName());
                     formatter.format("={");
                     successor.formatTo(formatter, neighborsFlags, 0, precision - 1);
                     formatter.format("}");
@@ -1008,173 +1042,40 @@ public abstract class Node implements Cloneable, Formattable {
         }
     }
 
-    // NEW API IMPLEMENTED BY GENERATED METHODS - NOT YET USED
-
-    public NodeClassIterable inputsV2() {
-        return NodeClassIterable.Empty;
+    /**
+     * Gets a hash for this {@linkplain NodeClass#valueNumberable() value numberable}
+     * {@linkplain NodeClass#isLeafNode() leaf} node based on its {@linkplain NodeClass#getData()
+     * data} fields.
+     *
+     * This method must only be called if {@link #USE_GENERATED_VALUE_NUMBER} is true and this is a
+     * value numberable leaf node.
+     *
+     * Overridden by a method generated for leaf nodes.
+     */
+    public int valueNumberLeaf() {
+        throw new GraalInternalError("Node is not a value numberable leaf", this);
     }
 
     /**
-     * Determines if this node's inputs contain a given node.
+     * Overridden by a generated method.
      *
      * @param other
      */
-    public boolean inputsContains(Node other) {
-        return false;
+    protected boolean dataEquals(Node other) {
+        throw GraalInternalError.shouldNotReachHere();
     }
 
     /**
-     * Determines if this node's successors contain a given node.
+     * Determines if this node's {@link NodeClass#getData() data} fields are equal to the data
+     * fields of another node of the same type. Primitive fields are compared by value and
+     * non-primitive fields are compared by {@link Objects#equals(Object, Object)}.
      *
-     * @param other
-     */
-    public boolean successorsContains(Node other) {
-        return false;
-    }
-
-    public NodeClassIterable successorsV2() {
-        return NodeClassIterable.Empty;
-    }
-
-    public Collection<Position> getFirstLevelInputs() {
-        return Collections.emptyList();
-    }
-
-    public Collection<Position> getFirstLevelSuccessors() {
-        return Collections.emptyList();
-    }
-
-    /**
-     * Gets an input or successor of this node at a given position.
+     * The result of this method undefined if {@code other.getClass() != this.getClass()}.
      *
-     * @param pos
+     * @param other a node of exactly the same type as this node
+     * @return true if the data fields of this object and {@code other} are equal
      */
-    public Node getNodeAt(Position pos) {
-        throw new NoSuchElementException();
-    }
-
-    /**
-     * Gets the number of {@link Node} and {@link NodeList} fields in this node that are
-     * {@link Input}s or {@link OptionalInput}s.
-     *
-     * @return {@code L << 16 | N} where {@code N} is the number of {@link Node} fields and
-     *         {@code L} is the number of {@link NodeList} fields
-     */
-    public int getInputsCount() {
-        return 0;
-    }
-
-    /**
-     * Gets the number of {@link Node} and {@link NodeList} fields in this node that are
-     * {@link Successor}s.
-     *
-     * @return {@code L << 16 | N} where {@code N} is the number of {@link Node} fields and
-     *         {@code L} is the number of {@link NodeList} fields
-     */
-    public int getSuccessorsCount() {
-        return 0;
-    }
-
-    /**
-     * Gets an input of this node at a given index.
-     *
-     * @param index index of an input {@link Node} field. This value must be in the range of the
-     *            number of {@link Node} fields returned by {@link #getInputsCount()}.
-     */
-    public Node getInputNodeAt(int index) {
-        throw new NoSuchElementException();
-    }
-
-    /**
-     * Gets a successor of this node at a given index.
-     *
-     * @param index index of a successor {@link Node} field. This value must be in the range of the
-     *            number of {@link Node} fields returned by {@link #getSuccessorsCount()}.
-     */
-    public Node getSuccessorNodeAt(int index) {
-        throw new NoSuchElementException();
-    }
-
-    /**
-     * Gets an input list at a given index.
-     *
-     * @param index index of an input {@link NodeList} field. This value must be in the range of the
-     *            number of {@link NodeList} fields returned by {@link #getInputsCount()}.
-     */
-    public NodeList<? extends Node> getInputNodeListAt(int index) {
-        throw new NoSuchElementException();
-    }
-
-    /**
-     * Gets a successor list at a given index.
-     *
-     * @param index index of a successor {@link NodeList} field. This value must be in the range of
-     *            the number of {@link NodeList} fields returned by {@link #getSuccessorsCount()}.
-     */
-    public NodeList<? extends Node> getSuccessorNodeListAt(int index) {
-        throw new NoSuchElementException();
-    }
-
-    /**
-     * Gets an input or successor list at a given position.
-     *
-     * @param position
-     */
-    public NodeList<? extends Node> getNodeListAt(Position position) {
-        throw new NoSuchElementException();
-    }
-
-    /**
-     * Sets an input or successor list at a given position.
-     *
-     * @param position
-     * @param list
-     */
-    public void setNodeListAt(Position position, NodeList<? extends Node> list) {
-        throw new NoSuchElementException();
-    }
-
-    /**
-     * Updates an input or successor of this node at a given position. The existing, non-null input
-     * or successor at {@code position} is notified of the change via
-     * {@link #updateUsages(Node, Node)} or {@link #updatePredecessor(Node, Node)}.
-     *
-     * @param position
-     * @param value
-     */
-    public void updateNodeAt(Position position, Node value) {
-        throw new NoSuchElementException();
-    }
-
-    /**
-     * Sets an input or successor of this node at a given position without notifying the existing
-     * input or successor at {@code position} of the change.
-     *
-     * @param position
-     * @param value
-     */
-    public void initializeNodeAt(Position position, Node value) {
-        throw new NoSuchElementException();
-    }
-
-    /**
-     * @param pos
-     */
-    public InputType getInputTypeAt(Position pos) {
-        throw new NoSuchElementException();
-    }
-
-    /**
-     * @param pos
-     */
-    public String getNameOf(Position pos) {
-        throw new NoSuchElementException();
-    }
-
-    /**
-     * @param pos
-     */
-    public boolean isOptionalInputAt(Position pos) {
-        throw new NoSuchElementException();
+    public boolean valueEquals(Node other) {
+        return USE_GENERATED_VALUE_EQUALS ? dataEquals(other) : getNodeClass().dataEquals(this, other);
     }
 }

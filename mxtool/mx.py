@@ -284,6 +284,13 @@ class Project(Dependency):
         Add the transitive set of dependencies for this project, including
         libraries if 'includeLibs' is true, to the 'deps' list.
         """
+        return self._all_deps_helper(deps, [], includeLibs, includeSelf, includeJreLibs, includeAnnotationProcessors)
+
+    def _all_deps_helper(self, deps, dependants, includeLibs, includeSelf=True, includeJreLibs=False, includeAnnotationProcessors=False):
+        if self in dependants:
+            abort(str(self) + 'Project dependency cycle found:\n    ' +
+                  '\n        |\n        V\n    '.join(map(str, dependants[dependants.index(self):])) +
+                  '\n        |\n        V\n    ' + self.name)
         childDeps = list(self.deps)
         if includeAnnotationProcessors and len(self.annotation_processors()) > 0:
             childDeps = self.annotation_processors() + childDeps
@@ -292,8 +299,11 @@ class Project(Dependency):
         for name in childDeps:
             assert name != self.name
             dep = dependency(name)
-            if not dep in deps and (dep.isProject or (dep.isLibrary() and includeLibs) or (dep.isJreLibrary() and includeJreLibs)):
-                dep.all_deps(deps, includeLibs=includeLibs, includeJreLibs=includeJreLibs, includeAnnotationProcessors=includeAnnotationProcessors)
+            if not dep in deps:
+                if dep.isProject():
+                    dep._all_deps_helper(deps, dependants + [self], includeLibs=includeLibs, includeJreLibs=includeJreLibs, includeAnnotationProcessors=includeAnnotationProcessors)
+                elif dep.isProject or (dep.isLibrary() and includeLibs) or (dep.isJreLibrary() and includeJreLibs):
+                    dep.all_deps(deps, includeLibs=includeLibs, includeJreLibs=includeJreLibs, includeAnnotationProcessors=includeAnnotationProcessors)
         if not self in deps and includeSelf:
             deps.append(self)
         return deps
@@ -639,16 +649,7 @@ class JreLibrary(BaseLibrary):
             return NotImplemented
 
     def is_present_in_jdk(self, jdk):
-        for e in jdk.bootclasspath().split(os.pathsep):
-            if basename(e) == self.jar:
-                return True
-        for d in jdk.extdirs().split(os.pathsep):
-            if len(d) and self.jar in os.listdir(d):
-                return True
-        for d in jdk.endorseddirs().split(os.pathsep):
-            if len(d) and self.jar in os.listdir(d):
-                return True
-        return False
+        return jdk.containsJar(self.jar)
 
     def all_deps(self, deps, includeLibs, includeSelf=True, includeJreLibs=False, includeAnnotationProcessors=False):
         """
@@ -850,114 +851,6 @@ def _read_projects_file(projectsFile):
                 attrs[attr] = value
     return suite
 
-# TODO: remove this command once all repos have transitioned
-# to the new project format
-def convertprojects(args, verbose=True):
-    """convert old style projects file to projects*.py file(s)"""
-
-    class Printer:
-        def __init__(self, fp, indent):
-            self.fp = fp
-            self.indent = indent
-            self.prefix = ''
-        def println(self, s):
-            if len(s) == 0:
-                print >> self.fp, s
-            else:
-                print >> self.fp, self.prefix + s
-        def inc(self):
-            self.prefix = ''.rjust(len(self.prefix) + self.indent)
-        def dec(self):
-            self.prefix = ''.rjust(len(self.prefix) - self.indent)
-
-    list_attrs = ['urls', 'dependencies', 'sourceUrls', 'sourceDirs', 'annotationProcessors', 'exclude', 'distDependencies']
-
-    for projectsFile in args:
-        suite = _read_projects_file(projectsFile)
-        def print_attrs(p, name, attrs, is_last=False):
-            p.println('"' + name + '" : {')
-            p.inc()
-            for n, v in attrs.iteritems():
-                if n in list_attrs:
-                    if len(v) == 0:
-                        p.println('"{}" : [],'.format(n))
-                    else:
-                        v = [e.strip() for e in v.split(',')]
-                        if len(v) == 1:
-                            p.println('"{}" : ["{}"],'.format(n, v[0]))
-                        else:
-                            p.println('"{}" : ['.format(n))
-                            p.inc()
-                            for e in v:
-                                p.println('"' + e + '",')
-                            p.dec()
-                            p.println('],')
-                else:
-                    p.println('"{}" : "{}",'.format(n, v))
-            p.dec()
-            if is_last:
-                p.println('}')
-            else:
-                p.println('},')
-                p.println('')
-
-        def print_section(p, sname, suite, is_last=False):
-            section = suite.get(sname)
-            if section:
-                p.println('"' + sname + '" : {')
-                p.inc()
-                i = 0
-                for name, attrs in section.iteritems():
-                    i = i + 1
-                    print_attrs(p, name, attrs, i == len(section))
-
-                p.dec()
-                if is_last:
-                    p.println('}')
-                else:
-                    p.println('},')
-                    p.println('')
-
-        existing, projectsPyFile = _load_suite_dict(dirname(projectsFile))
-        if existing:
-            assert existing['name'] == suite.pop('name')
-            assert existing['mxversion'] == suite.pop('mxversion')
-            for s in ['projects', 'libraries', 'jrelibraries', 'distributions']:
-                section = suite[s]
-                for k in existing[s].iterkeys():
-                    duplicate = section.pop(k)
-                    if duplicate and s == 'distributions':
-                        original = existing[s][k]
-                        extensions = [d for d in duplicate['dependencies'].split(',') if d not in original['dependencies']]
-                        if len(extensions):
-                            extensions = ','.join(extensions)
-                            suite.setdefault('distribution_extensions', {})[k] = {'dependencies' : extensions}
-                if len(section) == 0:
-                    suite.pop(s)
-
-        if len(suite):
-            out = StringIO.StringIO()
-            p = Printer(out, 2)
-            p.println(('extra' if existing else 'suite') + ' = {')
-            p.inc()
-            if not existing:
-                p.println('"mxversion" : "' + suite['mxversion'] + '",')
-                p.println('"name" : "' + suite['name'] + '",')
-            print_section(p, 'libraries', suite)
-            print_section(p, 'jrelibraries', suite)
-            print_section(p, 'projects', suite)
-            print_section(p, 'distributions', suite)
-            if existing and suite.has_key('distribution_extensions'):
-                print_section(p, 'distribution_extensions', suite, is_last=True)
-
-            p.dec()
-            p.println('}')
-
-            with open(projectsPyFile, 'w') as fp:
-                fp.write(out.getvalue())
-                if verbose:
-                    print 'created: ' + projectsPyFile
-
 def _load_suite_dict(mxDir):
 
     suffix = 1
@@ -980,7 +873,7 @@ def _load_suite_dict(mxDir):
 
         return value
 
-    moduleName = 'projects'
+    moduleName = 'suite'
     modulePath = join(mxDir, moduleName + '.py')
     while exists(modulePath):
 
@@ -1003,8 +896,8 @@ def _load_suite_dict(mxDir):
         # For now fail fast if extra modules were loaded.
         # This can later be relaxed to simply remove the extra modules
         # from the sys.modules name space if necessary.
-        extraModules = snapshot - sys.modules.viewkeys()
-        assert len(extraModules) == 0, 'loading ' + modulePath + ' caused extra modules to be loaded: ' + ', '.join([m.__file__ for m in extraModules])
+        extraModules = sys.modules.viewkeys() - snapshot
+        assert len(extraModules) == 0, 'loading ' + modulePath + ' caused extra modules to be loaded: ' + ', '.join([m for m in extraModules])
 
         # revert the Python path
         del sys.path[0]
@@ -1046,8 +939,13 @@ def _load_suite_dict(mxDir):
                         original['dependencies'] += v
 
         dictName = 'extra'
-        moduleName = 'projects' + str(suffix)
+        moduleName = 'suite' + str(suffix)
         modulePath = join(mxDir, moduleName + '.py')
+
+        deprecatedModulePath = join(mxDir, 'projects' + str(suffix) + '.py')
+        if exists(deprecatedModulePath):
+            abort('Please rename ' + deprecatedModulePath + ' to ' + modulePath)
+
         suffix = suffix + 1
 
     return suite, modulePath
@@ -1075,13 +973,8 @@ class Suite:
         return self.name
 
     def _load_projects(self):
-        # TODO: remove once mx/projects has been deprecated
-        projectsFile = join(self.mxDir, 'projects')
-        if exists(projectsFile):
-            convertprojects([projectsFile], verbose=False)
-
-        projectsPyFile = join(self.mxDir, 'projects.py')
-        if not exists(projectsPyFile):
+        suitePyFile = join(self.mxDir, 'suite.py')
+        if not exists(suitePyFile):
             return
 
         suiteDict, _ = _load_suite_dict(self.mxDir)
@@ -1219,7 +1112,7 @@ class Suite:
                 self.dists.append(d)
 
         if self.name is None:
-            abort('Missing "suite=<name>" in ' + projectsPyFile)
+            abort('Missing "suite=<name>" in ' + suitePyFile)
 
     def _commands_name(self):
         return 'mx_' + self.name.replace('-', '_')
@@ -1445,10 +1338,50 @@ def get_os():
         return 'linux'
     elif sys.platform.startswith('sunos'):
         return 'solaris'
-    elif sys.platform.startswith('win32') or sys.platform.startswith('cygwin'):
+    elif sys.platform.startswith('win32'):
         return 'windows'
+    elif sys.platform.startswith('cygwin'):
+        return 'cygwin'
     else:
         abort('Unknown operating system ' + sys.platform)
+
+def _cygpathU2W(p):
+    """
+    Translate a path from unix-style to windows-style.
+    This method has no effects on other platforms than cygwin.
+    """
+    if p is None or get_os() != "cygwin":
+        return p
+    return subprocess.check_output(['cygpath', '-w', p]).strip()
+
+def _cygpathW2U(p):
+    """
+    Translate a path from windows-style to unix-style.
+    This method has no effects on other platforms than cygwin.
+    """
+    if p is None or get_os() != "cygwin":
+        return p
+    return subprocess.check_output(['cygpath', '-u', p]).strip()
+
+def _separatedCygpathU2W(p):
+    """
+    Translate a group of paths, separated by a path separator.
+    unix-style to windows-style.
+    This method has no effects on other platforms than cygwin.
+    """
+    if p is None or p == "" or get_os() != "cygwin":
+        return p
+    return ';'.join(map(_cygpathU2W, p.split(os.pathsep)))
+
+def _separatedCygpathW2U(p):
+    """
+    Translate a group of paths, separated by a path separator.
+    windows-style to unix-style.
+    This method has no effects on other platforms than cygwin.
+    """
+    if p is None or p == "" or get_os() != "cygwin":
+        return p
+    return os.pathsep.join(map(_cygpathW2U, p.split(';')))
 
 def get_arch():
     machine = platform.uname()[4]
@@ -1638,7 +1571,8 @@ def classpath(names=None, resolve=True, includeSelf=True, includeBootClasspath=F
 
     if includeBootClasspath:
         result = os.pathsep.join([java().bootclasspath(), result])
-    return result
+
+    return _separatedCygpathU2W(result)
 
 def classpath_walk(names=None, resolve=True, includeSelf=True, includeBootClasspath=False):
     """
@@ -2105,7 +2039,7 @@ class VersionSpec:
         return cmp(self.parts, other.parts)
 
 def _filter_non_existant_paths(paths):
-    return os.pathsep.join([path for path in paths.split(os.pathsep) if exists(path)])
+    return os.pathsep.join([path for path in _separatedCygpathW2U(paths).split(os.pathsep) if exists(path)])
 
 """
 A JavaConfig object encapsulates info on how Java commands are run.
@@ -2170,8 +2104,8 @@ class JavaConfig:
             os.makedirs(outDir)
         javaSource = join(myDir, 'ClasspathDump.java')
         if not exists(join(outDir, 'ClasspathDump.class')):
-            subprocess.check_call([self.javac, '-d', outDir, javaSource], stderr=subprocess.PIPE, stdout=subprocess.PIPE)
-        self._bootclasspath, self._extdirs, self._endorseddirs = [x if x != 'null' else None for x in subprocess.check_output([self.java, '-cp', outDir, 'ClasspathDump'], stderr=subprocess.PIPE).split('|')]
+            subprocess.check_call([self.javac, '-d', _cygpathU2W(outDir), _cygpathU2W(javaSource)], stderr=subprocess.PIPE, stdout=subprocess.PIPE)
+        self._bootclasspath, self._extdirs, self._endorseddirs = [x if x != 'null' else None for x in subprocess.check_output([self.java, '-cp', _separatedCygpathU2W(outDir), 'ClasspathDump'], stderr=subprocess.PIPE).split('|')]
         if not self._bootclasspath or not self._extdirs or not self._endorseddirs:
             warn("Could not find all classpaths: boot='" + str(self._bootclasspath) + "' extdirs='" + str(self._extdirs) + "' endorseddirs='" + str(self._endorseddirs) + "'")
         self._bootclasspath = _filter_non_existant_paths(self._bootclasspath)
@@ -2198,17 +2132,32 @@ class JavaConfig:
     def bootclasspath(self):
         if self._bootclasspath is None:
             self._init_classpaths()
-        return self._bootclasspath
+        return _separatedCygpathU2W(self._bootclasspath)
 
     def extdirs(self):
         if self._extdirs is None:
             self._init_classpaths()
-        return self._extdirs
+        return _separatedCygpathU2W(self._extdirs)
 
     def endorseddirs(self):
         if self._endorseddirs is None:
             self._init_classpaths()
-        return self._endorseddirs
+        return _separatedCygpathU2W(self._endorseddirs)
+
+    def containsJar(self, jar):
+        if self._bootclasspath is None:
+            self._init_classpaths()
+
+        for e in self._bootclasspath.split(os.pathsep):
+            if basename(e) == jar:
+                return True
+        for d in self._extdirs.split(os.pathsep):
+            if len(d) and jar in os.listdir(d):
+                return True
+        for d in self._endorseddirs.split(os.pathsep):
+            if len(d) and jar in os.listdir(d):
+                return True
+        return False
 
 def check_get_env(key):
     """
@@ -2339,11 +2288,11 @@ def download(path, urls, verbose=False):
     javaSource = join(myDir, 'URLConnectionDownload.java')
     javaClass = join(myDir, 'URLConnectionDownload.class')
     if not exists(javaClass) or getmtime(javaClass) < getmtime(javaSource):
-        subprocess.check_call([java().javac, '-d', myDir, javaSource])
+        subprocess.check_call([java().javac, '-d', _cygpathU2W(myDir), _cygpathU2W(javaSource)])
     verbose = []
     if sys.stderr.isatty():
         verbose.append("-v")
-    if run([java().java, '-cp', myDir, 'URLConnectionDownload', path] + verbose + urls, nonZeroIsFatal=False) == 0:
+    if run([java().java, '-cp', _cygpathU2W(myDir), 'URLConnectionDownload', _cygpathU2W(path)] + verbose + urls, nonZeroIsFatal=False) == 0:
         return
 
     abort('Could not download to ' + path + ' from any of the following URLs:\n\n    ' +
@@ -2398,24 +2347,23 @@ class JavaCompileTask:
     def execute(self):
         argfileName = join(self.proj.dir, 'javafilelist.txt')
         argfile = open(argfileName, 'wb')
-        argfile.write('\n'.join(self.javafilelist))
+        argfile.write('\n'.join(map(_cygpathU2W, self.javafilelist)))
         argfile.close()
 
         processorArgs = []
-
         processorPath = self.proj.annotation_processors_path()
         if processorPath:
             genDir = self.proj.source_gen_dir()
             if exists(genDir):
                 shutil.rmtree(genDir)
             os.mkdir(genDir)
-            processorArgs += ['-processorpath', join(processorPath), '-s', genDir]
+            processorArgs += ['-processorpath', _separatedCygpathU2W(join(processorPath)), '-s', _cygpathU2W(genDir)]
         else:
             processorArgs += ['-proc:none']
 
         args = self.args
         jdk = self.jdk
-        outputDir = self.outputDir
+        outputDir = _cygpathU2W(self.outputDir)
         compliance = str(jdk.javaCompliance)
         cp = classpath(self.proj.name, includeSelf=True)
         toBeDeleted = [argfileName]
@@ -2430,7 +2378,7 @@ class JavaCompileTask:
                     if jdk.debug_port is not None:
                         javacCmd += ['-J-Xdebug', '-J-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=' + str(jdk.debug_port)]
                     javacCmd += processorArgs
-                    javacCmd += ['@' + argfile.name]
+                    javacCmd += ['@' + _cygpathU2W(argfile.name)]
 
                     if not args.warnAPI:
                         javacCmd.append('-XDignore.symbol.file')
@@ -2447,7 +2395,7 @@ class JavaCompileTask:
             else:
                 self.logCompilation('JDT')
 
-                jdtVmArgs = ['-Xmx1g', '-jar', self.jdtJar]
+                jdtVmArgs = ['-Xmx1g', '-jar', _cygpathU2W(self.jdtJar)]
 
                 jdtArgs = ['-' + compliance,
                          '-cp', cp, '-g', '-enableJavadoc',
@@ -2477,10 +2425,10 @@ class JavaCompileTask:
                         with open(jdtPropertiesTmp, 'w') as fp:
                             fp.write(content)
                         toBeDeleted.append(jdtPropertiesTmp)
-                        jdtArgs += ['-properties', jdtPropertiesTmp]
+                        jdtArgs += ['-properties', _cygpathU2W(jdtPropertiesTmp)]
                     else:
-                        jdtArgs += ['-properties', jdtProperties]
-                jdtArgs.append('@' + argfile.name)
+                        jdtArgs += ['-properties', _cygpathU2W(jdtProperties)]
+                jdtArgs.append('@' + _cygpathU2W(argfile.name))
 
                 run_java(jdtVmArgs + jdtArgs)
 
@@ -3585,8 +3533,8 @@ def eclipseinit(args, buildProcessorJars=True, refreshOnly=False):
 
 def _check_ide_timestamp(suite, configZip, ide):
     """return True if and only if the projects file, eclipse-settings files, and mx itself are all older than configZip"""
-    projectsPyFiles = [join(suite.mxDir, e) for e in os.listdir(suite.mxDir) if e.startswith('projects') and e.endswith('.py')]
-    if configZip.isOlderThan(projectsPyFiles):
+    suitePyFiles = [join(suite.mxDir, e) for e in os.listdir(suite.mxDir) if e.startswith('suite') and e.endswith('.py')]
+    if configZip.isOlderThan(suitePyFiles):
         return False
     # Assume that any mx change might imply changes to the generated IDE files
     if configZip.isOlderThan(__file__):
@@ -5127,12 +5075,27 @@ def javap(args):
         run([javapExe, '-private', '-verbose', '-classpath', classpath()] + selection)
 
 def show_projects(args):
-    """show all loaded projects"""
+    """show all projects"""
     for s in suites():
         if len(s.projects) != 0:
-            log(join(s.mxDir, 'projects*.py'))
+            log(join(s.mxDir, 'suite*.py'))
             for p in s.projects:
                 log('\t' + p.name)
+
+def show_suites(args):
+    """show all suites"""
+    def _show_section(name, section):
+        if len(section) != 0:
+            log('  ' + name + ':')
+            for e in section:
+                log('    ' + e.name)
+
+    for s in suites():
+        log(join(s.mxDir, 'suite*.py'))
+        _show_section('libraries', s.libs)
+        _show_section('jrelibraries', s.jreLibs)
+        _show_section('projects', s.projects)
+        _show_section('distributions', s.dists)
 
 def ask_yes_no(question, default=None):
     """"""
@@ -5176,7 +5139,6 @@ _commands = {
     'about': [about, ''],
     'build': [build, '[options]'],
     'checkstyle': [checkstyle, ''],
-    'convertprojects' : [convertprojects, ''],
     'canonicalizeprojects': [canonicalizeprojects, ''],
     'clean': [clean, ''],
     'eclipseinit': [eclipseinit, ''],
@@ -5195,6 +5157,7 @@ _commands = {
     'javadoc': [javadoc, '[options]'],
     'site': [site, '[options]'],
     'netbeansinit': [netbeansinit, ''],
+    'suites': [show_suites, ''],
     'projects': [show_projects, ''],
 }
 
@@ -5218,7 +5181,7 @@ def _is_suite_dir(d, mxDirName=None):
         for f in os.listdir(d):
             if (mxDirName == None and (f == 'mx' or fnmatch.fnmatch(f, 'mx.*'))) or f == mxDirName:
                 mxDir = join(d, f)
-                if exists(mxDir) and isdir(mxDir) and (exists(join(mxDir, 'projects.py')) or exists(join(mxDir, 'projects'))):
+                if exists(mxDir) and isdir(mxDir) and (exists(join(mxDir, 'suite.py'))):
                     return mxDir
 
 def _check_primary_suite():

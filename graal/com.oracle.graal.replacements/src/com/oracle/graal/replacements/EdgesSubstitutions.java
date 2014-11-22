@@ -27,16 +27,17 @@ import com.oracle.graal.api.replacements.*;
 import com.oracle.graal.graph.*;
 import com.oracle.graal.nodes.*;
 import com.oracle.graal.nodes.extended.*;
+import com.oracle.graal.replacements.nodes.*;
 
 /**
- * Substitutions for improving the performance of some critical methods in {@link NodeClass}
- * methods. These substitutions improve the performance by forcing the relevant methods to be
- * inlined (intrinsification being a special form of inlining) and removing a checked cast. The
- * latter cannot be done directly in Java code as {@link PiNode} is not available to the project
- * containing {@link NodeClass}.
+ * Substitutions for improving the performance of some critical methods in {@link Edges}. These
+ * substitutions improve the performance by forcing the relevant methods to be inlined
+ * (intrinsification being a special form of inlining) and removing a checked cast. The latter
+ * cannot be done directly in Java code as {@link DeferredPiNode} is not available to the project
+ * containing {@link Edges}.
  */
-@ClassSubstitution(NodeClass.class)
-public class NodeClassSubstitutions {
+@ClassSubstitution(Edges.class)
+public class EdgesSubstitutions {
 
     @MethodSubstitution
     private static Node getNode(Node node, long offset) {
@@ -57,5 +58,4 @@ public class NodeClassSubstitutions {
     private static void putNodeList(Node node, long offset, NodeList<?> value) {
         UnsafeStoreNode.store(node, offset, value, Kind.Object, LocationIdentity.ANY_LOCATION);
     }
-
 }

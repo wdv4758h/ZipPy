@@ -22,7 +22,10 @@
  */
 package com.oracle.graal.nodes.calc;
 
+import com.oracle.graal.api.meta.*;
+import com.oracle.graal.compiler.common.type.ArithmeticOpTable.IntegerConvertOp;
 import com.oracle.graal.compiler.common.type.*;
+import com.oracle.graal.graph.spi.*;
 import com.oracle.graal.nodeinfo.*;
 import com.oracle.graal.nodes.*;
 import com.oracle.graal.nodes.spi.*;
@@ -31,12 +34,17 @@ import com.oracle.graal.nodes.spi.*;
  * An {@code IntegerConvert} converts an integer to an integer of different width.
  */
 @NodeInfo
-public abstract class IntegerConvertNode extends ConvertNode implements ArithmeticLIRLowerable {
+public abstract class IntegerConvertNode extends UnaryNode implements ConvertNode, ArithmeticLIRLowerable {
 
-    private final int resultBits;
+    protected IntegerConvertOp op;
+    protected IntegerConvertOp reverseOp;
 
-    protected IntegerConvertNode(Stamp stamp, ValueNode input, int resultBits) {
-        super(stamp, input);
+    protected final int resultBits;
+
+    protected IntegerConvertNode(IntegerConvertOp op, IntegerConvertOp reverseOp, int resultBits, ValueNode input) {
+        super(op.foldStamp(resultBits, input.stamp()), input);
+        this.op = op;
+        this.reverseOp = reverseOp;
         this.resultBits = resultBits;
     }
 
@@ -52,21 +60,34 @@ public abstract class IntegerConvertNode extends ConvertNode implements Arithmet
         }
     }
 
-    public static long convert(long value, int bits, boolean unsigned) {
-        if (unsigned) {
-            return ZeroExtendNode.zeroExtend(value, bits);
-        } else {
-            return SignExtendNode.signExtend(value, bits);
-        }
+    @Override
+    public Constant convert(Constant c) {
+        return op.foldConstant(getInputBits(), getResultBits(), c);
     }
 
-    protected ValueNode canonicalConvert(@SuppressWarnings("hiding") ValueNode value) {
+    @Override
+    public Constant reverse(Constant c) {
+        return reverseOp.foldConstant(getResultBits(), getInputBits(), c);
+    }
+
+    @Override
+    public boolean inferStamp() {
+        op = ArithmeticOpTable.forStamp(getValue().stamp()).getIntegerConvertOp(op);
+        boolean changed = updateStamp(op.foldStamp(resultBits, getValue().stamp()));
+        if (changed) {
+            reverseOp = ArithmeticOpTable.forStamp(stamp()).getIntegerConvertOp(reverseOp);
+        }
+        return changed;
+    }
+
+    @Override
+    public ValueNode canonical(CanonicalizerTool tool, ValueNode forValue) {
         if (value.stamp() instanceof IntegerStamp) {
             int inputBits = ((IntegerStamp) value.stamp()).getBits();
             if (inputBits == resultBits) {
                 return value;
             } else if (value.isConstant()) {
-                return ConstantNode.forIntegerBits(resultBits, evalConst(value.asConstant()).asLong());
+                return ConstantNode.forPrimitive(stamp(), convert(forValue.asConstant()));
             }
         }
         return this;

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -20,32 +20,40 @@
  * or visit www.oracle.com if you need additional information or have any
  * questions.
  */
-package com.oracle.graal.lir.sparc;
-
-import com.oracle.graal.asm.sparc.*;
-import com.oracle.graal.lir.*;
-import com.oracle.graal.lir.asm.*;
+package com.oracle.graal.compiler.common.type;
 
 /**
- * This interface can be used for {@link LIRInstruction}s which may provide a delay slot. If a delay
- * slot for this LIRInstruction is requrested, the requester just calls the method
- * {@link #emitForDelay(CompilationResultBuilder, SPARCMacroAssembler)}.
- *
- * @see TailDelayedLIRInstruction
+ * Type describing values that support arithmetic operations.
  */
-public interface DelaySlotHolder {
+public abstract class ArithmeticStamp extends Stamp {
 
-    DelaySlotHolder DUMMY = new DelaySlotHolder() {
-        public void emitForDelay(CompilationResultBuilder crb, SPARCMacroAssembler masm) {
-            // do nothing
+    private final ArithmeticOpTable ops;
+
+    protected ArithmeticStamp(ArithmeticOpTable ops) {
+        this.ops = ops;
+    }
+
+    public ArithmeticOpTable getOps() {
+        return ops;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ops.hashCode();
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
         }
-
-        @Override
-        public String toString() {
-            return "null";
+        if (!(obj instanceof ArithmeticStamp)) {
+            return false;
         }
-    };
-
-    public void emitForDelay(CompilationResultBuilder crb, SPARCMacroAssembler masm);
-
+        ArithmeticStamp other = (ArithmeticStamp) obj;
+        return this.ops == other.ops;
+    }
 }

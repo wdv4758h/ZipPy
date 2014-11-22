@@ -26,6 +26,7 @@ import static com.oracle.graal.graph.iterators.NodePredicates.*;
 
 import java.util.*;
 
+import com.oracle.graal.compiler.common.type.*;
 import com.oracle.graal.graph.*;
 import com.oracle.graal.graph.iterators.*;
 import com.oracle.graal.graph.spi.*;
@@ -38,9 +39,9 @@ import com.oracle.graal.nodes.util.*;
 @NodeInfo
 public class LoopBeginNode extends MergeNode implements IterableNodeType, LIRLowerable {
 
-    private double loopFrequency;
-    private int nextEndIndex;
-    private int unswitches;
+    protected double loopFrequency;
+    protected int nextEndIndex;
+    protected int unswitches;
     @OptionalInput(InputType.Guard) GuardingNode overflowGuard;
 
     public static LoopBeginNode create() {
@@ -247,8 +248,8 @@ public class LoopBeginNode extends MergeNode implements IterableNodeType, LIRLow
         for (int i = 0; i < phi.valueCount(); i++) {
             ValueNode input = phi.valueAt(i);
             long increment = NO_INCREMENT;
-            if (input != null && input instanceof IntegerAddNode) {
-                IntegerAddNode add = (IntegerAddNode) input;
+            if (input != null && input instanceof AddNode && input.stamp() instanceof IntegerStamp) {
+                AddNode add = (AddNode) input;
                 if (add.getX() == phi && add.getY().isConstant()) {
                     increment = add.getY().asConstant().asLong();
                 } else if (add.getY() == phi && add.getX().isConstant()) {
@@ -282,7 +283,7 @@ public class LoopBeginNode extends MergeNode implements IterableNodeType, LIRLow
                 if (phi != null) {
                     nextPhi: for (int otherPhiIndex = phiIndex + 1; otherPhiIndex < phiCount; otherPhiIndex++) {
                         PhiNode otherPhi = phis[otherPhiIndex];
-                        if (otherPhi == null || phi.getNodeClass() != otherPhi.getNodeClass() || !phi.getNodeClass().valueEqual(phi, otherPhi)) {
+                        if (otherPhi == null || phi.getNodeClass() != otherPhi.getNodeClass() || !phi.valueEquals(otherPhi)) {
                             continue nextPhi;
                         }
                         if (selfIncrement[phiIndex] == null) {

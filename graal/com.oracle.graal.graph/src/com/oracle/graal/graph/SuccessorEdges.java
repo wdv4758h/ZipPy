@@ -22,43 +22,20 @@
  */
 package com.oracle.graal.graph;
 
-import com.oracle.graal.graph.Node.Input;
+import static com.oracle.graal.graph.Edges.Type.*;
 
-/**
- * An iterator over the references to a given {@link Node}'s {@linkplain Input inputs}.
- *
- * An iterator of this type will return null values.
- */
-public final class NodeAllRefsIterator extends NodeRefIterator {
+import java.util.*;
 
-    public NodeAllRefsIterator(Node node, int nodeFields, int nodeListFields, boolean isInputs) {
-        super(node, nodeFields, nodeListFields, isInputs);
+import com.oracle.graal.graph.NodeClass.EdgeInfo;
+
+public final class SuccessorEdges extends Edges {
+
+    public SuccessorEdges(int directCount, ArrayList<EdgeInfo> edges) {
+        super(Successors, directCount, edges);
     }
 
     @Override
-    protected void forward() {
-        assert needsForward;
-        needsForward = false;
-        if (index < nodeFields) {
-            index++;
-            if (index < nodeFields) {
-                nextElement = getNode(index);
-                return;
-            }
-        } else {
-            subIndex++;
-        }
-
-        while (index < allNodeRefFields) {
-            if (subIndex == 0) {
-                list = getNodeList(index - nodeFields);
-            }
-            if (subIndex < list.size()) {
-                nextElement = list.get(subIndex);
-                return;
-            }
-            subIndex = 0;
-            index++;
-        }
+    protected void update(Node node, Node oldValue, Node newValue) {
+        node.updatePredecessor(oldValue, newValue);
     }
 }

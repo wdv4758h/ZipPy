@@ -154,6 +154,9 @@ class VM:
         _vmbuild = self.previousBuild
 
 def chmodRecursive(dirname, chmodFlagsDir):
+    if mx.get_os() == 'windows':
+        return
+
     def _chmodDir(chmodFlags, dirname, fnames):
         os.chmod(dirname, chmodFlagsDir)
 
@@ -351,9 +354,10 @@ def _vmLibDirInJdk(jdk):
     Get the directory within a JDK where the server and client
     subdirectories are located.
     """
-    if platform.system() == 'Darwin':
+    mxos = mx.get_os()
+    if mxos == 'darwin':
         return join(jdk, 'jre', 'lib')
-    if platform.system() == 'Windows':
+    if mxos == 'windows' or mxos == 'cygwin':
         return join(jdk, 'jre', 'bin')
     return join(jdk, 'jre', 'lib', mx.get_arch())
 
@@ -361,9 +365,10 @@ def _vmJliLibDirs(jdk):
     """
     Get the directories within a JDK where the jli library designates to.
     """
-    if platform.system() == 'Darwin':
+    mxos = mx.get_os()
+    if mxos == 'darwin':
         return [join(jdk, 'jre', 'lib', 'jli')]
-    if platform.system() == 'Windows':
+    if mxos == 'windows' or mxos == 'cygwin':
         return [join(jdk, 'jre', 'bin'), join(jdk, 'bin')]
     return [join(jdk, 'jre', 'lib', mx.get_arch(), 'jli'), join(jdk, 'lib', mx.get_arch(), 'jli')]
 
@@ -371,7 +376,8 @@ def _vmCfgInJdk(jdk, jvmCfgFile='jvm.cfg'):
     """
     Get the jvm.cfg file.
     """
-    if platform.system() == 'Windows':
+    mxos = mx.get_os()
+    if mxos == "windows" or mxos == "cygwin":
         return join(jdk, 'jre', 'lib', mx.get_arch(), jvmCfgFile)
     return join(_vmLibDirInJdk(jdk), jvmCfgFile)
 
@@ -426,10 +432,8 @@ def _jdk(build=None, vmToCheck=None, create=False, installJars=True):
                         jvmCfgLines += [line]
 
             assert defaultVM is not None, 'Could not find default VM in ' + jvmCfg
-            if mx.get_os() != 'windows':
-                chmodRecursive(jdk, JDK_UNIX_PERMISSIONS_DIR)
+            chmodRecursive(jdk, JDK_UNIX_PERMISSIONS_DIR)
             shutil.move(join(_vmLibDirInJdk(jdk), defaultVM), join(_vmLibDirInJdk(jdk), 'original'))
-
 
             with open(jvmCfg, 'w') as fp:
                 for line in jvmCfgLines:
@@ -525,7 +529,7 @@ def _update_graalRuntime_inline_hpp(dist):
         graalRuntime_inline_hpp = join(genSrcDir, 'graalRuntime.inline.hpp')
         cp = os.pathsep.join([mx.distribution(d).path for d in dist.distDependencies] + [dist.path, p.output_dir()])
         tmp = StringIO.StringIO()
-        mx.run_java(['-cp', cp, mainClass], out=tmp.write)
+        mx.run_java(['-cp', mx._separatedCygpathU2W(cp), mainClass], out=tmp.write)
 
         # Compute SHA1 for currently generated graalRuntime.inline.hpp content
         # and all other generated sources in genSrcDir
@@ -548,7 +552,7 @@ def _update_graalRuntime_inline_hpp(dist):
         javaClass = join(_graal_home, 'GeneratedSourcesSha1.class')
         with open(javaSource, 'w') as fp:
             print >> fp, 'class GeneratedSourcesSha1 { private static final String value = "' + sha1 + '"; }'
-        subprocess.check_call([mx.java().javac, '-d', _graal_home, javaSource], stderr=subprocess.PIPE, stdout=subprocess.PIPE)
+        subprocess.check_call([mx.java().javac, '-d', mx._cygpathU2W(_graal_home), mx._cygpathU2W(javaSource)], stderr=subprocess.PIPE, stdout=subprocess.PIPE)
         zf = zipfile.ZipFile(dist.path, 'a')
         with open(javaClass, 'rb') as fp:
             zf.writestr(os.path.basename(javaClass), fp.read())
@@ -607,21 +611,26 @@ def _runInDebugShell(cmd, workingDir, logFile=None, findInOutput=None, respondTo
 
     winSDK = mx.get_env('WIN_SDK', 'C:\\Program Files\\Microsoft SDKs\\Windows\\v7.1\\')
 
-    if not exists(winSDK):
+    if not exists(mx._cygpathW2U(winSDK)):
         mx.abort("Could not find Windows SDK : '" + winSDK + "' does not exist")
 
-    if not exists(join(winSDK, 'Bin', 'SetEnv.cmd')):
+    winSDKSetEnv = mx._cygpathW2U(join(winSDK, 'Bin', 'SetEnv.cmd'))
+    if not exists(winSDKSetEnv):
         mx.abort("Invalid Windows SDK path (" + winSDK + ") : could not find Bin/SetEnv.cmd (you can use the WIN_SDK environment variable to specify an other path)")
 
-    p = subprocess.Popen('cmd.exe /E:ON /V:ON /K ""' + winSDK + '/Bin/SetEnv.cmd" & echo ' + startToken + '"', \
-            shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, creationflags=subprocess.CREATE_NEW_PROCESS_GROUP)
+    wincmd = 'cmd.exe /E:ON /V:ON /K "' + mx._cygpathU2W(winSDKSetEnv) + '"'
+    p = subprocess.Popen(wincmd, shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     stdout = p.stdout
     stdin = p.stdin
     if logFile:
         log = open(logFile, 'w')
     ret = False
-    while True:
 
+    def _writeProcess(s):
+        stdin.write(s + newLine)
+
+    _writeProcess("echo " + startToken)
+    while True:
         # encoding may be None on windows plattforms
         if sys.stdout.encoding is None:
             encoding = 'utf-8'
@@ -634,25 +643,25 @@ def _runInDebugShell(cmd, workingDir, logFile=None, findInOutput=None, respondTo
         line = line.strip()
         mx.log(line)
         if line == startToken:
-            stdin.write('cd /D ' + workingDir + ' & ' + cmd + ' & echo ' + endToken + newLine)
+            _writeProcess('cd /D ' + workingDir + ' & ' + cmd + ' & echo ' + endToken)
         for regex in respondTo.keys():
             match = regex.search(line)
             if match:
-                stdin.write(respondTo[regex] + newLine)
+                _writeProcess(respondTo[regex])
         if findInOutput:
             match = findInOutput.search(line)
             if match:
                 ret = True
         if line == endToken:
             if not findInOutput:
-                stdin.write('echo ERRXXX%errorlevel%' + newLine)
+                _writeProcess('echo ERRXXX%errorlevel%')
             else:
                 break
         if line.startswith('ERRXXX'):
             if line == 'ERRXXX0':
                 ret = True
             break
-    stdin.write('exit' + newLine)
+    _writeProcess("exit")
     if logFile:
         log.close()
     return ret
@@ -787,13 +796,15 @@ def build(args, vm=None):
         if not mx.ask_yes_no("Warning: building while --installed-jdks is set (" + _installed_jdks + ") is not recommanded - are you sure you want to continue", 'n'):
             mx.abort(1)
 
+    isWindows = platform.system() == 'Windows' or "CYGWIN" in platform.system()
     for build in builds:
         if build == 'ide-build-target':
             build = os.environ.get('IDE_BUILD_TARGET', None)
             if build is None or len(build) == 0:
                 continue
 
-        jdk = _jdk(build, create=True, installJars=vm != 'original' and not opts2.java)
+        installJars = vm != 'original' and (isWindows or not opts2.java)
+        jdk = _jdk(build, create=True, installJars=installJars)
 
         if vm == 'original':
             if build != 'product':
@@ -806,8 +817,7 @@ def build(args, vm=None):
 
         vmDir = join(_vmLibDirInJdk(jdk), vm)
         if not exists(vmDir):
-            if mx.get_os() != 'windows':
-                chmodRecursive(jdk, JDK_UNIX_PERMISSIONS_DIR)
+            chmodRecursive(jdk, JDK_UNIX_PERMISSIONS_DIR)
             mx.log('Creating VM directory in JDK: ' + vmDir)
             os.makedirs(vmDir)
 
@@ -838,21 +848,22 @@ def build(args, vm=None):
             mx.logv('[all files in src and make directories are older than ' + timestampFile[len(_graal_home) + 1:] + ' - skipping native build]')
             continue
 
-        if platform.system() == 'Windows':
-            compilelogfile = _graal_home + '/graalCompile.log'
+        if isWindows:
+            t_compilelogfile = mx._cygpathU2W(os.path.join(_graal_home, "graalCompile.log"))
             mksHome = mx.get_env('MKS_HOME', 'C:\\cygwin\\bin')
 
             variant = {'client': 'compiler1', 'server': 'compiler2'}.get(vm, vm)
             project_config = variant + '_' + build
-            _runInDebugShell('msbuild ' + _graal_home + r'\build\vs-amd64\jvm.vcproj /p:Configuration=' + project_config + ' /target:clean', _graal_home)
-            winCompileCmd = r'set HotSpotMksHome=' + mksHome + r'& set OUT_DIR=' + jdk + r'& set JAVA_HOME=' + jdk + r'& set path=%JAVA_HOME%\bin;%path%;%HotSpotMksHome%& cd /D "' + _graal_home + r'\make\windows"& call create.bat ' + _graal_home
+            t_graal_home = mx._cygpathU2W(_graal_home)
+            _runInDebugShell('msbuild ' + t_graal_home + r'\build\vs-amd64\jvm.vcproj /p:Configuration=' + project_config + ' /target:clean', t_graal_home)
+            winCompileCmd = r'set HotSpotMksHome=' + mksHome + r'& set OUT_DIR=' + mx._cygpathU2W(jdk) + r'& set JAVA_HOME=' + mx._cygpathU2W(jdk) + r'& set path=%JAVA_HOME%\bin;%path%;%HotSpotMksHome%& cd /D "' + t_graal_home + r'\make\windows"& call create.bat ' + t_graal_home
             print winCompileCmd
             winCompileSuccess = re.compile(r"^Writing \.vcxproj file:")
-            if not _runInDebugShell(winCompileCmd, _graal_home, compilelogfile, winCompileSuccess):
+            if not _runInDebugShell(winCompileCmd, t_graal_home, t_compilelogfile, winCompileSuccess):
                 mx.log('Error executing create command')
                 return
-            winBuildCmd = 'msbuild ' + _graal_home + r'\build\vs-amd64\jvm.vcxproj /p:Configuration=' + project_config + ' /p:Platform=x64'
-            if not _runInDebugShell(winBuildCmd, _graal_home, compilelogfile):
+            winBuildCmd = 'msbuild ' + t_graal_home + r'\build\vs-amd64\jvm.vcxproj /p:Configuration=' + project_config + ' /p:Platform=x64'
+            if not _runInDebugShell(winBuildCmd, t_graal_home, t_compilelogfile):
                 mx.log('Error building project')
                 return
         else:
@@ -892,6 +903,9 @@ def build(args, vm=None):
                 setMakeVar('GRAAL_VERSION', version)
                 setMakeVar('INCLUDE_GRAAL', 'true')
             setMakeVar('INSTALL', 'y', env=env)
+            if mx.get_os() == 'darwin' and platform.mac_ver()[0] != '':
+                # Force use of clang on MacOS
+                setMakeVar('USE_CLANG', 'true')
             if mx.get_os() == 'solaris':
                 # If using sparcWorks, setup flags to avoid make complaining about CC version
                 cCompilerVersion = subprocess.Popen('CC -V', stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).stderr.readlines()[0]
@@ -987,11 +1001,17 @@ def _parseVmArgs(args, vm=None, cwd=None, vmbuild=None):
     if _jacoco == 'on' or _jacoco == 'append':
         jacocoagent = mx.library("JACOCOAGENT", True)
         # Exclude all compiler tests and snippets
-        excludes = ['com.oracle.graal.compiler.tests.*', 'com.oracle.graal.jtt.*']
-        for p in mx.projects():
-            excludes += _find_classes_with_annotations(p, None, ['@Snippet', '@ClassSubstitution', '@Test'], includeInnerClasses=True).keys()
-            excludes += p.find_classes_with_matching_source_line(None, lambda line: 'JaCoCo Exclude' in line, includeInnerClasses=True).keys()
 
+        baseExcludes = ['com.oracle.graal.compiler.test', 'com.oracle.graal.jtt', 'com.oracle.graal.api.meta.test', 'com.oracle.truffle.api.test', 'com.oracle.truffle.api.dsl.test', 'com.oracle.graal.compiler.hsail.test']
+        def _filter(l):
+            # filter out specific classes which are already covered by a baseExclude package
+            return [clazz for clazz in l if not any([clazz.startswith(package) for package in baseExcludes])]
+        excludes = []
+        for p in mx.projects():
+            excludes += _filter(_find_classes_with_annotations(p, None, ['@Snippet', '@ClassSubstitution', '@Test'], includeInnerClasses=True).keys())
+            excludes += _filter(p.find_classes_with_matching_source_line(None, lambda line: 'JaCoCo Exclude' in line, includeInnerClasses=True).keys())
+
+        excludes += [package + '.*' for package in baseExcludes]
         includes = ['com.oracle.graal.*']
         agentOptions = {
                         'append' : 'true' if _jacoco == 'append' else 'false',
@@ -1166,7 +1186,7 @@ def _unittest(args, annotations, prefixCp="", blacklist=None, whitelist=None, ve
             # replaying the VM execution in a native debugger (e.g., gdb).
             vm(prefixArgs + vmArgs + ['-cp', cp, 'com.oracle.graal.test.GraalJUnitCore'] + coreArgs + testclasses)
         else:
-            vm(prefixArgs + vmArgs + ['-cp', cp, 'com.oracle.graal.test.GraalJUnitCore'] + coreArgs + ['@' + testfile])
+            vm(prefixArgs + vmArgs + ['-cp', cp, 'com.oracle.graal.test.GraalJUnitCore'] + coreArgs + ['@' + mx._cygpathU2W(testfile)])
 
     try:
         _run_tests(args, harness, annotations, testfile, blacklist, whitelist, regex)
@@ -1299,9 +1319,11 @@ def buildvms(args):
                 log = open(join(_graal_home, logFile), 'wb')
                 start = time.time()
                 mx.log('BEGIN: ' + v + '-' + vmbuild + '\t(see: ' + logFile + ')')
+                verbose = ['-v'] if mx._opts.verbose else []
                 # Run as subprocess so that output can be directed to a file
-                subprocess.check_call([sys.executable, '-u', join('mxtool', 'mx.py'), '--vm', v, '--vmbuild',
-                                       vmbuild, 'build'], cwd=_graal_home, stdout=log, stderr=subprocess.STDOUT)
+                cmd = [sys.executable, '-u', join('mxtool', 'mx.py')] + verbose + ['--vm', v, '--vmbuild', vmbuild, 'build']
+                mx.logv("executing command: " + str(cmd))
+                subprocess.check_call(cmd, cwd=_graal_home, stdout=log, stderr=subprocess.STDOUT)
                 duration = datetime.timedelta(seconds=time.time() - start)
                 mx.log('END:   ' + v + '-' + vmbuild + '\t[' + str(duration) + ']')
             else:
@@ -1336,38 +1358,28 @@ class Task:
 
 def ctw(args):
     """run CompileTheWorld"""
-    from sanitycheck import CTWMode
-    modes = {
-             'noinline' : CTWMode.NoInline,
-             'nocomplex' : CTWMode.NoComplex,
-             'full' : CTWMode.Full
-             }
-    mode = sanitycheck.CTWMode.NoInline
-    vmargs = []
-    for a in args:
-        m = modes.get(a, None)
-        if m:
-            mode = m
-        else:
-            vmargs.append(a)
 
-    jdk = _jdk(installJars=False)
-    rtjar = join(jdk, 'jre', 'lib', 'rt.jar')
+    parser = ArgumentParser(prog='mx ctw')
+    parser.add_argument('--ctwopts', action='store', help='space separated Graal options (without the -G: prefix) used for CTW compilations')
+    parser.add_argument('--jar', action='store', help='jar of classes to compiled instead of rt.jar')
+    parser.add_argument('vmargs', nargs=REMAINDER, metavar='VM options...')
 
-    vm_ = _get_vm()
+    args, vmargs = parser.parse_known_args(args)
 
-    args = vmargs + ['-XX:+CompileTheWorld', '-Xbootclasspath/p:' + rtjar]
-    if vm_ == 'graal':
-        args += ['-XX:+BootstrapGraal']
-    if mode >= CTWMode.NoInline:
-        if not isGraalEnabled(vm_):
-            args.append('-XX:-Inline')
-        else:
-            args.append('-G:-Inline')
-    if mode >= CTWMode.NoComplex:
-        if isGraalEnabled(vm_):
-            args += ['-G:-OptLoopTransform', '-G:-OptTailDuplication', '-G:-FullUnroll', '-G:-MemoryAwareScheduling', '-G:-NewMemoryAwareScheduling', '-G:-PartialEscapeAnalysis']
-    vm(args)
+    if args.ctwopts:
+        vmargs.append('-G:CompileTheWorldConfig=' + args.ctwopts)
+
+    if args.jar:
+        jar = os.path.abspath(args.jar)
+    else:
+        jar = join(_jdk(installJars=False), 'jre', 'lib', 'rt.jar')
+
+    vmargs += ['-XX:+CompileTheWorld']
+    if _get_vm() == 'graal':
+        vmargs += ['-XX:+BootstrapGraal', '-G:CompileTheWorldClasspath=' + jar]
+    else:
+        vmargs += ['-Xbootclasspath/p:' + jar]
+    vm(vmargs)
 
 def _basic_gate_body(args, tasks):
     t = Task('BuildHotSpotGraal: fastdebug,product')
@@ -1442,7 +1454,9 @@ def _basic_gate_body(args, tasks):
     _jacoco = 'off'
 
     t = Task('CleanAndBuildIdealGraphVisualizer')
-    mx.run(['ant', '-f', join(_graal_home, 'src', 'share', 'tools', 'IdealGraphVisualizer', 'build.xml'), '-q', 'clean', 'build'])
+    env = _igvFallbackJDK(os.environ)
+    buildxml = mx._cygpathU2W(join(_graal_home, 'src', 'share', 'tools', 'IdealGraphVisualizer', 'build.xml'))
+    mx.run(['ant', '-f', buildxml, '-q', 'clean', 'build'], env=env)
     tasks.append(t.stop())
 
     # Prevent Graal modifications from breaking the standard builds
@@ -1588,6 +1602,13 @@ def longtests(args):
 
     dacapo(['100', 'eclipse', '-esa'])
 
+def _igvFallbackJDK(env):
+    if mx._java_homes[0].version == mx.VersionSpec("1.8.0_20"):
+        fallbackJDK = mx._java_homes[1]
+        mx.logv("1.8.0_20 has a known javac bug (JDK-8043926), thus falling back to " + str(fallbackJDK.version))
+        env['JAVA_HOME'] = str(fallbackJDK.jdk)
+    return env
+
 def igv(args):
     """run the Ideal Graph Visualizer"""
     with open(join(_graal_home, '.ideal_graph_visualizer.log'), 'w') as fp:
@@ -1602,6 +1623,7 @@ def igv(args):
             proxyName, proxyPort = proxy.split(':', 1)
             proxyEnv = '-DproxyHost="' + proxyName + '" -DproxyPort=' + proxyPort
             env['ANT_OPTS'] = proxyEnv
+        _igvFallbackJDK(env)
 
         mx.logv('[Ideal Graph Visualizer log is in ' + fp.name + ']')
         nbplatform = join(_graal_home, 'src', 'share', 'tools', 'IdealGraphVisualizer', 'nbplatform')
@@ -1725,8 +1747,6 @@ def bench(args):
         benchmarks.append(sanitycheck.getCTW(vm, sanitycheck.CTWMode.Full))
     if 'ctw-noinline' in args:
         benchmarks.append(sanitycheck.getCTW(vm, sanitycheck.CTWMode.NoInline))
-    if 'ctw-nocomplex' in args:
-        benchmarks.append(sanitycheck.getCTW(vm, sanitycheck.CTWMode.NoComplex))
 
     # Python
     if 'pythontest' in args:
@@ -1859,12 +1879,18 @@ def makejmhdeps(args):
         graalSuite = mx.suite("graal")
         path = artifactId + '.jar'
         if args.permissive:
+            allDeps = []
             for name in deps:
-                if not mx.project(name, fatalIfMissing=False):
-                    if not mx.library(name, fatalIfMissing=False):
-                        mx.log('Skipping ' + groupId + '.' + artifactId + '.jar as ' + name + ' cannot be resolved')
-                        return
-        d = mx.Distribution(graalSuite, name=artifactId, path=path, sourcesPath=path, deps=deps, mainClass=None, excludedDependencies=[], distDependencies=[])
+                dist = mx.distribution(name, fatalIfMissing=False)
+                if dist:
+                    allDeps = allDeps + [d.name for d in dist.sorted_deps(transitive=True)]
+                else:
+                    if not mx.project(name, fatalIfMissing=False):
+                        if not mx.library(name, fatalIfMissing=False):
+                            mx.log('Skipping dependency ' + groupId + '.' + artifactId + ' as ' + name + ' cannot be resolved')
+                            return
+                    allDeps.append(name)
+        d = mx.Distribution(graalSuite, name=artifactId, path=path, sourcesPath=path, deps=allDeps, mainClass=None, excludedDependencies=[], distDependencies=[], javaCompliance=None)
         d.make_archive()
         cmd = ['mvn', 'install:install-file', '-DgroupId=' + groupId, '-DartifactId=' + artifactId,
                '-Dversion=1.0-SNAPSHOT', '-Dpackaging=jar', '-Dfile=' + d.path]
@@ -1922,7 +1948,7 @@ def buildjmh(args):
                 buildOutput.append(x)
         env = os.environ.copy()
         env['JAVA_HOME'] = _jdk(vmToCheck='server')
-        env['MAVEN_OPTS'] = '-server'
+        env['MAVEN_OPTS'] = '-server -XX:-UseGraalClassLoader'
         mx.log("Building benchmarks...")
         cmd = ['mvn']
         if args.settings:
@@ -1948,6 +1974,8 @@ def jmh(args):
         mx.abort(1)
 
     vmArgs, benchmarksAndJsons = _extract_VM_args(args)
+    if '-XX:-UseGraalClassLoader' not in vmArgs:
+        vmArgs = ['-XX:-UseGraalClassLoader'] + vmArgs
 
     benchmarks = [b for b in benchmarksAndJsons if not b.startswith('{')]
     jmhArgJsons = [b for b in benchmarksAndJsons if b.startswith('{')]
@@ -2333,13 +2361,13 @@ def findbugs(args):
         findbugsJar = join(findbugsLib, 'findbugs.jar')
     assert exists(findbugsJar)
     nonTestProjects = [p for p in mx.projects() if not p.name.endswith('.test') and not p.name.endswith('.jtt')]
-    outputDirs = [p.output_dir() for p in nonTestProjects]
+    outputDirs = map(mx._cygpathU2W, [p.output_dir() for p in nonTestProjects])
     findbugsResults = join(_graal_home, 'findbugs.results')
 
-    cmd = ['-jar', findbugsJar, '-textui', '-low', '-maxRank', '15']
+    cmd = ['-jar', mx._cygpathU2W(findbugsJar), '-textui', '-low', '-maxRank', '15']
     if sys.stdout.isatty():
         cmd.append('-progress')
-    cmd = cmd + ['-auxclasspath', mx.classpath([d.name for d in _jdkDeployedDists] + [p.name for p in nonTestProjects]), '-output', findbugsResults, '-exitcode'] + args + outputDirs
+    cmd = cmd + ['-auxclasspath', mx.classpath([d.name for d in _jdkDeployedDists] + [p.name for p in nonTestProjects]), '-output', mx._cygpathU2W(findbugsResults), '-exitcode'] + args + outputDirs
     exitcode = mx.run_java(cmd, nonZeroIsFatal=False)
     if exitcode != 0:
         with open(findbugsResults) as fp:

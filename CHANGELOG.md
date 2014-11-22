@@ -2,9 +2,11 @@
 
 ## `tip`
 ### Graal
+* Changed name suite specification from `mx/projects.py` to `mx/suite.py`.
 * ...
 
 ### Truffle
+* Relaxed declared type restriction on child fields to allow for interface types in addition to Node subclasses.
 * ...
 
 ## Version 0.5
@@ -13,6 +15,8 @@
 * New register allocator optimization: `-G:+ConstantLoadOptimization`.
 * SPARC backend is able to run benchmark and passing most of the JTTs.
 * Fix: Stamp: interface types can not be trusted except after explicit runtime checks.
+* Changed format of suite specification from a properties file (`mx/projects`) to a Python file (`mx/projects.py`).
+
 
 ### Truffle
 * Added `TruffleRuntime#getCallTargets()` to get all call targets that were created and are still referenced.

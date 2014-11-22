@@ -22,7 +22,7 @@
  */
 package com.oracle.graal.nodes.calc;
 
-import com.oracle.graal.api.meta.*;
+import com.oracle.graal.api.code.*;
 import com.oracle.graal.compiler.common.calc.*;
 import com.oracle.graal.compiler.common.type.*;
 import com.oracle.graal.graph.spi.*;
@@ -30,7 +30,6 @@ import com.oracle.graal.lir.gen.*;
 import com.oracle.graal.nodeinfo.*;
 import com.oracle.graal.nodes.*;
 import com.oracle.graal.nodes.spi.*;
-import com.oracle.graal.nodes.type.*;
 
 /**
  * The {@code ZeroExtendNode} converts an integer to a wider integer using zero extension.
@@ -42,26 +41,12 @@ public class ZeroExtendNode extends IntegerConvertNode {
         return USE_GENERATED_NODES ? new ZeroExtendNodeGen(input, resultBits) : new ZeroExtendNode(input, resultBits);
     }
 
+    private ZeroExtendNode(ArithmeticOpTable ops, ValueNode input, int resultBits) {
+        super(ops.getZeroExtend(), ops.getNarrow(), resultBits, input);
+    }
+
     protected ZeroExtendNode(ValueNode input, int resultBits) {
-        super(StampTool.zeroExtend(input.stamp(), resultBits), input, resultBits);
-    }
-
-    public static long zeroExtend(long value, int inputBits) {
-        if (inputBits < 64) {
-            return value & ~(-1L << inputBits);
-        } else {
-            return value;
-        }
-    }
-
-    @Override
-    public Constant convert(Constant c) {
-        return Constant.forPrimitiveInt(getResultBits(), zeroExtend(c.asLong(), getInputBits()));
-    }
-
-    @Override
-    public Constant reverse(Constant c) {
-        return Constant.forPrimitiveInt(getInputBits(), NarrowNode.narrow(c.asLong(), getInputBits()));
+        this(ArithmeticOpTable.forStamp(input.stamp()), input, resultBits);
     }
 
     @Override
@@ -70,8 +55,8 @@ public class ZeroExtendNode extends IntegerConvertNode {
     }
 
     @Override
-    public boolean preservesOrder(Condition op) {
-        switch (op) {
+    public boolean preservesOrder(Condition cond) {
+        switch (cond) {
             case GE:
             case GT:
             case LE:
@@ -84,7 +69,7 @@ public class ZeroExtendNode extends IntegerConvertNode {
 
     @Override
     public ValueNode canonical(CanonicalizerTool tool, ValueNode forValue) {
-        ValueNode ret = canonicalConvert(forValue);
+        ValueNode ret = super.canonical(tool, forValue);
         if (ret != this) {
             return ret;
         }
@@ -100,7 +85,7 @@ public class ZeroExtendNode extends IntegerConvertNode {
             Stamp inputStamp = narrow.getValue().stamp();
             if (inputStamp instanceof IntegerStamp && inputStamp.isCompatible(stamp())) {
                 IntegerStamp istamp = (IntegerStamp) inputStamp;
-                long mask = IntegerStamp.defaultMask(PrimitiveStamp.getBits(narrow.stamp()));
+                long mask = CodeUtil.mask(PrimitiveStamp.getBits(narrow.stamp()));
                 if (((istamp.upMask() | istamp.downMask()) & ~mask) == 0) {
                     // The original value is in the range of the masked zero extended result so
                     // simply return the original input.
@@ -110,11 +95,6 @@ public class ZeroExtendNode extends IntegerConvertNode {
         }
 
         return this;
-    }
-
-    @Override
-    public boolean inferStamp() {
-        return updateStamp(StampTool.zeroExtend(getValue().stamp(), getResultBits()));
     }
 
     @Override

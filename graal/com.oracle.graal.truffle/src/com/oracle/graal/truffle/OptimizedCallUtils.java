@@ -29,22 +29,32 @@ import com.oracle.truffle.api.nodes.NodeUtil.NodeClass;
 import com.oracle.truffle.api.nodes.NodeUtil.NodeCountFilter;
 import com.oracle.truffle.api.nodes.NodeUtil.NodeField;
 
-class OptimizedCallUtils {
+public class OptimizedCallUtils {
 
     public static int countCalls(OptimizedCallTarget target) {
-        return NodeUtil.countNodes(target.getRootNode(), new NodeCountFilter() {
-            public boolean isCounted(Node node) {
-                return node instanceof DirectCallNode;
-            }
-        }, true);
+        ContextSensitiveInlining inlining = target.getInliningDecision();
+        if (inlining != null) {
+            return inlining.countCalls();
+        } else {
+            return NodeUtil.countNodes(target.getRootNode(), new NodeCountFilter() {
+                public boolean isCounted(Node node) {
+                    return node instanceof DirectCallNode;
+                }
+            }, true);
+        }
     }
 
     public static int countCallsInlined(OptimizedCallTarget target) {
-        return NodeUtil.countNodes(target.getRootNode(), new NodeCountFilter() {
-            public boolean isCounted(Node node) {
-                return (node instanceof OptimizedDirectCallNode) && ((OptimizedDirectCallNode) node).isInlined();
-            }
-        }, true);
+        ContextSensitiveInlining inlining = target.getInliningDecision();
+        if (inlining != null) {
+            return inlining.countInlinedCalls();
+        } else {
+            return NodeUtil.countNodes(target.getRootNode(), new NodeCountFilter() {
+                public boolean isCounted(Node node) {
+                    return (node instanceof OptimizedDirectCallNode) && ((OptimizedDirectCallNode) node).isInlined();
+                }
+            }, true);
+        }
     }
 
     public static int countNonTrivialNodes(final OptimizedCallTarget target, final boolean inlined) {

@@ -22,14 +22,12 @@
  */
 package com.oracle.graal.nodes.calc;
 
-import com.oracle.graal.api.meta.*;
 import com.oracle.graal.compiler.common.type.*;
 import com.oracle.graal.graph.spi.*;
 import com.oracle.graal.lir.gen.*;
 import com.oracle.graal.nodeinfo.*;
 import com.oracle.graal.nodes.*;
 import com.oracle.graal.nodes.spi.*;
-import com.oracle.graal.nodes.type.*;
 
 /**
  * The {@code SignExtendNode} converts an integer to a wider integer using sign extension.
@@ -41,30 +39,12 @@ public class SignExtendNode extends IntegerConvertNode {
         return USE_GENERATED_NODES ? new SignExtendNodeGen(input, resultBits) : new SignExtendNode(input, resultBits);
     }
 
+    private SignExtendNode(ArithmeticOpTable ops, ValueNode input, int resultBits) {
+        super(ops.getSignExtend(), ops.getNarrow(), resultBits, input);
+    }
+
     protected SignExtendNode(ValueNode input, int resultBits) {
-        super(StampTool.signExtend(input.stamp(), resultBits), input, resultBits);
-    }
-
-    public static long signExtend(long value, int inputBits) {
-        if (inputBits < 64) {
-            if ((value >>> (inputBits - 1) & 1) == 1) {
-                return value | (-1L << inputBits);
-            } else {
-                return value & ~(-1L << inputBits);
-            }
-        } else {
-            return value;
-        }
-    }
-
-    @Override
-    public Constant convert(Constant c) {
-        return Constant.forPrimitiveInt(getResultBits(), signExtend(c.asLong(), getInputBits()));
-    }
-
-    @Override
-    public Constant reverse(Constant c) {
-        return Constant.forPrimitiveInt(getInputBits(), NarrowNode.narrow(c.asLong(), getInputBits()));
+        this(ArithmeticOpTable.forStamp(input.stamp()), input, resultBits);
     }
 
     @Override
@@ -74,7 +54,7 @@ public class SignExtendNode extends IntegerConvertNode {
 
     @Override
     public ValueNode canonical(CanonicalizerTool tool, ValueNode forValue) {
-        ValueNode ret = canonicalConvert(forValue);
+        ValueNode ret = super.canonical(tool, forValue);
         if (ret != this) {
             return ret;
         }
@@ -103,11 +83,6 @@ public class SignExtendNode extends IntegerConvertNode {
         }
 
         return this;
-    }
-
-    @Override
-    public boolean inferStamp() {
-        return updateStamp(StampTool.signExtend(getValue().stamp(), getResultBits()));
     }
 
     @Override

@@ -41,11 +41,11 @@ import com.oracle.graal.nodes.type.*;
 @NodeInfo(nameTemplate = "IdxLoc {p#locationIdentity/s}")
 public class IndexedLocationNode extends LocationNode implements Canonicalizable {
 
-    private final Kind valueKind;
-    private final LocationIdentity locationIdentity;
-    private final long displacement;
+    protected final Kind valueKind;
+    protected final LocationIdentity locationIdentity;
+    protected final long displacement;
     @Input ValueNode index;
-    private final int indexScaling;
+    protected final int indexScaling;
 
     /**
      * Gets the index or offset of this location.
@@ -73,7 +73,7 @@ public class IndexedLocationNode extends LocationNode implements Canonicalizable
         return USE_GENERATED_NODES ? new IndexedLocationNodeGen(identity, kind, displacement, index, indexScaling) : new IndexedLocationNode(identity, kind, displacement, index, indexScaling);
     }
 
-    IndexedLocationNode(LocationIdentity identity, Kind kind, long displacement, ValueNode index, int indexScaling) {
+    protected IndexedLocationNode(LocationIdentity identity, Kind kind, long displacement, ValueNode index, int indexScaling) {
         super(StampFactory.forVoid());
         assert index != null;
         assert indexScaling != 0;
@@ -107,8 +107,8 @@ public class IndexedLocationNode extends LocationNode implements Canonicalizable
     public IntegerStamp getDisplacementStamp() {
         assert indexScaling > 0 && CodeUtil.isPowerOf2(indexScaling);
         int scale = CodeUtil.log2(indexScaling);
-        return (IntegerStamp) StampTool.add(StampFactory.forInteger(64, displacement, displacement),
-                        StampTool.signExtend(StampTool.leftShift(index.stamp(), StampFactory.forInteger(64, scale, scale)), 64));
+        return (IntegerStamp) IntegerStamp.OPS.getAdd().foldStamp(StampFactory.forInteger(64, displacement, displacement),
+                        IntegerStamp.OPS.getSignExtend().foldStamp(64, StampTool.leftShift(index.stamp(), StampFactory.forInteger(64, scale, scale))));
     }
 
     @Override

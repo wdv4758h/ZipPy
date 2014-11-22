@@ -29,6 +29,7 @@ import java.util.*;
 import java.util.concurrent.*;
 
 import com.oracle.truffle.api.*;
+import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.source.*;
 import com.oracle.truffle.api.utilities.*;
 
@@ -37,9 +38,9 @@ import com.oracle.truffle.api.utilities.*;
  */
 public abstract class Node implements Cloneable {
 
-    private Node parent;
+    @CompilationFinal private Node parent;
 
-    private SourceSection sourceSection;
+    @CompilationFinal private SourceSection sourceSection;
 
     /**
      * Marks array fields that are children of this node.
@@ -123,12 +124,16 @@ public abstract class Node implements Cloneable {
      *
      * @return the assigned source code section
      */
-    @CompilerDirectives.SlowPath
+    @ExplodeLoop
     public final SourceSection getEncapsulatingSourceSection() {
-        if (sourceSection == null && getParent() != null) {
-            return getParent().getEncapsulatingSourceSection();
+        Node current = this;
+        while (current != null) {
+            if (current.sourceSection != null) {
+                return current.sourceSection;
+            }
+            current = current.parent;
         }
-        return sourceSection;
+        return null;
     }
 
     /**

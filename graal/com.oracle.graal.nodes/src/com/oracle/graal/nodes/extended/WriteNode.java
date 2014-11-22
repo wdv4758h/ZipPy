@@ -40,7 +40,7 @@ public class WriteNode extends AbstractWriteNode implements LIRLowerable, Simpli
         return USE_GENERATED_NODES ? new WriteNodeGen(object, value, location, barrierType) : new WriteNode(object, value, location, barrierType);
     }
 
-    WriteNode(ValueNode object, ValueNode value, ValueNode location, BarrierType barrierType) {
+    protected WriteNode(ValueNode object, ValueNode value, ValueNode location, BarrierType barrierType) {
         super(object, value, location, barrierType);
     }
 
@@ -48,7 +48,7 @@ public class WriteNode extends AbstractWriteNode implements LIRLowerable, Simpli
         return USE_GENERATED_NODES ? new WriteNodeGen(object, value, location, barrierType, initialization) : new WriteNode(object, value, location, barrierType, initialization);
     }
 
-    WriteNode(ValueNode object, ValueNode value, ValueNode location, BarrierType barrierType, boolean initialization) {
+    protected WriteNode(ValueNode object, ValueNode value, ValueNode location, BarrierType barrierType, boolean initialization) {
         super(object, value, location, barrierType, initialization);
     }
 
@@ -56,23 +56,15 @@ public class WriteNode extends AbstractWriteNode implements LIRLowerable, Simpli
         return USE_GENERATED_NODES ? new WriteNodeGen(object, value, location, barrierType, guard, initialization) : new WriteNode(object, value, location, barrierType, guard, initialization);
     }
 
-    WriteNode(ValueNode object, ValueNode value, ValueNode location, BarrierType barrierType, GuardingNode guard, boolean initialization) {
+    protected WriteNode(ValueNode object, ValueNode value, ValueNode location, BarrierType barrierType, GuardingNode guard, boolean initialization) {
         super(object, value, location, barrierType, guard, initialization);
     }
 
     @Override
     public void generate(NodeLIRBuilderTool gen) {
         Value address = location().generateAddress(gen, gen.getLIRGeneratorTool(), gen.operand(object()));
-        // It's possible a constant was forced for other usages so inspect the value directly and
-        // use a constant if it can be directly stored.
-        Value v;
-        if (value().isConstant() && gen.getLIRGeneratorTool().canStoreConstant(value().asConstant())) {
-            v = value().asConstant();
-        } else {
-            v = gen.operand(value());
-        }
         LIRKind writeKind = gen.getLIRGeneratorTool().getLIRKind(value().stamp());
-        gen.getLIRGeneratorTool().emitStore(writeKind, address, v, gen.state(this));
+        gen.getLIRGeneratorTool().emitStore(writeKind, address, gen.operand(value()), gen.state(this));
     }
 
     @Override

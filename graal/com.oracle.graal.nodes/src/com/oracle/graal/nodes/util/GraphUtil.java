@@ -326,6 +326,31 @@ public class GraphUtil {
     }
 
     /**
+     * Looks for an {@link ArrayLengthProvider} while iterating through all {@link ValueProxy
+     * ValueProxies}.
+     *
+     * @param value The start value.
+     * @return The array length if one was found, or null otherwise.
+     */
+    public static ValueNode arrayLength(ValueNode value) {
+        ValueNode current = value;
+        do {
+            if (current instanceof ArrayLengthProvider) {
+                ValueNode length = ((ArrayLengthProvider) current).length();
+                if (length != null) {
+                    return length;
+                }
+            }
+            if (current instanceof ValueProxy) {
+                current = ((ValueProxy) current).getOriginalNode();
+            } else {
+                break;
+            }
+        } while (true);
+        return null;
+    }
+
+    /**
      * Tries to find an original value of the given node by traversing through proxies and
      * unambiguous phis. Note that this method will perform an exhaustive search through phis. It is
      * intended to be used during graph building, when phi nodes aren't yet canonicalized.
@@ -335,8 +360,8 @@ public class GraphUtil {
     public static ValueNode originalValue(ValueNode proxy) {
         ValueNode v = proxy;
         do {
-            if (v instanceof ValueProxy) {
-                v = ((ValueProxy) v).getOriginalNode();
+            if (v instanceof LimitedValueProxy) {
+                v = ((LimitedValueProxy) v).getOriginalNode();
             } else if (v instanceof PhiNode) {
                 v = ((PhiNode) v).singleValue();
                 if (v == PhiNode.MULTIPLE_VALUES) {
@@ -372,8 +397,8 @@ public class GraphUtil {
             NodeWorkList worklist = proxy.graph().createNodeWorkList();
             worklist.add(proxy);
             for (Node node : worklist) {
-                if (node instanceof ValueProxy) {
-                    ValueNode originalValue = ((ValueProxy) node).getOriginalNode();
+                if (node instanceof LimitedValueProxy) {
+                    ValueNode originalValue = ((LimitedValueProxy) node).getOriginalNode();
                     if (!process(originalValue, worklist)) {
                         return;
                     }

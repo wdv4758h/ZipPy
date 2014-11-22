@@ -80,7 +80,7 @@ public class NewObjectSnippets implements Snippets {
         Total
     }
 
-    public static final ProfileMode PROFILE_MODE = ProfileMode.Total;
+    public static final ProfileMode PROFILE_MODE = ProfileMode.AllocatedTypes;
 
     @Fold
     private static String createName(String path, String typeContext) {
@@ -114,7 +114,7 @@ public class NewObjectSnippets implements Snippets {
         }
     }
 
-    private static void emitPrefetchAllocate(Word address, boolean isArray) {
+    public static void emitPrefetchAllocate(Word address, boolean isArray) {
         if (config().allocatePrefetchStyle > 0) {
             // Insert a prefetch for each allocation only on the fast-path
             // Generate several prefetch instructions.

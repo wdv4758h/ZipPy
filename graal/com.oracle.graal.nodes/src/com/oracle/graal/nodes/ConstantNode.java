@@ -24,6 +24,7 @@ package com.oracle.graal.nodes;
 
 import java.util.*;
 
+import com.oracle.graal.api.code.*;
 import com.oracle.graal.api.meta.*;
 import com.oracle.graal.compiler.common.*;
 import com.oracle.graal.compiler.common.type.*;
@@ -42,7 +43,7 @@ public class ConstantNode extends FloatingNode implements LIRLowerable {
 
     private static final DebugMetric ConstantNodes = Debug.metric("ConstantNodes");
 
-    private final Constant value;
+    protected final Constant value;
 
     private static ConstantNode createPrimitive(Constant value) {
         assert value.getKind() != Kind.Object;
@@ -90,10 +91,10 @@ public class ConstantNode extends FloatingNode implements LIRLowerable {
 
     @Override
     public void generate(NodeLIRBuilderTool gen) {
-        if (gen.getLIRGeneratorTool().canInlineConstant(value) || onlyUsedInVirtualState()) {
+        if (onlyUsedInVirtualState()) {
             gen.setResult(this, value);
         } else {
-            gen.setResult(this, gen.getLIRGeneratorTool().emitMove(value));
+            gen.setResult(this, gen.getLIRGeneratorTool().emitLoadConstant(value));
         }
     }
 
@@ -176,9 +177,12 @@ public class ConstantNode extends FloatingNode implements LIRLowerable {
             assert constant.getKind().isNumericInteger() && stamp.getStackKind() == constant.getKind().getStackKind();
             IntegerStamp istamp = (IntegerStamp) stamp;
             return forIntegerBits(istamp.getBits(), constant);
-        } else {
+        } else if (stamp instanceof FloatStamp) {
             assert constant.getKind().isNumericFloat() && stamp.getStackKind() == constant.getKind();
             return forConstant(constant, null);
+        } else {
+            assert !(stamp instanceof AbstractObjectStamp);
+            return ConstantNode.create(constant, stamp.constant(constant, null));
         }
     }
 
@@ -318,7 +322,7 @@ public class ConstantNode extends FloatingNode implements LIRLowerable {
 
     private static ConstantNode forIntegerBits(int bits, Constant constant, StructuredGraph graph) {
         long value = constant.asLong();
-        long bounds = SignExtendNode.signExtend(value, bits);
+        long bounds = CodeUtil.signExtend(value, bits);
         return unique(graph, ConstantNode.create(constant, StampFactory.forInteger(bits, bounds, bounds)));
     }
 
@@ -332,7 +336,7 @@ public class ConstantNode extends FloatingNode implements LIRLowerable {
 
     private static ConstantNode forIntegerBits(int bits, Constant constant) {
         long value = constant.asLong();
-        long bounds = SignExtendNode.signExtend(value, bits);
+        long bounds = CodeUtil.signExtend(value, bits);
         return ConstantNode.create(constant, StampFactory.forInteger(bits, bounds, bounds));
     }
 

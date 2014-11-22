@@ -370,7 +370,7 @@ class CFGPrinter extends CompilationPrinter {
         int lastIndex = -1;
         while (iter.hasNext()) {
             Position pos = iter.nextPosition();
-            if (hideSuffix != null && node.getNodeClass().getName(pos).endsWith(hideSuffix)) {
+            if (hideSuffix != null && pos.getName().endsWith(hideSuffix)) {
                 continue;
             }
 
@@ -378,10 +378,10 @@ class CFGPrinter extends CompilationPrinter {
                 if (lastIndex != -1) {
                     out.print(suffix);
                 }
-                out.print(prefix).print(node.getNodeClass().getName(pos)).print(": ");
+                out.print(prefix).print(pos.getName()).print(": ");
                 lastIndex = pos.getIndex();
             }
-            out.print(nodeToString(node.getNodeClass().get(node, pos))).print(" ");
+            out.print(nodeToString(pos.get(node))).print(" ");
         }
         if (lastIndex != -1) {
             out.print(suffix);
@@ -450,30 +450,31 @@ class CFGPrinter extends CompilationPrinter {
 
         for (int i = 0; i < lirInstructions.size(); i++) {
             LIRInstruction inst = lirInstructions.get(i);
-            out.printf("nr %4d ", inst.id()).print(COLUMN_END);
+            if (inst == null) {
+                out.print("nr   -1 ").print(COLUMN_END).print(" instruction ").print("<deleted>").print(COLUMN_END);
+                out.println(COLUMN_END);
+            } else {
+                out.printf("nr %4d ", inst.id()).print(COLUMN_END);
 
-            final StringBuilder stateString = new StringBuilder();
-            inst.forEachState(new StateProcedure() {
-
-                @Override
-                protected void doState(LIRFrameState state) {
+                final StringBuilder stateString = new StringBuilder();
+                inst.forEachState(state -> {
                     if (state.hasDebugInfo()) {
                         DebugInfo di = state.debugInfo();
                         stateString.append(debugInfoToString(di.getBytecodePosition(), di.getReferenceMap(), di.getCalleeSaveInfo(), target.arch));
                     } else {
                         stateString.append(debugInfoToString(state.topFrame, null, null, target.arch));
                     }
+                });
+                if (stateString.length() > 0) {
+                    int level = out.indentationLevel();
+                    out.adjustIndentation(-level);
+                    out.print(" st ").print(HOVER_START).print("st").print(HOVER_SEP).print(stateString.toString()).print(HOVER_END).print(COLUMN_END);
+                    out.adjustIndentation(level);
                 }
-            });
-            if (stateString.length() > 0) {
-                int level = out.indentationLevel();
-                out.adjustIndentation(-level);
-                out.print(" st ").print(HOVER_START).print("st").print(HOVER_SEP).print(stateString.toString()).print(HOVER_END).print(COLUMN_END);
-                out.adjustIndentation(level);
-            }
 
-            out.print(" instruction ").print(inst.toString()).print(COLUMN_END);
-            out.println(COLUMN_END);
+                out.print(" instruction ").print(inst.toString()).print(COLUMN_END);
+                out.println(COLUMN_END);
+            }
         }
         end("IR");
     }

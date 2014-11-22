@@ -26,7 +26,7 @@ import java.util.*;
 
 import com.oracle.graal.api.meta.*;
 import com.oracle.graal.compiler.common.cfg.*;
-import com.oracle.graal.lir.StandardOp.BlockEndOp;
+import com.oracle.graal.lir.StandardOp.*;
 
 /**
  * This class implements the overall container for the LIR graph and directs its construction,
@@ -144,13 +144,10 @@ public class LIR {
      */
     public static LabelRef getExceptionEdge(LIRInstruction op) {
         final LabelRef[] exceptionEdge = {null};
-        op.forEachState(new StateProcedure() {
-            @Override
-            protected void doState(LIRFrameState state) {
-                if (state.exceptionEdge != null) {
-                    assert exceptionEdge[0] == null;
-                    exceptionEdge[0] = state.exceptionEdge;
-                }
+        op.forEachState(state -> {
+            if (state.exceptionEdge != null) {
+                assert exceptionEdge[0] == null;
+                exceptionEdge[0] = state.exceptionEdge;
             }
         });
         return exceptionEdge[0];
@@ -209,5 +206,16 @@ public class LIR {
 
     public void setSpillMoveFactory(SpillMoveFactory spillMoveFactory) {
         this.spillMoveFactory = spillMoveFactory;
+    }
+
+    public void resetLabels() {
+
+        for (AbstractBlock<?> block : codeEmittingOrder()) {
+            for (LIRInstruction inst : lirInstructions.get(block)) {
+                if (inst instanceof LabelOp) {
+                    ((LabelOp) inst).getLabel().reset();
+                }
+            }
+        }
     }
 }

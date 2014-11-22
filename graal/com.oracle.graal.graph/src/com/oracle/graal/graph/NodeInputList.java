@@ -22,37 +22,35 @@
  */
 package com.oracle.graal.graph;
 
+import static com.oracle.graal.graph.Edges.Type.*;
+
 import java.util.*;
+
+import com.oracle.graal.graph.Edges.*;
 
 public final class NodeInputList<T extends Node> extends NodeList<T> {
 
-    private final Node self;
-
     public NodeInputList(Node self, int initialSize) {
-        super(initialSize);
-        this.self = self;
+        super(self, initialSize);
     }
 
     public NodeInputList(Node self) {
-        this.self = self;
+        super(self);
     }
 
     public NodeInputList(Node self, T[] elements) {
-        super(elements);
+        super(self, elements);
         assert self.usages().isEmpty();
-        this.self = self;
     }
 
     public NodeInputList(Node self, List<? extends T> elements) {
-        super(elements);
+        super(self, elements);
         assert self.usages().isEmpty();
-        this.self = self;
     }
 
     public NodeInputList(Node self, Collection<? extends NodeInterface> elements) {
-        super(elements);
+        super(self, elements);
         assert self.usages().isEmpty();
-        this.self = self;
     }
 
     @Override
@@ -61,39 +59,7 @@ public final class NodeInputList<T extends Node> extends NodeList<T> {
     }
 
     @Override
-    public boolean add(Node node) {
-        assert node == null || !node.isDeleted();
-        self.incModCount();
-        return super.add(node);
-    }
-
-    @Override
-    public T remove(int index) {
-        self.incModCount();
-        return super.remove(index);
-    }
-
-    @Override
-    public boolean remove(Object node) {
-        self.incModCount();
-        return super.remove(node);
-    }
-
-    @Override
-    public void clear() {
-        self.incModCount();
-        super.clear();
-    }
-
-    @Override
-    void copy(NodeList<? extends Node> other) {
-        self.incModCount();
-        super.copy(other);
-    }
-
-    @Override
-    public void setAll(NodeList<T> values) {
-        self.incModCount();
-        super.setAll(values);
+    public Type getEdgesType() {
+        return Inputs;
     }
 }

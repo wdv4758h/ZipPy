@@ -25,8 +25,8 @@ package com.oracle.graal.hotspot.sparc;
 import static com.oracle.graal.api.code.CallingConvention.Type.*;
 import static com.oracle.graal.api.code.ValueUtil.*;
 import static com.oracle.graal.compiler.common.GraalOptions.*;
-import static com.oracle.graal.sparc.SPARC.*;
 import static com.oracle.graal.compiler.common.UnsafeAccess.*;
+import static com.oracle.graal.sparc.SPARC.*;
 
 import java.util.*;
 
@@ -53,7 +53,6 @@ import com.oracle.graal.lir.StandardOp.SaveRegistersOp;
 import com.oracle.graal.lir.asm.*;
 import com.oracle.graal.lir.gen.*;
 import com.oracle.graal.lir.sparc.*;
-import com.oracle.graal.lir.sparc.SPARCCall.*;
 import com.oracle.graal.nodes.*;
 import com.oracle.graal.nodes.spi.*;
 import com.oracle.graal.sparc.*;
@@ -209,39 +208,47 @@ public class SPARCHotSpotBackend extends HotSpotHostBackend {
 
     @Override
     public void emitCode(CompilationResultBuilder crb, LIR lir, ResolvedJavaMethod installedCodeOwner) {
-        fixupDelayedInstructions(lir);
+        stuffDelayedControlTransfers(lir);
         SPARCMacroAssembler masm = (SPARCMacroAssembler) crb.asm;
         FrameMap frameMap = crb.frameMap;
         RegisterConfig regConfig = frameMap.registerConfig;
         HotSpotVMConfig config = getRuntime().getConfig();
         Label unverifiedStub = installedCodeOwner == null || installedCodeOwner.isStatic() ? null : new Label();
 
-        // Emit the prefix
-
-        if (unverifiedStub != null) {
-            MarkId.recordMark(crb, MarkId.UNVERIFIED_ENTRY);
-            // We need to use JavaCall here because we haven't entered the frame yet.
-            CallingConvention cc = regConfig.getCallingConvention(JavaCall, null, new JavaType[]{getProviders().getMetaAccess().lookupJavaType(Object.class)}, getTarget(), false);
-            Register inlineCacheKlass = g5; // see MacroAssembler::ic_call
-
-            try (SPARCScratchRegister sc = SPARCScratchRegister.get()) {
-                Register scratch = sc.getRegister();
-                Register receiver = asRegister(cc.getArgument(0));
-                SPARCAddress src = new SPARCAddress(receiver, config.hubOffset);
-
-                new Ldx(src, scratch).emit(masm);
-                new Cmp(scratch, inlineCacheKlass).emit(masm);
+        int i = 0;
+        do {
+            if (i > 0) {
+                crb.reset();
+                lir.resetLabels();
+                resetDelayedControlTransfers(lir);
             }
-            new Bpne(CC.Xcc, unverifiedStub).emit(masm);
-            new Nop().emit(masm);  // delay slot
-        }
 
-        masm.align(config.codeEntryAlignment);
-        MarkId.recordMark(crb, MarkId.OSR_ENTRY);
-        MarkId.recordMark(crb, MarkId.VERIFIED_ENTRY);
+            // Emit the prefix
+            if (unverifiedStub != null) {
+                MarkId.recordMark(crb, MarkId.UNVERIFIED_ENTRY);
+                // We need to use JavaCall here because we haven't entered the frame yet.
+                CallingConvention cc = regConfig.getCallingConvention(JavaCall, null, new JavaType[]{getProviders().getMetaAccess().lookupJavaType(Object.class)}, getTarget(), false);
+                Register inlineCacheKlass = g5; // see MacroAssembler::ic_call
 
-        // Emit code for the LIR
-        crb.emit(lir);
+                try (SPARCScratchRegister sc = SPARCScratchRegister.get()) {
+                    Register scratch = sc.getRegister();
+                    Register receiver = asRegister(cc.getArgument(0));
+                    SPARCAddress src = new SPARCAddress(receiver, config.hubOffset);
+
+                    new Ldx(src, scratch).emit(masm);
+                    new Cmp(scratch, inlineCacheKlass).emit(masm);
+                }
+                new Bpne(CC.Xcc, unverifiedStub).emit(masm);
+                new Nop().emit(masm);  // delay slot
+            }
+
+            masm.align(config.codeEntryAlignment);
+            MarkId.recordMark(crb, MarkId.OSR_ENTRY);
+            MarkId.recordMark(crb, MarkId.VERIFIED_ENTRY);
+
+            // Emit code for the LIR
+            crb.emit(lir);
+        } while (i++ < 1);
 
         HotSpotFrameContext frameContext = (HotSpotFrameContext) crb.frameContext;
         HotSpotForeignCallsProvider foreignCalls = getProviders().getForeignCalls();
@@ -264,82 +271,112 @@ public class SPARCHotSpotBackend extends HotSpotHostBackend {
         }
     }
 
-    private static void fixupDelayedInstructions(LIR l) {
-        for (AbstractBlock<?> b : l.codeEmittingOrder()) {
-            fixupDelayedInstructions(l, b);
-        }
-    }
-
-    private static void fixupDelayedInstructions(LIR l, AbstractBlock<?> block) {
-        TailDelayedLIRInstruction lastDelayable = null;
-        for (LIRInstruction inst : l.getLIRforBlock(block)) {
-            if (lastDelayable != null && inst instanceof DelaySlotHolder) {
-                if (isDelayable(inst, (LIRInstruction) lastDelayable)) {
-                    lastDelayable.setDelaySlotHolder((DelaySlotHolder) inst);
+    private static void resetDelayedControlTransfers(LIR lir) {
+        for (AbstractBlock<?> block : lir.codeEmittingOrder()) {
+            for (LIRInstruction inst : lir.getLIRforBlock(block)) {
+                if (inst instanceof SPARCDelayedControlTransfer) {
+                    ((SPARCDelayedControlTransfer) inst).resetState();
                 }
-                lastDelayable = null; // We must not pull over other delay slot holder.
-            } else if (inst instanceof TailDelayedLIRInstruction) {
-                lastDelayable = (TailDelayedLIRInstruction) inst;
-            } else {
-                lastDelayable = null;
             }
         }
     }
 
-    public static boolean isDelayable(final LIRInstruction delaySlotHolder, final LIRInstruction other) {
-        final Set<Value> delaySlotHolderInputs = new HashSet<>(2);
-        final Set<LIRFrameState> otherFrameStates = new HashSet<>(2);
-        other.forEachState(new InstructionStateProcedure() {
-            @Override
-            protected void doState(LIRInstruction instruction, LIRFrameState state) {
-                otherFrameStates.add(state);
-            }
-        });
-        int frameStatesBefore = otherFrameStates.size();
-        delaySlotHolder.forEachState(new InstructionStateProcedure() {
-            @Override
-            protected void doState(LIRInstruction instruction, LIRFrameState state) {
-                otherFrameStates.add(state);
-            }
-        });
-        if (frameStatesBefore != otherFrameStates.size() && otherFrameStates.size() >= 2) {
-            // both have framestates, the instruction is not delayable
-            return false;
+    /**
+     * Fix-up over whole LIR.
+     *
+     * @see #stuffDelayedControlTransfers(LIR, AbstractBlock)
+     * @param l
+     */
+    private static void stuffDelayedControlTransfers(LIR l) {
+        for (AbstractBlock<?> b : l.codeEmittingOrder()) {
+            stuffDelayedControlTransfers(l, b);
         }
-        // Direct calls do not have dependencies to data before
-        if (delaySlotHolder instanceof DirectCallOp) {
-            return true;
+    }
+
+    /**
+     * Tries to put DelayedControlTransfer instructions and DelayableLIRInstructions together. Also
+     * it tries to move the DelayedLIRInstruction to the DelayedControlTransfer instruction, if
+     * possible.
+     */
+    private static void stuffDelayedControlTransfers(LIR l, AbstractBlock<?> block) {
+        List<LIRInstruction> instructions = l.getLIRforBlock(block);
+        if (instructions.size() >= 2) {
+            LIRDependencyAccumulator acc = new LIRDependencyAccumulator();
+            SPARCDelayedControlTransfer delayedTransfer = null;
+            int delayTransferPosition = -1;
+            for (int i = instructions.size() - 1; i >= 0; i--) {
+                LIRInstruction inst = instructions.get(i);
+                boolean adjacent = delayTransferPosition - i == 1;
+
+                if ((!adjacent && inst.hasState()) || inst.destroysCallerSavedRegisters() || leavesRegisterWindow(inst)) {
+                    delayedTransfer = null;
+                }
+                if (inst instanceof SPARCDelayedControlTransfer) {
+                    delayedTransfer = (SPARCDelayedControlTransfer) inst;
+                    acc.start(inst);
+                    delayTransferPosition = i;
+                } else if (delayedTransfer != null) {
+                    boolean overlap = acc.add(inst);
+                    if (!overlap && inst instanceof SPARCTailDelayedLIRInstruction) {
+                        // We have found a non overlapping LIR instruction which can be delayed
+                        ((SPARCTailDelayedLIRInstruction) inst).setDelayedControlTransfer(delayedTransfer);
+                        delayedTransfer = null;
+                        if (!adjacent) {
+                            // If not adjacent, we make it adjacent
+                            instructions.remove(i);
+                            instructions.add(delayTransferPosition - 1, inst);
+                        }
+                    }
+                }
+            }
         }
-        delaySlotHolder.visitEachInput(new InstructionValueConsumer() {
-            @Override
-            protected void visitValue(LIRInstruction instruction, Value value) {
-                delaySlotHolderInputs.add(value);
+    }
+
+    private static boolean leavesRegisterWindow(LIRInstruction inst) {
+        return inst instanceof SPARCLIRInstruction && ((SPARCLIRInstruction) inst).leavesRegisterWindow();
+    }
+
+    /**
+     * Accumulates inputs/outputs/temp/alive in a set along we walk back the LIRInstructions and
+     * detects, if there is any overlap. In this way LIRInstructions can be detected, which can be
+     * moved nearer to the DelayedControlTransfer instruction.
+     */
+    private static class LIRDependencyAccumulator {
+        private final Set<Object> inputs = new HashSet<>(10);
+        private boolean overlap = false;
+
+        private final InstructionValueConsumer valueConsumer = (instruction, value, mode, flags) -> {
+            Object valueObject = value;
+            if (isRegister(value)) { // Canonicalize registers
+                valueObject = asRegister(value);
             }
-        });
-        delaySlotHolder.visitEachTemp(new InstructionValueConsumer() {
-            @Override
-            protected void visitValue(LIRInstruction instruction, Value value) {
-                delaySlotHolderInputs.add(value);
+            if (!inputs.add(valueObject)) {
+                overlap = true;
             }
-        });
-        if (delaySlotHolderInputs.size() == 0) {
-            return true;
+        };
+
+        public void start(LIRInstruction initial) {
+            inputs.clear();
+            overlap = false;
+            initial.visitEachInput(valueConsumer);
+            initial.visitEachTemp(valueConsumer);
+            initial.visitEachAlive(valueConsumer);
         }
-        final Set<Value> otherOutputs = new HashSet<>();
-        other.visitEachOutput(new InstructionValueConsumer() {
-            @Override
-            protected void visitValue(LIRInstruction instruction, Value value) {
-                otherOutputs.add(value);
-            }
-        });
-        other.visitEachTemp(new InstructionValueConsumer() {
-            @Override
-            protected void visitValue(LIRInstruction instruction, Value value) {
-                otherOutputs.add(value);
-            }
-        });
-        int sizeBefore = otherOutputs.size();
-        otherOutputs.removeAll(delaySlotHolderInputs);
-        return otherOutputs.size() == sizeBefore;
+
+        /**
+         * Adds the inputs of lir instruction to the accumulator and returns, true if there was any
+         * overlap of parameters.
+         *
+         * @param inst
+         * @return true if an overlap was found
+         */
+        public boolean add(LIRInstruction inst) {
+            overlap = false;
+            inst.visitEachOutput(valueConsumer);
+            inst.visitEachTemp(valueConsumer);
+            inst.visitEachInput(valueConsumer);
+            inst.visitEachAlive(valueConsumer);
+            return overlap;
+        }
     }
 }

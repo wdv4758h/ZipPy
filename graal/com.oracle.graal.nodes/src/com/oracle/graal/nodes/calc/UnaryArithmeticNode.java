@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2014, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -22,28 +22,44 @@
  */
 package com.oracle.graal.nodes.calc;
 
+import com.oracle.graal.api.meta.*;
 import com.oracle.graal.compiler.common.type.*;
+import com.oracle.graal.compiler.common.type.ArithmeticOpTable.UnaryOp;
+import com.oracle.graal.graph.spi.*;
 import com.oracle.graal.nodeinfo.*;
 import com.oracle.graal.nodes.*;
 import com.oracle.graal.nodes.spi.*;
 
 @NodeInfo
-public abstract class FloatArithmeticNode extends BinaryNode implements ArithmeticLIRLowerable {
+public abstract class UnaryArithmeticNode extends UnaryNode implements ArithmeticLIRLowerable {
 
-    private final boolean isStrictFP;
+    protected UnaryOp op;
 
-    public FloatArithmeticNode(Stamp stamp, ValueNode x, ValueNode y, boolean isStrictFP) {
-        super(stamp, x, y);
-        assert stamp instanceof FloatStamp;
-        this.isStrictFP = isStrictFP;
+    protected UnaryArithmeticNode(UnaryOp op, ValueNode value) {
+        super(op.foldStamp(value.stamp()), value);
+        this.op = op;
     }
 
-    /**
-     * Checks whether this instruction has strict fp semantics.
-     * 
-     * @return {@code true} if this instruction has strict fp semantics
-     */
-    public boolean isStrictFP() {
-        return isStrictFP;
+    public UnaryOp getOp() {
+        return op;
+    }
+
+    public Constant evalConst(Constant... inputs) {
+        assert inputs.length == 1;
+        return op.foldConstant(inputs[0]);
+    }
+
+    @Override
+    public boolean inferStamp() {
+        op = ArithmeticOpTable.forStamp(getValue().stamp()).getUnaryOp(op);
+        return updateStamp(op.foldStamp(getValue().stamp()));
+    }
+
+    @Override
+    public ValueNode canonical(CanonicalizerTool tool, ValueNode forValue) {
+        if (forValue.isConstant()) {
+            return ConstantNode.forPrimitive(stamp(), op.foldConstant(forValue.asConstant()));
+        }
+        return this;
     }
 }
